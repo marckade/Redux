@@ -2,7 +2,7 @@ using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_SAT3.Verifiers;
 
-class GenericVerifier : IVerifier<SAT3> {
+class GenericVerifier : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";

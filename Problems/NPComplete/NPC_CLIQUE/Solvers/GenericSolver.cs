@@ -1,7 +1,7 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Solvers;
-class GenericSolver : ISolver<CLIQUE> {
+class GenericSolver : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";

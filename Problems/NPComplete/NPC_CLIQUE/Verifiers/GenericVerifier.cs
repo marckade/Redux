@@ -2,7 +2,7 @@ using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 
-class GenericVerifier : IVerifier<CLIQUE> {
+class GenericVerifier : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";

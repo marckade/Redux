@@ -1,7 +1,7 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_SAT3.Solvers;
-class GenericSolver : ISolver<SAT3> {
+class GenericSolver : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";

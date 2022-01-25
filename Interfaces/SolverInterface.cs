@@ -1,6 +1,6 @@
 namespace API.Interfaces;
 
-interface ISolver<T> {
+interface ISolver {
     string solverName{get;}
     string solverDefinition{get;}
     string source {get;}
