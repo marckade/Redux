@@ -73,7 +73,7 @@ class VERTEXCOVER : IProblem<GenericSolver,GenericVerifier>{
 
     // --- Methods Including Constructors ---
     public VERTEXCOVER() {
-        _Gk = defaultInstance;  //SHOULD I HAVE 2 or 1???
+        _Gk = defaultInstance; 
     
     }
     public VERTEXCOVER(string GkInput) {
