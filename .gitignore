@@ -1,1 +1,5 @@
 obj/
+.vscode/launch.json
+.gitignore
+.vscode/tasks.json
+Problems/NPComplete/NPC_ARCSET/ReduceTo/NPC_CLIQUE/Sipser.cs
