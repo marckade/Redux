@@ -13,7 +13,7 @@ public class testController : ControllerBase {
     public String test() {
         GRAPHCOLORING testObj = new GRAPHCOLORING();
 
-        if (testObj.G == null) {
+        if (testObj.GK == null) {
             return testObj.defaultInstance;
         }
         else {

@@ -17,7 +17,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{x1,x2,x3,x4}";
 
-    private string _g =  string.Empty;
+    private string _Gk =  string.Empty;
 
 
 
@@ -58,13 +58,13 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
         }
     }
 
-    public String G {
+    public String GK {
         get{
-            return _g;
+            return _Gk;
         }
 
         set {
-            _g = value;
+            _Gk = value;
         }
     }
     
@@ -87,12 +87,12 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
     public GRAPHCOLORING() {
       
     }
-    public GRAPHCOLORING(string gInput) {
-        _g = gInput;
+    public GRAPHCOLORING(string gkInput) {
+        _Gk = gkInput;
         
     }
 
-    public void ParseProblem(string gInput) {
+    public void ParseProblem(string gkInput) {
 
     }
 
