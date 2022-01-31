@@ -12,7 +12,7 @@ public class testController : ControllerBase {
     public String test() {
         ARCSET testObj = new ARCSET();
 
-        if (testObj.phi == null) {
+        if (testObj.arcset == null) {
             return testObj.defaultInstance;
         }
         else {
