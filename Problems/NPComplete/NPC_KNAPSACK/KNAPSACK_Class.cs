@@ -8,12 +8,13 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
 
     // --- Fields ---
     private string _problemName = "KNAPSACK";
-    private string _formalDefinition = "<H, W, V> | There is a subset of items (w,v) in H whose weight less than or equal to W and wwhose value is greater than or equal to V.";
+
+    private string _formalDefinition = "{<H, W, V> | H is a set of items (w,v) and there is a subset of items in H whose collective weight is less than or equal to W and whose collective value is greater than or equal to V.}";
     private string _problemDefinition = "The KNAPSACK problem is a problem of determining whether there is a combination of items that provide enough value without going over weight. ";
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "< {(5, 6), (7,4), (8, 5), (10, 8)}, 24,  16>";
+    private string _defaultInstance = " ({(5, 6), (7,4), (8, 5), (10, 8)}, 24,  16)";
     private string _HWV = string.Empty;
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
