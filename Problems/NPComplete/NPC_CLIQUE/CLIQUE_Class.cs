@@ -7,12 +7,14 @@ namespace API.Problems.NPComplete.NPC_CLIQUE;
 class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
 
     // --- Fields ---
-    private string _problemName = "Clique Cover";
-    private string _formalDefinition = " ____";
+    private string _problemName = "Clique";
+    private string _formalDefinition = "<G, k> | G is an graph that has a set of k mutually adjacent nodes";
     private string _problemDefinition = "A clique is the problem of uncovering a subset of vertices in an undirected graph G = (V, E) such that every two distinct vertices are adjacent";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{(x1,x2,x3,x4,x5), (x1:x3,x3:x2,x4:x1)}";
+    private string _defaultInstance = "<{a,{b,c}}, {c,{d,e}}, {d,{f}}, {e,{f,g}}), 3>";
     private string _G = string.Empty;
+    private List<string> _nodes = new List<string>();
+    private Dictionary<string,string> _edges = new Dictionary<string, string>();
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
@@ -43,7 +45,6 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
             return _defaultInstance;
         }
     }
-
     public string G {
         get {
             return _G;
@@ -52,13 +53,27 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
             _G = value;
         }
     }
-
+    public List<string> nodes {
+        get {
+            return _nodes;
+        }
+        set {
+            _nodes = value;
+        }
+    }
+    public Dictionary<string,string> edges {
+        get {
+            return _edges;
+        }
+        set {
+            _edges = value;
+        }
+    }
     public GenericSolver defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-
     public GenericVerifier defaultVerifier {
         get {
             return _defaultVerifier;
@@ -66,13 +81,15 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     }
     // --- Methods Including Constructors ---
     public CLIQUE() {
-
+        _G = defaultInstance;
     }
     public CLIQUE(string GInput) {
         _G = GInput;
     }
 
-    public void ParseProblem(string phiInput) {
-
+    public List<string> getNodes(string Ginput) {
+        return new List<string>();
     }
+
+
 }
