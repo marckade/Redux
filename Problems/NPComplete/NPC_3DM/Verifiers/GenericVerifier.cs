@@ -59,7 +59,7 @@ between ','s excluding spaces, and places those strings inside Set.
 
 /*************************************************
 ParseCertificate(string certificate) takes the string representation of the 3-Dimensional Matching solution, and returns a 
-2 dimensional list, Each inner lists will be sets of 3 elements.
+2-dimensional list, Each inner lists will be sets of 3 elements. 
 ***************************************************/
     private List<List<string>> ParseCertificate(string certificate) {
         List<List<string>> Certificate = new List<List<string>>();
