@@ -9,10 +9,10 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
 
     // --- Fields ---
     private string _problemName = "3-Dimensional Matching";
-    private string _formalDefinition = "<U,A,B,C> | U is a subset of A*B*C,|A|=|B|=|C| and a subset of U, M, exists, where |M| = |A|,|B|,|C|, and no two elements of M agree in any cooridinate" ;
-    private string _problemDefinition = "The 3-DImensional Matching problem, is when, given 3 equally sived sets, A, B, and C, and a set of constraints U, which is a subset of AxBxC, are you able to a set of 3-tuples, which contains each element of A, B, and C in one and only one 3-tuple, while following the constraints U. ";
+    private string _formalDefinition = "<M,X,Y,Z> | M is a subset of X*Y*Z,|X|=|Y|=|Z| and a subset of M, M', exists, where |M'| = |A|,|B|,|C|, and no two elements of M' agree in any cooridinate" ;
+    private string _problemDefinition = "The 3-DImensional Matching problem, is when, given 3 equally sived sets, X, Y, and Z, and a set of constraints M, which is a subset of XxYxZ, are you able to create a set of 3-tuples, which contains each element of X, Y, and Z in one and only one 3-tuple, while following the constraints M. ";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{a1,a2,a3,a4}{b1,b2,b3,b4}{c1,c2,c3,c4}{a1,b2,c1}{a1,b2,c4}{a2,b1,c1}{a2,b1,c2}{a2,b2,c1}{a2,b2,c4}{a2,b4,c3}{a3,b3,c2}{a3,b3,c3}{a4,b1,c1}{a4,b1,c2}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be A, B, and C, and all subsequent sets are sets in U
+    private string _defaultInstance = "{x1,x2,x3,x4}{y1,y2,y3,y4}{z1,z2,z3,z4}{x1,y2,z1}{x1,y2,z4}{x2,y1,z1}{x2,y1,z2}{x2,y2,z1}{x2,y2,z4}{x2,y4,z3}{x3,y3,z2}{x3,y3,z3}{x4,y1,z1}{x4,y1,z2}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
     private string _phi = string.Empty;
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
@@ -99,7 +99,7 @@ between ','s excluding spaces, and places those strings inside Set.
     }
     /*************************************************
    ParseProblem(string phiInput) takes the string representation of the 3-Dimensional Matching problem, and returns a 
-   3 dimensional list, the first depths of list, contains two lists, one with the sets A,B,and C, and the other containing all the sets in U.
+   3 dimensional list, the first depths of list, contains two lists, one with the sets X,Y,and Z, and the other containing all the sets in M.
    ***************************************************/
     public List<List<List<string>>> ParseProblem(string phiInput) {
         List<List<List<string>>> Problem = new List<List<List<string>>>(){new List<List<string>>(), new List<List<string>>()};
