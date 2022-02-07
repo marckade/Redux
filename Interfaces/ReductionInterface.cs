@@ -5,5 +5,5 @@ interface IReduction<T,U> {
     string source {get;}
     T reductionFrom {get;}
     U reductionTo {get;}
-    U reduce(T from, U to);
+    U reduce();
 }

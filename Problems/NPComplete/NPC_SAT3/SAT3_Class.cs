@@ -8,15 +8,15 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
 
     // --- Fields ---
     private string _problemName = "3SAT";
-    private string _formalDefinition = "PHI | PHI is a satisfiabile Boolean forumla in 3CNF";
-    private string _problemDefinition = "3SAT, or the Boolean satisfiability problem, is a problem that asks for a given formula in Boolean algebra (with unknown number of variables) whether it is satisfiable, that is, whether there is some combination of the (binary) values of the variables that will give 1";
-
-    // How we want format
+    private string _formalDefinition = "{Φ | Φ is a satisfiabile Boolean forumla in 3CNF}";
+    private string _problemDefinition = "3SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi (with a maximum of 3 literals per clause) to result in 'True'";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "(x1,x2*,x3) ^ (x1*,x3,x1) ^ (x2,x3*,x1)";
-    private string _phi = string.Empty;
+    private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private string _phi = string.Empty;
+    private List<List<string>> _clauses = new List<List<string>>();
+    private List<string> _literals = new List<string>();
 
     // --- Properties ---
     public string problemName {
@@ -34,7 +34,6 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
             return _problemDefinition;
         }
     }
-
     public string source {
         get {
             return _source;
@@ -43,14 +42,6 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
     public string defaultInstance {
         get {
             return _defaultInstance;
-        }
-    }
-    public string phi {
-        get {
-            return _phi;
-        }
-        set {
-            _phi = value;
         }
     }
     public GenericSolver defaultSolver {
@@ -63,17 +54,84 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
             return _defaultVerifier;
         }
     }
+    public string phi {
+        get {
+            return _phi;
+        }
+        set {
+            _phi = value;
+        }
+    }
+    public List<List<string>> clauses {
+        get {
+            return _clauses;
+        }
+        set {
+            _clauses = value;
+        }
+    }
+    public List<string> literals {
+        get {
+            return _literals;
+        }
+        set {
+            _literals = value;
+        }
+    }
 
 
     // --- Methods Including Constructors ---
     public SAT3() {
         _phi = defaultInstance;
+        clauses = getClauses(_phi);
+        literals = getLiterals(_phi);
     }
     public SAT3(string phiInput) {
+        // TODO Validate there are only a maximum of 3 literals in each clause
         _phi = phiInput;
+        clauses = getClauses(_phi);
+        literals = getLiterals(_phi);
     }
 
-    public void ParseProblem(string phiInput) {
+    public List<List<string>> getClauses(string phiInput) {
+        
+        List<List<string>> clauses = new List<List<string>>();
 
+        // Strip extra characters
+        string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
+
+        // Parse on | to collect each clause
+        string[] rawClauses = strippedInput.Split('|');
+
+        foreach(string clause in rawClauses) {
+            List<string> clauseToAdd = new List<string>();
+            string[] literals = clause.Split('&');
+
+            foreach(string literal in literals) {
+                clauseToAdd.Add(literal);
+            }
+            clauses.Add(clauseToAdd);
+        }
+
+        return clauses;
+
+    }
+
+    public List<string> getLiterals(string phiInput) {
+        
+        List<string> literals = new List<string>();
+        string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
+
+        // Parse on | to collect each clause
+        string[] rawClauses = strippedInput.Split('|');
+
+        foreach(string clause in rawClauses) {
+            string[] rawLiterals = clause.Split('&');
+
+            foreach(string literal in rawLiterals) {
+                literals.Add(literal);
+            }
+        }
+        return literals;
     }
 }
