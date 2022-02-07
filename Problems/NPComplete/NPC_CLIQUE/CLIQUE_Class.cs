@@ -7,12 +7,15 @@ namespace API.Problems.NPComplete.NPC_CLIQUE;
 class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
 
     // --- Fields ---
-    private string _problemName = "Clique Cover";
-    private string _formalDefinition = " ____";
+    private string _problemName = "Clique";
+    private string _formalDefinition = "<G, k> | G is an graph that has a set of k mutually adjacent nodes";
     private string _problemDefinition = "A clique is the problem of uncovering a subset of vertices in an undirected graph G = (V, E) such that every two distinct vertices are adjacent";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{(x1,x2,x3,x4,x5), (x1:x3,x3:x2,x4:x1)}";
+    private string _defaultInstance = "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
     private string _G = string.Empty;
+    private List<string> _nodes = new List<string>();
+    private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
+    private int _K = 3;
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
@@ -43,7 +46,6 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
             return _defaultInstance;
         }
     }
-
     public string G {
         get {
             return _G;
@@ -52,13 +54,36 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
             _G = value;
         }
     }
+    public List<string> nodes {
+        get {
+            return _nodes;
+        }
+        set {
+            _nodes = value;
+        }
+    }
+    public List<KeyValuePair<string, string>> edges {
+        get {
+            return _edges;
+        }
+        set {
+            _edges = value;
+        }
+    }
 
+    public int K {
+        get {
+            return _K;
+        }
+        set {
+            _K = value;
+        }
+    }
     public GenericSolver defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-
     public GenericVerifier defaultVerifier {
         get {
             return _defaultVerifier;
@@ -66,13 +91,61 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     }
     // --- Methods Including Constructors ---
     public CLIQUE() {
-
+        _G = defaultInstance;
+        nodes = getNodes(_G);
+        edges = getEdges(_G);
+        K = getK(_G);
     }
     public CLIQUE(string GInput) {
         _G = GInput;
+        nodes = getNodes(_G);
+        edges = getEdges(_G);
+        K = getK(_G);
+    }
+    public List<string> getNodes(string Ginput) {
+
+        List<string> allGNodes = new List<string>();
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+        
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        string[] Gnodes = Gsections[0].Split(',');
+        
+        foreach(string node in Gnodes) {
+            allGNodes.Add(node);
+        }
+
+        return allGNodes;
+    }
+    public List<KeyValuePair<string, string>> getEdges(string Ginput) {
+
+        List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
+
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+        
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        string[] Gedges = Gsections[1].Split('&');
+        
+        foreach (string edge in Gedges) {
+            string[] fromTo = edge.Split(',');
+            string nodeFrom = fromTo[0];
+            string nodeTo = fromTo[1];
+            
+            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+            allGEdges.Add(fullEdge);
+        }
+
+        return allGEdges;
     }
 
-    public void ParseProblem(string phiInput) {
-
+    public int getK(string Ginput) {
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+        
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        return Int32.Parse(Gsections[2]);
     }
+
+
 }

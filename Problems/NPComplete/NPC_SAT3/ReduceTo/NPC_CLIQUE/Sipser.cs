@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_CLIQUE;
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 
-class SipserSAT3_CLIQUE_Reduction : IReduction<SAT3, CLIQUE> {
+class SipserReduction : IReduction<SAT3, CLIQUE> {
 
     // --- Fields ---
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
@@ -41,12 +41,57 @@ class SipserSAT3_CLIQUE_Reduction : IReduction<SAT3, CLIQUE> {
     }
 
     // --- Methods Including Constructors ---
-    public SipserSAT3_CLIQUE_Reduction(SAT3 from, CLIQUE to) {
+    public SipserReduction(SAT3 from) {
         _reductionFrom = from;
-        _reductionTo = to;
+        _reductionTo = reduce();
+
     }
-    public CLIQUE reduce(SAT3 from, CLIQUE to) {
-        return new CLIQUE();
+    public CLIQUE reduce() {
+        SAT3 SAT3Instance = _reductionFrom;
+        CLIQUE reducedCLIQUE = new CLIQUE();
+        // SAT3 literals become nodes.
+        reducedCLIQUE.nodes = SAT3Instance.literals;
+        List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
+
+        // define what makes the edges. Not in same cluster & not inverse
+
+        // I is the cluster
+        for(int i = 0; i < SAT3Instance.clauses.Count; i++) {
+
+            for(int j = 0; j < SAT3Instance.clauses[i].Count; j++) {
+                string nodeFrom = SAT3Instance.clauses[i][j];
+
+                //Four loops? Sounds efficent
+                for(int a = 0; a < SAT3Instance.clauses.Count; a++) {
+
+                    for(int b = 0; b < SAT3Instance.clauses[a].Count; b++) {
+                        string nodeTo = SAT3Instance.clauses[a][b];
+                        bool inverse = false;
+                        bool samecluser = false;
+
+                        // Check if nodes are inverse of one another
+                        if (nodeFrom != nodeTo && nodeFrom.Replace("!", "") == nodeTo.Replace("!", "")) {
+                            inverse = true;
+                        }
+                        // Check if nodes belong to same cluster
+                        if (i == a) {
+                            samecluser = true;
+                        }
+
+                        if (!inverse && !samecluser) {
+                            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+                            edges.Add(fullEdge);
+                        }
+                    }
+                }
+            }
+        }
+        reducedCLIQUE.edges = edges;
+        
+        //K is the number of clauses
+        
+        reductionTo = reducedCLIQUE;
+        return reducedCLIQUE;
     }
 }
 // return an instance of what you are reducing to
