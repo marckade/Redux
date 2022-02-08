@@ -46,7 +46,7 @@ class SipserKNAPSACK_CLIQUE_Reduction : IReduction<KNAPSACK, CLIQUE> {
         _reductionFrom = from;
         _reductionTo = to;
     }
-    public CLIQUE reduce(KNAPSACK from, CLIQUE to) {
+    public CLIQUE reduce() {
         return new CLIQUE();
     }
 }
