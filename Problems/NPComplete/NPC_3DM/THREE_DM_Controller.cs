@@ -7,22 +7,6 @@ namespace API.Problems.NPComplete.NPC_3DM;
 
 [ApiController]
 [Route("[controller]")]
-public class testController : ControllerBase {
-    
-    public String test() {
-        THREE_DM testObj = new THREE_DM();
-
-        if (testObj.phi == null) {
-            return testObj.defaultInstance;
-        }
-        else {
-            return "REALLY? API!";
-        }
-    }
-}
-
-[ApiController]
-[Route("[controller]")]
 public class THREE_DMGenericController : ControllerBase {
 
     [HttpGet]

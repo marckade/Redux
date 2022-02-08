@@ -6,21 +6,6 @@ using System.Text.Json.Serialization;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-[ApiController]
-[Route("[controller]")]
-public class testController : ControllerBase {
-    
-    public String test() {
-        GRAPHCOLORING testObj = new GRAPHCOLORING();
-
-        if (testObj.GK == null) {
-            return testObj.defaultInstance;
-        }
-        else {
-            return "REALLY? API!";
-        }
-    }
-}
 
 [ApiController]
 [Route("[controller]")]
