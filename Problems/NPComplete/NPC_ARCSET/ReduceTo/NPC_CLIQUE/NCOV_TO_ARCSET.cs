@@ -1,18 +1,17 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_ARCSET;
 
-namespace API.Problems.NPComplete.NPC_ARCSET.ReduceTo.NPC_CLIQUE;
+namespace API.Problems.NPComplete.NPC_ExactCover.ReduceTo.NPC_ARCSET;
 
-class SipserARCSET_CLIQUE_Reduction : IReduction<ARCSET, CLIQUE> {
+class NCOV_TO_ARCSETReduction : IReduction<ExactCover, ARCSET> {
 
-    //ALEX NOTE: This class describes "SIPSERS" reduction and is not a generic reduction
-    //Will need to change class name to "Foo Bar's Reduction" when implementing properly
+  
 
     // --- Fields ---
-    private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
-    private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
-    private ARCSET _reductionFrom;
-    private CLIQUE _reductionTo;
+    private string _reductionDefinition = "This Reduction is an implementation of Lawler and Karp's reduction as laid out in Karp's 21 NP_Complete Problems.";
+    private string _source = "http://cgi.di.uoa.gr/~sgk/teaching/grad/handouts/karp.pdf"; //Alex NOTE: Change later to real citation.
+    private ExactCover _reductionFrom;
+    private ARCSET _reductionTo;
 
 
     // --- Properties ---
@@ -26,7 +25,7 @@ class SipserARCSET_CLIQUE_Reduction : IReduction<ARCSET, CLIQUE> {
             return _source;
         }
     }
-    public ARCSET reductionFrom {
+    public ExactCover reductionFrom {
         get {
             return _reductionFrom;
         }
@@ -34,7 +33,7 @@ class SipserARCSET_CLIQUE_Reduction : IReduction<ARCSET, CLIQUE> {
             _reductionFrom = value;
         }
     }
-    public CLIQUE reductionTo {
+    public ARCSET reductionTo {
         get {
             return _reductionTo;
         }
@@ -44,12 +43,18 @@ class SipserARCSET_CLIQUE_Reduction : IReduction<ARCSET, CLIQUE> {
     }
 
     // --- Methods Including Constructors ---
-    public SipserARCSET_CLIQUE_Reduction(ARCSET from, CLIQUE to) {
+
+    public NCOV_TO_ARCSETReduction(){
+
+        _reductionFrom = new ExactCover();
+        _reductionTo = new ARCSET();
+    }
+    public NCOV_TO_ARCSETReduction(ExactCover from, ARCSET to) {
         _reductionFrom = from;
         _reductionTo = to;
     }
-    public CLIQUE reduce() {
-        return new CLIQUE();
+    public ARCSET reduce() {
+        return new ARCSET();
     }
 }
 // return an instance of what you are reducing to
