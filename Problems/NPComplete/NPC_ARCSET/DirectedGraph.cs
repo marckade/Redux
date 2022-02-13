@@ -60,16 +60,19 @@ class DirectedGraph{
 
         string nodeListStr = "";
         foreach(Node node in nodeList){
+    
             nodeListStr= nodeListStr+ node.name +",";
         }
-        nodeListStr.TrimEnd(',');
+        nodeListStr = nodeListStr.TrimEnd(',');
+
         string edgeListStr = "";
         foreach(Edge edge in edgeList){
-           string edgeStr = edge.ToString() +" &";
+           string edgeStr = edge.ToString() +" & ";
             edgeListStr = edgeListStr+ edgeStr+""; 
         }
-        edgeListStr = edgeListStr.TrimEnd('&');
-        string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : {"+_K+"}";
+        edgeListStr = edgeListStr.TrimEnd('&',' ');
+        //edgeListStr = edgeListStr.TrimEnd(' ');
+        string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : "+_K+"}";
         return toStr;
     }  
 

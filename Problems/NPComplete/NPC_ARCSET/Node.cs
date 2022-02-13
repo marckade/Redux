@@ -49,4 +49,10 @@ public bool postVisit {
     }
 }
 
+//May want to change to include visit values.
+public override string ToString(){
+
+return _name;
+}
+
 }
