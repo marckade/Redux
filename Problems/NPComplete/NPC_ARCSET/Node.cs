@@ -7,20 +7,26 @@ class Node{
 
 //Fields
 private string _name;
-private bool _preVisit;
-private bool _postVisit;
+private int _preVisit;
+private int _postVisit;
+
+private bool _visited;
 
 //Constructors
 public Node(){
 _name = "DEFAULT";
-_preVisit = false;
-_postVisit = false;
+_preVisit = 0;
+_postVisit = 0;
+_visited = false;
+
 
 }
 public Node(string nm){
     _name = nm;
-    _preVisit = false;
-    _postVisit = false;
+    _preVisit = 0;
+    _postVisit = 0;
+    _visited = false;
+   
 }
 
 //getters and setters
@@ -32,7 +38,7 @@ public string name {
             _name = value;
         }
     }
-public bool preVisit {
+public int preVisit {
     get{
         return _preVisit;
     }
@@ -40,7 +46,7 @@ public bool preVisit {
         _preVisit = value;
     }
 }
-public bool postVisit {
+public int postVisit {
     get{
         return _postVisit;
     }
@@ -48,11 +54,21 @@ public bool postVisit {
         _postVisit = value;
     }
 }
+public bool visited {
+    get{
+        return _visited;
+    }
+    set{
+        _visited = value;
+    }
+}
+
 
 //May want to change to include visit values.
 public override string ToString(){
 
 return _name;
 }
+
 
 }
