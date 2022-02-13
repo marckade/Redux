@@ -69,11 +69,14 @@ public class GraphTestController : ControllerBase {
         el.Add(edge5);
         int kTest = 1;
         DirectedGraph testG = new DirectedGraph(nl,el,kTest);
+        UndirectedGraph testUG = new UndirectedGraph("{{1,2,3} : {[1,2] & [2,3] & [3,1]} : 1}");
+
+
         string testGStr = testG.ToString();
         var options = new JsonSerializerOptions { WriteIndented = true };
             
         //Console.WriteLine(testG.ToString());
-        string jsonString = JsonSerializer.Serialize(new ARCSET(testGStr), options);
+        string jsonString = JsonSerializer.Serialize(new ARCSET(testUG.ToString()), options);
         return jsonString;
     }
 }

@@ -39,7 +39,14 @@ public Node node2{
 }
 
 public override string ToString(){
-return "("+_node1+","+_node2+")";
+return node1+" "+_node2;
+}
+
+public string undirectedString(){
+    return "["+node1+","+_node2+"]";
+}
+public string directedString(){
+    return "("+node1+","+_node2+")";
 }
 
 }
