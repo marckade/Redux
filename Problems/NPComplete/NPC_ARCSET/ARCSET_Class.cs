@@ -83,13 +83,13 @@ class ARCSET : IProblem<GenericSolver,GenericVerifier>{
     }
     public ARCSET(string arcInput) {
         //_arcset = arcInput;
-        List<string> nodeList = getNodes(arcInput);
-        List<KeyValuePair<string,string>> edgeList = getEdges(arcInput);
-        int k = getK(arcInput);
+        // List<string> nodeList = getNodes(arcInput);
+        // List<KeyValuePair<string,string>> edgeList = getEdges(arcInput);
+        // int k = getK(arcInput);
 
     
 
-        _arcset = new DirectedGraph(nodeList,edgeList,k).ToString();
+        _arcset = new DirectedGraph(arcInput).ToString();
 
 
     }
