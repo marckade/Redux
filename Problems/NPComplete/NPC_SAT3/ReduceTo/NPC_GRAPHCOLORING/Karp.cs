@@ -9,7 +9,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
     // --- Fields ---
     private string _reductionDefinition = "Karps reduction converts clauses from 3SAT into colored nodes in a graph for which a valid coloring exists.";
-    private string _source = "";
+    private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
 
@@ -64,6 +64,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     }
 
 
+    
 
   //The below code is reducing the SAT3 instance to a GRAPHCOLORING instance.
     public GRAPHCOLORING reduce() {
@@ -79,9 +80,14 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
         // ------- Add nodes -------
 
-        
         List<string> nodes = new List<string>(palette);
-        nodes.AddRange(SAT3Instance.literals);
+
+        List<string> variables = SAT3Instance.literals.Distinct().ToList();
+
+        for(int i = 0; i < variables.Count; i++){
+            nodes.Add(variables[i]+": null");
+        }
+        // nodes.AddRange(SAT3Instance.literals);
 
         // Create clause nodes 
         List<List<string>> clauses = new List<List<string>>();
@@ -128,21 +134,21 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
         // Connect variable edges to palette color blue 
         // Can only be colored True or false can't be base 
-        for (int i = 0; i < SAT3Instance.literals.Count; i++)
+        for (int i = 0; i < variables.Count; i++)
         {
-            addEdge(SAT3Instance.literals[i], palette[2], edges);
+            addEdge(variables[i], palette[2], edges);
 
         }
 
         // Connect literal to literal negation
         // x1 and !x1 can't have the same color
-        for (int i = 0; i < SAT3Instance.literals.Count; i++)
+        for (int i = 0; i < variables.Count; i++)
         {
-            for (int j = 0; j < SAT3Instance.literals.Count; j++)
+            for (int j = 0; j < variables.Count; j++)
             {
-                if (SAT3Instance.literals[i].Replace("!", "") == SAT3Instance.literals[j].Replace("!", "") && SAT3Instance.literals[i] != SAT3Instance.literals[j])
+                if (variables[i].Replace("!", "") == variables[j].Replace("!", "") && variables[i] != variables[j])
                 {
-                    addEdge(SAT3Instance.literals[i], SAT3Instance.literals[j], edges);
+                    addEdge(variables[i], variables[j], edges);
                 }
             }
         }
