@@ -14,8 +14,15 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = " ({(5, 6), (7,4), (8, 5), (10, 8)}, 24,  16)";
+    private string _defaultInstance = " {{(5, 6) & (7,4) & (8, 5) & (10, 8)} : 24 :  16}";
     private string _HWV = string.Empty;
+
+    private List<KeyValuePair<string, string>> _items = new List<KeyValuePair<string, string>>();
+
+    private int _W = 0;
+
+    private int _V = 0;
+
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
@@ -54,6 +61,31 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
             _HWV = value;
         }
     }
+    public List<KeyValuePair<string, string>> items {
+        get {
+            return _items;
+        }
+        set {
+            _items = value;
+        }
+    }
+
+    public int W {
+        get {
+            return _W;
+        }
+        set {
+            _W = value;
+        }
+    }
+    public int V {
+        get {
+            return _V;
+        }
+        set {
+            _V = value;
+        }
+    }
     public GenericSolver defaultSolver {
         get {
             return _defaultSolver;
@@ -69,9 +101,54 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
     // --- Methods Including Constructors ---
     public KNAPSACK() {
         _HWV = defaultInstance;
+        items = getItems(_HWV);
+        W = getW(_HWV);
+        V = getV(_HWV);
     }
     public KNAPSACK(string HWVInput) {
         _HWV = HWVInput;
+        items = getItems(_HWV);
+        W = getW(_HWV);
+        V = getV(_HWV);
+    }
+
+    public List<KeyValuePair<string, string>> getItems(string HWVInput){
+       
+       List<KeyValuePair<string,string>> allItems = new List<KeyValuePair<string, string>>(); 
+
+       string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+
+        //HWVsections[0] is the items [1] is W and [2] is V.
+       string[] HWVsections = strippedInput.Split(":");
+       string[] HWVitems = HWVsections[0].Split("&");
+
+        foreach(string item in HWVitems) {
+            string[] fromTo = item.Split(",");
+            string nodeFrom = fromTo[0];
+            string nodeTo = fromTo[1];
+
+            KeyValuePair<string, string> fullItem = new KeyValuePair<string, string>(nodeFrom, nodeTo);
+            allItems.Add(fullItem);
+        }
+        return allItems;
+    }
+
+    public int getW(string HWVInput){
+        
+        string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+
+        //HWVsections[0] is the items [1] is W and [2] is V.
+       string[] HWVsections = strippedInput.Split(":");
+       return Int32.Parse(HWVsections[1]);
+    }
+
+  public int getV(string HWVInput){
+        
+        string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+
+        //HWVsections[0] is the items [1] is W and [2] is V.
+       string[] HWVsections = strippedInput.Split(":");
+       return Int32.Parse(HWVsections[2]);
     }
 
     public void ParseProblem(string HWVInput) {
