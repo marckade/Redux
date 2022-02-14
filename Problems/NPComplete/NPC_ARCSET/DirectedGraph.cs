@@ -18,6 +18,7 @@ class DirectedGraph:Graph{
 
 
     protected int _K;
+    private int lazyTimer;
     private Dictionary<string,Stack<KeyValuePair<string,Node>>> _adjacencyMatrix; //Array of Queues of Key Value Pairs
 
     //Constructor
@@ -26,7 +27,7 @@ class DirectedGraph:Graph{
         nodeList = new List<Node>();
         edgeList = new List<Edge>();
         _K=0;
-        _adjacencyMatrix = new Dictionary<string,Stack<KeyValuePair<string,Node>>>();
+        _adjacencyMatrix = new Dictionary<string,Stack<KeyValuePair<string,Node>>>(_adjacencyMatrix);
     //     _adjacencyMatrix = new Queue<Node>[nodeList.Count];
 
     //      for (int i = 0; i < nodeList.Count; ++i){_adjacencyMatrix[i] = new Queue<Node>();}
@@ -40,9 +41,7 @@ class DirectedGraph:Graph{
         edgeList = el; 
         _K = kVal; 
         _adjacencyMatrix = new Dictionary<string,Stack<KeyValuePair<string,Node>>>();
-        // _adjacencyMatrix = new Queue<Node>[nodeList.Count];
-
-        //  for (int i = 0; i < nodeList.Count; ++i){_adjacencyMatrix[i] = new Queue<Node>();}
+    
         generateAdjacencyMatrix();
 
     }
@@ -69,10 +68,7 @@ class DirectedGraph:Graph{
         _K = kVal;
         _adjacencyMatrix = new Dictionary<string,Stack<KeyValuePair<string,Node>>>();
         generateAdjacencyMatrix();
-        //  _adjacencyMatrix = new Queue<Node>[nodeList.Count];
-
-        //  for (int i = 0; i < nodeList.Count; ++i){_adjacencyMatrix[i] = new Queue<Node>();}
-
+       
 
     }
     /**
@@ -120,6 +116,7 @@ class DirectedGraph:Graph{
         string edgeListStr = "";
         foreach(Edge edge in edgeList){
            string edgeStr = edge.directedString() +" & "; //this line is what makes this class distinct from Undirected Graph
+           //Console.WriteLine("Edge: "+ edge.directedString());
             edgeListStr = edgeListStr+ edgeStr+""; 
         }
         edgeListStr = edgeListStr.TrimEnd('&',' ');
@@ -195,58 +192,82 @@ class DirectedGraph:Graph{
 **/
   private void generateAdjacencyMatrix(){
 
-            
+            _adjacencyMatrix = new Dictionary<string, Stack<KeyValuePair<string, Node>>>();
+            Dictionary<string,Stack<KeyValuePair<string,Node>>> adj =  new Dictionary<string,Stack<KeyValuePair<string,Node>>>(_adjacencyMatrix);
             foreach(Node n in nodeList){ //creates the x row
                 _adjacencyMatrix.Add(n.name,new Stack<KeyValuePair<string,Node>>());
-                
+                    //Console.Write(n.name);    
             }
+            Stack<KeyValuePair<string,Node>> posStack;
+            KeyValuePair<string,Node>kvp;
             foreach(Edge e in edgeList){ //creates the y columns. 
-                Stack<KeyValuePair<string,Node>> posStack;
-                _adjacencyMatrix.TryGetValue(e.node1.name,out posStack); //given name of node 1 in edge, pushes the KVP (node2.name, node2) to stack. 
-                posStack.Push(new KeyValuePair<string,Node>(e.node2.name,e.node2));
+            
+               bool stackIsEmpty = _adjacencyMatrix.TryGetValue(e.node1.name,out posStack); //given name of node 1 in edge, pushes the KVP (node2.name, node2) to stack. 
+                  kvp = new KeyValuePair<string, Node>(e.node2.name,e.node2);
+                  
+                //Console.Write(kvp.Value.GetType().ToString());
+                try{
+                posStack.Push(kvp);
+                }
+               catch (NullReferenceException exept) //This exception will be caused by a bad string input. 
+                {
+                Console.Write("NULL CAST EXCEPTION");
+                Console.Write(exept.StackTrace);
+                }
+               
+
             }
-        // Console.Write("TEST ");
-        // Stack<Node> testStack = new Stack<Node>();
-        // _adjacencyMatrix.TryGetValue("1",out testStack);
-        // Console.Write(testStack.Peek().ToString);
+//         bool testBool =  _adjacencyMatrix.TryGetValue("1",out posStack);
+//         if(testBool){
+//          Console.WriteLine("AHA!! "+posStack.Peek().Key);
+//   }
 
     }
 
 
 //This method implements a depth first search to assign pre and post visit numbers to all nodes
-    private void exploreGadget(KeyValuePair<string,Node> kvp,int timer,Stack<KeyValuePair<string,Node>> currentStack){
+    private void exploreGadget(KeyValuePair<string,Node> kvp,Stack<KeyValuePair<string,Node>> currentStack){
         
   
-     timer=timer+1;
+     lazyTimer=lazyTimer+1;
      
      //we need the starting node. 
         Node n = kvp.Value;
-        Console.WriteLine(n.name);
+
+        if(n.visited!=true){
         n.visited = true;
-        n.preVisit = timer;
-         KeyValuePair<string,Node> nextNode;
-         bool canPop = currentStack.TryPop(out nextNode);
-        if(canPop){
-        exploreGadget(nextNode,timer,currentStack);
+        n.preVisit = lazyTimer;
         }
+        else{
+            n.postVisit = lazyTimer;
+        }
+        Console.Write(n.ToString()+ ",");
+         KeyValuePair<string,Node> nextNodePair;
+         bool canPop = currentStack.TryPop(out nextNodePair);
+        if(canPop){
+        exploreGadget(nextNodePair,currentStack);
+        }
+    
     }
     public void explore(){
-        int timer =0;
-        Dictionary<string, Stack<KeyValuePair<string,Node>>> adj = new Dictionary<string,Stack<KeyValuePair<string,Node>>>(_adjacencyMatrix); //Shallow Copy
-
+        lazyTimer = 0;
+        Dictionary<string, Stack<KeyValuePair<string,Node>>> adj = new Dictionary<string, Stack<KeyValuePair<string,Node>>>(_adjacencyMatrix); //may not clone
+        List<Node> nodeListCopy = new List<Node>(nodeList);
     //Console.Write("Keys: " +_adjacencyMatrix.Keys.ToString());
         //Console.Write("Keys: "+ _adjacencyMatrix.ContainsKey("1")+ " "+  _adjacencyMatrix.ContainsKey("2")+ " "+  _adjacencyMatrix.ContainsKey("3")+ " "+  _adjacencyMatrix.ContainsKey("4")+ " " +  _adjacencyMatrix.ContainsKey("5"));
 
-        foreach(Node n in nodeList){
+        
+        foreach(Node n in nodeListCopy){
+           // Console.WriteLine(n.ToString() + " timer: "+lazyTimer);
             Stack<KeyValuePair<string,Node>> value;
             adj.TryGetValue(n.name,out value);
             KeyValuePair<string,Node> currentBranch = new KeyValuePair<string, Node>(n.name,n);
-
-
             
-            exploreGadget(currentBranch,timer,value);
+             exploreGadget(currentBranch,value);
+            
         }
-
+        generateAdjacencyMatrix(); //Regenerate what is wiped by the search. 
+        //Console.Write(nodeListCopy);
     }
     public bool hasCycles(){
         explore();
@@ -262,24 +283,35 @@ class DirectedGraph:Graph{
         stack.Push(adjEdge);
     }
 
-    public string adjToString(){
+    public string adjToString(List<Node> nl){
         String toString = "";
-        foreach(Node n in nodeList){
+        foreach(Node n in nl){
             toString= toString+" Node: "+ n.name +" ";
-            Stack<KeyValuePair<string,Node>> stack;
-              _adjacencyMatrix.TryGetValue(n.name,out stack);
+            Stack<KeyValuePair<string,Node>> stack = new Stack<KeyValuePair<string, Node>>();
+            Dictionary<string,Stack<KeyValuePair<string, Node>>> adj = new Dictionary<string, Stack<KeyValuePair<string, Node>>>(_adjacencyMatrix); //this may not clone properly
+           
+             bool testStackCreation = adj.TryGetValue(n.name,out stack);
+              //Console.Write(testStackCreation);
               toString = toString +"Edges: (";
               foreach(KeyValuePair<string,Node> kvp in stack){
-                  toString= toString+ kvp.Key + ",";
+                
+                  toString= toString+ "["+ n.name + ","+kvp.Value.name +"]";
               }
               toString= toString+")";
             
         }
+        generateAdjacencyMatrix(); //We have to regenerate our matrix after doing a depth first search. 
         return toString;
     }
 
   
+    public List<Node> getNodeList{
+        get{
+            return base.nodeList;
+        }
+    }
 
+   
 
 
 }

@@ -70,13 +70,18 @@ public class GraphTestController : ControllerBase {
         int kTest = 1;
         //DirectedGraph testG = new DirectedGraph(nl,el,kTest);
         DirectedGraph testG = new DirectedGraph("{{1,2,3,4,5} : {(1,2) & (2,3) & (3,1) & (1,3) & (1,4)} : 1}");
-        testG.explore();
-        //Console.Write(testG.adjToString());
         
-        //UndirectedGraph testUG = new UndirectedGraph("{{1,2,3} : {[1,2] & [2,3] & [3,1]} : 1}");
+       // Console.Write(testG.adjToString(testG.getNodeList));
+        //testG.explore();
+        
+        
+        UndirectedGraph testUG = new UndirectedGraph("{{A,B,C} : {[A,B] & [B,C] & [C,A]} : 1}");
+        string testReduction = testUG.reduction();
+        Console.Write(testReduction);
 
-
-        string testGStr = testG.ToString();
+        //string testGStr = testG.ToString();
+        //Console.WriteLine(testGStr);
+       // Console.WriteLine(testG.adjToString(testG.getNodeList));
         var options = new JsonSerializerOptions { WriteIndented = true };
             
         //Console.WriteLine(testG.ToString());

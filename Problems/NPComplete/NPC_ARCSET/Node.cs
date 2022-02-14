@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
-class Node{
+class Node:ICloneable{
 
 //Fields
 private string _name;
@@ -67,8 +67,15 @@ public bool visited {
 //May want to change to include visit values.
 public override string ToString(){
 
-return _name;
+return _name + " " + _preVisit + " " + _postVisit;
 }
 
+public object Clone(){
+    Node clonedNode = new Node(this._name);
+    clonedNode._preVisit = this._preVisit;
+    clonedNode._postVisit = this._postVisit;
+    clonedNode._visited = this._visited;
+    return clonedNode;
+}
 
 }
