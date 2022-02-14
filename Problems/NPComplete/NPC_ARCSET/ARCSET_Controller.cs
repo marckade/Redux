@@ -74,8 +74,9 @@ public class GraphTestController : ControllerBase {
        // Console.Write(testG.adjToString(testG.getNodeList));
         //testG.explore();
         
-        
-        UndirectedGraph testUG = new UndirectedGraph("{{A,B,C} : {[A,B] & [B,C] & [C,A]} : 1}");
+        string inputStr = "{{A,B,C} : {[A,B] & [B,C] & [C,A]} : 1}";
+        Console.WriteLine("Our input string: "+inputStr);
+        UndirectedGraph testUG = new UndirectedGraph(inputStr);
         string testReduction = testUG.reduction();
         Console.Write(testReduction);
 

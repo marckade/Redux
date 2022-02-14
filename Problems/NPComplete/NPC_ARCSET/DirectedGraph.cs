@@ -249,6 +249,10 @@ class DirectedGraph:Graph{
         }
     
     }
+    /**
+    *
+    *explore uses a DFS to check a graph for cycles. 
+    **/ 
     public void explore(){
         lazyTimer = 0;
         Dictionary<string, Stack<KeyValuePair<string,Node>>> adj = new Dictionary<string, Stack<KeyValuePair<string,Node>>>(_adjacencyMatrix); //may not clone

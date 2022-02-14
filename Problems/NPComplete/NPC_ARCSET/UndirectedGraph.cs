@@ -194,6 +194,14 @@ class UndirectedGraph:Graph{
             Edge numberedEdge = new Edge(newNode1,newNode2);
             numberedEdges.Add(numberedEdge);
         }
+
+        //map from every 0 to 1
+        for(int i=0;i<newNodes.Count;++i){
+            if(i%2==0){
+                Edge newEdge = new Edge(newNodes[i],newNodes[i+1]);
+                numberedEdges.Add(newEdge);
+            }
+        }
         newEdges.Clear(); //Getting rid of unsplit edges
         newEdges = numberedEdges;
 
