@@ -14,6 +14,11 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{x1,x2,x3,x4}{y1,y2,y3,y4}{z1,z2,z3,z4}{x1,y2,z1}{x1,y2,z4}{x2,y1,z1}{x2,y1,z2}{x2,y2,z1}{x2,y2,z4}{x2,y4,z3}{x3,y3,z2}{x3,y3,z3}{x4,y1,z1}{x4,y1,z2}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
     private string _phi = string.Empty;
+    private List<List<List<string>>> _problem;
+    private List<string> _X;
+    private List<string> _Y;
+    private List<string> _Z;
+    private List<List<string>> _M;
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
@@ -52,6 +57,42 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
             _phi = value;
         }
     }
+    public List<string> X {
+        get {
+            return _X;
+        }
+        set {
+            _X = value;
+            _problem[0][0]=_X;
+        }
+    }
+    public List<string> Y {
+        get {
+            return _Y;
+        }
+        set {
+            _Y = value;
+            _problem[0][1]=_Y;
+        }
+    }
+    public List<string> Z {
+        get {
+            return _Z;
+        }
+        set {
+            _Z = value;
+            _problem[0][2]=_Z;
+        }
+    }
+    public List<List<string>> M {
+        get {
+            return _M;
+        }
+        set {
+            _M = value;
+            _problem[1]=_M;
+        }
+    }
     public GenericSolver defaultSolver {
         get {
             return _defaultSolver;
@@ -67,9 +108,19 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
     // --- Methods Including Constructors ---
     public THREE_DM() {
         _phi = defaultInstance;
+        _problem = ParseProblem(_phi);
+        _X = _problem[0][0];
+        _Y = _problem[0][1];
+        _Z = _problem[0][2];
+        _M = _problem[1];
     }
     public THREE_DM(string phiInput) {
         _phi = phiInput;
+        _problem = ParseProblem(_phi);
+        _X = _problem[0][0];
+        _Y = _problem[0][1];
+        _Z = _problem[0][2];
+        _M = _problem[1];
     }
 
 /*************************************************
@@ -115,3 +166,5 @@ between ','s excluding spaces, and places those strings inside Set.
         return Problem;
     }
 }
+
+
