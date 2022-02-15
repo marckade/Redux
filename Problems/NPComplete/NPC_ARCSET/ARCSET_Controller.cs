@@ -71,14 +71,15 @@ public class GraphTestController : ControllerBase {
         //DirectedGraph testG = new DirectedGraph(nl,el,kTest);
         DirectedGraph testG = new DirectedGraph("{{1,2,3,4,5} : {(1,2) & (2,3) & (3,1) & (1,3) & (1,4)} : 1}");
         
-       // Console.Write(testG.adjToString(testG.getNodeList));
+       Console.Write(testG.adjToString());
         //testG.explore();
         
         string inputStr = "{{A,B,C} : {[A,B] & [B,C] & [C,A]} : 1}";
-        Console.WriteLine("Our input string: "+inputStr);
+        //Console.WriteLine("Our input string: "+inputStr);
         UndirectedGraph testUG = new UndirectedGraph(inputStr);
         string testReduction = testUG.reduction();
-        Console.Write(testReduction);
+        testG.DFS();
+       // Console.Write(testReduction);
 
         //string testGStr = testG.ToString();
         //Console.WriteLine(testGStr);

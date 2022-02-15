@@ -12,8 +12,8 @@ private Node _node1;
 private Node _node2;
 
 public Edge(){
-_node1 = new Node("1");
-_node2 = new Node("2");
+_node1 = new Node();
+_node2 = new Node();
 }
 public Edge(Node n1,Node n2){
     _node1 = n1;

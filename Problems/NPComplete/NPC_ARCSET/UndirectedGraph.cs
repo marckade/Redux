@@ -205,14 +205,14 @@ class UndirectedGraph:Graph{
         newEdges.Clear(); //Getting rid of unsplit edges
         newEdges = numberedEdges;
 
-        Console.WriteLine("Nodes: ");
+      //  Console.WriteLine("Nodes: ");
         foreach(Node n in newNodes){
-            Console.Write(n.name+",");
+            //Console.Write(n.name+",");
         }
-        Console.WriteLine("Edges: ");
+       // Console.WriteLine("Edges: ");
 
         foreach(Edge e in newEdges){
-            Console.WriteLine(e.directedString());
+          //  Console.WriteLine(e.directedString());
         }
         
         //"{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}" //formatting
