@@ -294,25 +294,23 @@ class DirectedGraph:Graph{
 
  private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] postVisitArr,Dictionary<string,int> nodePositionDict,Dictionary<string,int> nodePreDict,Dictionary<string,int> nodePostDict){
      
-     int currPos;
+     int currPos; //our current node virtual array index.
      Console.Write("Counter="+lazyCounter);
      //int preNumPos;
      //int postNumPos;
-
      nodePositionDict.TryGetValue(currentNode.name,out currPos); //grabs the array position of the current node. 
     lazyCounter++;
-
      
 if(!visited[currPos]){
     visited[currPos] = true; //sets this node as visited.
-    preVisitArr[currPos] = lazyCounter;
+    preVisitArr[currPos] = lazyCounter; //sets this Node's previsit value to our counter. 
     }  
     //Dictionary adjMatrix = inputG.adjacencyMatrix; 
     
     List<KeyValuePair<string,Node>> adjKVPList; //list of adjacent nodes.
     _adjacencyMatrix.TryGetValue(currentNode.name, out adjKVPList); //given a node name, output a List of KVPs of strings and nodes (ie, the adjacent nodes to this one).
 
-    Console.Write("Current Node: "+currentNode.name );
+    //Console.Write("Current Node: "+currentNode.name );
 
     foreach(KeyValuePair<string,Node> kvp in adjKVPList ){ //search the adjacent edges to this one
         int position; //position of adjacent node.
@@ -320,21 +318,37 @@ if(!visited[currPos]){
         nodePositionDict.TryGetValue(nextNodeName,out position); //get the position associated with the name
         bool nodeIsVisited = visited[position]; //has this node been visited?
         if(nodeIsVisited){
-        Console.Write("Already Visited: "+nextNodeName+ " "+nodeIsVisited+"! ");
-
+            
         }
-        else{
+        else{ //since this node in the adjacency list isn't visited, visit it. 
             _nodeDict.TryGetValue(nextNodeName,out currentNode); //sets the next node to currentNode. 
-            Console.WriteLine("Next Node:" +nextNodeName);
             explore(currentNode,visited,preVisitArr,postVisitArr,nodePositionDict,nodePreDict,nodePostDict);
         }
         // foreach(int pre in preVisitArr){
         //     Console.Write(pre +" ");
         // }
-
     }
+    lazyCounter++;
+    postVisitArr[currPos] = lazyCounter; //if we are at the bottom of the search then set our current node postVisit to our counter.
+    Console.Write("Previsit Values:  {");
+    foreach(int preVis in preVisitArr){
+        Console.Write(preVis + ",");
+    }
+    Console.WriteLine("}");
+     Console.Write("Postvisit Values:  {");
+    foreach(int postVis in postVisitArr){
+        Console.Write(postVis + ",");
+    }
+    Console.WriteLine("}");
 
+    Console.Write("Node Names:  {");
+    foreach(KeyValuePair<string,Node> nodeKVP in nodeDict){
+
+        Console.Write(nodeKVP.Key + ",");
+    }
+    Console.WriteLine("}");
 }
+
   public void DFS(){
       //while member, no need for static. 
     bool[] visited = new bool[nodeList.Count]; //makes array equal entry for entry to nodeList
