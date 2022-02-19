@@ -75,18 +75,18 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
     }
 
     
-    public bool Verify(List<List<List<string>>> Problem, string c){
+    public bool Verify(THREE_DM Problem, string c){
         bool match;
         List<List<string>> certificate = ParseCertificate(c);
-        if(!certificate.Except(Problem[1]).Any()){  // Checks if c is a subset of M
+        if(!certificate.Except(Problem.M).Any()){  // Checks if c is a subset of M
             Console.WriteLine("c is not a subset");
             return false;
         }
-        if(certificate.Count != Problem[0][0].Count){   //Checks is c is the size of X, if not it cannot conatin each element.
+        if(certificate.Count != Problem.X[0].Length){   //Checks is c is the size of X, if not it cannot conatin each element.
             Console.WriteLine("c is not the right size");
             return false;   
         }
-        foreach(var set in Problem[0]){   //Checks that each element of X Y and Z are in a set of c
+        foreach(var set in Problem.problem[0]){   //Checks that each element of X Y and Z are in a set of c
             foreach(var item in set){
                 match = false;
                 foreach(var c_set in certificate){

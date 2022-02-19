@@ -93,6 +93,11 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
             _problem[1]=_M;
         }
     }
+    public List<List<List<string>>> problem {
+        get {
+            return _problem;
+        }
+    }
     public GenericSolver defaultSolver {
         get {
             return _defaultSolver;
