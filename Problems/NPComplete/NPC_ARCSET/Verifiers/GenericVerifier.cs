@@ -29,6 +29,7 @@ class GenericVerifier : IVerifier {
     // --- Methods Including Constructors ---
     public GenericVerifier() {
         
+        
         //Note that the certificate of our default ARCSET instance would be the set {(2,4)} where the set has a length 1 and position 0 is the tuple (2,4) 
 
         //To implement our verifier, we take take some input string and convert it into a data structure that we can use. Remember to remove certificate edges from this graph

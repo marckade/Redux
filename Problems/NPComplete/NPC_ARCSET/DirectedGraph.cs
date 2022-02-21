@@ -116,9 +116,9 @@ class DirectedGraph:Graph{
         }
 
          //gets edges. no object initialization needed, if we need to grab a node given an edge, we can query the dictionary given the edge's key or value. 
-         List<KeyValuePair<string,string>> tempEdgeList = getEdges(graphStr);
+         List<KeyValuePair<string,string>> tempEdgeList = getEdges(graphStr); //REDUNDANT. CHANGE EDGELIST SOON
         foreach(KeyValuePair<string,string> kvp in tempEdgeList){
-           // tempEdgeDict.Add(kvp.Key,kvp.Value);
+           tempEdgeDict.Add(kvp.Key,kvp.Value);
         }
 
     }
@@ -206,7 +206,7 @@ class DirectedGraph:Graph{
 
 
 /**
-* This method generates a Dictionary of Stacks to represent the graph so that the explore() function can explore the graph. 
+* This method generates a Dictionary of key value pairs to represent the graph so that the explore() function can explore the graph. 
 **/
   private void generateAdjacencyMatrix(){
 
@@ -293,11 +293,9 @@ class DirectedGraph:Graph{
 
 
  private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] postVisitArr,Dictionary<string,int> nodePositionDict,Dictionary<string,int> nodePreDict,Dictionary<string,int> nodePostDict){
-     
+    // bool hasCycle = false;
      int currPos; //our current node virtual array index.
-     Console.Write("Counter="+lazyCounter);
-     //int preNumPos;
-     //int postNumPos;
+    // Console.Write("Counter="+lazyCounter);
      nodePositionDict.TryGetValue(currentNode.name,out currPos); //grabs the array position of the current node. 
     lazyCounter++;
      
@@ -317,8 +315,9 @@ if(!visited[currPos]){
         String nextNodeName = kvp.Key;
         nodePositionDict.TryGetValue(nextNodeName,out position); //get the position associated with the name
         bool nodeIsVisited = visited[position]; //has this node been visited?
-        if(nodeIsVisited){
-            
+        if(nodeIsVisited){ //if a node has been visited then this graph contains a cycle. 
+             Console.WriteLine("Node: "+nextNodeName + "has already been visited. CYCLE FOUND!");
+           // hasCycle = true; 
         }
         else{ //since this node in the adjacency list isn't visited, visit it. 
             _nodeDict.TryGetValue(nextNodeName,out currentNode); //sets the next node to currentNode. 
@@ -330,26 +329,31 @@ if(!visited[currPos]){
     }
     lazyCounter++;
     postVisitArr[currPos] = lazyCounter; //if we are at the bottom of the search then set our current node postVisit to our counter.
-    Console.Write("Previsit Values:  {");
-    foreach(int preVis in preVisitArr){
-        Console.Write(preVis + ",");
-    }
-    Console.WriteLine("}");
-     Console.Write("Postvisit Values:  {");
-    foreach(int postVis in postVisitArr){
-        Console.Write(postVis + ",");
-    }
-    Console.WriteLine("}");
+    // Console.Write("Previsit Values:  {");
+    // foreach(int preVis in preVisitArr){
+    //     Console.Write(preVis + ",");
+    // }
+    // Console.WriteLine("}");
+    //  Console.Write("Postvisit Values:  {");
+    // foreach(int postVis in postVisitArr){
+    //     Console.Write(postVis + ",");
+    // }
+    // Console.WriteLine("}");
 
-    Console.Write("Node Names:  {");
-    foreach(KeyValuePair<string,Node> nodeKVP in nodeDict){
+    // Console.Write("Node Names:  {");
+    // foreach(KeyValuePair<string,Node> nodeKVP in nodeDict){
 
-        Console.Write(nodeKVP.Key + ",");
-    }
-    Console.WriteLine("}");
+    //     Console.Write(nodeKVP.Key + ",");
+    // }
+    // Console.WriteLine("}");
+    //return hasCycle;
 }
 
-  public void DFS(){
+/**
+* This method uses a DFS to check a graph for cycles, returning true if any cycles have been found. 
+**/
+  public bool DFS(){
+      //bool hasCycle = false;
       //while member, no need for static. 
     bool[] visited = new bool[nodeList.Count]; //makes array equal entry for entry to nodeList
    // bool[] mapNodeNum = new bool[nodeList.Count];
@@ -357,38 +361,85 @@ if(!visited[currPos]){
     int[] postVisitArr = new int[nodeList.Count];
     int i = 0;
     string nameNodeInit = "";
-    if(nodeList.Count!=0){
-     nameNodeInit = nodeList[0].name; 
-  }
-    Node currentNode = new Node(); //Instantiates Object, be careful.
-    _nodeDict.TryGetValue(nameNodeInit, out currentNode);
+    if(nodeList.Count!=0)
+    {
 
-    KeyValuePair<string,int> mapNodePos; //we want to map our node name to a position int
-    Dictionary<string,int> nodePositionDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
+        nameNodeInit = nodeList[0].name; //This will start the DFS using the 
 
-    KeyValuePair<string,int> mapNodePreVis; //we want to map our node name to a previsit int
-    Dictionary<string,int> nodePreDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
+        Node currentNode = new Node(); //Instantiates Object. This is messy solution, but avoids a O(n) search of nodeList. 
+        _nodeDict.TryGetValue(nameNodeInit, out currentNode); 
 
-    KeyValuePair<string,int> mapNodePosVis; //we want to map our node name to a previsit int
-    Dictionary<string,int> nodePostDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
+        KeyValuePair<string,int> mapNodePos; //we want to map our node name to a position int
+        Dictionary<string,int> nodePositionDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
 
-    foreach(var nodeKVP in _nodeDict){
-    visited[i] = false; //sets initial visit value of every node to false
-    string nodeName = nodeKVP.Key;
-    //mapNodePos = new KeyValuePair<string, int>(nodeName,i); //maps name of node to position
-    nodePositionDict.Add(nodeName,i); //now nodeNumDict will be able to find a position given a name.
-    i++;
+        KeyValuePair<string,int> mapNodePreVis; //we want to map our node name to a previsit int
+        Dictionary<string,int> nodePreDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
+
+        KeyValuePair<string,int> mapNodePosVis; //we want to map our node name to a previsit int
+        Dictionary<string,int> nodePostDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
+
+        foreach(var nodeKVP in _nodeDict){
+        visited[i] = false; //sets initial visit value of every node to false
+        string nodeName = nodeKVP.Key;
+        //mapNodePos = new KeyValuePair<string, int>(nodeName,i); //maps name of node to position
+        nodePositionDict.Add(nodeName,i); //now nodeNumDict will be able to find a position given a name.
+        i++;
+        }
+
+        int counter = 0;
+
+        foreach(var entry in _nodeDict){
+        int mappedPos = -1;
+        nodePositionDict.TryGetValue(entry.Key,out mappedPos); //looks for a position given name.
+        if(!visited[mappedPos])
+            { //if the boolean visit array sees the position isn't visited
+        explore(currentNode,visited,preVisitArr,postVisitArr,nodePositionDict,nodePreDict,nodePostDict); //explore the position (start recursion).
+            }
+
+        }
+            //checks for backedges.        
+            foreach(KeyValuePair<string,string> kvp in tempEdgeDict){
+            String nodeFrom = kvp.Key;
+            String nodeTo = kvp.Value;
+
+            int node1Pos;
+            int node2Pos;
+            nodePositionDict.TryGetValue(nodeFrom, out node1Pos);
+            nodePositionDict.TryGetValue(nodeTo, out node2Pos);
+            
+            if(preVisitArr[node1Pos]>preVisitArr[node2Pos]){ //if the previsit value of the from node is greater than the to node, we have a backedge.
+                return true;
+            } 
+        }
+   
+    // Console.Write("Previsit Values:  {");
+    // foreach(int preVis in preVisitArr){
+    //     Console.Write(preVis + ",");
+    // }
+    // Console.WriteLine("}");
+    //  Console.Write("Postvisit Values:  {");
+    // foreach(int postVis in postVisitArr){
+    //     Console.Write(postVis + ",");
+    // }
+    // Console.WriteLine("}");
+
+    // Console.Write("Node Names:  {");
+    // foreach(KeyValuePair<string,Node> nodeKVP in nodeDict){
+
+    //     Console.Write(nodeKVP.Key + ",");
+    // }
+    // Console.WriteLine("}");
+
     }
-    int counter = 0;
-    foreach(var entry in _nodeDict){
-    int mappedPos = -1;
-    nodePositionDict.TryGetValue(entry.Key,out mappedPos); //looks for a position given name.
-    if(!visited[mappedPos])
-    { //if the boolean visit array sees the position isn't visited
-    explore(currentNode,visited,preVisitArr,postVisitArr,nodePositionDict,nodePreDict,nodePostDict); //explore the position (start recursion).
-    }
+    else{
+        Console.Write("NodeList is empty, cannot DFS");
+        }
+
+  
     
-    }
+    
+    return false; //no cycle was found. 
+
 }
 
 }

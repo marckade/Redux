@@ -54,7 +54,6 @@ public class GraphTestController : ControllerBase {
         nl.Add(node3);
         nl.Add(node4);
         nl.Add(node5);
-
         Edge edge1 = new Edge(node1,node2);
         Edge edge2 = new Edge(node2,node3);
         Edge edge3 = new Edge(node3,node1);
@@ -69,7 +68,7 @@ public class GraphTestController : ControllerBase {
         el.Add(edge5);
         int kTest = 1;
         //DirectedGraph testG = new DirectedGraph(nl,el,kTest);
-        DirectedGraph testG = new DirectedGraph("{{1,2,3,4,5} : {(1,2) & (2,3) & (3,5) & (1,4)} : 1}");
+        DirectedGraph testG = new DirectedGraph("{{1,2,3} : {(1,2) & (2,3) } : 1}");
         
        Console.Write(testG.adjToString());
         //testG.explore();
@@ -78,7 +77,8 @@ public class GraphTestController : ControllerBase {
         //Console.WriteLine("Our input string: "+inputStr);
         UndirectedGraph testUG = new UndirectedGraph(inputStr);
         string testReduction = testUG.reduction();
-        testG.DFS();
+        Console.WriteLine();
+        Console.WriteLine(testG.DFS());
        // Console.Write(testReduction);
 
         //string testGStr = testG.ToString();
