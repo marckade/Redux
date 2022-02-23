@@ -27,9 +27,11 @@ class GenericVerifier : IVerifier {
     }
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
-        
-        
+    public GenericVerifier(ARCSET arc) {
+        DirectedGraph dg = arc.directedGraph;
+
+        bool isArcset = dg.DFS(); //true or false. 
+        Console.Write(isArcset);
         //Note that the certificate of our default ARCSET instance would be the set {(2,4)} where the set has a length 1 and position 0 is the tuple (2,4) 
 
         //To implement our verifier, we take take some input string and convert it into a data structure that we can use. Remember to remove certificate edges from this graph
@@ -40,4 +42,14 @@ class GenericVerifier : IVerifier {
 
         //Def back edge: the only edges (u,v) where u and v are nodes in a graph for which post(u) < post(v) are back edges. 
     }
+
+    public GenericVerifier(string arcInput){
+        DirectedGraph dg = new DirectedGraph(arcInput);
+        bool isArcset = dg.DFS();
+        Console.Write(isArcset);
+    }
+    public GenericVerifier(DirectedGraph dgInput){
+        bool isArcset = dgInput.DFS();
+    }
+
 }

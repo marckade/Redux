@@ -36,18 +36,23 @@ class DirectedGraph:Graph{
     generateAdjacencyMatrix();
     }
 
+/**
+*Note: this constructor DOES NOT WORK PROPERLY, REFACTOR THIS.
+*
+**/
     public DirectedGraph(List<Node> nl, List<Edge> el, int kVal){
 
         nodeList = nl;
         edgeList = el; 
         _K = kVal; 
-        _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
-    
+        _nodeDict = new Dictionary<string, Node>();
+ 
         generateAdjacencyMatrix();
-
     }
-
-//This constructors takes in a list of nodes (in string format) and a list of edges (in key value pair format) and constructs a graph
+/**
+*Note: This constructor DOES NOT WORK PROPERLY, REFACTOR THIS.
+*
+**/
     public DirectedGraph(List<String> nl, List<KeyValuePair<string,string>> el, int kVal){
 
         nodeList = new List<Node>();
@@ -65,19 +70,15 @@ class DirectedGraph:Graph{
             Edge edge = new Edge(n1,n2);
             edgeList.Add(edge);
         }
-
         _K = kVal;
-        _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
+        _nodeDict = new Dictionary<string, Node>();
         generateAdjacencyMatrix();
        
-
     }
     /**
     * takes a string directed graph input and constructs a directed graph
     **/
-    public DirectedGraph(String graphStr){
- 
-        
+    public DirectedGraph(String graphStr){     
         List<string> nl = getNodes(graphStr);
         List<KeyValuePair<string,string>> el = getEdges(graphStr);
         int k = getK(graphStr);
@@ -120,7 +121,6 @@ class DirectedGraph:Graph{
         foreach(KeyValuePair<string,string> kvp in tempEdgeList){
            tempEdgeDict.Add(kvp.Key,kvp.Value);
         }
-
     }
     public override string ToString(){
 
@@ -226,18 +226,14 @@ class DirectedGraph:Graph{
                 try{
                 posList.Add(kvp); //adds the node kvp to the list of kvps associated with "e" (current node).
                 }
-               catch (NullReferenceException exept) //This exception will be caused by a bad string input. 
+               catch (NullReferenceException except) //This exception will be caused by a bad string input. 
                 {
                 Console.Write("NULL CAST EXCEPTION");
-                Console.Write(exept.StackTrace);
+                Console.Write(except.StackTrace);
                 }
                
 
             }
-//         bool testBool =  _adjacencyMatrix.TryGetValue("1",out posStack);
-//         if(testBool){
-//          Console.WriteLine("AHA!! "+posStack.Peek().Key);
-//   }
 
     }
 
@@ -290,20 +286,15 @@ class DirectedGraph:Graph{
        }
    }
 
-
-
- private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] postVisitArr,Dictionary<string,int> nodePositionDict,Dictionary<string,int> nodePreDict,Dictionary<string,int> nodePostDict){
-    // bool hasCycle = false;
-     int currPos; //our current node virtual array index.
-    // Console.Write("Counter="+lazyCounter);
-     nodePositionDict.TryGetValue(currentNode.name,out currPos); //grabs the array position of the current node. 
-    lazyCounter++;
+    private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] postVisitArr,Dictionary<string,int> nodePositionDict,Dictionary<string,int> nodePreDict,Dictionary<string,int> nodePostDict){
+        int currPos; //our current node virtual array index.
+        nodePositionDict.TryGetValue(currentNode.name,out currPos); //grabs the array position of the current node. 
+        lazyCounter++;
      
-if(!visited[currPos]){
-    visited[currPos] = true; //sets this node as visited.
-    preVisitArr[currPos] = lazyCounter; //sets this Node's previsit value to our counter. 
-    }  
-    //Dictionary adjMatrix = inputG.adjacencyMatrix; 
+    if(!visited[currPos]){
+        visited[currPos] = true; //sets this node as visited.
+        preVisitArr[currPos] = lazyCounter; //sets this Node's previsit value to our counter. 
+        }  
     
     List<KeyValuePair<string,Node>> adjKVPList; //list of adjacent nodes.
     _adjacencyMatrix.TryGetValue(currentNode.name, out adjKVPList); //given a node name, output a List of KVPs of strings and nodes (ie, the adjacent nodes to this one).
@@ -329,24 +320,6 @@ if(!visited[currPos]){
     }
     lazyCounter++;
     postVisitArr[currPos] = lazyCounter; //if we are at the bottom of the search then set our current node postVisit to our counter.
-    // Console.Write("Previsit Values:  {");
-    // foreach(int preVis in preVisitArr){
-    //     Console.Write(preVis + ",");
-    // }
-    // Console.WriteLine("}");
-    //  Console.Write("Postvisit Values:  {");
-    // foreach(int postVis in postVisitArr){
-    //     Console.Write(postVis + ",");
-    // }
-    // Console.WriteLine("}");
-
-    // Console.Write("Node Names:  {");
-    // foreach(KeyValuePair<string,Node> nodeKVP in nodeDict){
-
-    //     Console.Write(nodeKVP.Key + ",");
-    // }
-    // Console.WriteLine("}");
-    //return hasCycle;
 }
 
 /**
@@ -434,9 +407,6 @@ if(!visited[currPos]){
     else{
         Console.Write("NodeList is empty, cannot DFS");
         }
-
-  
-    
     
     return false; //no cycle was found. 
 

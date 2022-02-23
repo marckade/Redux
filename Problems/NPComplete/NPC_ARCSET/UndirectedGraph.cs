@@ -166,7 +166,6 @@ class UndirectedGraph:Graph{
         }
 
 
-
     public string reduction(){
         List<Node> newNodes = new List<Node>();
         foreach(Node n in nodeList){

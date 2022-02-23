@@ -52,11 +52,12 @@ class NCOV_TO_ARCSETReduction : IReduction<ExactCover, ARCSET> {
     }
     public NCOV_TO_ARCSETReduction(ExactCover from, ARCSET to) {
         _reductionFrom = from;
-        _reductionTo = to;
+        //_reduceTo = reduce()
+        
     }
     public ARCSET reduce() {
+       
         
-
         return new ARCSET();
     }
 }
