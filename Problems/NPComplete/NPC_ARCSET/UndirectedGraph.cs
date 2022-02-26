@@ -19,36 +19,36 @@ class UndirectedGraph:Graph{
     //Constructor
     public UndirectedGraph(){
 
-        this.nodeList = new List<Node>();
-        this.edgeList = new List<Edge>();
+        _nodeList = new List<Node>();
+        _edgeList = new List<Edge>();
         _K=0;
     }
 
 
     public UndirectedGraph(List<Node> nl, List<Edge> el, int kVal){
 
-        this.nodeList = nl;
-        this.edgeList = el; 
+        this._nodeList = nl;
+        this._edgeList = el; 
         _K = kVal; 
     }
 
 //This constructors takes in a list of nodes (in string format) and a list of edges (in string format) and creates a graph
     public UndirectedGraph(List<String> nl, List<KeyValuePair<string,string>> el, int kVal){
 
-        this.nodeList = new List<Node>();
+        this._nodeList = new List<Node>();
         foreach (string nodeStr in nl){
             Node node = new Node(nodeStr);
-            nodeList.Add(node);
+            _nodeList.Add(node);
         }
         //Note that this is initializing unique node instances. May want to compose edges of already existing nodes instead. 
-        this.edgeList = new List<Edge>();
+        this._edgeList = new List<Edge>();
         foreach(KeyValuePair<string,string> edgeKV in el){
             string eStr1= edgeKV.Key;
             string eStr2 = edgeKV.Value;
             Node n1 = new Node(eStr1);
             Node n2 = new Node(eStr2);
             Edge edge = new Edge(n1,n2);
-            this.edgeList.Add(edge);
+            this._edgeList.Add(edge);
         }
 
         _K = kVal;
@@ -64,20 +64,20 @@ class UndirectedGraph:Graph{
         List<KeyValuePair<string,string>> el = getEdges(graphStr);
         int k = getK(graphStr);
 
-         this.nodeList = new List<Node>();
+         this._nodeList = new List<Node>();
         foreach (string nodeStr in nl){
             Node node = new Node(nodeStr);
-            nodeList.Add(node);
+            _nodeList.Add(node);
         }
         //Note that this is initializing unique node instances. May want to compose edges of already existing nodes instead. 
-        this.edgeList = new List<Edge>();
+        this._edgeList = new List<Edge>();
         foreach(KeyValuePair<string,string> edgeKV in el){
             string eStr1= edgeKV.Key;
             string eStr2 = edgeKV.Value;
             Node n1 = new Node(eStr1);
             Node n2 = new Node(eStr2);
             Edge edge = new Edge(n1,n2);
-            this.edgeList.Add(edge);
+            this._edgeList.Add(edge);
         }
 
         _K = k;
@@ -87,14 +87,14 @@ class UndirectedGraph:Graph{
     public override string ToString(){
 
         string nodeListStr = "";
-        foreach(Node node in nodeList){
+        foreach(Node node in _nodeList){
     
             nodeListStr= nodeListStr+ node.name +",";
         }
         nodeListStr = nodeListStr.TrimEnd(',');
 
         string edgeListStr = "";
-        foreach(Edge edge in edgeList){
+        foreach(Edge edge in _edgeList){
            string edgeStr = edge.undirectedString() +" & "; //This line makes this distinct from DirectedGraph
             edgeListStr = edgeListStr+ edgeStr+""; 
         }
@@ -168,7 +168,7 @@ class UndirectedGraph:Graph{
 
     public string reduction(){
         List<Node> newNodes = new List<Node>();
-        foreach(Node n in nodeList){
+        foreach(Node n in _nodeList){
             Node newNode1 = new Node(n.name);
             Node newNode2 = new Node(n.name);
             newNode1.name = n.name+"0";
@@ -179,7 +179,7 @@ class UndirectedGraph:Graph{
         //Turn undirected edges into paired directed edges.
         List<Edge> newEdges = new List<Edge>();
         List<Edge> numberedEdges = new List<Edge>();
-        foreach(Edge e in edgeList){
+        foreach(Edge e in _edgeList){
             Edge newEdge1 = new Edge(e.node1,e.node2);
             Edge newEdge2 = new Edge(e.node2,e.node1);
             newEdges.Add(newEdge1);

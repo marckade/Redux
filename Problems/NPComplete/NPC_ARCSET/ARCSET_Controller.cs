@@ -66,9 +66,8 @@ public class GraphTestController : ControllerBase {
         el.Add(edge3);
         el.Add(edge4);
         el.Add(edge5);
-        int kTest = 1;
         //DirectedGraph testG = new DirectedGraph(nl,el,kTest);
-        DirectedGraph testG = new DirectedGraph("{{1,2,3} : {(1,2) & (2,3) } : 1}");
+        DirectedGraph testG = new DirectedGraph("{{1,2,3} : {(1,2) & (2,3) & (3,1)} : 1}");
         
        Console.Write(testG.adjToString());
         //testG.explore();
