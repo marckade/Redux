@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -66,3 +67,35 @@ public class Sipser_ReduceTo_CLIQUEController : ControllerBase {
 
 }
 
+
+[ApiController]
+[Route("[controller]")]
+public class KadensSimpleVerifierController : ControllerBase {
+
+    [HttpGet("{certificate}/{problemInstance}")]
+    public String getInstance(string certificate, string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 SAT3Problem = new SAT3(problemInstance);
+        KadensSimple verifier = new KadensSimple();
+
+        Boolean response = verifier.verify(SAT3Problem,certificate);
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+        return jsonString;
+    }
+
+}
+
+[ApiController]
+[Route("[controller]")]
+public class testInstanceController : ControllerBase {
+
+    [HttpGet("/{certificate}/{problemInstance}")]
+    public String getSingleInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        
+        string returnString = certificate + problemInstance;
+        return returnString;
+    }
+
+}
