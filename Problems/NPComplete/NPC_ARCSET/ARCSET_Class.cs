@@ -22,7 +22,7 @@ class ARCSET : IProblem<GenericSolver,GenericVerifier>{
     private string _arcset = string.Empty; 
     private DirectedGraph _arcsetAsGraph;
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier; //Verifier needs to implement a Depth First Search. 
+    private GenericVerifier _defaultVerifier = new GenericVerifier(); //Verifier needs to implement a Depth First Search. 
     
 
     // --- Properties ---

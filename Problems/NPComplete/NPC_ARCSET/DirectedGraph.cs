@@ -16,7 +16,7 @@ class DirectedGraph:Graph{
     //protected List<Edge> _edgeList;
 
     Dictionary<string,Node> _nodeDict;
-    Dictionary<string,string> _tempEdgeDict;
+  
 
     protected int _K;
     private int lazyCounter;
@@ -28,14 +28,11 @@ class DirectedGraph:Graph{
         _nodeList = new List<Node>();
          _edgeList = new List<Edge>();
         _nodeDict = new Dictionary<string, Node>();
-        _tempEdgeDict = new Dictionary<string, string>();
+      
        
         _K=0;
         _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
-    //     _adjacencyMatrix = new Queue<Node>[nodeList.Count];
-
-    //      for (int i = 0; i < nodeList.Count; ++i){_adjacencyMatrix[i] = new Queue<Node>();}
-    // }
+   
     generateAdjacencyMatrix();
     }
 
@@ -52,10 +49,6 @@ class DirectedGraph:Graph{
         foreach(Node n in _nodeList){
             _nodeDict.Add(n.name,n);
         }
-        _tempEdgeDict = new Dictionary<string, string>();
-        foreach(Edge e in _edgeList){
-            _tempEdgeDict.Add(e.node1.name,e.node2.name);
-        }
         _adjacencyMatrix = new Dictionary<string, List<KeyValuePair<string, Node>>>();
         generateAdjacencyMatrix();
 
@@ -67,7 +60,6 @@ class DirectedGraph:Graph{
         _K = kVal;
         _nodeDict = new Dictionary<string, Node>();
         _adjacencyMatrix = new Dictionary<string, List<KeyValuePair<string, Node>>>();
-        _tempEdgeDict = new Dictionary<string, string>();
         _edgeList = new List<Edge>();
 
         foreach (string nodeStr in nl){
@@ -85,7 +77,6 @@ class DirectedGraph:Graph{
             Node n2 = new Node(eStr2);
             Edge edge = new Edge(n1,n2);
             _edgeList.Add(edge);
-            _tempEdgeDict.Add(eStr1,eStr2);
         }
         
         generateAdjacencyMatrix();
@@ -100,7 +91,6 @@ class DirectedGraph:Graph{
         
          //The following generates the dictionaries for our Nodes and Edges
          _nodeDict = new Dictionary<string,Node>();
-         _tempEdgeDict = new Dictionary<string, string>();
         int k = getK(graphStr);
 
          _nodeList = new List<Node>();
@@ -118,21 +108,17 @@ class DirectedGraph:Graph{
             Node n2 = new Node(eStr2);
             Edge edge = new Edge(n1,n2);
             _edgeList.Add(edge); //adds edge to edgeList
-            _tempEdgeDict.Add(eStr1,eStr2); //adds edge to edgeDict
         }
 
         _K = k;
         _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
         generateAdjacencyMatrix();
-
-    
-        
+ 
     }
-    public override string ToString(){
 
+    public override string ToString(){
         string nodeListStr = "";
         foreach(Node node in _nodeList){
-    
             nodeListStr= nodeListStr+ node.name +",";
         }
         nodeListStr = nodeListStr.TrimEnd(',');
@@ -217,6 +203,8 @@ class DirectedGraph:Graph{
 **/
   private void generateAdjacencyMatrix(){
 
+            
+
              _adjacencyMatrix =  new Dictionary<string,List<KeyValuePair<string,Node>>>();
             foreach(Node n in _nodeList){ //creates the x row
                 _adjacencyMatrix.Add(n.name,new List<KeyValuePair<string,Node>>()); //initializes a list of KVP's per node. 
@@ -279,31 +267,7 @@ class DirectedGraph:Graph{
         return toString;
     }
 
-  
-    public List<Node> getNodeList{
-        get{
-            return base._nodeList;
-        }
-    }
-    public List<Edge> getEdgeList{
-        get{
-            return base._edgeList;
-        }
-    }
 
-   public Dictionary<string,Node> nodeDict{
-       get{
-           return _nodeDict;
-       }
-       set{
-           _nodeDict = value;
-       }
-   }
-   public Dictionary<string,List<KeyValuePair<string,Node>>> adjacencyMatrix{ 
-       get{
-           return _adjacencyMatrix;
-       }
-   }
 
     private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] postVisitArr,Dictionary<string,int> nodePositionDict,Dictionary<string,int> nodePreDict,Dictionary<string,int> nodePostDict){
         int currPos; //our current node virtual array index.
@@ -328,7 +292,7 @@ class DirectedGraph:Graph{
         //nodePositionDict.TryGetValue(nextNodeName,out position); //get the position associated with the name
         bool nodeIsVisited = visited[position]; //has this node been visited?
         if(nodeIsVisited){ //if a node has been visited then this graph contains a cycle. 
-             Console.WriteLine("Node: "+nextNodeName + "has already been visited. CYCLE FOUND!");
+             //Console.WriteLine("Node: "+nextNodeName + "has already been visited. CYCLE FOUND!");
            // hasCycle = true; 
         }
         else{ //since this node in the adjacency list isn't visited, visit it. 
@@ -410,9 +374,11 @@ class DirectedGraph:Graph{
 
         }
             //checks for backedges.        
-            foreach(KeyValuePair<string,string> kvp in _tempEdgeDict){
-            String nodeFrom = kvp.Key;
-            String nodeTo = kvp.Value;
+
+            foreach(Edge e in _edgeList){
+
+            String nodeFrom = e.node1.name;
+            String nodeTo = e.node2.name;
 
             int node1Pos;
             int node2Pos;
@@ -457,6 +423,71 @@ class DirectedGraph:Graph{
 
 }
 
+
+    public void addEdge(KeyValuePair<string,string> edge){
+        Node newNode1 = new Node(edge.Key);
+        Node newNode2 = new Node(edge.Value);
+        Edge newEdge = new Edge(newNode1,newNode2);
+        this._edgeList.Add(newEdge);
+        generateAdjacencyMatrix();
+
+    }
+    /**
+    * Removes the edge from any data structures in the graph that regerence it.
+    **/
+    public void removeEdge(KeyValuePair<string,string> edge){
+        string edgeKey = edge.Key;
+        List<Edge> foundEdgeList = new List<Edge>();
+        
+        foreach(Edge e in this._edgeList){ //O(n) search operation. This is due to not having a data structure that maps edge names to edges. 
+            if(e.node1.name.Equals(edgeKey)){
+                foundEdgeList.Add(e);
+            }
+        }
+        foreach(Edge e in foundEdgeList){
+            this._edgeList.Remove(e);
+        }
+        generateAdjacencyMatrix();
+    }
+
+    /**
+    * Processes a user String input of edges and removes all of the input edges from the graph.
+    **/
+    public void processCertificate(String certificate){
+        if (!certificate.Equals(String.Empty)){
+        List<KeyValuePair<string,string>> certEdges;
+        certEdges = getEdges(certificate);
+        foreach(KeyValuePair<string, string> e in certEdges){
+            removeEdge(e);
+        }
+    }
+
+    }
+  
+    public List<Node> getNodeList{
+        get{
+            return base._nodeList;
+        }
+    }
+    public List<Edge> getEdgeList{
+        get{
+            return base._edgeList;
+        }
+    }
+
+   public Dictionary<string,Node> nodeDict{
+       get{
+           return _nodeDict;
+       }
+       set{
+           _nodeDict = value;
+       }
+   }
+   public Dictionary<string,List<KeyValuePair<string,Node>>> adjacencyMatrix{ 
+       get{
+           return _adjacencyMatrix;
+       }
+   }
 
 
 }

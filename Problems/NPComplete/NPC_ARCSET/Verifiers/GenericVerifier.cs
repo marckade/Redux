@@ -1,6 +1,8 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_ARCSET.Verifiers;
+using API.Problems.NPComplete.NPC_ARCSET;
+using API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 class GenericVerifier : IVerifier {
 
@@ -24,6 +26,11 @@ class GenericVerifier : IVerifier {
         get {
             return _source;
         }
+    }
+
+
+    public GenericVerifier(){
+
     }
 
     // --- Methods Including Constructors ---
@@ -50,6 +57,21 @@ class GenericVerifier : IVerifier {
     }
     public GenericVerifier(DirectedGraph dgInput){
         bool isArcset = dgInput.DFS();
+    }
+
+
+    /**
+    * This method should take in an arcset problem and a list of edges to remove from that problem. It removes those edges and then checks if the problem is still an instance of ARCSET
+    * ie. Does this input graph continue to have cycles after these input edges are removed? 
+    **/
+    public Boolean verify(ARCSET problem, string userInput){
+
+        DirectedGraph graph = problem.directedGraph; 
+        graph.processCertificate(userInput);
+        bool isInARCSET = graph.DFS();
+
+        //when userInput is removed from graph is it still Cyclical? 
+        return isInARCSET;
     }
 
 }
