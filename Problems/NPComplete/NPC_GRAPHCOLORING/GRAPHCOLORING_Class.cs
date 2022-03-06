@@ -32,7 +32,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
     private int size;
 
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private GenericVerifier _defaultVerifier = new IgbokwesSimple();
 
 
     #endregion

@@ -26,4 +26,25 @@ public class GRAPHCOLORINGGenericController : ControllerBase {
     }
 
 
+
+    [ApiController]
+[Route("[controller]")]
+public class IgbokwesSimpleVerifierController : ControllerBase {
+
+    [HttpGet("{certificate}/{problemInstance}")]
+    public String getInstance(string certificate, string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
+        IgbokwesSimple verifier = new IgbokwesSimple();
+
+        Boolean response = verifier.verify(GRAPHCOLORINGProblem, certificate);
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+        return jsonString;
+    }
+
+}
+
+
+
 }

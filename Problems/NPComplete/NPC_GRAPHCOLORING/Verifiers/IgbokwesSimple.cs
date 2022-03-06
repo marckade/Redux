@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
-class GenericVerifier : IVerifier
+class IgbokwesSimple : IVerifier
 {
 
 
@@ -51,9 +51,12 @@ class GenericVerifier : IVerifier
 
     #region Methods
 
-    public void verify()
+    public Boolean verify(GRAPHCOLORING g, string userInput)
     {
+        // Parse Certificate 
+        g.NodeColoring = parseCertificate(userInput);
 
+        return DFS(g);
     }
 
 
@@ -65,12 +68,13 @@ class GenericVerifier : IVerifier
 
 
     */
-    public bool DFS(GRAPHCOLORING g)
+    public Boolean DFS(GRAPHCOLORING g)
     {
 
         bool[] visited = new bool[g.nodes.Count];
         string node = g.nodes[0];
 
+        
         //Checks if node has a color in k
         if (g.validColor(g.getNodeColor(node)))
         {
@@ -88,7 +92,7 @@ class GenericVerifier : IVerifier
       Checks if connected adjacent have a different colors, and if 
       the color is in K
     */
-    private bool checkNeighbors(GRAPHCOLORING g, int v, string color, bool[] visited)
+    private Boolean checkNeighbors(GRAPHCOLORING g, int v, string color, bool[] visited)
     {
 
         visited[v] = true;
@@ -126,12 +130,15 @@ class GenericVerifier : IVerifier
     private Dictionary<string, string> parseCertificate(string certificate)
     {
 
+        string parseCertificate = certificate.Replace("(", "").Replace(")","");
+
+
         Dictionary<string, string> nodeColoring = new Dictionary<string, string>();
         
 
-        if (certificate.Length != 0)
+        if (parseCertificate.Length != 0)
         {
-            string[] nodes = certificate.Split(',');
+            string[] nodes = parseCertificate.Split(',');
 
             foreach (string node in nodes)
             {
