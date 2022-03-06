@@ -65,7 +65,6 @@ class KadensSimple : IVerifier {
             bool containedInClause = false;
 
             foreach (string literal in trueLiterals) {
-
                 // Check if any of the trueLiterals are in the clause
                 if (clauses[i].Contains(literal)) {
                     containedInClause = true;
@@ -80,6 +79,6 @@ class KadensSimple : IVerifier {
         }
 
         // Backup just in case
-        return false;
+        return true;
     }
 }

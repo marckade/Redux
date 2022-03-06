@@ -72,8 +72,8 @@ public class Sipser_ReduceTo_CLIQUEController : ControllerBase {
 [Route("[controller]")]
 public class KadensSimpleVerifierController : ControllerBase {
 
-    [HttpGet("{certificate}/{problemInstance}")]
-    public String getInstance(string certificate, string problemInstance) {
+    [HttpGet]
+    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 SAT3Problem = new SAT3(problemInstance);
         KadensSimple verifier = new KadensSimple();
@@ -90,7 +90,7 @@ public class KadensSimpleVerifierController : ControllerBase {
 [Route("[controller]")]
 public class testInstanceController : ControllerBase {
 
-    [HttpGet("/{certificate}/{problemInstance}")]
+    [HttpGet]
     public String getSingleInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         
