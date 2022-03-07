@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING0_1;
-
+using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -91,3 +91,36 @@ public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
 }
 
+=======
+
+[ApiController]
+[Route("[controller]")]
+public class KadensSimpleVerifierController : ControllerBase {
+
+    [HttpGet]
+    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 SAT3Problem = new SAT3(problemInstance);
+        KadensSimple verifier = new KadensSimple();
+
+        Boolean response = verifier.verify(SAT3Problem,certificate);
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+        return jsonString;
+    }
+
+}
+
+[ApiController]
+[Route("[controller]")]
+public class testInstanceController : ControllerBase {
+
+    [HttpGet]
+    public String getSingleInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        
+        string returnString = certificate + problemInstance;
+        return returnString;
+    }
+
+}

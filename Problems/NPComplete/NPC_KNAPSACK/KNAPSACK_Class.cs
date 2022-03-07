@@ -116,7 +116,7 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
        
        List<KeyValuePair<string,string>> allItems = new List<KeyValuePair<string, string>>(); 
 
-       string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+       string strippedInput = HWVInput.Replace("{", "").Replace("{","").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
 
         //HWVsections[0] is the items [1] is W and [2] is V.
        string[] HWVsections = strippedInput.Split(":");
