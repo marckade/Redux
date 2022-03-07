@@ -1,49 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
-using API.Problems.NPComplete.NPC_ARCSET;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Verifiers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System;
-using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 
-namespace API.Problems.NPComplete.NPC_ARCSET;
+namespace API.Problems.NPComplete.NPC_SAT3;
+
 
 [ApiController]
 [Route("[controller]")]
-public class ARCSETGenericController : ControllerBase {
+public class INTPROGRAMMING0_1GenericController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
+        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING0_1(), options);
         return jsonString;
     }
 
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
+        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING0_1(), options);
         return jsonString;
     }
-}
 
 [ApiController]
 [Route("[controller]")]
-public class ArcsetVerifierController : ControllerBase {
+public class GenericVerifier0_1INTPController : ControllerBase {
 
-      [HttpGet]
+    [HttpGet]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        ARCSET ARCSETProblem = new ARCSET(problemInstance);
-        AlexArcsetVerifier verifier = new AlexArcsetVerifier();
+        INTPROGRAMMING0_1 INTPROGRAMMING0_1_Problem = new INTPROGRAMMING0_1(problemInstance);
+        GenericVerifier0_1INTP verifier = new GenericVerifier0_1INTP();
 
-        Boolean response = verifier.verify(ARCSETProblem,certificate);
+        Boolean response = verifier.verify(INTPROGRAMMING0_1_Problem,certificate);
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
     }
 
-
+}
+    
 
 }
+
 
 

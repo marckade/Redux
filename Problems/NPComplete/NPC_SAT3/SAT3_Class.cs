@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
-class SAT3 : IProblem<GenericSolver,GenericVerifier>{
+class SAT3 : IProblem<GenericSolver,KadensSimple>{
 
     // --- Fields ---
     private string _problemName = "3SAT";
@@ -13,7 +13,7 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private KadensSimple _defaultVerifier = new KadensSimple();
     private string _phi = string.Empty;
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
@@ -49,7 +49,7 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public KadensSimple defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -87,7 +87,9 @@ class SAT3 : IProblem<GenericSolver,GenericVerifier>{
         literals = getLiterals(_phi);
     }
     public SAT3(string phiInput) {
+
         // TODO Validate there are only a maximum of 3 literals in each clause
+
         _phi = phiInput;
         clauses = getClauses(_phi);
         literals = getLiterals(_phi);

@@ -1,11 +1,11 @@
 using API.Interfaces;
 
-namespace API.Problems.NPComplete.NPC_KNAPSACK.Solvers;
+namespace API.Problems.NPComplete.NPC_SUBSETSUM.Solvers;
 class GenericSolver : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This is a generic solver for Knapsack";
+    private string _solverDefinition = "This is a generic solver for Subset Sum";
     private string _source = "This person ____";
 
     // --- Properties ---
@@ -26,6 +26,6 @@ class GenericSolver : ISolver {
     }
     // --- Methods Including Constructors ---
     public GenericSolver() {
-
+        
     }
 }
