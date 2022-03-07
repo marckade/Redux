@@ -374,9 +374,8 @@ class DirectedGraph:Graph{
 
         }
             //checks for backedges.        
-
             foreach(Edge e in _edgeList){
-
+           // Console.WriteLine(e.ToString());
             String nodeFrom = e.node1.name;
             String nodeTo = e.node2.name;
 
@@ -393,7 +392,7 @@ class DirectedGraph:Graph{
                 Console.WriteLine("Key not found "+k.StackTrace);
             }
             
-            ///return false;
+           // return false;
         }
    
     // Console.Write("Previsit Values:  {");
@@ -437,10 +436,11 @@ class DirectedGraph:Graph{
     **/
     public void removeEdge(KeyValuePair<string,string> edge){
         string edgeKey = edge.Key;
+        string edgeValue = edge.Value;
         List<Edge> foundEdgeList = new List<Edge>();
         
         foreach(Edge e in this._edgeList){ //O(n) search operation. This is due to not having a data structure that maps edge names to edges. 
-            if(e.node1.name.Equals(edgeKey)){
+            if(e.node1.name.Equals(edgeKey) && e.node2.name.Equals(edgeValue)){
                 foundEdgeList.Add(e);
             }
         }
@@ -454,6 +454,8 @@ class DirectedGraph:Graph{
     * Processes a user String input of edges and removes all of the input edges from the graph.
     **/
     public void processCertificate(String certificate){
+        
+
         if (!certificate.Equals(String.Empty)){
         List<KeyValuePair<string,string>> certEdges;
         certEdges = getEdges(certificate);
