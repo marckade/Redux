@@ -42,7 +42,7 @@ class IgbokwesSimple : IVerifier
     #endregion 
 
     #region Constructors
-    public GenericVerifier()
+    public IgbokwesSimple()
     {
 
     }
@@ -51,21 +51,19 @@ class IgbokwesSimple : IVerifier
 
     #region Methods
 
-    public Boolean verify(GRAPHCOLORING g, string userInput)
+    public Boolean verify(GRAPHCOLORING problem, string userInput)
     {
         // Parse Certificate 
-        g.NodeColoring = parseCertificate(userInput);
+        problem.NodeColoring = parseCertificate(userInput);
 
-        return DFS(g);
+        return DFS(problem);
     }
 
 
 
     /*
-
       Runs the Depth-first search on the connected graph
       starting from the first node.
-
 
     */
     public Boolean DFS(GRAPHCOLORING g)

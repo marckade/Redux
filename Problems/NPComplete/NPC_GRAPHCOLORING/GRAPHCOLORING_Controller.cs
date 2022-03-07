@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
@@ -27,7 +27,7 @@ public class GRAPHCOLORINGGenericController : ControllerBase {
 
 
 
-    [ApiController]
+[ApiController]
 [Route("[controller]")]
 public class IgbokwesSimpleVerifierController : ControllerBase {
 

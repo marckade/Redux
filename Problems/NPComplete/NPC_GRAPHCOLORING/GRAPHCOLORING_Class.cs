@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
+class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
 
 
@@ -32,7 +32,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
     private int size;
 
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new IgbokwesSimple();
+    private IgbokwesSimple _defaultVerifier = new IgbokwesSimple();
 
 
     #endregion
