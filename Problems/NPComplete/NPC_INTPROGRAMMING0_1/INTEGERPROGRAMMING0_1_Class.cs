@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
 
-class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier>{
+class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
 
     // --- Fields ---
     private string _problemName = "0-1 Integer Programming";
@@ -15,7 +15,7 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier>{
     private List<List<int>> _C = new List<List<int>>();
     private List<int> _d = new List<int>();
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private GenericVerifier0_1INTP _defaultVerifier = new GenericVerifier0_1INTP();
     private string _phi = string.Empty;
 
     // --- Properties ---
@@ -49,7 +49,7 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public GenericVerifier0_1INTP defaultVerifier {
         get {
             return _defaultVerifier;
         }
