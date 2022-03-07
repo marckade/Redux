@@ -6,8 +6,9 @@ namespace API.Problems.NPComplete.NPC_SAT3.Verifiers;
 class KadensSimple : IVerifier {
 
     // --- Fields ---
-    private string _verifierName = "Generic Verifier";
-    private string _verifierDefinition = "This is a verifier for 3SAT";
+    private string _verifierName = "Kaden's Simple Verifier";
+    private string _verifierDefinition = "This is a verifier for 3SAT made by Kaden Marchetti. It takes the certificate from " + 
+                                         "the user and validates that every clause contains a true literal";
     private string _source = " ";
     // --- Properties ---
     public string verifierName {
