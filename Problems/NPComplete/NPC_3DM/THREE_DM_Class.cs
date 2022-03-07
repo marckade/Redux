@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace API.Problems.NPComplete.NPC_3DM;
 
-class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
+class THREE_DM : IProblem<HurkensShrijver,GenericVerifier> {
 
     // --- Fields ---
     private string _problemName = "3-Dimensional Matching";
@@ -19,7 +19,7 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
     private List<string> _Y;
     private List<string> _Z;
     private List<List<string>> _M;
-    private GenericSolver _defaultSolver = new GenericSolver();
+    private HurkensShrijver _defaultSolver = new HurkensShrijver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
     // --- Properties ---
@@ -98,7 +98,7 @@ class THREE_DM : IProblem<GenericSolver,GenericVerifier> {
             return _problem;
         }
     }
-    public GenericSolver defaultSolver {
+    public HurkensShrijver defaultSolver {
         get {
             return _defaultSolver;
         }
