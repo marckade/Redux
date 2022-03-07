@@ -2,7 +2,7 @@ using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_3DM.Verifiers;
 
-class GenericVerifier : IVerifier {
+class GenericVerifier3DM : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "3-DImensional Matching Verifier";
@@ -27,7 +27,7 @@ class GenericVerifier : IVerifier {
     }
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
+    public GenericVerifier3DM() {
         
     }
 
@@ -74,16 +74,18 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
 
     }
 
-    
-    public bool Verify(THREE_DM Problem, string c){
+    // Take in a problem and a possible solution and evaluate it. Expected userInput follows the format ({Matching in solution}{Matching in solution}{Matching in solution}...)
+    // EXAMPLE: "{x1,y2,z4}{x2,y1,z1}{x2,y1,z2}{x2,y2,z1}"
+    // ONLY true literal names should be included in the user input seperated by commas
+    public Boolean verify(THREE_DM Problem, string c){
         bool match;
         List<List<string>> certificate = ParseCertificate(c);
         if(!certificate.Except(Problem.M).Any()){  // Checks if c is a subset of M
-            Console.WriteLine("c is not a subset");
+            //Console.WriteLine("c is not a subset");
             return false;
         }
         if(certificate.Count != Problem.X[0].Length){   //Checks is c is the size of X, if not it cannot conatin each element.
-            Console.WriteLine("c is not the right size");
+            //Console.WriteLine("c is not the right size");
             return false;   
         }
         foreach(var set in Problem.problem[0]){   //Checks that each element of X Y and Z are in a set of c
@@ -95,7 +97,7 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
                     }
                 }
                 if(match == false){
-                    Console.WriteLine(item + " is not in the certificate");
+                    //Console.WriteLine(item + " is not in the certificate");
                     return false;
                 }
             }
