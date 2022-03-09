@@ -95,6 +95,28 @@ public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+public class GandJ_ReduceTo_3DMController : ControllerBase {
+
+    [HttpGet]
+    public String getDefault() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 defaultSAT3 = new SAT3();
+        GareyAndJohnsonReduction reduction = new GareyAndJohnsonReduction(defaultSAT3);
+        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        return jsonString;
+    }
+
+    [HttpGet("{instance}")]
+    public String getInstance() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        return jsonString;
+    }
+
+}
+
+[ApiController]
+[Route("[controller]")]
 public class KadensSimpleVerifierController : ControllerBase {
 
     [HttpGet]
