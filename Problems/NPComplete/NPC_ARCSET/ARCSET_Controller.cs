@@ -35,7 +35,6 @@ public class ArcsetVerifierController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
         AlexArcsetVerifier verifier = new AlexArcsetVerifier();
-
         Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
