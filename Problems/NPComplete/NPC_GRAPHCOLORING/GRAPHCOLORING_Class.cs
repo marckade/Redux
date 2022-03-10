@@ -234,7 +234,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
     public string getNodeColor(string node) {
 
-        Console.WriteLine("This is the current nodes color : "+this.nodeColoring[node]);
+      
 
         return this.nodeColoring[node];
         
@@ -252,7 +252,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
     public Boolean validColor(string color){
 
-        Console.WriteLine("is the color valid "+color +" "+this.colors.Contains(color));
+     
 
         return this.colors.Contains(color);
     }
@@ -275,7 +275,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
         for(int i= 0; i< this._edges.Count -1 ; i++){
 
-               Console.WriteLine("This is SIZE OF EDGES "+this._edges.Count);
+            
     
              problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
          
