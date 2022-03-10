@@ -14,7 +14,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
     private readonly string _problemDefinition = "Graph Coloring is an assignment of labels traditionally called colors to elements of a graph subject to certain constraints.The most common example of graph coloring is the vertex coloring which in its simplest form,  is a way of coloring the vertices of a graph such that no two adjacent vertices are of the same color; this is called a vertex coloring";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{ { {a,b,c,d,e} : {{a,b} & {b,a} & {b,c} }} : 3}";
+    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
 
     private string _G =  string.Empty;
 
@@ -24,7 +24,8 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
     private Dictionary<string, string> nodeColoring = new Dictionary<string, string>();
 
-    private Dictionary<string, bool> colors = new Dictionary<string, bool>();
+    private HashSet<string> colors = new HashSet<string>();
+  
 
 
     private int _K;
@@ -130,7 +131,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public IgbokwesSimple defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -145,6 +146,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
         nodes = getNodes(_G);
         edges  = getEdges(_G);
         K = getK(_G);
+        setColors(K);
       
     }
     public GRAPHCOLORING(string GInput) {
@@ -152,6 +154,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
         nodes = getNodes(_G);
         edges  = getEdges(_G);
         K = getK(_G);
+        setColors(K);
         
     }
 
@@ -182,12 +185,14 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
         for(int i = 0; i < this._edges.Count; i++){
 
-            if(this._edges[i].Key.Equals(node)){
+            if(this._edges[i].Key.ToLower().Equals(node.ToLower())){
 
                 adjNodes.Add(this._edges[i].Value);
             }
 
         }
+
+        Console.WriteLine("This is the adjacent list ",adjNodes, "\n" );
 
         return adjNodes;
     }
@@ -229,20 +234,34 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
     public string getNodeColor(string node) {
 
+        Console.WriteLine("This is the current nodes color : "+this.nodeColoring[node]);
+
         return this.nodeColoring[node];
         
     }
 
-    public bool validColor(string color){
+    public void setColors(int K ){ 
 
-        return this.colors.ContainsKey(color);
+        for(int i = 0; i < K; i++){
+
+            this.colors.Add(i.ToString());
+
+        }
+
+    }
+
+    public Boolean validColor(string color){
+
+        Console.WriteLine("is the color valid "+color +" "+this.colors.Contains(color));
+
+        return this.colors.Contains(color);
     }
 
 
 
     public void parseProblem() {
 
-        string problem = "{{   {";
+        string problem = "{{ {";
 
 
         // Parse nodes
@@ -256,15 +275,14 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
         for(int i= 0; i< this._edges.Count -1 ; i++){
 
-            if(i % 2 == 0){
-                problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
-            }
+               Console.WriteLine("This is SIZE OF EDGES "+this._edges.Count);
+    
+             problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
+         
 
         }
 
-        if( ((this._edges.Count -1) % 2) == 0) {
-            problem +=  "{"+ this._edges[this._edges.Count -1].Key + "," + this._edges[this._edges.Count -1].Value + "}} : ";
-        }
+    
 
         // Parse k
         problem += this._K + "}";

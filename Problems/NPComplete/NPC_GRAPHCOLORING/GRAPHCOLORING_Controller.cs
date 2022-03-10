@@ -25,14 +25,24 @@ public class GRAPHCOLORINGGenericController : ControllerBase {
         return jsonString;
     }
 
+}
+
+
 
 
 [ApiController]
 [Route("[controller]")]
-public class IgbokwesSimpleVerifierController : ControllerBase {
+public class IgbokweVerifierController : ControllerBase {
 
-    [HttpGet("{certificate}/{problemInstance}")]
-    public String getInstance(string certificate, string problemInstance) {
+    //[HttpGet("{certificate}/{problemInstance}")]
+    [HttpGet]
+    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+        //string certificate, string problemInstance
+
+        Console.WriteLine("go to the route");
+        // certificate = "(a:blue, b:red, c:green)";
+        // problemInstance = "{ { {a,b,c} : {{a,b} & {b,a} & {b,c} }} : 3}";
+
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
         IgbokwesSimple verifier = new IgbokwesSimple();
@@ -41,10 +51,7 @@ public class IgbokwesSimpleVerifierController : ControllerBase {
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
+       
     }
-
-}
-
-
 
 }

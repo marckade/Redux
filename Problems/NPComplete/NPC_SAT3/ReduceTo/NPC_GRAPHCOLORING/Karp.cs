@@ -77,9 +77,9 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     public GRAPHCOLORING reduce() {
 
         // color palette 
-        // Red : False, Green : True,  Blue : Base
+          // 0 : False, 1 : True,  2 : Base
 
-        string[] palette = { "palette: red", "palette: green", "palette: blue" };
+        string[] palette = { "palette: 0", "palette: 1", "palette: 2" };
 
         SAT3 SAT3Instance = _reductionFrom;
         GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
@@ -258,13 +258,13 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
     # region N Reduction
 
-      // The code below  is reducing the SAT3 problem to a GRAPHCOLORING problem in linear time.
+    // The code below  is reducing the SAT3 problem to a GRAPHCOLORING problem in linear time.
     public GRAPHCOLORING Nreduce(){
 
          // color palette 
-        // Red : False, Green : True,  Blue : Base
+        // 0 : False, 1 : True,  2 : Base
 
-        string[] palette = { "palette: red", "palette: green", "palette: blue" };
+        string[] palette = { "palette: 0", "palette: 1", "palette: 2" };
 
         SAT3 SAT3Instance = _reductionFrom;
         GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
@@ -327,7 +327,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
         }
 
-        // Connect literal to literal negation
+        // Connect literal to its negation
         // x1 and !x1 can't have the same color
         for (int i = 0; i < variables.Count; i++){
 
@@ -363,10 +363,11 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
         }
 
+        // Join clauses, variables and palette
 
         for (int i = 0; i < SAT3Instance.clauses.Count; i++) {
 
-            int a =  i + 6;
+            int a =  i * 6;
 
             // Connect variables to clause gadgets 
             NaddEdge(SAT3Instance.clauses[i][0], clauseNodes[a] , edges);
@@ -380,7 +381,6 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
             // Connect red 
             NaddEdge(palette[0], clauseNodes[a + 5],edges);
-
 
             // Connect blue 
             NaddEdge(palette[2], clauseNodes[a + 5],edges);
