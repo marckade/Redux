@@ -313,15 +313,15 @@ class DirectedGraph:Graph{
 }
 
 /**
-* This method uses a DFS to check a graph for cycles, returning true if any cycles have been found. 
+* This method uses a DFS to check a graph for cycles, returning a list of all all backedges (can be empty)
 **/
-  public bool DFS(){
-      //bool hasCycle = false;
+  public List<Edge> DFS(){
       //while member, no need for static. 
     bool[] visited = new bool[_nodeList.Count]; //makes array equal entry for entry to nodeList
    // bool[] mapNodeNum = new bool[nodeList.Count];
     int[] preVisitArr = new int[_nodeList.Count];
     int[] postVisitArr = new int[_nodeList.Count];
+    List<Edge> backEdges = new List<Edge>();
     int i = 0;
     string nameNodeInit = "";
     if(_nodeList.Count!=0)
@@ -385,14 +385,15 @@ class DirectedGraph:Graph{
             nodePositionDict.TryGetValue(nodeFrom, out node1Pos);
             nodePositionDict.TryGetValue(nodeTo, out node2Pos);
             if(preVisitArr[node1Pos]>preVisitArr[node2Pos]){ //if the previsit value of the from node is greater than the to node, we have a backedge.
-                return true;
+                //Console.WriteLine("BACKEDGE FOUND from node: " + nodeFrom + " to node: "+nodeTo);
+                backEdges.Add(e);
             } 
             }
             catch(KeyNotFoundException k){
                 Console.WriteLine("Key not found "+k.StackTrace);
             }
             
-           // return false;
+           
         }
    
     // Console.Write("Previsit Values:  {");
@@ -418,7 +419,7 @@ class DirectedGraph:Graph{
         Console.Write("NodeList is empty, cannot DFS");
         }
     
-    return false; //no cycle was found. 
+    return backEdges; //Returns a list of all the backEdges in the graph. 
 
 }
 
@@ -463,9 +464,37 @@ class DirectedGraph:Graph{
             removeEdge(e);
         }
     }
+    }
+
+/**
+* Our DFS is able to return a bunch of information, so this gives a simple answer for verifiers to call, and then we can use the DFS to check for backedges specifically.
+**/
+  public bool isCyclical(){
+      
+      List<Edge> backEdgeList = new List<Edge>();
+      backEdgeList = DFS();
+      if (backEdgeList.Count==0){
+          return false; //if no backedges, no cycles.
+      }
+      else{
+          return true; //backedges mean cycles.
+      }
+
+  }
+
+    public String getBackEdges(){
+        List<Edge> backEdgeList = new List<Edge>();
+        String toStr = "";
+        backEdgeList = DFS();
+
+      foreach(Edge e in backEdgeList){
+          toStr += " "+e.directedString();
+      }
+
+    return toStr;
 
     }
-  
+
     public List<Node> getNodeList{
         get{
             return base._nodeList;
