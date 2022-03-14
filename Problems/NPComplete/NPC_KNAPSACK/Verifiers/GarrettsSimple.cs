@@ -4,7 +4,7 @@ using System;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
-class GenericVerifier : IVerifier {
+class GarrettsSimple : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";
@@ -29,7 +29,7 @@ class GenericVerifier : IVerifier {
     }
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
+    public GarrettsSimple() {
         
     }
 

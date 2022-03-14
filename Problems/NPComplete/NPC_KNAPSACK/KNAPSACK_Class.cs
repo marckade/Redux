@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;
 
-class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
+class KNAPSACK : IProblem<GenericSolver,GarrettsSimple>{
 
     // --- Fields ---
     private string _problemName = "KNAPSACK";
@@ -14,7 +14,7 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = " {{(5, 6) & (7,4) & (8, 5) & (10, 8)} : 24 :  16}";
+    private string _defaultInstance = " {{(1, 5) & (2,7) & (3, 9) & (1, 7)} : 5 :  20}";
     private string _HWV = string.Empty;
 
     private List<KeyValuePair<string, string>> _items = new List<KeyValuePair<string, string>>();
@@ -24,7 +24,7 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
     private int _V = 0;
 
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private GarrettsSimple _defaultVerifier = new GarrettsSimple();
 
     // --- Properties ---
     public string problemName {
@@ -91,7 +91,7 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public GarrettsSimple defaultVerifier {
         get {
             return _defaultVerifier;
         }
