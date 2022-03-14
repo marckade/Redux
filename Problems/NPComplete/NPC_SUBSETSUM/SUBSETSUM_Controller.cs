@@ -1,26 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
-using API.Problems.NPComplete.NPC_CLIQUE;
-using API.Problems.NPComplete.NPC_CLIQUE.ReduceTo.NPC_VertexCover;
+using API.Problems.NPComplete.NPC_SUBSETSUM;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using API.Problems.NPComplete.NPC_SUBSETSUM.ReduceTo.NPC_KNAPSACK;
 
-namespace API.Problems.NPComplete.NPC_CLIQUE;
+namespace API.Problems.NPComplete.NPC_SUBSETSUM;
 
 [ApiController]
 [Route("[controller]")]
-public class CLIQUEGenericController : ControllerBase {
+public class SUBSETSUMGenericController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
+        string jsonString = JsonSerializer.Serialize(new SUBSETSUM(), options);
         return jsonString;
     }
 
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
+        string jsonString = JsonSerializer.Serialize(new SUBSETSUM(), options);
         return jsonString;
     }
 
@@ -28,13 +28,13 @@ public class CLIQUEGenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class CVC_ReduceTo_VERTEXCOVERController : ControllerBase {
 
+public class Feng_ReduceTo_KNAPSACKController : ControllerBase {
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CLIQUE defaultCLIQUE = new CLIQUE();
-        Clique_to_VertexCoverReduction reduction = new Clique_to_VertexCoverReduction(defaultCLIQUE);
+        SUBSETSUM defaultSUBSETSUM = new SUBSETSUM();
+        FengReduction reduction = new FengReduction(defaultSUBSETSUM);
         string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
         return jsonString;
     }
@@ -42,8 +42,7 @@ public class CVC_ReduceTo_VERTEXCOVERController : ControllerBase {
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
+        string jsonString = JsonSerializer.Serialize(new SUBSETSUM(), options);
         return jsonString;
     }
-
 }

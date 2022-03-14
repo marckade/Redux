@@ -1,12 +1,12 @@
 using API.Interfaces;
 
-namespace API.Problems.NPComplete.NPC_SAT3.Verifiers;
+namespace API.Problems.NPComplete.NPC_SUBSETSUM.Verifiers;
 
 class GenericVerifier : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";
-    private string _verifierDefinition = "This is a verifier for 3SAT";
+    private string _verifierDefinition = "This is a verifier for Subset Summ";
     private string _source = " ";
 
     // --- Properties ---

@@ -87,9 +87,27 @@ class SipserReduction : IReduction<SAT3, CLIQUE> {
             }
         }
         reducedCLIQUE.edges = edges;
-        
-        //K is the number of clauses
-        
+        reducedCLIQUE.K = SAT3Instance.clauses.Count;
+
+        // --- Generate G string for new CLIQUE ---
+        string nodesString = "";
+        foreach (string literal in SAT3Instance.literals) {
+            nodesString += literal + ",";
+        }
+        nodesString = nodesString.Trim(',');
+
+        string edgesString = "";
+        foreach (KeyValuePair<string,string> edge in edges) {
+            edgesString += "(" + edge.Key + "," + edge.Value + ")" + " & ";
+        }
+        edgesString = edgesString.Trim('&');
+
+        int kint = SAT3Instance.clauses.Count;
+        // "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
+        string G = "{{" + nodesString + "} : {" + edgesString + "} : " + kint.ToString() + "}";
+
+        // Assign and return
+        reducedCLIQUE.G = G;
         reductionTo = reducedCLIQUE;
         return reducedCLIQUE;
     }

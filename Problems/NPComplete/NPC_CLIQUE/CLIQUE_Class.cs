@@ -11,6 +11,7 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     private string _formalDefinition = "<G, k> | G is an graph that has a set of k mutually adjacent nodes";
     private string _problemDefinition = "A clique is the problem of uncovering a subset of vertices in an undirected graph G = (V, E) such that every two distinct vertices are adjacent";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    //{{a,b,c,d,e,f} : {(a,b) & (a,f) & (a,e) & (b,c) & (b,e) & (b,d) & (d,c) & (d,e) & (c,f) & (c,e)} : 4}
     private string _defaultInstance = "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
     private string _G = string.Empty;
     private List<string> _nodes = new List<string>();
