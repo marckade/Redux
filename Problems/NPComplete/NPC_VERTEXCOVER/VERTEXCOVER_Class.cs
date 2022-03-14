@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
-class VERTEXCOVER : IProblem<GenericSolver,GenericVerifier>{
+class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
 
     // --- Fields ---
     private string _problemName = "VERTEXCOVER";
@@ -16,8 +16,8 @@ class VERTEXCOVER : IProblem<GenericSolver,GenericVerifier>{
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
-    private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private VCSolverJanita _defaultSolver = new VCSolverJanita();
+    private VCVerifierJanita _defaultVerifier = new VCVerifierJanita();
 
     // --- Properties ---
     public string problemName {
@@ -81,12 +81,12 @@ class VERTEXCOVER : IProblem<GenericSolver,GenericVerifier>{
         }
     }
 
-    public GenericSolver defaultSolver {
+    public VCSolverJanita defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public VCVerifierJanita defaultVerifier {
         get {
             return _defaultVerifier;
         }
