@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_KNAPSACK;
 using System.Text.Json;
+using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 using System.Text.Json.Serialization;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;

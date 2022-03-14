@@ -1,7 +1,7 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK.Solvers;
-class GenericSolver : ISolver {
+class GarrettKnapsackSolver : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";
@@ -25,7 +25,8 @@ class GenericSolver : ISolver {
         }
     }
     // --- Methods Including Constructors ---
-    public GenericSolver() {
+    public GarrettKnapsackSolver() {
 
     }
+
 }
