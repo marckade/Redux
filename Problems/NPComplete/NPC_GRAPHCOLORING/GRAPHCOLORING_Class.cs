@@ -4,33 +4,43 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
+class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
 
-    // ---- Fields  -----
 
-    private string _problemName = "GRAPHCOLORING";
-    private string _formalDefinition = "{<G,k> | G is a graph that has a k-coloring}";
-    private string _problemDefinition = "Vertex coloring problem is defined as given k colors, find a way of coloring the vertices of a graph such that no two adjacent vertices are colored using the same color";
+    #region Fields
+    private readonly string _problemName = "GRAPHCOLORING";
+    private readonly string _formalDefinition = "{<G,k> | G is a graph that has a k-coloring}";
+    private readonly string _problemDefinition = "Graph Coloring is an assignment of labels traditionally called colors to elements of a graph subject to certain constraints.The most common example of graph coloring is the vertex coloring which in its simplest form,  is a way of coloring the vertices of a graph such that no two adjacent vertices are of the same color; this is called a vertex coloring";
+
+    private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
+
+    private string _G =  string.Empty;
+
+    private List<string> _nodes =  new List<string>();
+
+    private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
+
+    private Dictionary<string, string> nodeColoring = new Dictionary<string, string>();
+
+    private HashSet<string> colors = new HashSet<string>();
+  
 
 
-    private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "( ( {a,b,c,d,e}, { {a,b}, {b,a}, {b,c} }), 3)";
+    private int _K;
 
-    private string _Gk =  string.Empty;
-
-
+    private int size;
 
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private IgbokwesSimple _defaultVerifier = new IgbokwesSimple();
 
 
+    #endregion
 
 
+    #region Properties
 
-
-
-    // --- Properties ---
     public string problemName {
         get {
             return _problemName;
@@ -58,13 +68,61 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
         }
     }
 
-    public String GK {
+    public String G {
         get{
-            return _Gk;
+            return _G;
         }
 
         set {
-            _Gk = value;
+            _G = value;
+        }
+    }
+
+
+      public List<string> nodes {
+        get {
+            return _nodes;
+        }
+        set {
+            _nodes = value;
+        }
+    }
+    public List<KeyValuePair<string, string>> edges {
+        get {
+            return _edges;
+        }
+        set {
+            _edges = value;
+        }
+    }
+
+    public Dictionary<string, string> NodeColoring {
+
+        get{
+            return nodeColoring;
+        }
+
+        set {
+            nodeColoring = value;
+        }
+    }
+
+    public int K {
+        get {
+            return _K;
+        }
+        set {
+            _K = value;
+        }
+    }
+
+
+        public int Size {
+        get {
+            return size;
+        }
+        set {
+            size = _edges.Count;
         }
     }
     
@@ -73,28 +131,170 @@ class GRAPHCOLORING : IProblem<GenericSolver, GenericVerifier>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public IgbokwesSimple defaultVerifier {
         get {
             return _defaultVerifier;
         }
     }
 
+    #endregion
 
 
-
-
-    // --- Methods Including Constructors ---
-    public GRAPHCOLORING() {
+    #region Constructors
+      public GRAPHCOLORING() {
+        _G = defaultInstance;
+        nodes = getNodes(_G);
+        edges  = getEdges(_G);
+        K = getK(_G);
+        setColors(K);
       
     }
-    public GRAPHCOLORING(string gkInput) {
-        _Gk = gkInput;
+    public GRAPHCOLORING(string GInput) {
+        _G = GInput;
+        nodes = getNodes(_G);
+        edges  = getEdges(_G);
+        K = getK(_G);
+        setColors(K);
         
     }
 
-    public void ParseProblem(string gkInput) {
+    #endregion
+
+
+    #region Methods
+
+    
+    public List<string> getNodes(string Ginput){
+        List<string> allGNodes = new List<string>();
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
+
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        string[] Gnodes = Gsections[0].Split(',');
+        
+        foreach(string node in Gnodes) {
+            allGNodes.Add(node);
+        }
+
+        return allGNodes;
+    }
+
+    public List<string> getAdjNodes(string node){
+
+        List<string> adjNodes = new List<string>();
+
+        for(int i = 0; i < this._edges.Count; i++){
+
+            if(this._edges[i].Key.ToLower().Equals(node.ToLower())){
+
+                adjNodes.Add(this._edges[i].Value);
+            }
+
+        }
+
+        Console.WriteLine("This is the adjacent list ",adjNodes, "\n" );
+
+        return adjNodes;
+    }
+
+
+
+    public List<KeyValuePair<string, string>> getEdges(string Ginput) {
+
+        
+        List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
+
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        string[] Gedges = Gsections[1].Split('&');
+        
+        foreach (string edge in Gedges) {
+            string[] fromTo = edge.Split(',');
+            string nodeFrom = fromTo[0];
+            string nodeTo = fromTo[1];
+            
+            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+            allGEdges.Add(fullEdge);
+        }
+
+        return allGEdges;
+    }
+
+
+
+    public int getK(string Ginput) {
+
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
+
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        return Int32.Parse(Gsections[2]);
+    } 
+
+    public string getNodeColor(string node) {
+
+      
+
+        return this.nodeColoring[node];
+        
+    }
+
+    public void setColors(int K ){ 
+
+        for(int i = 0; i < K; i++){
+
+            this.colors.Add(i.ToString());
+
+        }
 
     }
+
+    public Boolean validColor(string color){
+
+     
+
+        return this.colors.Contains(color);
+    }
+
+
+
+    public void parseProblem() {
+
+        string problem = "{{ {";
+
+
+        // Parse nodes
+        for(int i = 0; i < this._nodes.Count - 1; i++){
+            problem += this._nodes[i] + ",";
+        }
+        problem += this._nodes[this._nodes.Count - 1] + "}  : {";
+
+
+        // Parse edges
+
+        for(int i= 0; i< this._edges.Count -1 ; i++){
+
+            
+    
+             problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
+         
+
+        }
+
+    
+
+        // Parse k
+        problem += this._K + "}";
+        this._defaultInstance = problem;
+        this.G = this._defaultInstance;
+
+    }
+
+    #endregion
+
+  
+
 
 
 

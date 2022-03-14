@@ -3,6 +3,7 @@ using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_3DM;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_GRAPHCOLORING;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_3DM;
 using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING0_1;
@@ -73,6 +74,15 @@ public class Sipser_ReduceTo_CLIQUEController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+public class Karp_ReduceTo_GRAPHCOLORINGController : ControllerBase {
+
+    [ HttpGet]
+    public String getDefault(){
+
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 defaultSAT3 = new SAT3();
+        KarpReduction reduction = new KarpReduction(defaultSAT3);
+=======
 public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
     [HttpGet]
@@ -112,6 +122,7 @@ public class GandJ_ReduceTo_3DMController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(new SAT3(), options);
         return jsonString;
     }
+}
 
 }
 
