@@ -81,11 +81,11 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
         bool match;
         List<List<string>> certificate = ParseCertificate(c);
         if(!certificate.Except(Problem.M).Any()){  // Checks if c is a subset of M
-            //Console.WriteLine("c is not a subset");
+            // Console.WriteLine("c is not a subset");
             return false;
         }
-        if(certificate.Count != Problem.X[0].Length){   //Checks is c is the size of X, if not it cannot conatin each element.
-            //Console.WriteLine("c is not the right size");
+        if(certificate.Count != Problem.X.Count){   //Checks is c is the size of X, if not it cannot conatin each element.
+            // Console.WriteLine("c is not the right size "+certificate.Count+" "+ Problem.X.Count);
             return false;   
         }
         foreach(var set in Problem.problem[0]){   //Checks that each element of X Y and Z are in a set of c
@@ -97,7 +97,7 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
                     }
                 }
                 if(match == false){
-                    //Console.WriteLine(item + " is not in the certificate");
+                    // Console.WriteLine(item + " is not in the certificate");
                     return false;
                 }
             }

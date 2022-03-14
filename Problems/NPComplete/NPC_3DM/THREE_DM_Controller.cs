@@ -24,6 +24,7 @@ public class THREE_DMGenericController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(new THREE_DM(), options);
         return jsonString;
     }
+}
 
 [ApiController]
 [Route("[controller]")]
@@ -43,5 +44,4 @@ public class GenericVerifier3DMController : ControllerBase {
 
 }
 
-}
 

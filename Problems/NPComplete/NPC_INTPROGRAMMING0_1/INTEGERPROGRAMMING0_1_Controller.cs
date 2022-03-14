@@ -24,6 +24,7 @@ public class INTPROGRAMMING0_1GenericController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING0_1(), options);
         return jsonString;
     }
+}
 
 [ApiController]
 [Route("[controller]")]
@@ -43,8 +44,6 @@ public class GenericVerifier0_1INTPController : ControllerBase {
 
 }
     
-
-}
 
 
 

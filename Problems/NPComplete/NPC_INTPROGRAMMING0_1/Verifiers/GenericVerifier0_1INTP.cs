@@ -45,7 +45,10 @@ class GenericVerifier0_1INTP : IVerifier {
         List<int> certificate = parseCertificate(c);
         
         //checks that the certificate is the correct size
-        if(certificate.Count != Problem.C[0].Count){return false;}
+        if(certificate.Count != Problem.C[0].Count){
+            // Console.WriteLine("Not the correct size "+certificate.Count+" "+Problem.C[0].Count);
+            return false;
+            }
 
         //compute C*certificate, or Cx
         List<int> solution = new List<int>();
@@ -59,8 +62,12 @@ class GenericVerifier0_1INTP : IVerifier {
 
         //checks that C*solution <= d
         for(int i=0; i<Problem.d.Count; i++){
-            if(!(solution[i] <= Problem.d[i])){return false;}
+            if(!(solution[i] <= Problem.d[i])){
+                // Console.WriteLine("incorrect solution");
+                return false;
+                }
         }
+
 
         return true; 
     }
