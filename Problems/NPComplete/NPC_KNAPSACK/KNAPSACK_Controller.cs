@@ -24,5 +24,21 @@ public class KNAPSACKGenericController : ControllerBase {
     }
 
 
+
 }
 
+[ApiController]
+[Route("[controller]")]
+public class GarrettVerifierController : ControllerBase {
+    [HttpGet]
+    public String getInstance([FromQuery]string certifcate, [FromQuery] string problemInstance){
+        var options = new JsonSerializerOptions {WriteIndented = true};
+        KNAPSACK kNAPSACKProblem = new KNAPSACK(problemInstance);
+        GarrettsSimple verifier = new GarrettsSimple();
+
+        Boolean response = verifier.verify(kNAPSACKProblem, certifcate);
+        //send back to API user
+        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+        return jsonString;
+    }
+}
