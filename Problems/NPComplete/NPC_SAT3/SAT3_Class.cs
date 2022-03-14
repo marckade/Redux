@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
-class SAT3 : IProblem<GenericSolver,KadensSimple>{
+class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
 
     // --- Fields ---
     private string _problemName = "3SAT";
@@ -12,7 +12,7 @@ class SAT3 : IProblem<GenericSolver,KadensSimple>{
     private string _problemDefinition = "3SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi (with a maximum of 3 literals per clause) to result in 'True'";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
-    private GenericSolver _defaultSolver = new GenericSolver();
+    private SkeletonSolver _defaultSolver = new SkeletonSolver();
     private KadensSimple _defaultVerifier = new KadensSimple();
     private string _phi = string.Empty;
     private List<List<string>> _clauses = new List<List<string>>();
@@ -44,7 +44,7 @@ class SAT3 : IProblem<GenericSolver,KadensSimple>{
             return _defaultInstance;
         }
     }
-    public GenericSolver defaultSolver {
+    public SkeletonSolver defaultSolver {
         get {
             return _defaultSolver;
         }

@@ -1,12 +1,12 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_SAT3.Solvers;
-class GenericSolver : ISolver {
+class SkeletonSolver : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This is a generic solver for SAT3";
-    private string _source = "This person ____";
+    private string _solverDefinition = "This is a skeleton for the solver for SAT3";
+    private string _source = "Kaden";
 
     // --- Properties ---
     public string solverName {
@@ -25,7 +25,14 @@ class GenericSolver : ISolver {
         }
     }
     // --- Methods Including Constructors ---
-    public GenericSolver() {
+    public SkeletonSolver() {
 
+    }
+
+    // Return type varies
+    public Dictionary<string, bool> solve() {
+
+        // Logic goes here
+        return new Dictionary<string, bool>();
     }
 }

@@ -82,7 +82,9 @@ public class Karp_ReduceTo_GRAPHCOLORINGController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         KarpReduction reduction = new KarpReduction(defaultSAT3);
-=======
+        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        return jsonString;
+    }
 public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
     [HttpGet]
