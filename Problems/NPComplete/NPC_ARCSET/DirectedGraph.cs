@@ -495,6 +495,7 @@ class DirectedGraph:Graph{
 
     }
 
+
     public List<Node> getNodeList{
         get{
             return base._nodeList;
