@@ -48,5 +48,9 @@ public string undirectedString(){
 public string directedString(){
     return "("+node1.name+","+_node2.name+")";
 }
+public KeyValuePair<string,string> toKVP(){
+    KeyValuePair<string,string> asKVP = new KeyValuePair<string, string>(node1.name,node2.name);
+    return asKVP;
+}
 
 }

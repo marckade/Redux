@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
-class ARCSET : IProblem<GenericSolver,AlexArcsetVerifier>{
+class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
 
     // --- Fields ---
     private string _problemName = "ARCSET";
@@ -21,7 +21,7 @@ class ARCSET : IProblem<GenericSolver,AlexArcsetVerifier>{
     private string _defaultInstance = "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
     private string _arcset = string.Empty; 
     private DirectedGraph _arcsetAsGraph;
-    private GenericSolver _defaultSolver = new GenericSolver();
+    private AlexNaiveSolver _defaultSolver = new AlexNaiveSolver();
     private AlexArcsetVerifier _defaultVerifier = new  AlexArcsetVerifier(); //Verifier needs to implement a Depth First Search. 
     
 
@@ -60,7 +60,7 @@ class ARCSET : IProblem<GenericSolver,AlexArcsetVerifier>{
             _arcset = value;
         }
     }
-    public GenericSolver defaultSolver {
+    public AlexNaiveSolver defaultSolver {
         get {
             return _defaultSolver;
         }

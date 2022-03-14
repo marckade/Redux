@@ -41,7 +41,8 @@ class AlexArcsetVerifier : IVerifier {
 
         DirectedGraph graph = problem.directedGraph; 
         graph.processCertificate(userInput);
-        bool isInARCSET = graph.DFS();
+        //Console.WriteLine(graph.getBackEdges());
+        bool isInARCSET = graph.isCyclical();
 
         //when userInput is removed from graph is it still Cyclical? 
         return isInARCSET;
