@@ -64,7 +64,25 @@ public class ArcsetSolverController : ControllerBase {
         return jsonString;
     }
 
+}
 
+[ApiController]
+[Route("[controller]")]
+public class ArcsetReductionController : ControllerBase {
+
+      [HttpGet]
+    public String getInstance([FromQuery]string problemInstance) {
+ 
+        var options = new JsonSerializerOptions { WriteIndented = true };
+
+    
+        UndirectedGraph UG = new UndirectedGraph(problemInstance);
+        string reduction = UG.reduction();
+        //Boolean response = verifier.verify(ARCSETProblem,certificate);
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
 }
 
 
