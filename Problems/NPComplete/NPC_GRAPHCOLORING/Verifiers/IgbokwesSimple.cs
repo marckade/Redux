@@ -42,8 +42,7 @@ class IgbokwesSimple : IVerifier
     #endregion 
 
     #region Constructors
-    public IgbokwesSimple()
-    {
+    public IgbokwesSimple() {
 
     }
 
@@ -51,33 +50,29 @@ class IgbokwesSimple : IVerifier
 
     #region Methods
     public Boolean verify(GRAPHCOLORING problem, string userInput){
-    Boolean verified = false;
+        Boolean verified = false;
 
-      // Parse Certificate 
+        // Parse Certificate 
 
-    problem.NodeColoring = parseCertificate(userInput);
+        problem.nodeColoring = parseCertificate(userInput);
 
+        string node =  problem.nodes[0];
+        string color = problem.getNodeColor(node);
 
+        if(problem.validColor(color)){
 
-    string node =  problem.nodes[0];
-    string color = problem.getNodeColor(node);
+            verified = DFS(problem, node);
 
-    if(problem.validColor(color)){
+        }
 
-       verified = DFS(problem, node);
-
-    }
-
- 
-
-    return verified;
+        return verified;
 }
 
 
     private Boolean DFS(GRAPHCOLORING problem, string source){
 
-    Stack<string> stack = new Stack<string>();
-    HashSet<string> visited = new HashSet<string>();
+        Stack<string> stack = new Stack<string>();
+        HashSet<string> visited = new HashSet<string>();
 
     stack.Push(source);
 
@@ -88,10 +83,7 @@ class IgbokwesSimple : IVerifier
 
 
 
-        if(!visited.Contains(currentNode)){
-
-    
-          
+        if(!visited.Contains(currentNode)){ 
             visited.Add(currentNode);
 
         }

@@ -92,7 +92,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         List<string> variables = SAT3Instance.literals.Distinct().ToList();
 
         for(int i = 0; i < variables.Count; i++){
-            nodes.Add(variables[i]+": null");
+            nodes.Add(variables[i]+": -1");
         }
        
         // Create clause nodes 
@@ -105,7 +105,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
             for (int j = 1; j < 7; j++)
             {
-                tempClause.Add("C" + clauseIndex + "N" + j + ": null");
+                tempClause.Add("C" + clauseIndex + "N" + j + ": -1");
             }
 
             // Add clause-nodes to list of clauses 
@@ -277,8 +277,8 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         Dictionary<string, string> map = new Dictionary<string, string>();
 
         for(int i = 0; i < variables.Count; i++){
-            nodes.Add(variables[i]+": null");
-            map.Add(variables[i], "null");
+            nodes.Add(variables[i]+": -1");
+            map.Add(variables[i], "-1");
         }
 
         List<string> clauseNodes = new List<string>();
@@ -287,12 +287,12 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //Create 6 nodes for each clause 
         for(int i = 0; i < SAT3Instance.clauses.Count; i++) {
 
-            clauseNodes.Add("C" + i  + "N0"  + ": null");
-            clauseNodes.Add("C" + i + "N1"  + ": null");
-            clauseNodes.Add("C" + i  + "N2"  + ": null");
-            clauseNodes.Add("C" + i  + "N3"  + ": null");
-            clauseNodes.Add("C" + i  + "N4"  + ": null");
-            clauseNodes.Add("C" + i  + "N5"  + ": null");
+            clauseNodes.Add("C" + i  + "N0"  + ": -1");
+            clauseNodes.Add("C" + i + "N1"  + ": -1");
+            clauseNodes.Add("C" + i  + "N2"  + ": -1");
+            clauseNodes.Add("C" + i  + "N3"  + ": -1");
+            clauseNodes.Add("C" + i  + "N4"  + ": -1");
+            clauseNodes.Add("C" + i  + "N5"  + ": -1");
 
         }
 

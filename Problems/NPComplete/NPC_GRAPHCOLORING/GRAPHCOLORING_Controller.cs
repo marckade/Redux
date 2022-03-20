@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 using System.Text.Json;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
+using API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
@@ -55,3 +56,25 @@ public class IgbokweVerifierController : ControllerBase {
     }
 
 }
+
+
+
+[ApiController]
+[Route("[controller]")]
+public class IgbokweSolverController : ControllerBase {
+
+      [HttpGet]
+    public String getInstance([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
+        IgbokweSolver solver = new IgbokweSolver();
+       Tuple<Dictionary<string, string>, int> solvedInstance = solver.Solve(GRAPHCOLORINGProblem);
+      
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(solvedInstance, options);
+        return jsonString;
+    }
+
+
+}
+
