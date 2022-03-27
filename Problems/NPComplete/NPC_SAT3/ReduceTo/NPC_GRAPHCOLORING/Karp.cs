@@ -13,6 +13,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
+     private string _complexity;
 
     # endregion
 
@@ -30,6 +31,16 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         get
         {
             return _source;
+        }
+    }
+
+         public string complexity {
+        get {
+            return _complexity;
+        }
+
+        set{
+            _complexity = value;
         }
     }
     public SAT3 reductionFrom
@@ -63,7 +74,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
      public KarpReduction(SAT3 from)
     {
         _reductionFrom = from;
-        _reductionTo = Nreduce();
+        _reductionTo = reduce();
 
     }
 
@@ -72,17 +83,22 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
     # region Methods
 
-    # region (N^3) - Reduction
+
     //The below code is reducing the SAT3 instance to a GRAPHCOLORING instance.
-    public GRAPHCOLORING reduce() {
+    public  GRAPHCOLORING reduce() {
 
         // color palette 
           // 0 : False, 1 : True,  2 : Base
 
-        string[] palette = { "palette: 0", "palette: 1", "palette: 2" };
+        string[] palette = { "false", "true", "base" };
 
         SAT3 SAT3Instance = _reductionFrom;
         GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
+        Dictionary<string, string> coloring = new Dictionary<string, string>();
+
+       for(int i = 0; i < palette.Length; i++){
+           coloring.Add(palette[i], i.ToString());
+       }
 
 
         // ------- Add nodes -------
@@ -92,7 +108,8 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         List<string> variables = SAT3Instance.literals.Distinct().ToList();
 
         for(int i = 0; i < variables.Count; i++){
-            nodes.Add(variables[i]+": -1");
+            nodes.Add(variables[i]);
+            coloring.Add(variables[i], "-1");
         }
        
         // Create clause nodes 
@@ -103,9 +120,10 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
             List<string> tempClause = new List<string>();
 
-            for (int j = 1; j < 7; j++)
+            for (int j = 0; j < 6; j++)
             {
-                tempClause.Add("C" + clauseIndex + "N" + j + ": -1");
+                tempClause.Add("C" + clauseIndex + "N" + j);
+                coloring.Add("C" + clauseIndex + "N" + j , "-1");
             }
 
             // Add clause-nodes to list of clauses 
@@ -236,11 +254,15 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         // Set GRAPHCOLORING edges 
         reducedGRAPHCOLORING.edges = edges;
 
+        //Set NodeColoring 
+        reducedGRAPHCOLORING.nodeColoring = coloring;
+
         //The number of colors that satisfy the problem
-        reducedGRAPHCOLORING.K = 3;
+        reducedGRAPHCOLORING.K = 0;
 
      
        // Instance of GRAPHCOLORING
+       _reductionTo = reducedGRAPHCOLORING;
 
         return reducedGRAPHCOLORING;
     }
@@ -253,162 +275,6 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         edges.Add(fullEdge);
     }
 
-
-    # endregion
-
-    # region N Reduction
-
-    // The code below  is reducing the SAT3 problem to a GRAPHCOLORING problem in linear time.
-    public GRAPHCOLORING Nreduce(){
-
-         // color palette 
-        // 0 : False, 1 : True,  2 : Base
-
-        string[] palette = { "palette: 0", "palette: 1", "palette: 2" };
-
-        SAT3 SAT3Instance = _reductionFrom;
-        GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
-
-        // ------- Add nodes -------
-
-        List<string> nodes = new List<string>(palette);
-
-        List<string> variables = SAT3Instance.literals.Distinct().ToList();
-        Dictionary<string, string> map = new Dictionary<string, string>();
-
-        for(int i = 0; i < variables.Count; i++){
-            nodes.Add(variables[i]+": -1");
-            map.Add(variables[i], "-1");
-        }
-
-        List<string> clauseNodes = new List<string>();
-
-
-        //Create 6 nodes for each clause 
-        for(int i = 0; i < SAT3Instance.clauses.Count; i++) {
-
-            clauseNodes.Add("C" + i  + "N0"  + ": -1");
-            clauseNodes.Add("C" + i + "N1"  + ": -1");
-            clauseNodes.Add("C" + i  + "N2"  + ": -1");
-            clauseNodes.Add("C" + i  + "N3"  + ": -1");
-            clauseNodes.Add("C" + i  + "N4"  + ": -1");
-            clauseNodes.Add("C" + i  + "N5"  + ": -1");
-
-        }
-
-        nodes.AddRange(clauseNodes);
-
-        //Set GRAPHCOLORING nodes
-        reducedGRAPHCOLORING.nodes = nodes;
-
-
-        // ---- End of nodes -----
-
-        // -------------  Add edges ----------------
-
-
-        List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
-
-        // Connect palette edges 
-
-        for(int i = 0; i < palette.Length; i++){
-
-            int j  = ( i + 1 ) % palette.Length;
-
-            NaddEdge(palette[i], palette[j], edges);
-
-        }
-
-        // Connect variable edges to palette color blue 
-        // Can only be colored True or false can't be base 
-        for (int i = 0; i < variables.Count; i++) {
-
-            NaddEdge(variables[i], palette[2], edges);
-
-        }
-
-        // Connect literal to its negation
-        // x1 and !x1 can't have the same color
-        for (int i = 0; i < variables.Count; i++){
-
-            string variable = "!" + variables[i];
-
-            if(map.ContainsKey(variable)){
-                NaddEdge(variable, variables[i], edges);
-
-            }
-
-        }
-
-
-        
-        // Create clause gadget
-        // Each clause contains 6 nodes 
-        for (int i = 0; i < SAT3Instance.clauses.Count; i++) {
-
-            int a =  i * 6;
-           
-            // Connect   (a V b ) 
-            NaddEdge(clauseNodes[a], clauseNodes[a + 1], edges);
-            NaddEdge(clauseNodes[a], clauseNodes[a + 2], edges);
-            NaddEdge(clauseNodes[a + 1], clauseNodes[a + 2], edges);
-
-            // Connect  ((a V b) V c )
-            NaddEdge(clauseNodes[a + 3], clauseNodes[a + 4], edges);
-            NaddEdge(clauseNodes[a + 3], clauseNodes[a + 5], edges);
-            NaddEdge(clauseNodes[a + 4], clauseNodes[a + 5], edges);
-
-            // Join ((a V b) V c )
-            NaddEdge(clauseNodes[a + 2], clauseNodes[a + 3], edges);
-
-        }
-
-        // Join clauses, variables and palette
-
-        for (int i = 0; i < SAT3Instance.clauses.Count; i++) {
-
-            int a =  i * 6;
-
-            // Connect variables to clause gadgets 
-            NaddEdge(SAT3Instance.clauses[i][0], clauseNodes[a] , edges);
-            NaddEdge(SAT3Instance.clauses[i][1], clauseNodes[a + 1] , edges);
-            NaddEdge(SAT3Instance.clauses[i][2], clauseNodes[a + 4] , edges);
-
-            // Connect color blue to (a V b)
-            NaddEdge(palette[2], clauseNodes[a + 2],edges);
-
-            // Connect color blue and red to ((a V b) V c )
-
-            // Connect red 
-            NaddEdge(palette[0], clauseNodes[a + 5],edges);
-
-            // Connect blue 
-            NaddEdge(palette[2], clauseNodes[a + 5],edges);
-
-            }
-
-        // Set GRAPHCOLORING edges 
-        reducedGRAPHCOLORING.edges = edges;
-
-        //The number of colors that satisfy the problem
-        reducedGRAPHCOLORING.K = 3;
-        reducedGRAPHCOLORING.parseProblem();
-
-        return reducedGRAPHCOLORING;
-    } 
-
-
-    private void NaddEdge(string x, string y, List<KeyValuePair<string, string>> edges){
-
-        KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(x, y);
-        KeyValuePair<string, string> fullEdge1 = new KeyValuePair<string, string>(y, x);
-        edges.Add(fullEdge);
-        edges.Add(fullEdge1);
-
-    }
-
-    # endregion
-   
     # endregion
 
   

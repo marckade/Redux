@@ -27,6 +27,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
     private SortedSet<string> _colors = new SortedSet<string>();
   
     private int _K;
+    private string _complexity;
 
     private IgbokweSolver _defaultSolver = new IgbokweSolver();
     private IgbokwesSimple _defaultVerifier = new IgbokwesSimple();
@@ -109,18 +110,20 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
         }
         set {
             _K = value;
+            setColors(K);
         }
     }
 
+    public string complexity {
+        get {
+            return _complexity;
+        }
 
-    //     public int Size {
-    //     get {
-    //         return size;
-    //     }
-    //     set {
-    //         size = _edges.Count;
-    //     }
-    // }
+        set{
+            _complexity = value;
+        }
+    }
+
 
     
     public SortedSet<string> colors {
@@ -153,6 +156,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
         edges  = getEdges(_G);
         K = getK(_G);
         setColors(K);
+        initializeDictionary();
       
     }
     public GRAPHCOLORING(string GInput) {
@@ -161,6 +165,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
         edges  = getEdges(_G);
         K = getK(_G);
         setColors(K);
+        initializeDictionary();
         
     }
 
@@ -224,6 +229,15 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
 
         return allGEdges;
     }
+
+
+    private void initializeDictionary(){
+
+        foreach(string node in this.nodes){
+            this.nodeColoring.Add(node, "-1");
+        }
+    }
+
 
 
 

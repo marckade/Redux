@@ -13,6 +13,8 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     private List<string> _uncoloredNodes = new List<string>();
     private SortedSet<int> _colors = new SortedSet<int>(){0,1,2,3};
 
+    private string _complexity;
+
 #endregion
 
 #region Properties 
@@ -29,6 +31,16 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     public string source {
         get {
             return _source;
+        }
+    }
+
+     public string complexity {
+        get {
+            return _complexity;
+        }
+
+        set{
+            _complexity = value;
         }
     }
 
@@ -74,9 +86,10 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
         _uncoloredNodes = problem.nodes;
         computeSaturation(problem, _uncoloredNodes);
         Dsatur(problem);
+        problem.K = getChromaticNumber(problem.nodeColoring);
        
 
-        return Tuple.Create(problem.nodeColoring, getChromaticNumber(problem.nodeColoring));
+        return Tuple.Create(problem.nodeColoring, problem.K);
     }
 
     private int getChromaticNumber( Dictionary<string, string> nodeColoring){
