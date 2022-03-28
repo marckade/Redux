@@ -82,6 +82,7 @@ public class ArcsetReductionController : ControllerBase {
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
+        
     }
 }
 
