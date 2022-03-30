@@ -8,6 +8,7 @@ using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_3DM;
 using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING0_1;
 using API.Problems.NPComplete.NPC_SAT3.Verifiers;
+using API.Problems.NPComplete.NPC_SAT3.Solvers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -52,14 +53,14 @@ public class SAT3GenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class Sipser_ReduceTo_CLIQUEController : ControllerBase {
+public class SipserReduceToCliqueStandardController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         SipserReduction reduction = new SipserReduction(defaultSAT3);
-        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
@@ -74,7 +75,7 @@ public class Sipser_ReduceTo_CLIQUEController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class Karp_ReduceTo_GRAPHCOLORINGController : ControllerBase {
+public class KarpReduceToGCStandardController : ControllerBase {
 
     [ HttpGet]
     public String getDefault(){
@@ -82,17 +83,21 @@ public class Karp_ReduceTo_GRAPHCOLORINGController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         KarpReduction reduction = new KarpReduction(defaultSAT3);
-        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
-public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
+}
+
+[ApiController]
+[Route("[controller]")]
+public class KarpIntProgStandardController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         Karp_Sat_to_INTPROGRAMMING0_1 reduction = new Karp_Sat_to_INTPROGRAMMING0_1(defaultSAT3);
-        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
@@ -107,14 +112,14 @@ public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class GandJ_ReduceTo_3DMController : ControllerBase {
+public class GJThreeDMController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         GareyAndJohnsonReduction reduction = new GareyAndJohnsonReduction(defaultSAT3);
-        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
@@ -126,12 +131,23 @@ public class GandJ_ReduceTo_3DMController : ControllerBase {
     }
 }
 
-}
 
 [ApiController]
 [Route("[controller]")]
 public class KadensSimpleVerifierController : ControllerBase {
 
+    // Return Generic Solver Class
+    [HttpGet]
+    public String getInstance() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        KadensSimple verifier = new KadensSimple();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(verifier, options);
+        return jsonString;
+    }
+
+    // Solve a instance given a certificate
     [HttpGet]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -142,6 +158,30 @@ public class KadensSimpleVerifierController : ControllerBase {
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
+    }
+
+}
+
+[ApiController]
+[Route("[controller]")]
+public class SkeletonSolverController : ControllerBase {
+
+    // Return Generic Solver Class
+    [HttpGet("info")]
+    public String getGeneric() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SkeletonSolver solver = new SkeletonSolver();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(solver, options);
+        return jsonString;
+    }
+
+    // Solve a instance given a certificate
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+        // Implement solver here
+        return "RETURN YOUR SOLVER RESULTS HERE";
     }
 
 }
