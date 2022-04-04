@@ -4,27 +4,26 @@ using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;
 
-class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
+class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
 
     // --- Fields ---
     private string _problemName = "KNAPSACK";
 
-    private string _formalDefinition = "{<H, W, V> | H is a set of items (w,v) and there is a subset of items in H whose collective weight is less than or equal to W and whose collective value is greater than or equal to V.}";
-    private string _problemDefinition = "The KNAPSACK problem is a problem of determining whether there is a combination of items that provide enough value without going over weight. ";
+    private string _formalDefinition = "{<H, W> | H is a set of items (w,v) and there is a subset of items in H whose collective weight is less than or equal to W and whose collective value is optimized.}";
+    private string _problemDefinition = "The 0-1 KNAPSACK problem is given a knapsack with a maximum capacity W and a set of n items x_1, x_2,... x_n with weights w_1,w_2,... w_n and values v_1,v_2,... v_n optimize the combination of singular items that provide the most value while staying under W. ";
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = " {{(5, 6) & (7,4) & (8, 5) & (10, 8)} : 24 :  16}";
+    private string _defaultInstance = " {{(1, 5) & (2,7) & (3, 9) & (1, 7)} : 5}";
     private string _HWV = string.Empty;
 
-    private List<KeyValuePair<string, string>> _items = new List<KeyValuePair<string, string>>();
+    private List<KeyValuePair<String, String>> _items = new List<KeyValuePair<String, String>>();
 
     private int _W = 0;
 
-    private int _V = 0;
 
-    private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private GarrettKnapsackSolver _defaultSolver = new GarrettKnapsackSolver();
+    private GarrettsSimple _defaultVerifier = new GarrettsSimple();
 
     // --- Properties ---
     public string problemName {
@@ -61,7 +60,7 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
             _HWV = value;
         }
     }
-    public List<KeyValuePair<string, string>> items {
+    public List<KeyValuePair<String, String>> items {
         get {
             return _items;
         }
@@ -78,20 +77,14 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
             _W = value;
         }
     }
-    public int V {
-        get {
-            return _V;
-        }
-        set {
-            _V = value;
-        }
-    }
-    public GenericSolver defaultSolver {
+
+    
+    public GarrettKnapsackSolver defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public GarrettsSimple defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -103,13 +96,11 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
         _HWV = defaultInstance;
         items = getItems(_HWV);
         W = getW(_HWV);
-        V = getV(_HWV);
     }
     public KNAPSACK(string HWVInput) {
         _HWV = HWVInput;
         items = getItems(_HWV);
         W = getW(_HWV);
-        V = getV(_HWV);
     }
 
     public List<KeyValuePair<string, string>> getItems(string HWVInput){
@@ -118,7 +109,7 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
 
        string strippedInput = HWVInput.Replace("{", "").Replace("{","").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
 
-        //HWVsections[0] is the items [1] is W and [2] is V.
+        //HWVsections[0] is the items and HWVsections[1] is W 
        string[] HWVsections = strippedInput.Split(":");
        string[] HWVitems = HWVsections[0].Split("&");
 
@@ -142,16 +133,6 @@ class KNAPSACK : IProblem<GenericSolver,GenericVerifier>{
        return Int32.Parse(HWVsections[1]);
     }
 
-  public int getV(string HWVInput){
-        
-        string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
 
-        //HWVsections[0] is the items [1] is W and [2] is V.
-       string[] HWVsections = strippedInput.Split(":");
-       return Int32.Parse(HWVsections[2]);
-    }
 
-    public void ParseProblem(string HWVInput) {
-
-    }
 }

@@ -8,6 +8,9 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
     // --- Fields ---
     private string _reductionDefinition = "Fengs reduction converts positive integers in SUBSETSUM to items in KNAPSACK";
     private string _source = "Feng, Thomas http://cgm.cs.mcgill.ca/~avis/courses/360/2003/assignments/sol4.pdf";
+
+    private string _complexity ="______";
+
     private SUBSETSUM _reductionFrom;
     private KNAPSACK _reductionTo;
 
@@ -39,6 +42,11 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
             _reductionTo = value;
         }
     }
+    public string complexity {
+        get {
+            return _complexity;
+        }
+    }
 
     // --- Methods Including Constructors ---
     public FengReduction(SUBSETSUM from) {
@@ -52,7 +60,6 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
 
         //We reduce by setting T from SUBSETSUM equal to both the minimum value and maxmimum weight constraints. 
         reducedKNAPSACK.W = SUBSETSUMInstance.T;
-        reducedKNAPSACK.V = SUBSETSUMInstance.T;
         
         // We reduce the set of integers to a set of items by having each integer n equal (n,n) as an item. 
         List<KeyValuePair<string, string>> Items = new List<KeyValuePair<string, string>>();

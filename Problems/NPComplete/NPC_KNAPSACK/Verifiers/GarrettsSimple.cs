@@ -4,12 +4,15 @@ using System;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
-class GenericVerifier : IVerifier {
+class GarrettsSimple : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for KNAPSACK";
     private string _source = " ";
+    
+    private string _complexity =" _____";
+
 
     // --- Properties ---
     public string verifierName {
@@ -27,15 +30,20 @@ class GenericVerifier : IVerifier {
             return _source;
         }
     }
+    public string complexity {
+        get {
+            return _complexity;
+        }
+    }
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
+    public GarrettsSimple() {
         
     }
 
     // Needs to verify that the userInput is a subset of the items in the given Knapsack problem 
     //and that each item is only in the subset 0 or 1 times. 
-    // Then must check that userInput meets the constraint W and exceeds the value V. 
+    // Then must check that userInput meets the constraint W. 
     public Boolean verify(KNAPSACK problem, string userInput){
         bool isInKnapsack =true;
          //list of items
@@ -74,10 +82,6 @@ class GenericVerifier : IVerifier {
             isInKnapsack = false;
         }
         
-        //If the value is under the target value, it is not a solution
-        if(Convert.ToDouble(problem.V) > combinedValue){
-            isInKnapsack = false;
-        }
         
 
         return isInKnapsack;
