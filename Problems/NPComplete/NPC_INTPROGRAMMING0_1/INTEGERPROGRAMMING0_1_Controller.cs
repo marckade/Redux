@@ -24,13 +24,22 @@ public class INTPROGRAMMING0_1GenericController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING0_1(), options);
         return jsonString;
     }
-
+}
 [ApiController]
 [Route("[controller]")]
 public class GenericVerifier0_1INTPController : ControllerBase {
 
-    [HttpGet]
-    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+    [HttpGet("info")]
+    public String getGeneric() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GenericVerifier0_1INTP verifier = new GenericVerifier0_1INTP();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(verifier, options);
+        return jsonString;
+    }
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         INTPROGRAMMING0_1 INTPROGRAMMING0_1_Problem = new INTPROGRAMMING0_1(problemInstance);
         GenericVerifier0_1INTP verifier = new GenericVerifier0_1INTP();
@@ -44,7 +53,7 @@ public class GenericVerifier0_1INTPController : ControllerBase {
 }
     
 
-}
+
 
 
 

@@ -84,7 +84,7 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
             //Console.WriteLine("c is not a subset");
             return false;
         }
-        if(certificate.Count != Problem.X[0].Length){   //Checks is c is the size of X, if not it cannot conatin each element.
+        if(certificate.Count != Problem.X.Count){   //Checks is c is the size of X, if not it cannot conatin each element.
             //Console.WriteLine("c is not the right size");
             return false;   
         }
