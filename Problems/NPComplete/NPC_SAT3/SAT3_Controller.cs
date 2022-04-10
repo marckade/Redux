@@ -74,9 +74,9 @@ public class Sipser_ReduceTo_CLIQUEController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class Karp_ReduceTo_GRAPHCOLORINGController : ControllerBase {
+public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 
-    [ HttpGet]
+    [HttpGet]
     public String getDefault(){
 
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -85,6 +85,15 @@ public class Karp_ReduceTo_GRAPHCOLORINGController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
         return jsonString;
     }
+
+    [HttpGet("{instance}")]
+    public String getInstance() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        return jsonString;
+    }
+
+}
 public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
     [HttpGet]
@@ -126,7 +135,7 @@ public class GandJ_ReduceTo_3DMController : ControllerBase {
     }
 }
 
-}
+
 
 [ApiController]
 [Route("[controller]")]

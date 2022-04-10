@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
+class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
 
 
@@ -27,10 +27,10 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
     private SortedSet<string> _colors = new SortedSet<string>();
   
     private int _K;
-    private string _complexity;
+
 
     private IgbokweSolver _defaultSolver = new IgbokweSolver();
-    private IgbokwesSimple _defaultVerifier = new IgbokwesSimple();
+    private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
 
 
     #endregion
@@ -114,16 +114,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
         }
     }
 
-    public string complexity {
-        get {
-            return _complexity;
-        }
-
-        set{
-            _complexity = value;
-        }
-    }
-
+   
 
     
     public SortedSet<string> colors {
@@ -140,7 +131,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
             return _defaultSolver;
         }
     }
-    public IgbokwesSimple defaultVerifier {
+    public IgbokweVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -292,11 +283,6 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokwesSimple>{
     #endregion
 
   
-
-
-
-
-
 
 
 

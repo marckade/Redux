@@ -13,7 +13,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
-     private string _complexity;
+     private string _complexity = "";
 
     # endregion
 
@@ -34,7 +34,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         }
     }
 
-         public string complexity {
+    public string complexity {
         get {
             return _complexity;
         }

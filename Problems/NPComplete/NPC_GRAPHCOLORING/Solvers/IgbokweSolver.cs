@@ -11,9 +11,9 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     private string _source = "";
     private Dictionary<string, Node> _nodeList = new Dictionary<string, Node>();
     private List<string> _uncoloredNodes = new List<string>();
-    private SortedSet<int> _colors = new SortedSet<int>(){0,1,2,3};
+    private SortedSet<int> _colors = new SortedSet<int>(){0,1,2};
 
-    private string _complexity;
+    private string _complexity = "";
 
 #endregion
 
@@ -74,9 +74,9 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 #endregion
 
 #region  Constructors 
-    public IgbokweSolver() {
+public IgbokweSolver() {
 
-    }
+}
 #endregion 
 
 #region Methods
