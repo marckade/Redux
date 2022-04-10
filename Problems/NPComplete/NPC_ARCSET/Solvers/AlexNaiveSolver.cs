@@ -8,7 +8,7 @@ class AlexNaiveSolver : ISolver {
     private string _solverDefinition = @"This solver has a complexity of 1/2. Essentially you order edges into two categories, decending and ascending. Then you only return the bigger set. 
                                         This will guarantee all cycles are broken. This solver specifically makes use of a DFS, where the graph is ordered into descending edges and back edges.
                                         This allows us to remove all backedges to break cycles in a less arbitrary way. 
-                                        Note that technilly, we will leave one back edge in, because we want to return an instance of ARCSET, not the maximum acyclical subgraph.";
+                                        Note that technically, we will leave one back edge in, because we want to return an instance of ARCSET, not the maximum acyclical subgraph.";
     private string _source = "wikipedia: https://en.wikipedia.org/wiki/Feedback_arc_set";
 
     // --- Properties ---
@@ -39,7 +39,7 @@ class AlexNaiveSolver : ISolver {
 
         foreach(Edge e in backEdges){
             allBackEdges.Add(e.toKVP());
-            backEdgeToReAdd = e.toKVP(); //I know that this overrwrites every time and is inefficient. 
+            backEdgeToReAdd = e.toKVP(); //I know that this overwrites every time and is inefficient. 
         }
         allBackEdges.Remove(backEdgeToReAdd);
 
