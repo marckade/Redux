@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System;
 using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
+using API.Problems.NPComplete.NPC_ExactCover.ReduceTo.NPC_ARCSET;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -30,7 +31,15 @@ public class ARCSETGenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class ArcsetVerifierController : ControllerBase {
+public class AlexArcsetVerifierController : ControllerBase {
+
+    [HttpGet]
+    public String getInstance(){
+        var options = new JsonSerializerOptions{WriteIndented = true};
+        AlexArcsetVerifier verifier = new AlexArcsetVerifier();
+        string jsonString = JsonSerializer.Serialize(verifier,options);
+        return jsonString;
+    }    
 
       [HttpGet]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
@@ -47,30 +56,24 @@ public class ArcsetVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class ArcsetSolverController : ControllerBase {
+public class AlexNaiveSolverController : ControllerBase {
 
     [HttpGet("info")]
+    //without params, just returns the solver.
     public String getDefault(){
         
         var options = new JsonSerializerOptions { WriteIndented = true };
 
         ARCSET ARCSETProblem = new ARCSET();
         AlexNaiveSolver solver = new AlexNaiveSolver();
-        string graphSolvedInstance = solver.solve(ARCSETProblem);
-        string prettySolvedInstance = solver.prettySolve(ARCSETProblem);
-        string[] totalSolvedInstance  = new string[2];
-        totalSolvedInstance[0] = graphSolvedInstance;
-        totalSolvedInstance[1] =  prettySolvedInstance;
-        //Boolean response = verifier.verify(ARCSETProblem,certificate);
+        
         // Send back to API user
-        string jsonString = JsonSerializer.Serialize(totalSolvedInstance, options);
+        string jsonString = JsonSerializer.Serialize(solver, options);
         return jsonString;
-
     }
 
-      //[HttpGet("solve")]
-          [HttpGet]
-
+      [HttpGet("solve")]
+     //With query.
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
@@ -90,17 +93,14 @@ public class ArcsetSolverController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class NCOV_TO_ARCSETController : ControllerBase {
+public class NCOV_TO_ARCSETReductionController : ControllerBase {
 
       [HttpGet("info")] // url parameter
 
       public String getDefault(){
             var options = new JsonSerializerOptions { WriteIndented = true };
-
-            VERTEXCOVER vCov = new VERTEXCOVER();
-            String undirectedGraphStr = vCov.defaultInstance;
-            UndirectedGraph ug = new UndirectedGraph(undirectedGraphStr);
-            String reduction = ug.reduction();
+            NCOV_TO_ARCSETReduction reduction = new NCOV_TO_ARCSETReduction();
+    
             String jsonString = JsonSerializer.Serialize(reduction,options);
             return jsonString;
       }
@@ -110,7 +110,6 @@ public class NCOV_TO_ARCSETController : ControllerBase {
     public String getInstance([FromQuery]string problemInstance) {
         
         //from query is a query parameter
-        
         Console.WriteLine(problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         UndirectedGraph UG = new UndirectedGraph(problemInstance);
