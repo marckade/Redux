@@ -81,11 +81,33 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
             }
             Cmatrix.Add(row);
         }
+        string Cstring = string.Empty;
+        string dstring = string.Empty;
 
+        for(int i=0; i<Cmatrix.Count-1; i++){
+            Cstring += "(";
+            for(int j = 0; j<Cmatrix[i].Count; j++){
+                Cstring += " "+Cmatrix[i][j]+" ";
+            }
+            Cstring += "),";
+        }
+        Cstring += "(";
+        for(int i=0; i<Cmatrix[Cmatrix.Count-1].Count; i++){
+            Cstring += " "+Cmatrix[Cmatrix.Count-1][i]+" ";
+        }
+        Cstring += ")";
+ 
+        dstring += "(";
+        for(int i=0; i<dVector.Count; i++){
+            dstring += " "+dVector[i]+" ";
+        }
+        dstring += ")";
 
+        string G = Cstring +"<="+dstring;
 
         reduced01INT.C = Cmatrix;
         reduced01INT.d = dVector;
+        reduced01INT.G = G;
         
         //K is the number of clauses
         

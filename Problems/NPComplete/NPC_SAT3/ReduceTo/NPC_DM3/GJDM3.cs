@@ -123,14 +123,37 @@ class GJDM3 : IReduction<SAT3, DM3> {
             }
             j ++;
         }
+        string Xstring = string.Empty;
+        string Ystring = string.Empty;
+        string Zstring = string.Empty;
+        string Mstring = string.Empty;
 
+
+        for (int i=0; i<X.Count-1; i++){
+            Xstring += ""+ X[i] + ",";
+            Ystring += ""+ Y[i] + ",";
+            Zstring += ""+ Z[i] + ",";
+        }
+        Xstring += X[X.Count-1];
+        Ystring += Y[X.Count-1];
+        Zstring += Z[X.Count-1];
+
+        for (int i=0; i<M.Count; i++){
+            Mstring += "{";
+            Mstring += ""+M[i][0] + ",";
+            Mstring += ""+M[i][1] + ",";
+            Mstring += ""+M[i][2];
+            Mstring += "}";
+        }
+            
+        string G = "{" + Xstring + "}{" + Ystring + "}{" + Zstring + "}" +Mstring;
         
         reduced3DM.X = X;
         reduced3DM.Y = Y;
         reduced3DM.Z = Z;
         reduced3DM.M = M;
+        reduced3DM.G = G;
 
-        reductionTo = reduced3DM;
         //return new THREE_DM();
         return reduced3DM;
     }
