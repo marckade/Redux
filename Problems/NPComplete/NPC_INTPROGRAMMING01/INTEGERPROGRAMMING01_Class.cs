@@ -1,10 +1,10 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Solvers;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Verifiers;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01.Solvers;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01.Verifiers;
 
-namespace API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
+namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
-class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
+class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
 
     // --- Fields ---
     private string _problemName = "0-1 Integer Programming";
@@ -15,7 +15,7 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
     private List<List<int>> _C = new List<List<int>>();
     private List<int> _d = new List<int>();
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier0_1INTP _defaultVerifier = new GenericVerifier0_1INTP();
+    private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
     private string _phi = string.Empty;
 
     // --- Properties ---
@@ -49,7 +49,7 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier0_1INTP defaultVerifier {
+    public GenericVerifier01INTP defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -81,13 +81,13 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
 
     
     // --- Methods Including Constructors ---
-    public INTPROGRAMMING0_1() {
+    public INTPROGRAMMING01() {
         _phi = defaultInstance;
         C = getMatrixC(_phi);
         d = getVectorD(_phi);
 
     }
-    public INTPROGRAMMING0_1(string phiInput) {
+    public INTPROGRAMMING01(string phiInput) {
         // TODO Validate there are only a maximum of 3 literals in each clause
         _phi = phiInput;
         C = getMatrixC(_phi);

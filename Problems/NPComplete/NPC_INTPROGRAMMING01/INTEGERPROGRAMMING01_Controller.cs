@@ -1,27 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Verifiers;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01.Verifiers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace API.Problems.NPComplete.NPC_SAT3;
+namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
 
 [ApiController]
 [Route("[controller]")]
-public class INTPROGRAMMING0_1GenericController : ControllerBase {
+public class INTPROGRAMMING01GenericController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING0_1(), options);
+        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING01(), options);
         return jsonString;
     }
 
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING0_1(), options);
+        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING01(), options);
         return jsonString;
     }
 }
@@ -32,7 +32,7 @@ public class GenericVerifier0_1INTPController : ControllerBase {
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        GenericVerifier0_1INTP verifier = new GenericVerifier0_1INTP();
+        GenericVerifier01INTP verifier = new GenericVerifier01INTP();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
@@ -41,10 +41,10 @@ public class GenericVerifier0_1INTPController : ControllerBase {
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        INTPROGRAMMING0_1 INTPROGRAMMING0_1_Problem = new INTPROGRAMMING0_1(problemInstance);
-        GenericVerifier0_1INTP verifier = new GenericVerifier0_1INTP();
+        INTPROGRAMMING01 INTPROGRAMMING01_Problem = new INTPROGRAMMING01(problemInstance);
+        GenericVerifier01INTP verifier = new GenericVerifier01INTP();
 
-        Boolean response = verifier.verify(INTPROGRAMMING0_1_Problem,certificate);
+        Boolean response = verifier.verify(INTPROGRAMMING01_Problem,certificate);
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
