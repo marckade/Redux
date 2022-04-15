@@ -1,15 +1,15 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
-namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING0_1;
+namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING01;
 
-class Karp_Sat_to_INTPROGRAMMING0_1 : IReduction<SAT3, INTPROGRAMMING0_1> {
+class Karp_Sat_to_INTPROGRAMMING01 : IReduction<SAT3, INTPROGRAMMING01> {
 
     // --- Fields ---
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
     private SAT3 _reductionFrom;
-    private INTPROGRAMMING0_1 _reductionTo;
+    private INTPROGRAMMING01 _reductionTo;
 
 
     // --- Properties ---
@@ -31,7 +31,7 @@ class Karp_Sat_to_INTPROGRAMMING0_1 : IReduction<SAT3, INTPROGRAMMING0_1> {
             _reductionFrom = value;
         }
     }
-    public INTPROGRAMMING0_1 reductionTo {
+    public INTPROGRAMMING01 reductionTo {
         get {
             return _reductionTo;
         }
@@ -41,14 +41,14 @@ class Karp_Sat_to_INTPROGRAMMING0_1 : IReduction<SAT3, INTPROGRAMMING0_1> {
     }
 
     // --- Methods Including Constructors ---
-    public Karp_Sat_to_INTPROGRAMMING0_1(SAT3 from) {
+    public Karp_Sat_to_INTPROGRAMMING01(SAT3 from) {
         _reductionFrom = from;
         _reductionTo = reduce();
 
     }
-    public INTPROGRAMMING0_1 reduce() {
+    public INTPROGRAMMING01 reduce() {
         SAT3 SAT3Instance = _reductionFrom;
-        INTPROGRAMMING0_1 reduced01INT = new INTPROGRAMMING0_1();
+        INTPROGRAMMING01 reduced01INT = new INTPROGRAMMING01();
         
         List<int> dVector = new List<int>();
         List<List<int>> Cmatrix = new List<List<int>>();

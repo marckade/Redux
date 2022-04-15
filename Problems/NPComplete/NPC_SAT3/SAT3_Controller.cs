@@ -96,7 +96,7 @@ public class KarpIntProgStandardController : ControllerBase {
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
-        Karp_Sat_to_INTPROGRAMMING0_1 reduction = new Karp_Sat_to_INTPROGRAMMING0_1(defaultSAT3);
+        Karp_Sat_to_INTPROGRAMMING01 reduction = new Karp_Sat_to_INTPROGRAMMING01(defaultSAT3);
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
