@@ -20,7 +20,7 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     private List<string> _Z;
     private List<List<string>> _M;
     private HurkensShrijver _defaultSolver = new HurkensShrijver();
-    private GenericVerifier3DM _defaultVerifier = new GenericVerifier3DM();
+    private GenericVerifierDM3 _defaultVerifier = new GenericVerifierDM3();
 
     // --- Properties ---
     public string problemName {
@@ -103,7 +103,7 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
             return _defaultSolver;
         }
     }
-    public GenericVerifier3DM defaultVerifier {
+    public GenericVerifierDM3 defaultVerifier {
         get {
             return _defaultVerifier;
         }

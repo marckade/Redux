@@ -34,7 +34,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        GenericVerifier3DM verifier = new GenericVerifier3DM();
+        GenericVerifierDM3 verifier = new GenericVerifierDM3();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
@@ -45,7 +45,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         DM3 DM3_PROBLEM = new DM3(problemInstance);
-        GenericVerifier3DM verifier = new GenericVerifier3DM();
+        GenericVerifierDM3 verifier = new GenericVerifierDM3();
 
         Boolean response = verifier.verify(DM3_PROBLEM,certificate);
         // Send back to API user
