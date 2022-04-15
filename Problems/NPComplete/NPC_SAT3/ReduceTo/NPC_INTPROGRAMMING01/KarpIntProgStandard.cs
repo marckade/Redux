@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING01;
 
-class Karp_Sat_to_INTPROGRAMMING01 : IReduction<SAT3, INTPROGRAMMING01> {
+class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
 
     // --- Fields ---
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
@@ -41,7 +41,7 @@ class Karp_Sat_to_INTPROGRAMMING01 : IReduction<SAT3, INTPROGRAMMING01> {
     }
 
     // --- Methods Including Constructors ---
-    public Karp_Sat_to_INTPROGRAMMING01(SAT3 from) {
+    public KarpIntProgStandard(SAT3 from) {
         _reductionFrom = from;
         _reductionTo = reduce();
 

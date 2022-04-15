@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_DM3;
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_DM3;
 
-class GareyAndJohnsonReduction : IReduction<SAT3, DM3> {
+class GJDM3 : IReduction<SAT3, DM3> {
 
     // --- Fields ---
     private string _reductionDefinition = "Garey and Johnson Reduction converts 3SAT to a set of elements, and constraints of a 3-dimensional matching problem. ";
@@ -41,7 +41,7 @@ class GareyAndJohnsonReduction : IReduction<SAT3, DM3> {
     }
 
     // --- Methods Including Constructors ---
-    public GareyAndJohnsonReduction(SAT3 from) {
+    public GJDM3(SAT3 from) {
         _reductionFrom = from;
         _reductionTo = reduce();
 

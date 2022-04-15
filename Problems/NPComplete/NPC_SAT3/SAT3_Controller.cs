@@ -96,7 +96,7 @@ public class KarpIntProgStandardController : ControllerBase {
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
-        Karp_Sat_to_INTPROGRAMMING01 reduction = new Karp_Sat_to_INTPROGRAMMING01(defaultSAT3);
+        KarpIntProgStandard reduction = new KarpIntProgStandard(defaultSAT3);
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
@@ -112,13 +112,13 @@ public class KarpIntProgStandardController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class GJThreeDMController : ControllerBase {
+public class GJDM3Controller : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
-        GareyAndJohnsonReduction reduction = new GareyAndJohnsonReduction(defaultSAT3);
+        GJDM3 reduction = new GJDM3(defaultSAT3);
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
