@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_3DM;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_GRAPHCOLORING;
-using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_3DM;
+using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_DM3;
 using API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING01;
 using API.Problems.NPComplete.NPC_SAT3.Verifiers;

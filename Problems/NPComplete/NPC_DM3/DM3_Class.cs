@@ -1,11 +1,11 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_3DM.Solvers;
-using API.Problems.NPComplete.NPC_3DM.Verifiers;
+using API.Problems.NPComplete.NPC_DM3.Solvers;
+using API.Problems.NPComplete.NPC_DM3.Verifiers;
 using System.Collections;
 
-namespace API.Problems.NPComplete.NPC_3DM;
+namespace API.Problems.NPComplete.NPC_DM3;
 
-class THREE_DM : IProblem<HurkensShrijver,GenericVerifier3DM> {
+class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
 
     // --- Fields ---
     private string _problemName = "3-Dimensional Matching";
@@ -111,7 +111,7 @@ class THREE_DM : IProblem<HurkensShrijver,GenericVerifier3DM> {
 
 
     // --- Methods Including Constructors ---
-    public THREE_DM() {
+    public DM3() {
         _phi = defaultInstance;
         _problem = ParseProblem(_phi);
         _X = _problem[0][0];
@@ -119,7 +119,7 @@ class THREE_DM : IProblem<HurkensShrijver,GenericVerifier3DM> {
         _Z = _problem[0][2];
         _M = _problem[1];
     }
-    public THREE_DM(string phiInput) {
+    public DM3(string phiInput) {
         _phi = phiInput;
         _problem = ParseProblem(_phi);
         _X = _problem[0][0];
