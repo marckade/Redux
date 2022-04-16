@@ -1,6 +1,6 @@
 using API.Interfaces;
 
-namespace API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Solvers;
+namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01.Solvers;
 class GenericSolver : ISolver {
 
     // --- Fields ---

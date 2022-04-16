@@ -1,15 +1,15 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_3DM;
+using API.Problems.NPComplete.NPC_DM3;
 
-namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_3DM;
+namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_DM3;
 
-class GareyAndJohnsonReduction : IReduction<SAT3, THREE_DM> {
+class GJDM3 : IReduction<SAT3, DM3> {
 
     // --- Fields ---
     private string _reductionDefinition = "Garey and Johnson Reduction converts 3SAT to a set of elements, and constraints of a 3-dimensional matching problem. ";
     private string _source = "Garey, M. R. and David S. Johnson. “Computers and Intractability: A Guide to the Theory of NP-Completeness.” (1978).";
     private SAT3 _reductionFrom;
-    private THREE_DM _reductionTo;
+    private DM3 _reductionTo;
 
 
     // --- Properties ---
@@ -31,7 +31,7 @@ class GareyAndJohnsonReduction : IReduction<SAT3, THREE_DM> {
             _reductionFrom = value;
         }
     }
-    public THREE_DM reductionTo {
+    public DM3 reductionTo {
         get {
             return _reductionTo;
         }
@@ -41,7 +41,7 @@ class GareyAndJohnsonReduction : IReduction<SAT3, THREE_DM> {
     }
 
     // --- Methods Including Constructors ---
-    public GareyAndJohnsonReduction(SAT3 from) {
+    public GJDM3(SAT3 from) {
         _reductionFrom = from;
         _reductionTo = reduce();
 
@@ -50,9 +50,9 @@ class GareyAndJohnsonReduction : IReduction<SAT3, THREE_DM> {
      * reduce() called after GareyAndJohnsonReduction reduction, and returns a THREE_DM object, that
      * is a reduction from the SAT3 object passed into GareyAndJohnsonReduction.
      */
-    public THREE_DM reduce() {
+    public DM3 reduce() {
         SAT3 SAT3Instance = _reductionFrom;
-        THREE_DM reduced3DM = new THREE_DM();
+        DM3 reduced3DM = new DM3();
         
         List<string> X = new List<string>();
         List<string> Y = new List<string>();
@@ -123,14 +123,37 @@ class GareyAndJohnsonReduction : IReduction<SAT3, THREE_DM> {
             }
             j ++;
         }
+        string Xstring = string.Empty;
+        string Ystring = string.Empty;
+        string Zstring = string.Empty;
+        string Mstring = string.Empty;
 
+
+        for (int i=0; i<X.Count-1; i++){
+            Xstring += ""+ X[i] + ",";
+            Ystring += ""+ Y[i] + ",";
+            Zstring += ""+ Z[i] + ",";
+        }
+        Xstring += X[X.Count-1];
+        Ystring += Y[X.Count-1];
+        Zstring += Z[X.Count-1];
+
+        for (int i=0; i<M.Count; i++){
+            Mstring += "{";
+            Mstring += ""+M[i][0] + ",";
+            Mstring += ""+M[i][1] + ",";
+            Mstring += ""+M[i][2];
+            Mstring += "}";
+        }
+            
+        string G = "{" + Xstring + "}{" + Ystring + "}{" + Zstring + "}" +Mstring;
         
         reduced3DM.X = X;
         reduced3DM.Y = Y;
         reduced3DM.Z = Z;
         reduced3DM.M = M;
+        reduced3DM.G = G;
 
-        reductionTo = reduced3DM;
         //return new THREE_DM();
         return reduced3DM;
     }
