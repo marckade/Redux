@@ -9,6 +9,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Somewhat of a security concern. But since we are not doing POSTS im not concerned about it
+app.Use((context, next) =>
+    {
+        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+        return next.Invoke();
+    });
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

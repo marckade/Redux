@@ -1,10 +1,10 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Solvers;
-using API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Verifiers;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01.Solvers;
+using API.Problems.NPComplete.NPC_INTPROGRAMMING01.Verifiers;
 
-namespace API.Problems.NPComplete.NPC_INTPROGRAMMING0_1;
+namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
-class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
+class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
 
     // --- Fields ---
     private string _problemName = "0-1 Integer Programming";
@@ -15,8 +15,8 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
     private List<List<int>> _C = new List<List<int>>();
     private List<int> _d = new List<int>();
     private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier0_1INTP _defaultVerifier = new GenericVerifier0_1INTP();
-    private string _phi = string.Empty;
+    private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
+    private string _G = string.Empty;
 
     // --- Properties ---
     public string problemName {
@@ -49,17 +49,17 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
             return _defaultSolver;
         }
     }
-    public GenericVerifier0_1INTP defaultVerifier {
+    public GenericVerifier01INTP defaultVerifier {
         get {
             return _defaultVerifier;
         }
     }
-    public string phi {
+    public string G {
         get {
-            return _phi;
+            return _G;
         }
         set {
-            _phi = value;
+            _G = value;
         }
     }
     public List<List<int>> C {
@@ -81,24 +81,24 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
 
     
     // --- Methods Including Constructors ---
-    public INTPROGRAMMING0_1() {
-        _phi = defaultInstance;
-        C = getMatrixC(_phi);
-        d = getVectorD(_phi);
+    public INTPROGRAMMING01() {
+        _G = defaultInstance;
+        C = getMatrixC(_G);
+        d = getVectorD(_G);
 
     }
-    public INTPROGRAMMING0_1(string phiInput) {
+    public INTPROGRAMMING01(string GInput) {
         // TODO Validate there are only a maximum of 3 literals in each clause
-        _phi = phiInput;
-        C = getMatrixC(_phi);
-        d = getVectorD(_phi);
+        _G = GInput;
+        C = getMatrixC(_G);
+        d = getVectorD(_G);
 
         
     }
 
-    public List<List<int>> getMatrixC(string phi){
-        string strippedPhi = phi.Replace("(","").Replace(")","");
-        string[] matrixString = strippedPhi.Split("<=")[0].Split(",");
+    public List<List<int>> getMatrixC(string G){
+        string strippedG = G.Replace("(","").Replace(")","");
+        string[] matrixString = strippedG.Split("<=")[0].Split(",");
         List<List<int>> C = new List<List<int>>();
         for(int i=0; i < matrixString.Length; i++){
             string[] stringVariables = matrixString[i].Split(" ");
@@ -113,9 +113,9 @@ class INTPROGRAMMING0_1 : IProblem<GenericSolver,GenericVerifier0_1INTP>{
         
     }
 
-    public List<int> getVectorD(string phi){
-        string strippedPhi = phi.Replace("(","").Replace(")","");
-        string[] vectorStringArray = strippedPhi.Split("<=")[1].Split(" ");
+    public List<int> getVectorD(string G){
+        string strippedG = G.Replace("(","").Replace(")","");
+        string[] vectorStringArray = strippedG.Split("<=")[1].Split(" ");
         List<int> d = new List<int>();
         for(int i=0; i<vectorStringArray.Length; i++){
             d.Add(int.Parse(vectorStringArray[i]));
