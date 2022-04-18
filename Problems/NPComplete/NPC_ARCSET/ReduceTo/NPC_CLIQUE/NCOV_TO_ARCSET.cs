@@ -58,8 +58,8 @@ class NCOV_TO_ARCSETReduction : IReduction<VERTEXCOVER, ARCSET> {
     }
     public ARCSET reduce() {
         API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph ug = new API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph(_reductionFrom.Gk);
-         string dgString = ug.reduction();
-        //DirectedGraph dg = new DirectedGraph(dgString);
+        string dgString = ug.reduction();
+        DirectedGraph dg = new DirectedGraph(dgString);
         ARCSET arcset = new ARCSET(dgString);
         
         return arcset;

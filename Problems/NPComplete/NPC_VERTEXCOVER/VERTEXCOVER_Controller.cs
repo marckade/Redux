@@ -50,19 +50,6 @@ public class VERTEXCOVERGenericController : ControllerBase {
 [Route("[controller]")]
 public class VCVerifierController : ControllerBase {
 
-
-    // [HttpGet]
-    // public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
-    //     var options = new JsonSerializerOptions { WriteIndented = true };
-    //     VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
-    //     VCVerifierJanita verifier = new VCVerifierJanita();
-    
-    //     Boolean response = verifier.Verify(VCProblem,certificate);
-    //     // Send back to API user
-    //     string jsonString = JsonSerializer.Serialize(response.ToString(), options);
-    //     return jsonString;
-    // }
-
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -107,7 +94,7 @@ public class testInstanceController : ControllerBase {
 public class VCSolverController : ControllerBase {
 
     [HttpGet("info")]
-    public String getInstance([FromQuery]string problemInstance) {
+    public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VCSolverJanita solver = new VCSolverJanita();
         
@@ -117,8 +104,7 @@ public class VCSolverController : ControllerBase {
     }
 
     [HttpGet("solve")]
-
-    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance){
+    public String solveInstance([FromQuery]string problemInstance){
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
         List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problemInstance);
