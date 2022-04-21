@@ -34,17 +34,17 @@ public class testController : ControllerBase {
 [Route("[controller]")]
 public class SAT3GenericController : ControllerBase {
 
-    [HttpGet]
+    [HttpGet()]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new SAT3(), options);
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("instance")]
+    public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        string jsonString = JsonSerializer.Serialize(new SAT3(problemInstance), options);
         return jsonString;
     }
 
