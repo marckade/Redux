@@ -55,7 +55,7 @@ class IgbokwesSimple : IVerifier
 
       // Parse Certificate 
 
-    problem.NodeColoring = parseCertificate(userInput);
+    problem.nodeColoring = parseCertificate(userInput);
 
 
 

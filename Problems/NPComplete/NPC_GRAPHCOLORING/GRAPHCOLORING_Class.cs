@@ -22,7 +22,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
 
-    private Dictionary<string, string> nodeColoring = new Dictionary<string, string>();
+    private Dictionary<string, string> _nodeColoring = new Dictionary<string, string>();
 
     private HashSet<string> colors = new HashSet<string>();
   
@@ -96,14 +96,14 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
         }
     }
 
-    public Dictionary<string, string> NodeColoring {
+    public Dictionary<string, string> nodeColoring {
 
         get{
-            return nodeColoring;
+            return _nodeColoring;
         }
 
         set {
-            nodeColoring = value;
+            _nodeColoring = value;
         }
     }
 
@@ -147,6 +147,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
         edges  = getEdges(_G);
         K = getK(_G);
         setColors(K);
+        initializeDictionary();
       
     }
     public GRAPHCOLORING(string GInput) {
@@ -155,6 +156,7 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
         edges  = getEdges(_G);
         K = getK(_G);
         setColors(K);
+        initializeDictionary();
         
     }
 
@@ -256,6 +258,13 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
         return this.colors.Contains(color);
     }
+    private void initializeDictionary(){
+
+        foreach(string node in this.nodes){
+            this.nodeColoring.Add(node, "-1");
+        }
+    }
+
 
 
 
