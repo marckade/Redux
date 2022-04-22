@@ -1,8 +1,8 @@
 using API.Interfaces;
 
-namespace API.Problems.NPComplete.NPC_INTPROGRAMMING0_1.Verifiers;
+namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01.Verifiers;
 
-class GenericVerifier0_1INTP : IVerifier {
+class GenericVerifier01INTP : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";
@@ -27,7 +27,7 @@ class GenericVerifier0_1INTP : IVerifier {
     }
 
     // --- Methods Including Constructors ---
-    public GenericVerifier0_1INTP() {
+    public GenericVerifier01INTP() {
         
     }
     public List<int> parseCertificate(string certificate){
@@ -41,7 +41,7 @@ class GenericVerifier0_1INTP : IVerifier {
 
     //Takes an instance of the 0-1 integer programming problem and a certificate, and verifies if that certificate is a solution
     //c should be in the form of a vector of 1's and 0's separated by spaces. such as "(1 0 1 1 0)"
-    public Boolean verify(INTPROGRAMMING0_1 Problem, string c){
+    public Boolean verify(INTPROGRAMMING01 Problem, string c){
         List<int> certificate = parseCertificate(c);
         
         //checks that the certificate is the correct size

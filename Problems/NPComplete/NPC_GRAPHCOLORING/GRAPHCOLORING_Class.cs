@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
+class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
 
 
@@ -24,16 +24,13 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
     private Dictionary<string, string> _nodeColoring = new Dictionary<string, string>();
 
-    private HashSet<string> colors = new HashSet<string>();
+    private SortedSet<string> _colors = new SortedSet<string>();
   
-
-
     private int _K;
 
-    private int size;
 
-    private GenericSolver _defaultSolver = new GenericSolver();
-    private IgbokwesSimple _defaultVerifier = new IgbokwesSimple();
+    private IgbokweSolver _defaultSolver = new IgbokweSolver();
+    private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
 
 
     #endregion
@@ -113,25 +110,28 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
         }
         set {
             _K = value;
+            setColors(K);
         }
     }
 
+   
 
-        public int Size {
+    
+    public SortedSet<string> colors {
         get {
-            return size;
+            return _colors;
         }
         set {
-            size = _edges.Count;
+            _colors = value;
         }
     }
     
-    public GenericSolver defaultSolver {
+    public IgbokweSolver defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-    public IgbokwesSimple defaultVerifier {
+    public IgbokweVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -194,8 +194,6 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
         }
 
-        Console.WriteLine("This is the adjacent list ",adjNodes, "\n" );
-
         return adjNodes;
     }
 
@@ -224,6 +222,15 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
     }
 
 
+    private void initializeDictionary(){
+
+        foreach(string node in this.nodes){
+            this.nodeColoring.Add(node, "-1");
+        }
+    }
+
+
+
 
     public int getK(string Ginput) {
 
@@ -235,35 +242,20 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
     } 
 
     public string getNodeColor(string node) {
-
-      
-
         return this.nodeColoring[node];
         
     }
 
     public void setColors(int K ){ 
-
         for(int i = 0; i < K; i++){
-
             this.colors.Add(i.ToString());
-
         }
-
     }
 
     public Boolean validColor(string color){
-
-     
-
         return this.colors.Contains(color);
     }
-    private void initializeDictionary(){
-
-        foreach(string node in this.nodes){
-            this.nodeColoring.Add(node, "-1");
-        }
-    }
+\
 
 
 
@@ -272,27 +264,17 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
 
         string problem = "{{ {";
 
-
         // Parse nodes
         for(int i = 0; i < this._nodes.Count - 1; i++){
             problem += this._nodes[i] + ",";
         }
         problem += this._nodes[this._nodes.Count - 1] + "}  : {";
 
-
         // Parse edges
-
         for(int i= 0; i< this._edges.Count -1 ; i++){
-
-            
-    
-             problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
-         
-
+            problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
+        
         }
-
-    
-
         // Parse k
         problem += this._K + "}";
         this._defaultInstance = problem;
@@ -303,11 +285,6 @@ class GRAPHCOLORING : IProblem<GenericSolver, IgbokwesSimple>{
     #endregion
 
   
-
-
-
-
-
 
 
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using API.Problems.NPComplete.NPC_3DM;
-using API.Problems.NPComplete.NPC_3DM.Verifiers;
-using API.Problems.NPComplete.NPC_3DM.Solvers;
+using API.Problems.NPComplete.NPC_DM3;
+using API.Problems.NPComplete.NPC_DM3.Verifiers;
+using API.Problems.NPComplete.NPC_DM3.Solvers;
 
 
 using System.Text.Json;
@@ -11,30 +11,30 @@ namespace API.Problems.NPComplete.NPC_3DM;
 
 [ApiController]
 [Route("[controller]")]
-public class THREE_DMGenericController : ControllerBase {
+public class DM3GenericController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new THREE_DM(), options);
+        string jsonString = JsonSerializer.Serialize(new DM3(), options);
         return jsonString;
     }
 
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new THREE_DM(), options);
+        string jsonString = JsonSerializer.Serialize(new DM3(), options);
         return jsonString;
     }
 }
 
 [ApiController]
 [Route("[controller]")]
-public class GenericVerifier3DMController : ControllerBase {
+public class GenericVerifierDM3Controller : ControllerBase {
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        GenericVerifier3DM verifier = new GenericVerifier3DM();
+        GenericVerifierDM3 verifier = new GenericVerifierDM3();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
@@ -44,10 +44,10 @@ public class GenericVerifier3DMController : ControllerBase {
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        THREE_DM THREE_DM_PROBLEM = new THREE_DM(problemInstance);
-        GenericVerifier3DM verifier = new GenericVerifier3DM();
+        DM3 DM3_PROBLEM = new DM3(problemInstance);
+        GenericVerifierDM3 verifier = new GenericVerifierDM3();
 
-        Boolean response = verifier.verify(THREE_DM_PROBLEM,certificate);
+        Boolean response = verifier.verify(DM3_PROBLEM,certificate);
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
@@ -75,7 +75,7 @@ public class HurkensShriverSolverController : ControllerBase {
     public String solveInstance([FromQuery]string problemInstance) {
         // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
-        THREE_DM problem = new THREE_DM(problemInstance);
+        DM3 problem = new DM3(problemInstance);
         List<List<string>> solution = problem.defaultSolver.solve(problem);
 
         string jsonString = JsonSerializer.Serialize(solution, options);

@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
-class IgbokwesSimple : IVerifier
+class IgbokweVerifier : IVerifier
 {
 
 
@@ -12,6 +12,7 @@ class IgbokwesSimple : IVerifier
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for GRAPHCOLORING";
     private string _source = " ";
+    private string _complexity = " O(V + E)";
 
     #endregion
 
@@ -38,46 +39,51 @@ class IgbokwesSimple : IVerifier
         }
     }
 
+    public string complexity {
+        get {
+            return _complexity;
+        }
+
+        set{
+            _complexity = value;
+        }
+    }
+
 
     #endregion 
 
-    #region Constructors
-    public IgbokwesSimple()
-    {
+#region Constructors
+    public IgbokweVerifier() {
 
-    }
-
+}
     #endregion
 
-    #region Methods
+
+#region Methods
     public Boolean verify(GRAPHCOLORING problem, string userInput){
-    Boolean verified = false;
+        Boolean verified = false;
 
-      // Parse Certificate 
+        // Parse Certificate 
 
-    problem.nodeColoring = parseCertificate(userInput);
+        problem.nodeColoring = parseCertificate(userInput);
 
+        string node =  problem.nodes[0];
+        string color = problem.getNodeColor(node);
 
+        if(problem.validColor(color)){
 
-    string node =  problem.nodes[0];
-    string color = problem.getNodeColor(node);
+            verified = DFS(problem, node);
 
-    if(problem.validColor(color)){
+        }
 
-       verified = DFS(problem, node);
-
-    }
-
- 
-
-    return verified;
+        return verified;
 }
 
 
     private Boolean DFS(GRAPHCOLORING problem, string source){
 
-    Stack<string> stack = new Stack<string>();
-    HashSet<string> visited = new HashSet<string>();
+        Stack<string> stack = new Stack<string>();
+        HashSet<string> visited = new HashSet<string>();
 
     stack.Push(source);
 
@@ -88,10 +94,7 @@ class IgbokwesSimple : IVerifier
 
 
 
-        if(!visited.Contains(currentNode)){
-
-    
-          
+        if(!visited.Contains(currentNode)){ 
             visited.Add(currentNode);
 
         }

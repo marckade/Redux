@@ -285,6 +285,7 @@ class DirectedGraph:Graph{
     
     //Console.Write("Current Node: "+currentNode.name );
 
+        //O(1) but approaches O(n) the more connected the graph is
     foreach(KeyValuePair<string,Node> kvp in adjKVPList ){ //search the adjacent edges to this one
         int position; //position of adjacent node.
         String nextNodeName = kvp.Key;
@@ -316,7 +317,7 @@ class DirectedGraph:Graph{
 * This method uses a DFS to check a graph for cycles, returning a list of all all backedges (can be empty)
 **/
   public List<Edge> DFS(){
-      //while member, no need for static. 
+      
     bool[] visited = new bool[_nodeList.Count]; //makes array equal entry for entry to nodeList
    // bool[] mapNodeNum = new bool[nodeList.Count];
     int[] preVisitArr = new int[_nodeList.Count];
@@ -327,7 +328,7 @@ class DirectedGraph:Graph{
     if(_nodeList.Count!=0)
     {
 
-        nameNodeInit = _nodeList[0].name; //This will start the DFS using the 
+        nameNodeInit = _nodeList[0].name; //This will start the DFS using the first node in the list as the first one. need to add error handling
 
         Node currentNode = new Node(); //Instantiates Object. This is messy solution, but avoids a O(n) search of nodeList. 
         try{
@@ -338,26 +339,27 @@ class DirectedGraph:Graph{
         }
        // _nodeDict.TryGetValue(nameNodeInit, out currentNode); 
 
-        //KeyValuePair<string,int> mapNodePos; //we want to map our node name to a position int
+        //we want to map our node name to a position int
         Dictionary<string,int> nodePositionDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
 
-        //KeyValuePair<string,int> mapNodePreVis; //we want to map our node name to a previsit int
+         //we want to map our node name to a previsit int
         Dictionary<string,int> nodePreDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
 
-       // KeyValuePair<string,int> mapNodePosVis; //we want to map our node name to a previsit int
+       //we want to map our node name to a previsit int
         Dictionary<string,int> nodePostDict = new Dictionary<string,int>(); //creates a dictionary of KVPs
 
+        //O(n)
         foreach(var nodeKVP in _nodeDict){
         visited[i] = false; //sets initial visit value of every node to false
         string nodeName = nodeKVP.Key;
-        //mapNodePos = new KeyValuePair<string, int>(nodeName,i); //maps name of node to position
+        //maps name of node to position
         nodePositionDict.Add(nodeName,i); //now nodeNumDict will be able to find a position given a name.
-
         i++;
         }
 
         //int counter = 0;
         
+        //O(n)
         foreach(var entry in _nodeDict){
         int mappedPos = -1;
         try{
@@ -369,11 +371,11 @@ class DirectedGraph:Graph{
         //nodePositionDict.TryGetValue(entry.Key,out mappedPos); //looks for a position given name.
         if(!visited[mappedPos])
             { //if the boolean visit array sees the position isn't visited
-        explore(currentNode,visited,preVisitArr,postVisitArr,nodePositionDict,nodePreDict,nodePostDict); //explore the position (start recursion).
+        explore(currentNode,visited,preVisitArr,postVisitArr,nodePositionDict,nodePreDict,nodePostDict); //explore the position (start recursion). O(n)
             }
 
         }
-            //checks for backedges.        
+            //checks for backedges.  O(e)      
             foreach(Edge e in _edgeList){
            // Console.WriteLine(e.ToString());
             String nodeFrom = e.node1.name;

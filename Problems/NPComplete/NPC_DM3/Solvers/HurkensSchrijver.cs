@@ -1,6 +1,6 @@
 using API.Interfaces;
 
-namespace API.Problems.NPComplete.NPC_3DM.Solvers;
+namespace API.Problems.NPComplete.NPC_DM3.Solvers;
 class HurkensShrijver : ISolver {
 
     // --- Fields ---
@@ -29,7 +29,7 @@ class HurkensShrijver : ISolver {
 
     }
 
-    public List<List<string>> solve(THREE_DM problem){
+    public List<List<string>> solve(DM3 problem){
         List<List<string>> S = new List<List<string>>();
         List<List<string>> M = problem.M;
         HashSet<string> SHash = new HashSet<string>();
