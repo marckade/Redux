@@ -50,22 +50,12 @@ public class VERTEXCOVERGenericController : ControllerBase {
 [Route("[controller]")]
 public class VCVerifierController : ControllerBase {
 
-    [HttpGet("info")]
-    public String getGeneric() {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        VCVerifierJanita verifier = new VCVerifierJanita();
-
-        // Send back to API user
-        string jsonString = JsonSerializer.Serialize(verifier, options);
-        return jsonString;
-    }
-
-    [HttpGet("solve")]
-    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+    [HttpGet]
+    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
         VCVerifierJanita verifier = new VCVerifierJanita();
-
+    
         Boolean response = verifier.Verify(VCProblem,certificate);
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
@@ -93,21 +83,14 @@ public class testInstanceController : ControllerBase {
 [Route("[controller]")]
 public class VCSolverController : ControllerBase {
 
-    [HttpGet("info")]
-    public String getInstance() {
+      [HttpGet]
+    public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
+        //VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
         VCSolverJanita solver = new VCSolverJanita();
-        
-        string jsonString = JsonSerializer.Serialize(solver, options);
-        return jsonString;
-        
-    }
-
-    [HttpGet("solve")]
-    public String solveInstance([FromQuery]string problemInstance){
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
-        List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problemInstance);
+        List<KeyValuePair<string, string>> solvedInstance = solver.Solve(problemInstance);
+        //Boolean response = verifier.verify(ARCSETProblem,certificate);
+        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }

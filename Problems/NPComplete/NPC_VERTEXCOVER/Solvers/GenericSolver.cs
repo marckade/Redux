@@ -10,8 +10,6 @@ class VCSolverJanita : ISolver {
     private string _solverDefinition = "This is a generic solver for VERTEXCOVER";
     private string _source = "This person ____";
 
-    private string _complexity = "";
-
     // --- Properties ---
     public string solverName {
         get {
