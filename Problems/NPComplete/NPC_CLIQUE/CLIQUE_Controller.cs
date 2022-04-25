@@ -28,7 +28,7 @@ public class CLIQUEGenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class CVC_ReduceTo_VERTEXCOVERController : ControllerBase {
+public class CliqueToVERTEXCOVERController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
