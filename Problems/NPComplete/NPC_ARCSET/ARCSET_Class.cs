@@ -83,7 +83,8 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
         //Should be a graph object.
 
        string arcDefaultString = _defaultInstance;
-        _arcsetAsGraph = new DirectedGraph();
+
+        _arcsetAsGraph = new DirectedGraph(_defaultInstance);
         _arcset = _arcset.ToString();
         _defaultVerifier = new AlexArcsetVerifier();
         
@@ -91,6 +92,10 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     public ARCSET(string arcInput) {
     
         _arcsetAsGraph = new DirectedGraph(arcInput);
+
+        //testGraph = {{1,2,3,4} : {[1,2] & [2,3] & [3,1]} : 1}
+        //_nCoverAsGraph = new UndirectedGraph(arcInput)
+        // _nCoverAsGraph.toString()
         _arcset = _arcsetAsGraph.ToString();
         _defaultVerifier = new AlexArcsetVerifier(); 
 
