@@ -8,7 +8,6 @@ class VCVerifierJanita : IVerifier {
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for VERTEXCOVER";
     private string _source = " ";
-    private string _complexity = "";
 
     // --- Properties ---
     public string verifierName {

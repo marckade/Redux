@@ -12,8 +12,6 @@ class Clique_to_VertexCoverReduction : IReduction<CLIQUE, VERTEXCOVER> {
     private CLIQUE _reductionFrom;
     private VERTEXCOVER _reductionTo;
 
-    private string _complexity = "";
-
 
     // --- Properties ---
     public string reductionDefinition {
