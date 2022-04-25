@@ -21,9 +21,9 @@ public class DM3GenericController : ControllerBase {
     }
 
     [HttpGet("{instance}")]
-    public String getInstance() {
+    public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new DM3(), options);
+        string jsonString = JsonSerializer.Serialize(new DM3(problemInstance), options);
         return jsonString;
     }
 }
