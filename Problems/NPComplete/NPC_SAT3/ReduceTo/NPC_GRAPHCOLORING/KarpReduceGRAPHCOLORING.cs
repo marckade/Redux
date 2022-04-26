@@ -10,10 +10,10 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     
     # region Fields
     private string _reductionDefinition = "Karps reduction converts clauses from 3SAT into colored nodes in a graph for which a valid coloring exists.";
-    private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
-     private string _complexity = "";
+     private string _complexity = "O(n^2)";
 
     # endregion
 
@@ -220,9 +220,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
          for (int i = 0; i < clauses.Count; i++)
         {
 
-            for (int j = 0; j < clauses[i].Count; j++)
-            {
-                // Connect variables to clause gadgets 
+               // Connect variables to clause gadgets 
                 addEdge(SAT3Instance.clauses[i][0],clauses[i][0], edges);
                 addEdge(SAT3Instance.clauses[i][1],clauses[i][1], edges);
                 addEdge(SAT3Instance.clauses[i][2],clauses[i][4], edges);
@@ -248,7 +246,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
                 //  color : blue 
                 addEdge(clauses[i][5] , palette[2], edges);
                 addEdge(palette[2], clauses[i][5],edges);
-            }
+            
         }
 
         // Set GRAPHCOLORING edges 
