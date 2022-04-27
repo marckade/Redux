@@ -9,7 +9,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
     
     # region Fields
-    private string _reductionDefinition = "Karps reduction converts clauses from 3SAT into colored nodes in a graph for which a valid coloring exists.";
+    private string _reductionDefinition = "Karp's reduction converts each clause from a 3CNF into an OR gadgets to establish the truth assignments using labels.";
     private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
