@@ -7,7 +7,7 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 
 #region Fields
     private string _solverName = "Dsatur Solver";
-    private string _solverDefinition = "This is a generic solver for GRAPHCOLORING";
+    private string _solverDefinition = "The Dsatur algorithm lables the vertices by choosing the uncolored vertex with the highest number of different adjacent colors, breaking ties using the highest degree induced by the number of uncolored vertices";
     private string _source = "https://dl.acm.org/doi/10.1145/359094.359101";
     private Dictionary<string, Node> _nodeList = new Dictionary<string, Node>();
     private List<string> _uncoloredNodes = new List<string>();

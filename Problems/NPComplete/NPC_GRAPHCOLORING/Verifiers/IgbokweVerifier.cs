@@ -10,7 +10,7 @@ class IgbokweVerifier : IVerifier
 
     #region Fields
     private string _verifierName = "Generic Verifier";
-    private string _verifierDefinition = "This is a verifier for GRAPHCOLORING that checks if adjacent vertices are assigned different labels, and their labels are valid using a depth first search";
+    private string _verifierDefinition = "This is a verifier for GRAPHCOLORING that checks if adjacent vertices are labeled differently, and their labels are valid using a depth first search";
     private string _source = " ";
     private string _complexity = " O(V + E)";
 

@@ -138,8 +138,6 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
      // -------------  Add edges -----------------------
 
-
-
      List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
     
 
@@ -215,8 +213,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         }
 
 
-        // Combine clause, variable and palette  
-
+        // add edges between clauses and literals
          for (int i = 0; i < clauses.Count; i++)
         {
 
@@ -225,19 +222,18 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
                 addEdge(SAT3Instance.clauses[i][1],clauses[i][1], edges);
                 addEdge(SAT3Instance.clauses[i][2],clauses[i][4], edges);
 
-
-                
                 addEdge(clauses[i][0], SAT3Instance.clauses[i][0], edges);
                 addEdge(clauses[i][1], SAT3Instance.clauses[i][1], edges);
                 addEdge(clauses[i][4], SAT3Instance.clauses[i][2], edges);
+
 
 
                 // Connect color blue to (a V b)
                 addEdge(clauses[i][2] , palette[2], edges);
                 addEdge(palette[2], clauses[i][2],edges);
 
-                // Connect color blue and red to ((a V b) V c )
 
+                // Connect color blue and red to ((a V b) V c )
                 // color : red 
                 addEdge(clauses[i][5] , palette[0], edges);
                 addEdge(palette[0], clauses[i][5],edges);
