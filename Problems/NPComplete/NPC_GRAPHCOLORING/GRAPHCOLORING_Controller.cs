@@ -47,11 +47,9 @@ public class IgbokweVerifierController : ControllerBase {
     //[HttpGet("{certificate}/{problemInstance}")]
     [HttpGet("solve")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
-        //string certificate, string problemInstance
 
-        Console.WriteLine("go to the route");
-        // certificate = "(a:blue, b:red, c:green)";
-        // problemInstance = "{ { {a,b,c} : {{a,b} & {b,a} & {b,c} }} : 3}";
+        // Example  certificate = "(a:blue, b:red, c:green)";
+        // Example problemInstance = "{ { {a,b,c} : {{a,b} & {b,a} & {b,c} }} : 3}";
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
@@ -84,6 +82,7 @@ public class IgbokweSolverController : ControllerBase {
 
     [HttpGet("solve")]
     public String solvedInstance([FromQuery]string problemInstance) {
+         //Example problemInstance = "{ { {a,b,c} : {{a,b} & {b,a} & {b,c} }} : 3}";
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
         IgbokweSolver solver = new IgbokweSolver();

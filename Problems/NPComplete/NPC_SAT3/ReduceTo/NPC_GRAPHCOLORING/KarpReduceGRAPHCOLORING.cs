@@ -136,8 +136,8 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //Set GRAPHCOLORING nodes
         reducedGRAPHCOLORING.nodes = nodes;
 
-     // -------------  Add edges -----------------------
 
+     // -------------  Add edges -----------------------
      List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
     
 
@@ -159,6 +159,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         for (int i = 0; i < variables.Count; i++)
         {
             addEdge(variables[i], palette[2], edges);
+            addEdge(palette[2], variables[i], edges);
 
         }
 
@@ -245,19 +246,23 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
             
         }
 
+
+
+
         // Set GRAPHCOLORING edges 
         reducedGRAPHCOLORING.edges = edges;
 
         //Set NodeColoring 
         reducedGRAPHCOLORING.nodeColoring = coloring;
 
+        // Set color set
+        reducedGRAPHCOLORING.colors = new SortedSet<string>();
+
         //The number of colors that satisfy the problem
         reducedGRAPHCOLORING.K = 0;
+        reducedGRAPHCOLORING.parseProblem();
 
-     
-       // Instance of GRAPHCOLORING
-       _reductionTo = reducedGRAPHCOLORING;
-
+   
         return reducedGRAPHCOLORING;
     }
 

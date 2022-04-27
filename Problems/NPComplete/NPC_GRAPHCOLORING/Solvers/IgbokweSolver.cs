@@ -11,7 +11,7 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     private string _source = "https://dl.acm.org/doi/10.1145/359094.359101";
     private Dictionary<string, Node> _nodeList = new Dictionary<string, Node>();
     private List<string> _uncoloredNodes = new List<string>();
-    private SortedSet<int> _colors = new SortedSet<int>(){0,1,2};
+    private SortedSet<int> _colors = new SortedSet<int>(){0};
 
     private string _complexity = "O(n^2)";
 

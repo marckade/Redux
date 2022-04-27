@@ -96,6 +96,17 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
         return jsonString;
     }
 
+
+
+    [HttpGet("solve")]
+    public String reducedInstance([FromQuery]string problemInstance){
+         
+        KarpReduction reduction = new KarpReduction(new SAT3(problemInstance));
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
 }
 // public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 

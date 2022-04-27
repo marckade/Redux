@@ -24,7 +24,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
     private Dictionary<string, string> _nodeColoring = new Dictionary<string, string>();
 
-    private SortedSet<string> _colors = new SortedSet<string>();
+    private SortedSet<string> _colors = new SortedSet<string>(){"0", "1","2"};
   
     private int _K;
 
@@ -144,7 +144,6 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         nodes = getNodes(_G);
         edges  = getEdges(_G);
         K = getK(_G);
-        setColors(K);
         initializeDictionary();
       
     }
