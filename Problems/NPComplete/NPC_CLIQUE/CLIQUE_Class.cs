@@ -13,7 +13,7 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     //{{a,b,c,d,e,f} : {(a,b) & (a,f) & (a,e) & (b,c) & (b,e) & (b,d) & (d,c) & (d,e) & (c,f) & (c,e)} : 4}
     private string _defaultInstance = "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
-    private string _G = string.Empty;
+    private string _instance = string.Empty;
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
@@ -47,12 +47,12 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
             return _defaultInstance;
         }
     }
-    public string G {
+    public string instance {
         get {
-            return _G;
+            return _instance;
         }
         set {
-            _G = value;
+            _instance = value;
         }
     }
     public List<string> nodes {
@@ -92,16 +92,16 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     }
     // --- Methods Including Constructors ---
     public CLIQUE() {
-        _G = defaultInstance;
-        nodes = getNodes(_G);
-        edges = getEdges(_G);
-        K = getK(_G);
+        _instance = defaultInstance;
+        nodes = getNodes(_instance);
+        edges = getEdges(_instance);
+        K = getK(_instance);
     }
     public CLIQUE(string GInput) {
-        _G = GInput;
-        nodes = getNodes(_G);
-        edges = getEdges(_G);
-        K = getK(_G);
+        _instance = GInput;
+        nodes = getNodes(_instance);
+        edges = getEdges(_instance);
+        K = getK(_instance);
     }
     public List<string> getNodes(string Ginput) {
 

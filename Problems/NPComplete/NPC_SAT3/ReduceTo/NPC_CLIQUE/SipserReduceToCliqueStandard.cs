@@ -107,7 +107,7 @@ class SipserReduction : IReduction<SAT3, CLIQUE> {
         string G = "{{" + nodesString + "} : {" + edgesString + "} : " + kint.ToString() + "}";
 
         // Assign and return
-        reducedCLIQUE.G = G;
+        reducedCLIQUE.instance = G;
         reductionTo = reducedCLIQUE;
         return reducedCLIQUE;
     }
