@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
+using API.Problems.NPComplete.NPC_ARCSET;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
+
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
@@ -115,4 +118,42 @@ public class VCSolverController : ControllerBase {
 
 }
 
+
+[ApiController]
+[Route("[controller]")]
+public class LawlerKarpController : ControllerBase {
+
+      [HttpGet("info")] // url parameter
+
+      public String getInfo(){
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            LawlerKarp reduction = new LawlerKarp();
+    
+            String jsonString = JsonSerializer.Serialize(reduction,options);
+            return jsonString;
+      }
+
+    
+      [HttpGet("reduce")]
+    public String getInfo([FromQuery]string problemInstance) {
+        
+        //from query is a query parameter
+
+        Console.WriteLine(problemInstance);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        //UndirectedGraph UG = new UndirectedGraph(problemInstance);
+        //string reduction = UG.reduction();
+        //Boolean response = verifier.verify(ARCSETProblem,certificate);
+        // Send back to API user
+        VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
+        LawlerKarp reduction = new LawlerKarp(vCover);
+        ARCSET reducedArcset = reduction.reduce();
+        string reducedStr = reducedArcset.instance;
+
+        string jsonString = JsonSerializer.Serialize(reducedStr, options);
+        return jsonString;
+
+    }
+
+}
 

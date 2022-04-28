@@ -59,7 +59,7 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         _reductionFrom = new VERTEXCOVER();
         _reductionTo = new ARCSET();
     }
-    public LawlerKarp(VERTEXCOVER from, ARCSET to) {
+    public LawlerKarp(VERTEXCOVER from) {
          _reductionFrom = from;
         _reductionTo = reduce();
         
