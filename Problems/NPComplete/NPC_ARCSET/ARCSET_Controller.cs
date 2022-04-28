@@ -93,13 +93,13 @@ public class AlexNaiveSolverController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class NCOV_TO_ARCSETReductionController : ControllerBase {
+public class LawlerKarpController : ControllerBase {
 
       [HttpGet("info")] // url parameter
 
       public String getDefault(){
             var options = new JsonSerializerOptions { WriteIndented = true };
-            NCOV_TO_ARCSETReduction reduction = new NCOV_TO_ARCSETReduction();
+            LawlerKarp reduction = new LawlerKarp();
     
             String jsonString = JsonSerializer.Serialize(reduction,options);
             return jsonString;
@@ -110,12 +110,16 @@ public class NCOV_TO_ARCSETReductionController : ControllerBase {
     public String getInstance([FromQuery]string problemInstance) {
         
         //from query is a query parameter
+
         Console.WriteLine(problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         UndirectedGraph UG = new UndirectedGraph(problemInstance);
         string reduction = UG.reduction();
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
+
+        // LawlerKarp reduction = new LawlerKarp();
+        // reduction.reduce()
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
 

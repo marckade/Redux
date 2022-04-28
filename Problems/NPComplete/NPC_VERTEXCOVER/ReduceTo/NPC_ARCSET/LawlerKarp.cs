@@ -5,7 +5,7 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 
-class NCOV_TO_ARCSETReduction : IReduction<VERTEXCOVER, ARCSET> {
+class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
 
   
 
@@ -54,12 +54,12 @@ class NCOV_TO_ARCSETReduction : IReduction<VERTEXCOVER, ARCSET> {
 
     // --- Methods Including Constructors ---
 
-    public NCOV_TO_ARCSETReduction(){
+    public LawlerKarp(){
 
         _reductionFrom = new VERTEXCOVER();
         _reductionTo = new ARCSET();
     }
-    public NCOV_TO_ARCSETReduction(VERTEXCOVER from, ARCSET to) {
+    public LawlerKarp(VERTEXCOVER from, ARCSET to) {
          _reductionFrom = from;
         _reductionTo = reduce();
         
