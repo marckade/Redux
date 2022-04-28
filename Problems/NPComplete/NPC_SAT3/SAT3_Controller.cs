@@ -16,22 +16,6 @@ namespace API.Problems.NPComplete.NPC_SAT3;
 
 [ApiController]
 [Route("[controller]")]
-public class testController : ControllerBase {
-    
-    public String test() {
-        SAT3 testObj = new SAT3();
-
-        if (testObj.phi == null) {
-            return testObj.defaultInstance;
-        }
-        else {
-            return "REALLY? API!";
-        }
-    }
-}
-
-[ApiController]
-[Route("[controller]")]
 public class SAT3GenericController : ControllerBase {
 
     [HttpGet()]
