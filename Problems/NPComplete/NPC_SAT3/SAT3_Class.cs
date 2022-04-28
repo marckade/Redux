@@ -11,7 +11,7 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
     private string _formalDefinition = "{Φ | Φ is a satisfiabile Boolean forumla in 3CNF}";
     private string _problemDefinition = "3SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi (with a maximum of 3 literals per clause) to result in 'True'";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
+    private string _defaultInstance = "(x1 | !x2 | x3) & (!x1 | x3 | x1) & (x2 | !x3 | x1)";
     private SkeletonSolver _defaultSolver = new SkeletonSolver();
     private KadensSimple _defaultVerifier = new KadensSimple();
     private string _phi = string.Empty;
@@ -93,7 +93,19 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
         _phi = phiInput;
         clauses = getClauses(_phi);
         literals = getLiterals(_phi);
+
+        //priority queue of variables prioritizing variables with the most occurences
+        // PriorityQueue<string, int> varQ = new PriorityQueue<string, int>();
+        //TODO: Create SAT3PQVariable class
     }
+
+    // public PriorityQueue<string, int> makeVarQ(){
+
+    // }
+
+    // public SAT3 evaluate(SAT3 sat3){
+
+    // }
 
     public List<List<string>> getClauses(string phiInput) {
         
@@ -103,11 +115,11 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
         string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
 
         // Parse on | to collect each clause
-        string[] rawClauses = strippedInput.Split('|');
+        string[] rawClauses = strippedInput.Split('&');
 
         foreach(string clause in rawClauses) {
             List<string> clauseToAdd = new List<string>();
-            string[] literals = clause.Split('&');
+            string[] literals = clause.Split('|');
 
             foreach(string literal in literals) {
                 clauseToAdd.Add(literal);
@@ -125,10 +137,10 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
         string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
 
         // Parse on | to collect each clause
-        string[] rawClauses = strippedInput.Split('|');
+        string[] rawClauses = strippedInput.Split('&');
 
         foreach(string clause in rawClauses) {
-            string[] rawLiterals = clause.Split('&');
+            string[] rawLiterals = clause.Split('|');
 
             foreach(string literal in rawLiterals) {
                 literals.Add(literal);
