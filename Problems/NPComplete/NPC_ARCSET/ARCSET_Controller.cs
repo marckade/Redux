@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using System;
 using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
-using API.Problems.NPComplete.NPC_ExactCover.ReduceTo.NPC_ARCSET;
+using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
