@@ -19,7 +19,7 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     // G = {A,r} 
     //private string _defaultInstance = "A = {1,2,3,4} r = {(4,1),(1,2),(4,3),(3,2),(2,4)} k = 1";
     private string _defaultInstance = "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
-    private string _arcset = string.Empty; 
+    private string _instance = string.Empty;
     private DirectedGraph _arcsetAsGraph;
     private AlexNaiveSolver _defaultSolver = new AlexNaiveSolver();
     private AlexArcsetVerifier _defaultVerifier = new  AlexArcsetVerifier(); //Verifier needs to implement a Depth First Search. 
@@ -52,12 +52,12 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
             return _defaultInstance;
         }
     }
-    public string arcset {
+    public string instance {
         get {
-            return _arcset;
+            return _instance;
         }
         set {
-            _arcset = value;
+            _instance = value;
         }
     }
     public AlexNaiveSolver defaultSolver {
@@ -85,8 +85,9 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
        string arcDefaultString = _defaultInstance;
 
         _arcsetAsGraph = new DirectedGraph(_defaultInstance);
-        _arcset = _arcset.ToString();
+        _instance = _arcsetAsGraph.ToString(); 
         _defaultVerifier = new AlexArcsetVerifier();
+
         
     }
     public ARCSET(string arcInput) {
@@ -96,7 +97,7 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
         //testGraph = {{1,2,3,4} : {[1,2] & [2,3] & [3,1]} : 1}
         //_nCoverAsGraph = new UndirectedGraph(arcInput)
         // _nCoverAsGraph.toString()
-        _arcset = _arcsetAsGraph.ToString();
+        _instance = _arcsetAsGraph.ToString();
         _defaultVerifier = new AlexArcsetVerifier(); 
 
 
