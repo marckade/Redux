@@ -18,7 +18,7 @@ class NCOV_TO_ARCSETReduction : IReduction<VERTEXCOVER, ARCSET> {
                                             Then turn every node into a pair of nodes denoted by 0 and 1. So a node 'A' turns into the two nodes '<A,0>' and '<A,1>'
                                             Now looks at the pairs of edges in E and maps from 1 to 0. So an edge (A,B) turns into (<A,1>, <B,0>) and edge (B,A) becomes (<B,1>,<A,0>)
                                             Then add directed edges from every 0 node 'u' to 1 node 'u'. ie. creates edges from <A,0> to <A,1>, <B,0> to <B,1> … <Z,0> to <Z,1>
-                                            Now the algortithm has created an ARCSET instance (in other words, a Digraph). ";
+                                            Now the algorithm has created an ARCSET instance (in other words, a Digraph). ";
     private string _source = "http://cgi.di.uoa.gr/~sgk/teaching/grad/handouts/karp.pdf"; //Alex NOTE: Change later to real citation.
     private VERTEXCOVER _reductionFrom;
     private ARCSET _reductionTo;
