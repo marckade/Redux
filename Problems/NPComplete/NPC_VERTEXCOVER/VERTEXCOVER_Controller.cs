@@ -135,8 +135,9 @@ public class LawlerKarpController : ControllerBase {
 
     
       [HttpGet("reduce")]
-    public String getInfo([FromQuery]string problemInstance) {
-        
+    public String getReduce([FromQuery]string problemInstance) {
+        Console.Write("VertexCover controller getReduce:");
+        Console.Write(problemInstance);
         //from query is a query parameter
 
         Console.WriteLine(problemInstance);
@@ -147,10 +148,10 @@ public class LawlerKarpController : ControllerBase {
         // Send back to API user
         VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
         LawlerKarp reduction = new LawlerKarp(vCover);
-        ARCSET reducedArcset = reduction.reduce();
-        string reducedStr = reducedArcset.instance;
+       // ARCSET reducedArcset = reduction.reduce();
+        //string reducedStr = reducedArcset.instance;
 
-        string jsonString = JsonSerializer.Serialize(reducedStr, options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
 
     }

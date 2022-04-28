@@ -79,6 +79,7 @@ public class AlexNaiveSolverController : ControllerBase {
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
         AlexNaiveSolver solver = new AlexNaiveSolver();
         string graphSolvedInstance = solver.solve(ARCSETProblem);
+        Console.Write(ARCSETProblem);
         string prettySolvedInstance = solver.prettySolve(ARCSETProblem);
         string[] totalSolvedInstance  = new string[2];
         totalSolvedInstance[0] = graphSolvedInstance;

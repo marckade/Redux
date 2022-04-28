@@ -1,7 +1,8 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_ARCSET;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 
@@ -62,6 +63,9 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
     public LawlerKarp(VERTEXCOVER from) {
          _reductionFrom = from;
         _reductionTo = reduce();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        String jsonString = JsonSerializer.Serialize(reduce(),options);
+        Console.Write(jsonString);
         
     }
     public ARCSET reduce() {
