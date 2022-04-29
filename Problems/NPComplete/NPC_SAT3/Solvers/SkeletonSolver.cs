@@ -1,5 +1,7 @@
 using API.Interfaces;
 
+using API.Problems.NPComplete.NPC_SAT3;
+
 namespace API.Problems.NPComplete.NPC_SAT3.Solvers;
 class SkeletonSolver : ISolver {
 
@@ -24,8 +26,10 @@ class SkeletonSolver : ISolver {
             return _source;
         }
     }
+
+
     // --- Methods Including Constructors ---
-    public SkeletonSolver(SAT3 sat3) {
+    public SkeletonSolver() {
     }
 
     // Return type varies
@@ -53,12 +57,13 @@ class SkeletonSolver : ISolver {
         int eval;
 
         //add initial SAT3 to PQ
-        satPQ.Add(new SAT3PQObject(sat3, 0, totalNumberOfVariables));
+        curSat = new SAT3PQObject(sat3, 0, totalNumberOfVariables);
+        satPQ.Enqueue(curSat, curSat.getPQWeight());
         
         //O(n!*pruning function)
         while(!solutionFound && satPQ.Count > 0){
             curSat = satPQ.Dequeue();
-            List<SAT3PQObject> childSATs = curSat.createSATChildren(curSat.depth, totalNumberOfVariables);
+            List<SAT3PQObject> childSATs = curSat.createSATChildren(curSat.depth, totalNumberOfVariables); //ADD VARIABLE TO INPUT
             foreach(SAT3PQObject childSAT in childSATs){
                 eval = evaluateBooleanExpression(childSAT.SATState.clauses);
                 if(eval == 0){
@@ -75,9 +80,11 @@ class SkeletonSolver : ISolver {
                 //else unsolvable therefore dont add
             }
         }
+        // Console.WriteLine();
+
 
         // Logic goes here
-        return new Dictionary<string, bool>();
+        return solution;
     }
 
     // //Takes in a new SATState with boolean values written to the states and evaluates them
@@ -88,8 +95,8 @@ class SkeletonSolver : ISolver {
         //if any entries are "!false" or "true" return null
         //else if "false" or "!true" is encountered remove it from the List and return the modified List
         //Check for satisfiablility
-        int retVal = null;
-        if(boolExp.Length == 1 && boolExp.get(0).toString() == "()"){
+        int retVal = 0;
+        if(boolExp.Count == 1 && boolExp[0].ToString() == "()"){
             retVal = 1;
         }
 
@@ -98,31 +105,31 @@ class SkeletonSolver : ISolver {
         int index = 0;
         string exp;
         //evaluates the string representation of each clause, if the expression is empty then it is unsatisfiable
-        while(retVal == null && index < boolExp.Length){
-            exp = boolExp.get(index).toString();
-            if(expVar.toString() == "()"){
+        while(retVal == 0 && index < boolExp.Count){
+            exp = boolExp[index].ToString();
+            if(exp.Equals("()")){
                 retVal = -1;
             }
             index++;
         }
 
         //If it is not satisfiable or unsolvable it must be undecided
-        if(retVal == null){
-            retVal = 0;
-        }
-
         return retVal;
     }
 
+
+    //code that generates the variable priority queue
+    //modifies the priority value so it sorts high to low
     private int findVariables(List<string> literals){
         Dictionary<string, int> numbVars = new Dictionary<string, int>();
         int count = 0;
-        foreach(string lit in literals){
-            if(!numbVars.Contains(lit[lit.Length - 1])){
-                numbVars.Add(lit, 1);
+        foreach(string literal in literals){
+            if(!numbVars.ContainsKey(literal[literal.Length - 1].ToString())){
+                numbVars.Add(literal, 1);
                 count++;
             }
         }
+
         return count;
     }
 }
