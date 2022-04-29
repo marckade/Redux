@@ -31,7 +31,9 @@ public class All_VerifiersController : ControllerBase {
         return jsonString;
     }
 }
-// Get all Verifiers for a specific problem
+// Get all Verifiers for a specific problem\
+[ApiController]
+[Route("Navigation/[controller]")]
 public class Problem_VerifiersController : ControllerBase {
     
     [HttpGet]
