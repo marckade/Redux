@@ -33,7 +33,7 @@ public class ARCSETGenericController : ControllerBase {
 [Route("[controller]")]
 public class AlexArcsetVerifierController : ControllerBase {
 
-    [HttpGet]
+    [HttpGet("info")]
     public String getInstance(){
         var options = new JsonSerializerOptions{WriteIndented = true};
         AlexArcsetVerifier verifier = new AlexArcsetVerifier();
@@ -41,7 +41,7 @@ public class AlexArcsetVerifierController : ControllerBase {
         return jsonString;
     }    
 
-      [HttpGet]
+      [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
