@@ -1,35 +1,17 @@
-using API.Interfaces;
 
-namespace API.Problems.NPComplete.NPC_SAT3.Solvers;
-class SkeletonSolver : ISolver {
 
-    // --- Fields ---
-    private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This is a skeleton for the solver for SAT3";
-    private string _source = "Kaden";
+public class testFile{
 
-    // --- Properties ---
-    public string solverName {
-        get {
-            return _solverName;
+    static void Main(string[] args)
+    {
+        // Display the number of command line arguments.
+        SAT3 testSAT = new SAT3();
+        Dictionary<string, bool> testOneRes = solve(testSAT);
+        foreach(KeyValuePair<string, bool> kvp in testOneRes){
+            Console.WriteLine(kvp.Key + " : " + kvp.Value.ToString);
         }
     }
-    public string solverDefinition {
-        get {
-            return _solverDefinition;
-        }
-    }
-    public string source {
-        get {
-            return _source;
-        }
-    }
-    // --- Methods Including Constructors ---
-    public SkeletonSolver(SAT3 sat3) {
-        //The example problem can be solved in O(n) time just by evaluating if any of the expressions dont have conflicting variables ie(!x and x)
 
-
-    }
 
     // //Takes in a new SATState with boolean values written to the states and evaluates them
     //Returns -1 if unsolvable

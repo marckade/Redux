@@ -1,13 +1,19 @@
 
 
 public class SAT3PQObject{
+    public SAT3 SAT3PQObject;
+    public int depth;
+    public int totalVars;
+    public Dictionary<string, int> varWeights;
+    public Dictionary<string, bool> varStates;
 
     public SAT3PQObject(SAT3 inSAT3, int newDepth, int totalVariables){
         SATState = inSAT3;
         // PriorityQueue<string, int> varQ = makeVarPQ();
         int depth = newDepth;
         int totalVars = totalVariables;
-        Dictionary<string, int> varsWeights = new Dictionary<string, int>();
+        varWeights = new Dictionary<string, int>();
+        varStates = new Dictionary<string, bool>();
         // int smallestClauseSize = 3;
     }
 
@@ -42,7 +48,7 @@ public class SAT3PQObject{
     }
 
     //Returns the two sats 
-    public List<SAT3PQObject> createSATChildren(){
+    public List<SAT3PQObject> createSATChildren(int depth, int totalNumberOfVariables){
         string var = this.varQ.Dequeue();
         List<SAT3PQObject> outList = new List<SAT3PQObject>();
         outList.Add(createNewSatState(var, true));
@@ -52,12 +58,14 @@ public class SAT3PQObject{
 
     //Takes in a variable and a boolean value and returns the new SATState
     //Returns null if the new state would be unviable
-    private SAT3PQObject createNewSatState(string var, bool boolValue){ //This is the meat and potatoes of the solver
-        
+    private SAT3PQObject createNewSatState(string var, bool boolValue, int depth, int totalNumberOfVariables){ //This is the meat and potatoes of the solver
         //update the variables to the string representation of the boolean value
         //pass the modified clause to the evaluateBooleanExpression method
         //if the evaluation returns a viable expression it will return a string else it will returns null
         //return the result
+
+        //adds the variable boolean state dictonary
+        this.varStates.Add(var, boolValue);
 
         
         //create a new phiInput
@@ -65,8 +73,8 @@ public class SAT3PQObject{
         string newPhiExpression = "(";
         string tempExpression = "";
 
-        //THIS IS THE CODE THAT PROCESSES THE CREATION OF THE NEW STATE AND CHECKS SATISFIABLILITY
-        //THIS DOES NOT CHECK IF A FAILED STATE HAS BEEN CREATED
+        //THIS IS THE CODE THAT PROCESSES THE CREATION OF THE NEW STATE
+        //THIS DOES NOT CHECK SATISFIABILITY
         //Iterates through each clause evaluating and creating the new state and writting it to the appropriate out list
         foreach(List<List<string>> boolExp in this.SATState.clauses){
             //adds the AND clause inbetween statements
@@ -107,49 +115,7 @@ public class SAT3PQObject{
         // if(newPhiExpression == "()"){
         //     return null;
         // }
-        return(new SAT3PQObject(new SAT3(newPhiExpression)));
-    }
-
-    // //Takes in a new SATState with boolean values written to the states and evaluates them
-    //Returns -1 if unsolvable
-    //Returns 0 if undecided
-    //Returns 1 if satisfiable
-    private Integer evaluateBooleanExpression(List<List<string>> boolExp){
-        //if any entries are "!false" or "true" return null
-        //else if "false" or "!true" is encountered remove it from the List and return the modified List
-        //Check for satisfiablility
-        retVal = null;
-        if(boolExp.Length == 1 && boolExp.get(0).toString() == "()"){
-            value = 1;
-        }
-
-
-        //variables for looping through boolExp
-        int index = 0;
-        string exp;
-        //evaluates the string representation of each clause, if the expression is empty then it is unsatisfiable
-        while(retVal == null && index < boolExp.Length){
-            exp = boolExp.get(index).toString();
-            if(expVar.toString() == "()"){
-                retVal = -1;
-            }
-            index++;
-        }
-
-        // if(retVal == null){
-        //     foreach(string expVar in boolExp){
-        //         if(expVar.toString() == "()"){
-        //             retVal = -1;
-        //         };
-        //     }
-        // }
-
-        //If it is not satisfiable or unsolvable it must be undecided
-        if(retVal == null){
-            retVal = 0;
-        }
-
-        return retVal;
+        return(new SAT3PQObject(new SAT3(newPhiExpression), depth + 1, totalNumberOfVariables));
     }
 
     public void updateHM(List<string> exp, string var){
@@ -165,5 +131,4 @@ public class SAT3PQObject{
             }
         }
     }
-
 }

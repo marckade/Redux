@@ -93,19 +93,7 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
         _phi = phiInput;
         clauses = getClauses(_phi);
         literals = getLiterals(_phi);
-
-        //priority queue of variables prioritizing variables with the most occurences
-        // PriorityQueue<string, int> varQ = new PriorityQueue<string, int>();
-        //TODO: Create SAT3PQVariable class
     }
-
-    // public PriorityQueue<string, int> makeVarQ(){
-
-    // }
-
-    // public SAT3 evaluate(SAT3 sat3){
-
-    // }
 
     public List<List<string>> getClauses(string phiInput) {
         
