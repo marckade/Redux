@@ -1,7 +1,7 @@
 
 
 public class SAT3PQObject{
-    public SAT3 SAT3PQObject;
+    public SAT3 SATState;
     public int depth;
     public int totalVars;
     public Dictionary<string, int> varWeights;
