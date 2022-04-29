@@ -53,17 +53,17 @@ class SkeletonSolver : ISolver {
         int eval;
 
         //add initial SAT3 to PQ
-        satPQ.Add(sat3, 0, totalNumberOfVariables);
+        satPQ.Add(new SAT3PQObject(sat3, 0, totalNumberOfVariables));
         
         //O(n!*pruning function)
         while(!solutionFound && satPQ.Count > 0){
             curSat = satPQ.Dequeue();
             List<SAT3PQObject> childSATs = curSat.createSATChildren(curSat.depth, totalNumberOfVariables);
             foreach(SAT3PQObject childSAT in childSATs){
-                eval = evaluateBooleanExpression(childSAT);
+                eval = evaluateBooleanExpression(childSAT.SATState.clauses);
                 if(eval == 0){
                     //undecided
-                    satPQ.Add(childSAT, childSAT.getPQWeight());
+                    satPQ.Enqueue(childSAT, childSAT.getPQWeight());
                 }
                 else if(eval == 1){
                     //satisfiable
