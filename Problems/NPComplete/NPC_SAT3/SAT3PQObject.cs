@@ -39,6 +39,14 @@ class SAT3PQObject{
         return highVar;
     }
 
+    public void setVarStates(Dictionary<string, bool> newVarStates){
+        this.varStates = newVarStates;
+    }
+
+    public void setVarWeights(Dictionary<string, int> newVarWeights){
+        this.varWeights = newVarWeights;
+    }
+
     public int getPQWeight(){
         //TODO: WRITE COMPARATOR FUNCTION
         // int priority;
@@ -139,13 +147,18 @@ class SAT3PQObject{
     private PriorityQueue<string, int> makeVarPQ(List<string> literals){
         Dictionary<string, int> numbVars = new Dictionary<string, int>();
         int highestVal = 0;
+        int tempCount;
+
         foreach(string literal in literals){
             if(!numbVars.ContainsKey(literal[literal.Length - 1].ToString())){
                 numbVars.Add(literal, 1);
                 // count++;
             }
             else{//increments value
-                numbVars.Add(literal, numbVars.GetValueOrDefault(literal)+1);
+                //we must remove then re-enter the value
+                tempCount = numbVars.GetValueOrDefault(literal)+1;
+                numbVars.Remove(literal);
+                numbVars.Add(literal, tempCount);
                 //updates highest value
                 if(highestVal < numbVars.GetValueOrDefault(literal)){
                     highestVal = numbVars.GetValueOrDefault(literal);
