@@ -134,8 +134,8 @@ public class GJDM3Controller : ControllerBase {
 public class KadensSimpleVerifierController : ControllerBase {
 
     // Return Generic Solver Class
-    [HttpGet]
-    public String getInstance() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         KadensSimple verifier = new KadensSimple();
 
@@ -145,7 +145,7 @@ public class KadensSimpleVerifierController : ControllerBase {
     }
 
     // Solve a instance given a certificate
-    [HttpGet]
+    [HttpGet("solve")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 SAT3Problem = new SAT3(problemInstance);
