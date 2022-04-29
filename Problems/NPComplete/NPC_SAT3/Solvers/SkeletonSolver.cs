@@ -26,9 +26,7 @@ class SkeletonSolver : ISolver {
     }
     // --- Methods Including Constructors ---
     public SkeletonSolver(SAT3 sat3) {
-        //The example problem can be solved in O(n) time just by evaluating if any of the expressions dont have conflicting variables ie(!x and x)
-
-
+        Console.WriteLine("SkeletonSolver");
     }
 
     // //Takes in a new SATState with boolean values written to the states and evaluates them
@@ -79,9 +77,7 @@ class SkeletonSolver : ISolver {
 
     // Return type varies
     public Dictionary<string, bool> solve(SAT3 sat3) {
-
-
-                ////O(n!*pruning function?)
+        ////O(n!)
         // while(!solutionFound && !satQueue.isEmpty()):
         // 	var = varQueue.pop() //O(1)
         // 	if(var != null):
