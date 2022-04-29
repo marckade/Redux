@@ -88,7 +88,7 @@ class SkeletonSolver : ISolver {
         //if any entries are "!false" or "true" return null
         //else if "false" or "!true" is encountered remove it from the List and return the modified List
         //Check for satisfiablility
-        retVal = null;
+        int retVal = null;
         if(boolExp.Length == 1 && boolExp.get(0).toString() == "()"){
             retVal = 1;
         }

@@ -1,4 +1,5 @@
 
+using API.Problems.NPComplete.NPC_SAT3;
 
 public class SAT3PQObject{
     public SAT3 SATState;
