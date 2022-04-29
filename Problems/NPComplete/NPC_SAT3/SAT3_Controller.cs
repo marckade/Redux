@@ -165,7 +165,7 @@ public class SkeletonSolverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
-    public String getGeneric() {
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SkeletonSolver solver = new SkeletonSolver();
 
@@ -176,7 +176,7 @@ public class SkeletonSolverController : ControllerBase {
 
     // Solve a instance given a certificate
     [HttpGet("solve")]
-    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+    public String solveInstance([FromQuery]string problemInstance) {
         // Implement solver here
         return "RETURN YOUR SOLVER RESULTS HERE";
     }
