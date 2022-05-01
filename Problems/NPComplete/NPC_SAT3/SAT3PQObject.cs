@@ -8,14 +8,18 @@ class SAT3PQObject{
     public Dictionary<string, int> varWeights;
     public Dictionary<string, bool> varStates;
     public PriorityQueue<string, int> varPQ;
+    public string nextVar;
 
     public SAT3PQObject(SAT3 inSAT3, int newDepth, int totalVariables){
         SATState = inSAT3;
-        PriorityQueue<string, int> varPQ = makeVarPQ(inSAT3.literals);
+        // PriorityQueue<string, int> varPQ = makeVarPQ(inSAT3.literals);
+        string nextVar = string.Empty;
         int depth = newDepth;
         int totalVars = totalVariables;
         varWeights = new Dictionary<string, int>();
         varStates = new Dictionary<string, bool>();
+        initNextVar();
+        // Console.WriteLine("nextVar after init is : " + nextVar);
         // int smallestClauseSize = 3;
     }
 
@@ -27,7 +31,7 @@ class SAT3PQObject{
     //     //we pop the variable, remove it from the VarPQ and remove and replace all affected variables while updating the var weights in the hashmap
     // }
 
-    private string getHighestVar(){
+    private int getHighestVal(){
         string highVar = string.Empty;
         int highVal = 0;
         foreach(KeyValuePair<string, int> kvp in this.varWeights){
@@ -36,52 +40,56 @@ class SAT3PQObject{
                 highVar = kvp.Key;
             }
         }
-        return highVar;
+        // Console.WriteLine("highVar is : " + highVar);
+        return highVal;
     }
 
-    public void setVarStates(Dictionary<string, bool> newVarStates){
-        this.varStates = newVarStates;
+    private void setVarStates(Dictionary<string, bool> newVarStates){
+        Dictionary<string, bool> copyDict = new Dictionary<string, bool>();
+        foreach(KeyValuePair<string, bool> kvp in newVarStates){
+            copyDict.Add(kvp.Key, kvp.Value);
+        }
+        this.varStates = copyDict;
     }
 
-    public void setVarWeights(Dictionary<string, int> newVarWeights){
-        this.varWeights = newVarWeights;
+    private void setVarWeights(Dictionary<string, int> newVarWeights){
+        Dictionary<string, int> copyDict = new Dictionary<string, int>();
+        foreach(KeyValuePair<string, int> kvp in newVarWeights){
+            copyDict.Add(kvp.Key, kvp.Value);
+        }
+        this.varWeights = copyDict;
     }
 
     public int getPQWeight(){
-        //TODO: WRITE COMPARATOR FUNCTION
-        // int priority;
-        //if the varQs next element has a size of 1 set PQ weight to -1
-        // if(this.SATState)
-        //else the method should prioritize depth and lower varQ priority
-        return this.totalVars - this.depth - this.varWeights.GetValueOrDefault(getHighestVar());
+        return this.totalVars - this.depth - getHighestVal();
         
     }
 
     //Returns the two sats 
     public List<SAT3PQObject> createSATChildren(int depth, int totalNumberOfVariables){
-        string var = this.varPQ.Dequeue();
+        // string var = this.varPQ.Dequeue();
         List<SAT3PQObject> outList = new List<SAT3PQObject>();
-        outList.Add(createNewSatState(var, true, depth, totalNumberOfVariables));
-        outList.Add(createNewSatState(var, false, depth, totalNumberOfVariables));
+        outList.Add(createNewSatState(true, depth, totalNumberOfVariables));
+        outList.Add(createNewSatState(false, depth, totalNumberOfVariables));
         return outList;
     }
 
     //Takes in a variable and a boolean value and returns the new SATState
     //Returns null if the new state would be unviable
-    private SAT3PQObject createNewSatState(string var, bool boolValue, int depth, int totalNumberOfVariables){ //This is the meat and potatoes of the solver
+    private SAT3PQObject createNewSatState(bool boolValue, int depth, int totalNumberOfVariables){ //This is the meat and potatoes of the solver
         //update the variables to the string representation of the boolean value
         //pass the modified clause to the evaluateBooleanExpression method
         //if the evaluation returns a viable expression it will return a string else it will returns null
         //return the result
 
-        //adds the variable boolean state dictonary
-        this.varStates.Add(var, boolValue);
+        // Console.WriteLine("nextVar at run is : " + this.nextVar);
 
         
         //create a new phiInput
         //Then construct a new SAT3 with that phi input
         string newPhiExpression = "(";
         string tempExpression = "";
+        string expLiteral;
 
         //THIS IS THE CODE THAT PROCESSES THE CREATION OF THE NEW STATE
         //THIS DOES NOT CHECK SATISFIABILITY
@@ -94,15 +102,24 @@ class SAT3PQObject{
             tempExpression = "";
             //eval code
             foreach(string expVar in boolExp){
+                // Console.WriteLine(expVar);
+                expLiteral = getVarFromLiteral(expVar); //expVar[expVar.Length - 1].ToString();
                 //if the var
-                if(expVar.Contains(var)){
+                if(expLiteral.Equals(this.nextVar)){ // expVar.Contains(this.nextVar)
                     //checks if the boolean value returns true, if so accepts the expression and breaks the loop
-                    if((expVar[0] == '!' && boolValue == false) || boolValue == true){
-                        //UPDATE HM
-                        updateHM(boolExp, var);
-                        tempExpression = null;
-                        break;
+                    if(expVar.Length > 0){
+                        if((expVar[0] == '!' && boolValue == false) || boolValue == true){
+                            //UPDATE HM
+                            updateVarWeights(boolExp, this.nextVar);
+                            tempExpression = string.Empty;
+                            break;
+                        }
                     }
+                    else{
+                        Console.WriteLine("empty literal found");
+                        //Does an empty literal mean an invalid expression?
+                    }
+
                 }
                 //if the tempExpression is longer than 0 then add the conditional OR statement
                 else{
@@ -115,24 +132,47 @@ class SAT3PQObject{
                 }
             }
             //if expression was not satisfied adds the modified expression to the phi statement
-            if(tempExpression != null){
+            if(tempExpression != string.Empty){
                 newPhiExpression += "(" + tempExpression + ")";
             }
         }
         newPhiExpression += ")";
 
-        //Returns null if its an invalid expression
-        // if(newPhiExpression == "()"){
-        //     return null;
+        //update dictionary
+        // this.varStates.Add(this.nextVar, boolValue);
+
+        //create new object
+        SAT3PQObject newSATObj = new SAT3PQObject(new SAT3(newPhiExpression), depth + 1, totalNumberOfVariables);
+        newSATObj.setVarStates(this.varStates);
+        newSATObj.setVarWeights(this.varWeights);
+        //adds the new state to the objects state of vars
+        // if(this.nextVar != null){
+        //adds var to the next state
+        if(!newSATObj.varStates.ContainsKey(this.nextVar)){
+            newSATObj.varStates.Add(this.nextVar, boolValue);
+        }
+        else{
+            Console.WriteLine("The variable : " + this.nextVar + " already exists in seen variables");
+            Console.WriteLine("the variable is set to : " + this.varStates.GetValueOrDefault(this.nextVar).ToString());
+            Console.WriteLine("The system is currently evaulating it at : " + boolValue.ToString());
+        }
+        
+        // Console.WriteLine("created New SAT State");
         // }
-        return(new SAT3PQObject(new SAT3(newPhiExpression), depth + 1, totalNumberOfVariables));
+        foreach(string s in newSATObj.SATState.literals){
+            Console.WriteLine(s);
+        }
+        Console.WriteLine("done");
+
+        return newSATObj;
     }
 
-    public void updateHM(List<string> exp, string var){
+    //updates the dictionary that holds the variable weights
+    public void updateVarWeights(List<string> exp, string var){
         int itemWeight;
         string tVar;
         foreach(string expVar in exp){
-            tVar = expVar[expVar.Length -1].ToString();
+            tVar = getVarFromLiteral(expVar);//expVar[expVar.Length -1].ToString();
 
             if(!tVar.Equals(var)){
                 itemWeight = this.varWeights.GetValueOrDefault(expVar);// TryGetValue(expVar);
@@ -144,33 +184,41 @@ class SAT3PQObject{
 
     //code that generates the variable priority queue
     //modifies the priority value so it sorts high to low
-    private PriorityQueue<string, int> makeVarPQ(List<string> literals){
+    public void initVarWeights(){
         Dictionary<string, int> numbVars = new Dictionary<string, int>();
-        int highestVal = 0;
         int tempCount;
+        string literalKey;
 
-        foreach(string literal in literals){
-            if(!numbVars.ContainsKey(literal[literal.Length - 1].ToString())){
-                numbVars.Add(literal, 1);
-                // count++;
+        foreach(string literal in this.SATState.literals){
+            literalKey = getVarFromLiteral(literal);
+            if(!numbVars.ContainsKey(literalKey)){
+                numbVars.Add(literalKey, 1);
             }
             else{//increments value
                 //we must remove then re-enter the value
-                tempCount = numbVars.GetValueOrDefault(literal)+1;
-                numbVars.Remove(literal);
-                numbVars.Add(literal, tempCount);
-                //updates highest value
-                if(highestVal < numbVars.GetValueOrDefault(literal)){
-                    highestVal = numbVars.GetValueOrDefault(literal);
-                }
+                tempCount = numbVars.GetValueOrDefault(literalKey)+1;
+                numbVars.Remove(literalKey);
+                numbVars.Add(literalKey, tempCount);
             }
         }
+        // Console.WriteLine("weights initialized");
+        //sets the variable weights to the newly created dictionary with their count
+        setVarWeights(numbVars);
+    }
 
-        PriorityQueue<string, int> newVarPQ = new PriorityQueue<string, int>();
-        foreach(KeyValuePair<string, int> kvp in numbVars){
-            newVarPQ.Enqueue(kvp.Key, highestVal - kvp.Value);
+    //gets the next variable for evaluation and removes the variable from the literals
+    private void initNextVar(){
+        string newVar = getVarFromLiteral(SATState.literals[0]);
+        SATState.literals.RemoveAt(0);
+        // Console.WriteLine("newVar is : " + newVar);
+        this.nextVar = newVar;
+    }
+
+    //returns the literal without the !
+    private string getVarFromLiteral(string literal){
+        if(literal.StartsWith('!')){
+            return literal.Substring(1);
         }
-
-        return newVarPQ;
+        return literal;
     }
 }

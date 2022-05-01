@@ -58,11 +58,14 @@ class SkeletonSolver : ISolver {
 
         //add initial SAT3 to PQ
         curSat = new SAT3PQObject(sat3, 0, totalNumberOfVariables);
+        // Console.WriteLine("curSat's nextVar after init : " + curSat.nextVar);
+        curSat.initVarWeights();
         satPQ.Enqueue(curSat, curSat.getPQWeight());
         
         //O(n!*pruning function)
         while(!solutionFound && satPQ.Count > 0){
             curSat = satPQ.Dequeue();
+            // Console.WriteLine("curSat's nextVar is : " + curSat.nextVar);
             List<SAT3PQObject> childSATs = curSat.createSATChildren(curSat.depth, totalNumberOfVariables); //ADD VARIABLE TO INPUT
             foreach(SAT3PQObject childSAT in childSATs){
                 eval = evaluateBooleanExpression(childSAT.SATState.clauses);
@@ -96,8 +99,16 @@ class SkeletonSolver : ISolver {
         //else if "false" or "!true" is encountered remove it from the List and return the modified List
         //Check for satisfiablility
         int retVal = 0;
-        if(boolExp.Count == 1 && boolExp[0].ToString() == "()"){
+        if(boolExp.Count == 1 && string.IsNullOrEmpty(boolExp[0][0])){
             retVal = 1;
+            // Console.WriteLine("SUCCESS!!!!!!!!!!!!!!");
+        }
+        //THERE IS AN ISSUE WITH THE EVALUATION
+        // Console.WriteLine(boolExp.ToString());
+        Console.WriteLine("evaluating");
+        Console.WriteLine(boolExp.Count);
+        foreach(List<string> sL in boolExp){
+            Console.Write(sL[0]);
         }
 
 
@@ -125,7 +136,7 @@ class SkeletonSolver : ISolver {
         int count = 0;
         foreach(string literal in literals){
             if(!numbVars.ContainsKey(literal[literal.Length - 1].ToString())){
-                numbVars.Add(literal, 1);
+                numbVars.Add(literal[literal.Length - 1].ToString(), 1);
                 count++;
             }
         }
