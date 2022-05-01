@@ -62,54 +62,50 @@ class SkeletonSolver : ISolver {
         curSat.initVarWeights();
         satPQ.Enqueue(curSat, curSat.getPQWeight());
         
-        //O(n!*pruning function)
+        //O(n!)
         while(!solutionFound && satPQ.Count > 0){
             curSat = satPQ.Dequeue();
             // Console.WriteLine("curSat's nextVar is : " + curSat.nextVar);
             List<SAT3PQObject> childSATs = curSat.createSATChildren(curSat.depth, totalNumberOfVariables); //ADD VARIABLE TO INPUT
             foreach(SAT3PQObject childSAT in childSATs){
-                eval = evaluateBooleanExpression(childSAT.SATState.clauses);
-                if(eval == 0){
-                    //undecided
-                    satPQ.Enqueue(childSAT, childSAT.getPQWeight());
-                }
-                else if(eval == 1){
-                    //satisfiable
-                    //WRITE ASSIGNMENTS OF VARIABLES
-                    solutionFound = true;
-                    solution = childSAT.varStates;
-
+                //Invalid statements are evaluated upon creation and returned as null
+                if(childSAT != null){
+                    eval = evaluateBooleanExpression(childSAT.SATState.clauses);
+                    if(eval == 0){
+                        //undecided
+                        satPQ.Enqueue(childSAT, childSAT.getPQWeight());
+                    }
+                    else if(eval == 1){
+                        //satisfiable
+                        //WRITE ASSIGNMENTS OF VARIABLES
+                        solutionFound = true;
+                        solution = childSAT.varStates;
+                        break; //SOLUTION FOUND EXIT FOR EACH
+                    }
                 }
                 //else unsolvable therefore dont add
             }
         }
-        // Console.WriteLine();
-
-
-        // Logic goes here
         return solution;
     }
 
-    // //Takes in a new SATState with boolean values written to the states and evaluates them
-    //Returns -1 if unsolvable
+    //Takes in a new SATState with boolean values written to the states and evaluates them
+    //Invalid expressions are filtered at the creation of the expressions and do not make it to this point of the process
     //Returns 0 if undecided
     //Returns 1 if satisfiable
     private int evaluateBooleanExpression(List<List<string>> boolExp){
-        //if any entries are "!false" or "true" return null
-        //else if "false" or "!true" is encountered remove it from the List and return the modified List
         //Check for satisfiablility
         int retVal = 0;
         if(boolExp.Count == 1 && string.IsNullOrEmpty(boolExp[0][0])){
             retVal = 1;
-            // Console.WriteLine("SUCCESS!!!!!!!!!!!!!!");
         }
         //THERE IS AN ISSUE WITH THE EVALUATION
         // Console.WriteLine(boolExp.ToString());
-        Console.WriteLine("evaluating");
-        Console.WriteLine(boolExp.Count);
-        foreach(List<string> sL in boolExp){
-            Console.Write(sL[0]);
-        }
+        // Console.WriteLine("evaluating");
+        // Console.WriteLine(boolExp.Count);
+        // foreach(List<string> sL in boolExp){
+        //     Console.Write(sL[0]);
+        // }
 
 
         //variables for looping through boolExp
@@ -117,7 +113,12 @@ class SkeletonSolver : ISolver {
         string exp;
         //evaluates the string representation of each clause, if the expression is empty then it is unsatisfiable
         while(retVal == 0 && index < boolExp.Count){
-            exp = boolExp[index].ToString();
+            exp = "";
+            foreach(string clause in boolExp[index]){
+                exp += clause;
+            }
+
+            // Console.WriteLine(exp);
             if(exp.Equals("()")){
                 retVal = -1;
             }

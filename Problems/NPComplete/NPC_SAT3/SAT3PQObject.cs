@@ -90,15 +90,12 @@ class SAT3PQObject{
         string newPhiExpression = "(";
         string tempExpression = "";
         string expLiteral;
+        bool isValid = true;
 
         //THIS IS THE CODE THAT PROCESSES THE CREATION OF THE NEW STATE
         //THIS DOES NOT CHECK SATISFIABILITY
         //Iterates through each clause evaluating and creating the new state and writting it to the appropriate out list
         foreach(List<string> boolExp in this.SATState.clauses){
-            //adds the AND clause inbetween statements
-            if(newPhiExpression.EndsWith(")")){
-                newPhiExpression += "&";
-            }
             tempExpression = "";
             //eval code
             foreach(string expVar in boolExp){
@@ -108,17 +105,21 @@ class SAT3PQObject{
                 if(expLiteral.Equals(this.nextVar)){ // expVar.Contains(this.nextVar)
                     //checks if the boolean value returns true, if so accepts the expression and breaks the loop
                     if(expVar.Length > 0){
-                        if((expVar[0] == '!' && boolValue == false) || boolValue == true){
+                        if((expVar[0] == '!' && boolValue == false) || (expVar[0] != '!' && boolValue == true)){
                             //UPDATE HM
                             updateVarWeights(boolExp, this.nextVar);
                             tempExpression = string.Empty;
                             break;
                         }
+                        //if the variable is the last literal the clause is invalid
+                        else if(boolExp.Count == 1){
+                            isValid = false;
+                        }
                     }
-                    else{
-                        Console.WriteLine("empty literal found");
-                        //Does an empty literal mean an invalid expression?
-                    }
+                    // else{
+                    //     Console.WriteLine("empty literal found");
+                    //     //Does an empty literal mean an invalid expression?
+                    // }
 
                 }
                 //if the tempExpression is longer than 0 then add the conditional OR statement
@@ -133,38 +134,41 @@ class SAT3PQObject{
             }
             //if expression was not satisfied adds the modified expression to the phi statement
             if(tempExpression != string.Empty){
+                //adds the AND clause inbetween statements
+                if(newPhiExpression.EndsWith(")")){
+                    newPhiExpression += "&";
+                }
+                //adds the temp expression
                 newPhiExpression += "(" + tempExpression + ")";
             }
         }
         newPhiExpression += ")";
+        // Console.WriteLine(this.nextVar + " : " + boolValue.ToString());
+        // Console.WriteLine(newPhiExpression);
 
         //update dictionary
         // this.varStates.Add(this.nextVar, boolValue);
-
-        //create new object
-        SAT3PQObject newSATObj = new SAT3PQObject(new SAT3(newPhiExpression), depth + 1, totalNumberOfVariables);
-        newSATObj.setVarStates(this.varStates);
-        newSATObj.setVarWeights(this.varWeights);
-        //adds the new state to the objects state of vars
-        // if(this.nextVar != null){
-        //adds var to the next state
-        if(!newSATObj.varStates.ContainsKey(this.nextVar)){
-            newSATObj.varStates.Add(this.nextVar, boolValue);
+        if(isValid){
+            //create new object
+            SAT3PQObject newSATObj = new SAT3PQObject(new SAT3(newPhiExpression), depth + 1, totalNumberOfVariables);
+            newSATObj.setVarStates(this.varStates);
+            newSATObj.setVarWeights(this.varWeights);
+            //adds the new state to the objects state of vars
+            // if(this.nextVar != null){
+            //adds var to the next state
+            if(!newSATObj.varStates.ContainsKey(this.nextVar)){
+                newSATObj.varStates.Add(this.nextVar, boolValue);
+            }
+            else{
+                Console.WriteLine("The variable : " + this.nextVar + " already exists in seen variables");
+                Console.WriteLine("the variable is set to : " + this.varStates.GetValueOrDefault(this.nextVar).ToString());
+                Console.WriteLine("The system is currently evaulating it at : " + boolValue.ToString());
+            }
+            return newSATObj;
         }
         else{
-            Console.WriteLine("The variable : " + this.nextVar + " already exists in seen variables");
-            Console.WriteLine("the variable is set to : " + this.varStates.GetValueOrDefault(this.nextVar).ToString());
-            Console.WriteLine("The system is currently evaulating it at : " + boolValue.ToString());
+            return null;
         }
-        
-        // Console.WriteLine("created New SAT State");
-        // }
-        foreach(string s in newSATObj.SATState.literals){
-            Console.WriteLine(s);
-        }
-        Console.WriteLine("done");
-
-        return newSATObj;
     }
 
     //updates the dictionary that holds the variable weights
