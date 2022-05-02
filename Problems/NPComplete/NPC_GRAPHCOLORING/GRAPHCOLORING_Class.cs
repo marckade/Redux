@@ -16,7 +16,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
 
-    private string _G =  string.Empty;
+    private string _instance  =  string.Empty;
 
     private List<string> _nodes =  new List<string>();
 
@@ -26,7 +26,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
     private SortedSet<string> _colors = new SortedSet<string>(){"0", "1","2"};
   
-    private int _K;
+    private int _K = 3;
 
     private IgbokweSolver _defaultSolver = new IgbokweSolver();
     private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
@@ -64,13 +64,13 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         }
     }
 
-    public String G {
+    public String instance  {
         get{
-            return _G;
+            return _instance ;
         }
 
         set {
-            _G = value;
+            _instance  = value;
         }
     }
 
@@ -140,18 +140,19 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
     #region Constructors
       public GRAPHCOLORING() {
-        _G = defaultInstance;
-        nodes = getNodes(_G);
-        edges  = getEdges(_G);
-        K = getK(_G);
+        _instance  = defaultInstance;
+        nodes = getNodes(_instance );
+        edges  = getEdges(_instance );
+        K = getK(_instance );
+        setColors(K);
         initializeDictionary();
       
     }
     public GRAPHCOLORING(string GInput) {
-        _G = GInput;
-        nodes = getNodes(_G);
-        edges  = getEdges(_G);
-        K = getK(_G);
+        _instance  = GInput;
+        nodes = getNodes(_instance );
+        edges  = getEdges(_instance );
+        K = getK(_instance );
         setColors(K);
         initializeDictionary();
         
@@ -275,7 +276,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         // Parse k
         problem += this._K + "}";
         this._defaultInstance = problem;
-        this.G = this._defaultInstance;
+        this._instance  = this._defaultInstance;
 
     }
 
