@@ -7,29 +7,19 @@ class SAT3PQObject{
     public int totalVars;
     public Dictionary<string, int> varWeights;
     public Dictionary<string, bool> varStates;
-    // public PriorityQueue<string, int> varPQ;
     public string nextVar;
 
     public SAT3PQObject(SAT3 inSAT3, int newDepth, int totalVariables){
         SATState = inSAT3;
-        // PriorityQueue<string, int> varPQ = makeVarPQ(inSAT3.literals);
         string nextVar = string.Empty;
         int depth = newDepth;
         int totalVars = totalVariables;
         varWeights = new Dictionary<string, int>();
         varStates = new Dictionary<string, bool>();
         initNextVar();
-        // Console.WriteLine("nextVar after init is : " + nextVar);
-        // int smallestClauseSize = 3;
     }
 
-    //called when initializing the object.
-    //reads through the parsed input string removing all ! symbols then assigning them
-    // private PriorityQueue<string, int> makeVarPQ(){
-    //     //TODO: WRITE PRIORITY QUEUE FOR VARS
-
-    //     //we pop the variable, remove it from the VarPQ and remove and replace all affected variables while updating the var weights in the hashmap
-    // }
+    //gets the variable witht he highest occurance
 
     private int getHighestVal(){
         string highVar = string.Empty;
@@ -109,7 +99,7 @@ class SAT3PQObject{
                             //UPDATE HM
                             updateVarWeights(boolExp, this.nextVar);
                             tempExpression = string.Empty;
-                            break;
+                            break; //Exit the foreach as the clause has been satisfied
                         }
                         //if the variable is the last literal the clause is invalid
                         else if(boolExp.Count == 1){
@@ -224,5 +214,31 @@ class SAT3PQObject{
             return literal.Substring(1);
         }
         return literal;
+    }
+
+    //Removes all duplicates from clauses
+    //ran only on the initial expression in SkeletonSolver.solve
+    public void removeDuplicatesFromClauses(){
+        List<List<string>> clausesWithoutDups = new List<List<string>>();
+        List<string> tempList;
+        HashSet<string> seen = new HashSet<string>();
+        foreach(List<string> clause in this.SATState.clauses){
+            seen.Clear();
+            foreach(string literal in clause){
+                if(!seen.Contains(literal)){
+                    seen.Add(literal);
+                }
+                // else{
+                //     Console.WriteLine("duplicate found : " + literal);
+                // }
+            }
+            tempList = seen.ToList();
+            // foreach(string s in tempList){
+            //     Console.Write(s + " ");
+            // }
+            // Console.WriteLine();
+            clausesWithoutDups.Add(tempList);
+        }
+        this.SATState.clauses = clausesWithoutDups;
     }
 }

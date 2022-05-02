@@ -12,7 +12,7 @@ Expected Return:
 
 
 Invalid Argument:
-http://0.0.0.0:27000/SkeletonSolver/solve/?problemInstance=(!x2 | !x3) %26 (!x1 | !x3 | !x3) %26 (!x2 | x3 | !x1) %26 (!x3) %26 (x3)
+http://0.0.0.0:27000/SkeletonSolver/solve/?problemInstance=(!x2 | !x3) %26 (!x1 | !x3 | !x3) %26 (!x2 | x3 | !x1) %26 (!x3 | !x3) %26 (x3)
 Solvable? NO
 Expected Return:
 null

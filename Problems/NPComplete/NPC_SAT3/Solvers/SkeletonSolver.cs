@@ -32,6 +32,10 @@ class SkeletonSolver : ISolver {
     public SkeletonSolver() {
     }
 
+
+
+
+
     // Return type varies
     public Dictionary<string, bool> solve(SAT3 sat3) {
         ////O(n!)
@@ -48,7 +52,7 @@ class SkeletonSolver : ISolver {
         // 		//this pruning function would attempt to imediatly evaluate the first standalone expression as the next node (after current processing is done)
         
         //CATCHES INVALID INPUTS
-        Console.WriteLine(sat3.literals.Count);
+        // Console.WriteLine(sat3.literals.Count);
         if(sat3.literals.Count < 2){
             Console.WriteLine("No literals provided");
             return null;
@@ -69,6 +73,7 @@ class SkeletonSolver : ISolver {
         curSat = new SAT3PQObject(sat3, 0, totalNumberOfVariables);
         // Console.WriteLine("curSat's nextVar after init : " + curSat.nextVar);
         curSat.initVarWeights();
+        curSat.removeDuplicatesFromClauses();
         satPQ.Enqueue(curSat, curSat.getPQWeight());
         
         //O(n!)
