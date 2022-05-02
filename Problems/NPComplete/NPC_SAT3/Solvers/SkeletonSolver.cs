@@ -46,11 +46,20 @@ class SkeletonSolver : ISolver {
         // 		//a potential pruning function would be to prioritize any variable that is alone in a statement and evaluating that to its required value (ex (y) must evaluate to true)
         // 		//to resolve cases where there are two contradicting statements ex (y), (!y) always choose the first statment to satisfy before evaluating the whole expression
         // 		//this pruning function would attempt to imediatly evaluate the first standalone expression as the next node (after current processing is done)
+        
+        //CATCHES INVALID INPUTS
+        Console.WriteLine(sat3.literals.Count);
+        if(sat3.literals.Count < 2){
+            Console.WriteLine("No literals provided");
+            return null;
+        }
+        
         bool solutionFound = false;
         PriorityQueue<SAT3PQObject, int> satPQ = new PriorityQueue<SAT3PQObject, int>();
         Dictionary<string, bool> solution = null;
 
         int totalNumberOfVariables = findVariables(sat3.literals);
+
 
         // string var;
         SAT3PQObject curSat;

@@ -7,7 +7,7 @@ class SAT3PQObject{
     public int totalVars;
     public Dictionary<string, int> varWeights;
     public Dictionary<string, bool> varStates;
-    public PriorityQueue<string, int> varPQ;
+    // public PriorityQueue<string, int> varPQ;
     public string nextVar;
 
     public SAT3PQObject(SAT3 inSAT3, int newDepth, int totalVariables){
