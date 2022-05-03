@@ -5,9 +5,9 @@ namespace API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
 class VCVerifierJanita : IVerifier {
 
     // --- Fields ---
-    private string _verifierName = "Generic Verifier";
-    private string _verifierDefinition = "This is a verifier for VERTEXCOVER";
-    private string _source = " ";
+    private string _verifierName = "Janita's Generic Verifier";
+    private string _verifierDefinition = "This verifier is a naive solver for Vertex Cover that does not have a clear origination. ";
+    private string _source = "No clear origination.";
     private string _complexity = "";
 
     // --- Properties ---

@@ -17,7 +17,7 @@ public class testController : ControllerBase {
     public String test() {
         VERTEXCOVER testObj = new VERTEXCOVER();
 
-        if (testObj.Gk == null) {
+        if (testObj.instance == null) {
             return testObj.defaultInstance;
         }
         else {
