@@ -9,10 +9,10 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
 
     // --- Fields ---
     private string _problemName = "3-Dimensional Matching";
-    private string _formalDefinition = "<M,X,Y,Z> | M is a subset of X*Y*Z,|X|=|Y|=|Z| and a subset of M, M', exists, where |M'| = |A|,|B|,|C|, and no two elements of M' agree in any cooridinate" ;
-    private string _problemDefinition = "The 3-DImensional Matching problem, is when, given 3 equally sived sets, X, Y, and Z, and a set of constraints M, which is a subset of XxYxZ, are you able to create a set of 3-tuples, which contains each element of X, Y, and Z in one and only one 3-tuple, while following the constraints M. ";
+    private string _formalDefinition = "{<M,X,Y,Z> | M is a subset of X*Y*Z,|X|=|Y|=|Z| and a subset of M, M', exists, where |M'| = |A|,|B|,|C|, and no two elements of M' agree in any cooridinate}" ;
+    private string _problemDefinition = "3-Dimensional Matching is when, given 3 equally sized sets, X, Y, and Z, and a set of constraints M, being a subset of XxYxZ, are you able to select a set of constraints which contain each element of X, Y, and Z in one and only one 3-tuple.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{x1,x2,x3,x4}{y1,y2,y3,y4}{z1,z2,z3,z4}{x1,y2,z1}{x1,y2,z4}{x2,y1,z1}{x2,y1,z2}{x2,y2,z1}{x2,y2,z4}{x2,y4,z3}{x3,y3,z2}{x3,y3,z3}{x4,y1,z1}{x4,y1,z2}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
+    private string _defaultInstance = "{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
     private string _instance = string.Empty;
     private List<List<List<string>>> _problem;
     private List<string> _X;
