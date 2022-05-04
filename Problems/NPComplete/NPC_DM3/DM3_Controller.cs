@@ -62,7 +62,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class HurkensShriverController : ControllerBase {
+public class HurkensSchrijverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
