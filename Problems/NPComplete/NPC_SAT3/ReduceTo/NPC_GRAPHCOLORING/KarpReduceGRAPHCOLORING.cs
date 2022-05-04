@@ -255,11 +255,9 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //Set NodeColoring 
         reducedGRAPHCOLORING.nodeColoring = coloring;
 
-        // Set color set
-        reducedGRAPHCOLORING.colors = new SortedSet<string>();
-
+    
         //The number of colors that satisfy the problem
-        reducedGRAPHCOLORING.K = 0;
+        reducedGRAPHCOLORING.K = 3;
         reducedGRAPHCOLORING.parseProblem();
 
    

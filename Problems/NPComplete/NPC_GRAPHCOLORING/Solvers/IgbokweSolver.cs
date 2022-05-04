@@ -84,15 +84,25 @@ public IgbokweSolver() {
     public string  Solve(GRAPHCOLORING problem){
         _nodeList = initialize(problem);
         _uncoloredNodes = problem.nodes;
+        initializeColors(problem.K);
         computeSaturation(problem, _uncoloredNodes);
         Dsatur(problem);
         problem.K = getChromaticNumber(problem.nodeColoring);
 
         string solution = "{ ( ";  
+        int count = 0;
         foreach(KeyValuePair < string, string > keyValues in problem.nodeColoring) {  
-            solution += keyValues.Key + " : " + keyValues.Value + ", ";  
+            count++;
+            if(count < problem.nodeColoring.Count -1){
+                solution += keyValues.Key + " : " + keyValues.Value + ", ";  
+            }else{
+                break;
+            }
+           
         }  
-        solution += " ) :"+ problem.K+"}";
+        KeyValuePair < string, string > keyValue = problem.nodeColoring.ElementAt(problem.nodeColoring.Count -1);
+    
+        solution += keyValue.Key+" : " + keyValue.Value + " ) :"+ problem.K+"}";
        
 
         return solution;
@@ -179,11 +189,6 @@ public IgbokweSolver() {
             }
             
         
-            if(checkColors.Count == 0){
-                colors.Add(colors.Count);
-                checkColors.Add(colors.Count);
-            }
-
 
            int newColor = checkColors.ElementAt(0);
             Node tempNode = _nodeList[currentNode.name];
@@ -232,6 +237,13 @@ public IgbokweSolver() {
         }
 
         return adjNodes;
+    }
+    
+
+    private void initializeColors(int K){
+        for( int i = 0; i< K; i++){
+            _colors.Add(i);
+        }
     }
 #endregion
 
