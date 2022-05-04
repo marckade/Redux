@@ -86,7 +86,24 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
         reducedVERTEXCOVER.edges = edges;
         reducedVERTEXCOVER.K = (CLIQUEInstance.nodes.Count - CLIQUEInstance.K); 
 
+        // --- Generate G string for new CLIQUE ---
+        string nodesString = "";
+        foreach (string nodes in CLIQUEInstance.nodes) {
+            nodesString += nodes + ",";
+        }
+        nodesString = nodesString.Trim(',');
 
+        string edgesString = "";
+        foreach (KeyValuePair<string,string> edge in edges) {
+            edgesString += "(" + edge.Key + "," + edge.Value + ")" + " & ";
+        }
+        edgesString = edgesString.Trim('&');
+
+        int kint = reducedVERTEXCOVER.K;
+
+        string G = "{{" + nodesString + "} : {" + edgesString + "} : " + kint.ToString() + "}";
+        reducedVERTEXCOVER.instance = G; 
+        Console.Write(reducedVERTEXCOVER.instance);
         reductionTo = reducedVERTEXCOVER;
         return reducedVERTEXCOVER;
 
