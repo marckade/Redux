@@ -146,13 +146,13 @@ class GJDM3 : IReduction<SAT3, DM3> {
             Mstring += "}";
         }
             
-        string G = "{" + Xstring + "}{" + Ystring + "}{" + Zstring + "}" +Mstring;
+        string instance = "{" + Xstring + "}{" + Ystring + "}{" + Zstring + "}" +Mstring;
         
         reduced3DM.X = X;
         reduced3DM.Y = Y;
         reduced3DM.Z = Z;
         reduced3DM.M = M;
-        reduced3DM.G = G;
+        reduced3DM.instance = instance;
 
         //return new THREE_DM();
         return reduced3DM;

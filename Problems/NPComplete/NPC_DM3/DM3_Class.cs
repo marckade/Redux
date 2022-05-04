@@ -13,7 +13,7 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     private string _problemDefinition = "The 3-DImensional Matching problem, is when, given 3 equally sived sets, X, Y, and Z, and a set of constraints M, which is a subset of XxYxZ, are you able to create a set of 3-tuples, which contains each element of X, Y, and Z in one and only one 3-tuple, while following the constraints M. ";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{x1,x2,x3,x4}{y1,y2,y3,y4}{z1,z2,z3,z4}{x1,y2,z1}{x1,y2,z4}{x2,y1,z1}{x2,y1,z2}{x2,y2,z1}{x2,y2,z4}{x2,y4,z3}{x3,y3,z2}{x3,y3,z3}{x4,y1,z1}{x4,y1,z2}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
-    private string _G = string.Empty;
+    private string _instance = string.Empty;
     private List<List<List<string>>> _problem;
     private List<string> _X;
     private List<string> _Y;
@@ -49,12 +49,12 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
             return _defaultInstance;
         }
     }
-    public string G {
+    public string instance {
         get {
-            return _G;
+            return _instance;
         }
         set {
-            _G = value;
+            _instance = value;
         }
     }
     public List<string> X {
@@ -112,16 +112,16 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
 
     // --- Methods Including Constructors ---
     public DM3() {
-        _G = defaultInstance;
-        _problem = ParseProblem(_G);
+        _instance = defaultInstance;
+        _problem = ParseProblem(_instance);
         _X = _problem[0][0];
         _Y = _problem[0][1];
         _Z = _problem[0][2];
         _M = _problem[1];
     }
-    public DM3(string GInput) {
-        _G = GInput;
-        _problem = ParseProblem(_G);
+    public DM3(string instanceInput) {
+        _instance = instanceInput;
+        _problem = ParseProblem(_instance);
         _X = _problem[0][0];
         _Y = _problem[0][1];
         _Z = _problem[0][2];
@@ -129,23 +129,23 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     }
 
 /*************************************************
-parseSet(List<string> Set,string GInput,int start), is meant to take one set inside of a string, and put it into an array
-it is refferenced in ParseProblem, The Set should be an empty List<string>, created by ParseProblem, GInput should be 
+parseSet(List<string> Set,string instanceInput,int start), is meant to take one set inside of a string, and put it into an array
+it is refferenced in ParseProblem, The Set should be an empty List<string>, created by ParseProblem, instanceInput should be 
 input of PareseProblem, and start should be the index of the '{' at the begining of the set in the string. It works by
 iterating through each charecter from the start index, until it reaches the end of the set '}'. and crestes string of anything
 between ','s excluding spaces, and places those strings inside Set.
 **************************************************/
-    private void parseSet(List<string> Set,string GInput,int start){
+    private void parseSet(List<string> Set,string instanceInput,int start){
         int i = start + 1;
         string temp = "";
-        while(GInput[i]!= '}'){
-            if(GInput[i] == ','){
+        while(instanceInput[i]!= '}'){
+            if(instanceInput[i] == ','){
                 if(temp != ""){Set.Add(temp);}
                 temp = "";
                 i++;
             }
-            else if(GInput[i] != ' '){
-                temp += GInput[i];
+            else if(instanceInput[i] != ' '){
+                temp += instanceInput[i];
                 i++;
             }
             else{i++;}
@@ -154,16 +154,16 @@ between ','s excluding spaces, and places those strings inside Set.
         return;
     }
     /*************************************************
-   ParseProblem(string GInput) takes the string representation of the 3-Dimensional Matching problem, and returns a 
+   ParseProblem(string instanceInput) takes the string representation of the 3-Dimensional Matching problem, and returns a 
    3 dimensional list, the first depths of list, contains two lists, one with the sets X,Y,and Z, and the other containing all the sets in M.
    ***************************************************/
-    public List<List<List<string>>> ParseProblem(string GInput) {
+    public List<List<List<string>>> ParseProblem(string instanceInput) {
         List<List<List<string>>> Problem = new List<List<List<string>>>(){new List<List<string>>(), new List<List<string>>()};
         int setIndex = 0;
-        for(int i = 0; i< GInput.Length; i++){
-            if(GInput[i] == '{'){ // at each occurence of {parseSet is called to put each element in the set, divided by commas, into the Problem list.
+        for(int i = 0; i< instanceInput.Length; i++){
+            if(instanceInput[i] == '{'){ // at each occurence of {parseSet is called to put each element in the set, divided by commas, into the Problem list.
                 List<string> Set = new List<string>();
-                parseSet(Set,GInput,i);
+                parseSet(Set,instanceInput,i);
                 Problem[setIndex].Add(Set);
             }
             if(Problem[0].Count == 3){setIndex = 1;}

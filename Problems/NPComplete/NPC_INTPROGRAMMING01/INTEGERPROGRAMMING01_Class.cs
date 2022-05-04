@@ -16,7 +16,7 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     private List<int> _d = new List<int>();
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
-    private string _G = string.Empty;
+    private string _instance = string.Empty;
 
     // --- Properties ---
     public string problemName {
@@ -54,12 +54,12 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
             return _defaultVerifier;
         }
     }
-    public string G {
+    public string instance {
         get {
-            return _G;
+            return _instance;
         }
         set {
-            _G = value;
+            _instance = value;
         }
     }
     public List<List<int>> C {
@@ -82,16 +82,16 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     
     // --- Methods Including Constructors ---
     public INTPROGRAMMING01() {
-        _G = defaultInstance;
-        C = getMatrixC(_G);
-        d = getVectorD(_G);
+        _instance = defaultInstance;
+        C = getMatrixC(_instance);
+        d = getVectorD(_instance);
 
     }
-    public INTPROGRAMMING01(string GInput) {
+    public INTPROGRAMMING01(string instanceInput) {
         // TODO Validate there are only a maximum of 3 literals in each clause
-        _G = GInput;
-        C = getMatrixC(_G);
-        d = getVectorD(_G);
+        _instance = instanceInput;
+        C = getMatrixC(_instance);
+        d = getVectorD(_instance);
 
         
     }
