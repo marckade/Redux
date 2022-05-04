@@ -7,8 +7,10 @@ class VCSolverJanita : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This is a generic solver for VERTEXCOVER";
-    private string _source = "This person ____";
+    private string _solverDefinition = "This approximation solver is a naive solver for Vertex Cover that does not have a clear origination, although there have been many improvements upon it published. It returns the cover of size 2n when the optimal solution is n. This solver was sourced from the book: Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2001) [1990]. 'Section 35.1: The vertex-cover problem'. Introduction to Algorithms (2nd ed.). MIT Press and McGraw-Hill. pp. 1024–1027. ISBN 0-262-03293-7.";
+    private string _source = "Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2001) [1990]. 'Section 35.1: The vertex-cover problem'. Introduction to Algorithms (2nd ed.). MIT Press and McGraw-Hill. pp. 1024–1027. ISBN 0-262-03293-7.";
+
+    private string _complexity = "";
 
     // --- Properties ---
     public string solverName {

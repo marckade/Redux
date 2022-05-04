@@ -16,22 +16,6 @@ namespace API.Problems.NPComplete.NPC_SAT3;
 
 [ApiController]
 [Route("[controller]")]
-public class testController : ControllerBase {
-    
-    public String test() {
-        SAT3 testObj = new SAT3();
-
-        if (testObj.phi == null) {
-            return testObj.defaultInstance;
-        }
-        else {
-            return "REALLY? API!";
-        }
-    }
-}
-
-[ApiController]
-[Route("[controller]")]
 public class SAT3GenericController : ControllerBase {
 
     [HttpGet()]
@@ -55,8 +39,8 @@ public class SAT3GenericController : ControllerBase {
 [Route("[controller]")]
 public class SipserReduceToCliqueStandardController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         SipserReduction reduction = new SipserReduction(defaultSAT3);
@@ -64,10 +48,12 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        SAT3 defaultSAT3 = new SAT3(problemInstance);
+        SipserReduction reduction = new SipserReduction(defaultSAT3);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
@@ -78,8 +64,8 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
 
 public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault(){
+    [HttpGet("info")]
+    public String getInfo(){
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
@@ -89,15 +75,19 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
     }
 
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+
+
+
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance){
+         
+        KarpReduction reduction = new KarpReduction(new SAT3(problemInstance));
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
 }
-// public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
 
 [ApiController]
@@ -148,8 +138,8 @@ public class GJDM3Controller : ControllerBase {
 public class KadensSimpleVerifierController : ControllerBase {
 
     // Return Generic Solver Class
-    [HttpGet]
-    public String getInstance() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         KadensSimple verifier = new KadensSimple();
 
@@ -159,7 +149,7 @@ public class KadensSimpleVerifierController : ControllerBase {
     }
 
     // Solve a instance given a certificate
-    [HttpGet]
+    [HttpGet("solve")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 SAT3Problem = new SAT3(problemInstance);
@@ -179,7 +169,7 @@ public class SkeletonSolverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
-    public String getGeneric() {
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SkeletonSolver solver = new SkeletonSolver();
 
@@ -197,6 +187,7 @@ public class SkeletonSolverController : ControllerBase {
 
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
+
     }
 
 }

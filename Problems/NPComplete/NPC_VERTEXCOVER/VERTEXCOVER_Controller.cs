@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
+using API.Problems.NPComplete.NPC_ARCSET;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
+
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
@@ -14,7 +17,7 @@ public class testController : ControllerBase {
     public String test() {
         VERTEXCOVER testObj = new VERTEXCOVER();
 
-        if (testObj.Gk == null) {
+        if (testObj.instance == null) {
             return testObj.defaultInstance;
         }
         else {
@@ -50,12 +53,22 @@ public class VERTEXCOVERGenericController : ControllerBase {
 [Route("[controller]")]
 public class VCVerifierController : ControllerBase {
 
-    [HttpGet]
-    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+    [HttpGet("info")]
+    public String getGeneric() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VCVerifierJanita verifier = new VCVerifierJanita();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(verifier, options);
+        return jsonString;
+    }
+
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
         VCVerifierJanita verifier = new VCVerifierJanita();
-    
+
         Boolean response = verifier.Verify(VCProblem,certificate);
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
@@ -83,14 +96,21 @@ public class testInstanceController : ControllerBase {
 [Route("[controller]")]
 public class VCSolverController : ControllerBase {
 
-      [HttpGet]
-    public String getInstance([FromQuery]string problemInstance) {
+    [HttpGet("info")]
+    public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        //VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
         VCSolverJanita solver = new VCSolverJanita();
-        List<KeyValuePair<string, string>> solvedInstance = solver.Solve(problemInstance);
-        //Boolean response = verifier.verify(ARCSETProblem,certificate);
-        // Send back to API user
+        
+        string jsonString = JsonSerializer.Serialize(solver, options);
+        return jsonString;
+        
+    }
+
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string problemInstance){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
+        List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problemInstance);
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }
@@ -98,4 +118,43 @@ public class VCSolverController : ControllerBase {
 
 }
 
+
+[ApiController]
+[Route("[controller]")]
+public class LawlerKarpController : ControllerBase {
+
+      [HttpGet("info")] // url parameter
+
+      public String getInfo(){
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            LawlerKarp reduction = new LawlerKarp();
+    
+            String jsonString = JsonSerializer.Serialize(reduction,options);
+            return jsonString;
+      }
+
+    
+      [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
+        Console.Write("VertexCover controller getReduce:");
+        Console.Write(problemInstance);
+        //from query is a query parameter
+
+        Console.WriteLine(problemInstance);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        //UndirectedGraph UG = new UndirectedGraph(problemInstance);
+        //string reduction = UG.reduction();
+        //Boolean response = verifier.verify(ARCSETProblem,certificate);
+        // Send back to API user
+        VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
+        LawlerKarp reduction = new LawlerKarp(vCover);
+       // ARCSET reducedArcset = reduction.reduce();
+        //string reducedStr = reducedArcset.instance;
+
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+
+    }
+
+}
 

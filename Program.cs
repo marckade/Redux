@@ -16,8 +16,13 @@ app.Use((context, next) =>
         return next.Invoke();
     });
 
-app.UseHttpsRedirection();
-
+// app.UseHttpsRedirection();
+app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+    
 app.UseAuthorization();
 
 app.MapControllers();

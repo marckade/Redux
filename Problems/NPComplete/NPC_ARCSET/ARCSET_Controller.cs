@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using System;
 using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
-using API.Problems.NPComplete.NPC_ExactCover.ReduceTo.NPC_ARCSET;
+using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -33,7 +33,7 @@ public class ARCSETGenericController : ControllerBase {
 [Route("[controller]")]
 public class AlexArcsetVerifierController : ControllerBase {
 
-    [HttpGet]
+    [HttpGet("info")]
     public String getInstance(){
         var options = new JsonSerializerOptions{WriteIndented = true};
         AlexArcsetVerifier verifier = new AlexArcsetVerifier();
@@ -41,7 +41,7 @@ public class AlexArcsetVerifierController : ControllerBase {
         return jsonString;
     }    
 
-      [HttpGet]
+      [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
@@ -93,29 +93,32 @@ public class AlexNaiveSolverController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class NCOV_TO_ARCSETReductionController : ControllerBase {
+public class LawlerKarpController : ControllerBase {
 
-      [HttpGet("info")] // url parameter
-
-      public String getDefault(){
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            NCOV_TO_ARCSETReduction reduction = new NCOV_TO_ARCSETReduction();
+    [HttpGet("info")] // url parameter
+    public String getDefault(){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        LawlerKarp reduction = new LawlerKarp();
     
-            String jsonString = JsonSerializer.Serialize(reduction,options);
-            return jsonString;
-      }
+        String jsonString = JsonSerializer.Serialize(reduction,options);
+        return jsonString;
+    }
 
     
-      [HttpGet]
+    [HttpGet]
     public String getInstance([FromQuery]string problemInstance) {
         
         //from query is a query parameter
+
         Console.WriteLine(problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         UndirectedGraph UG = new UndirectedGraph(problemInstance);
         string reduction = UG.reduction();
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
+
+        // LawlerKarp reduction = new LawlerKarp();
+        // reduction.reduce()
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
 

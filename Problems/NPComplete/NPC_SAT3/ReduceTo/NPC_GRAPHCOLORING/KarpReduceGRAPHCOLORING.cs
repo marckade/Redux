@@ -9,11 +9,11 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
     
     # region Fields
-    private string _reductionDefinition = "Karps reduction converts clauses from 3SAT into colored nodes in a graph for which a valid coloring exists.";
-    private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    private string _reductionDefinition = "Karp's reduction converts each clause from a 3CNF into an OR gadgets to establish the truth assignments using labels.";
+    private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
-     private string _complexity = "";
+     private string _complexity = "O(n^2)";
 
     # endregion
 
@@ -136,10 +136,8 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //Set GRAPHCOLORING nodes
         reducedGRAPHCOLORING.nodes = nodes;
 
+
      // -------------  Add edges -----------------------
-
-
-
      List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
     
 
@@ -161,6 +159,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         for (int i = 0; i < variables.Count; i++)
         {
             addEdge(variables[i], palette[2], edges);
+            addEdge(palette[2], variables[i], edges);
 
         }
 
@@ -215,31 +214,27 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         }
 
 
-        // Combine clause, variable and palette  
-
+        // add edges between clauses and literals
          for (int i = 0; i < clauses.Count; i++)
         {
 
-            for (int j = 0; j < clauses[i].Count; j++)
-            {
-                // Connect variables to clause gadgets 
+               // Connect variables to clause gadgets 
                 addEdge(SAT3Instance.clauses[i][0],clauses[i][0], edges);
                 addEdge(SAT3Instance.clauses[i][1],clauses[i][1], edges);
                 addEdge(SAT3Instance.clauses[i][2],clauses[i][4], edges);
 
-
-                
                 addEdge(clauses[i][0], SAT3Instance.clauses[i][0], edges);
                 addEdge(clauses[i][1], SAT3Instance.clauses[i][1], edges);
                 addEdge(clauses[i][4], SAT3Instance.clauses[i][2], edges);
+
 
 
                 // Connect color blue to (a V b)
                 addEdge(clauses[i][2] , palette[2], edges);
                 addEdge(palette[2], clauses[i][2],edges);
 
-                // Connect color blue and red to ((a V b) V c )
 
+                // Connect color blue and red to ((a V b) V c )
                 // color : red 
                 addEdge(clauses[i][5] , palette[0], edges);
                 addEdge(palette[0], clauses[i][5],edges);
@@ -248,8 +243,11 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
                 //  color : blue 
                 addEdge(clauses[i][5] , palette[2], edges);
                 addEdge(palette[2], clauses[i][5],edges);
-            }
+            
         }
+
+
+
 
         // Set GRAPHCOLORING edges 
         reducedGRAPHCOLORING.edges = edges;
@@ -257,13 +255,14 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //Set NodeColoring 
         reducedGRAPHCOLORING.nodeColoring = coloring;
 
+        // Set color set
+        reducedGRAPHCOLORING.colors = new SortedSet<string>();
+
         //The number of colors that satisfy the problem
         reducedGRAPHCOLORING.K = 0;
+        reducedGRAPHCOLORING.parseProblem();
 
-     
-       // Instance of GRAPHCOLORING
-       _reductionTo = reducedGRAPHCOLORING;
-
+   
         return reducedGRAPHCOLORING;
     }
 

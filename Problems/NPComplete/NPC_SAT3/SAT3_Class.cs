@@ -14,7 +14,7 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
     private string _defaultInstance = "(x1 | !x2 | x3) & (!x1 | x3 | x1) & (x2 | !x3 | x1)";
     private SkeletonSolver _defaultSolver = new SkeletonSolver();
     private KadensSimple _defaultVerifier = new KadensSimple();
-    private string _phi = string.Empty;
+    private string _instance = string.Empty;
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
 
@@ -54,12 +54,12 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
             return _defaultVerifier;
         }
     }
-    public string phi {
+    public string instance {
         get {
-            return _phi;
+            return _instance;
         }
         set {
-            _phi = value;
+            _instance = value;
         }
     }
     public List<List<string>> clauses {
@@ -82,17 +82,17 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
 
     // --- Methods Including Constructors ---
     public SAT3() {
-        _phi = defaultInstance;
-        clauses = getClauses(_phi);
-        literals = getLiterals(_phi);
+        _instance = defaultInstance;
+        clauses = getClauses(_instance);
+        literals = getLiterals(_instance);
     }
     public SAT3(string phiInput) {
 
         // TODO Validate there are only a maximum of 3 literals in each clause
 
-        _phi = phiInput;
-        clauses = getClauses(_phi);
-        literals = getLiterals(_phi);
+        _instance = phiInput;
+        clauses = getClauses(_instance);
+        literals = getLiterals(_instance);
     }
 
     public List<List<string>> getClauses(string phiInput) {

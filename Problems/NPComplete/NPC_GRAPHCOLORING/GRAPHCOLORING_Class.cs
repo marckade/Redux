@@ -11,12 +11,12 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
     #region Fields
     private readonly string _problemName = "GRAPHCOLORING";
     private readonly string _formalDefinition = "{<G,k> | G is a graph that has a k-coloring}";
-    private readonly string _problemDefinition = "Graph Coloring is an assignment of labels traditionally called colors to elements of a graph subject to certain constraints.The most common example of graph coloring is the vertex coloring which in its simplest form,  is a way of coloring the vertices of a graph such that no two adjacent vertices are of the same color; this is called a vertex coloring";
+    private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
 
-    private string _G =  string.Empty;
+    private string _instance  =  string.Empty;
 
     private List<string> _nodes =  new List<string>();
 
@@ -24,10 +24,9 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
     private Dictionary<string, string> _nodeColoring = new Dictionary<string, string>();
 
-    private SortedSet<string> _colors = new SortedSet<string>();
+    private SortedSet<string> _colors = new SortedSet<string>(){"0", "1","2"};
   
-    private int _K;
-
+    private int _K = 3;
 
     private IgbokweSolver _defaultSolver = new IgbokweSolver();
     private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
@@ -65,13 +64,13 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         }
     }
 
-    public String G {
+    public String instance  {
         get{
-            return _G;
+            return _instance ;
         }
 
         set {
-            _G = value;
+            _instance  = value;
         }
     }
 
@@ -110,7 +109,6 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         }
         set {
             _K = value;
-            setColors(K);
         }
     }
 
@@ -142,19 +140,19 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
     #region Constructors
       public GRAPHCOLORING() {
-        _G = defaultInstance;
-        nodes = getNodes(_G);
-        edges  = getEdges(_G);
-        K = getK(_G);
+        _instance  = defaultInstance;
+        nodes = getNodes(_instance );
+        edges  = getEdges(_instance );
+        K = getK(_instance );
         setColors(K);
         initializeDictionary();
       
     }
     public GRAPHCOLORING(string GInput) {
-        _G = GInput;
-        nodes = getNodes(_G);
-        edges  = getEdges(_G);
-        K = getK(_G);
+        _instance  = GInput;
+        nodes = getNodes(_instance );
+        edges  = getEdges(_instance );
+        K = getK(_instance );
         setColors(K);
         initializeDictionary();
         
@@ -258,6 +256,8 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
 
 
 
+
+
     public void parseProblem() {
 
         string problem = "{{ {";
@@ -276,7 +276,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         // Parse k
         problem += this._K + "}";
         this._defaultInstance = problem;
-        this.G = this._defaultInstance;
+        this._instance  = this._defaultInstance;
 
     }
 

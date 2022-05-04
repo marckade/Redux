@@ -28,21 +28,43 @@ public class CLIQUEGenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class CVC_ReduceTo_VERTEXCOVERController : ControllerBase {
+public class sipserReduceToVCController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault() {
+    // [HttpGet]
+    // public String getDefault() {
+    //     var options = new JsonSerializerOptions { WriteIndented = true };
+    //     CLIQUE defaultCLIQUE = new CLIQUE();
+    //     Clique_to_VertexCoverReduction reduction = new Clique_to_VertexCoverReduction(defaultCLIQUE);
+    //     string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+    //     return jsonString;
+    // }
+
+    // [HttpGet("{instance}")]
+    // public String getInstance() {
+    //     var options = new JsonSerializerOptions { WriteIndented = true };
+    //     string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
+    //     return jsonString;
+    // }
+
+    [HttpGet("info")]
+
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE defaultCLIQUE = new CLIQUE();
-        Clique_to_VertexCoverReduction reduction = new Clique_to_VertexCoverReduction(defaultCLIQUE);
-        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+        sipserReduction reduction = new sipserReduction(defaultCLIQUE);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
+        CLIQUE defaultCLIQUE = new CLIQUE(problemInstance);
+        //SAT3 defaultSAT3 = new SAT3(problemInstance);
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+        sipserReduction reduction = new sipserReduction(defaultCLIQUE);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
