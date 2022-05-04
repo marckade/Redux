@@ -81,15 +81,21 @@ public IgbokweSolver() {
 
 #region Methods
 
-    public Tuple<Dictionary<string, string>, int> Solve(GRAPHCOLORING problem){
+    public string  Solve(GRAPHCOLORING problem){
         _nodeList = initialize(problem);
         _uncoloredNodes = problem.nodes;
         computeSaturation(problem, _uncoloredNodes);
         Dsatur(problem);
         problem.K = getChromaticNumber(problem.nodeColoring);
+
+        string solution = "{ ( ";  
+        foreach(KeyValuePair < string, string > keyValues in problem.nodeColoring) {  
+            solution += keyValues.Key + " : " + keyValues.Value + ", ";  
+        }  
+        solution += " ) :"+ problem.K+"}";
        
 
-        return Tuple.Create(problem.nodeColoring, problem.K);
+        return solution;
     }
 
     private int getChromaticNumber( Dictionary<string, string> nodeColoring){

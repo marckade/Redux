@@ -86,7 +86,7 @@ public class IgbokweSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
         IgbokweSolver solver = new IgbokweSolver();
-        Tuple<Dictionary<string, string>, int> solvedInstance = solver.Solve(GRAPHCOLORINGProblem);
+        string solvedInstance = solver.Solve(GRAPHCOLORINGProblem);
       
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
