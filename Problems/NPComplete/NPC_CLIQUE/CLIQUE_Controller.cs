@@ -64,7 +64,7 @@ public class sipserReduceToVCController : ControllerBase {
         //SAT3 defaultSAT3 = new SAT3(problemInstance);
         //SipserReduction reduction = new SipserReduction(defaultSAT3);
         sipserReduction reduction = new sipserReduction(defaultCLIQUE);
-        string jsonString = JsonSerializer.Serialize(reduction, options);
+        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
         return jsonString;
     }
 
