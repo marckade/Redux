@@ -180,9 +180,14 @@ public class SkeletonSolverController : ControllerBase {
 
     // Solve a instance given a certificate
     [HttpGet("solve")]
-    public String solveInstance([FromQuery]string problemInstance) {
-        // Implement solver here
-        return "RETURN YOUR SOLVER RESULTS HERE";
+    public String solveInstance([FromQuery]string problemInstance) { //FromQuery]string certificate, 
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 SAT3_PROBLEM = new SAT3(problemInstance);
+        Dictionary<string, bool> solution = SAT3_PROBLEM.defaultSolver.solve(SAT3_PROBLEM);
+
+        string jsonString = JsonSerializer.Serialize(solution, options);
+        return jsonString;
+
     }
 
 }
