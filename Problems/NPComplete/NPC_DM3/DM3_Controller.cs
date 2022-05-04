@@ -48,8 +48,13 @@ public class GenericVerifierDM3Controller : ControllerBase {
         GenericVerifierDM3 verifier = new GenericVerifierDM3();
 
         Boolean response = verifier.verify(DM3_PROBLEM,certificate);
+        string responseString;
+        if(response){
+            responseString = "True";
+        }
+        else{responseString = "False";}
         // Send back to API user
-        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+        string jsonString = JsonSerializer.Serialize(responseString, options);
         return jsonString;
     }
 
@@ -57,7 +62,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class HurkensShriverSolverController : ControllerBase {
+public class HurkensShriverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
@@ -78,7 +83,13 @@ public class HurkensShriverSolverController : ControllerBase {
         DM3 problem = new DM3(problemInstance);
         List<List<string>> solution = problem.defaultSolver.solve(problem);
 
-        string jsonString = JsonSerializer.Serialize(solution, options);
+        string solutionString = string.Empty;
+        foreach(var list in solution){
+            solutionString += "{" + list[0]+", "+list[1]+", "+list[2]+"}";
+                
+        }
+
+        string jsonString = JsonSerializer.Serialize(solutionString, options);
         return jsonString;
     }
 
