@@ -94,8 +94,8 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 [Route("[controller]")]
 public class KarpIntProgStandardController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         KarpIntProgStandard reduction = new KarpIntProgStandard(defaultSAT3);
@@ -103,10 +103,12 @@ public class KarpIntProgStandardController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        SAT3 defaultSAT3 = new SAT3(problemInstance);
+        KarpIntProgStandard reduction = new KarpIntProgStandard(defaultSAT3);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
@@ -115,9 +117,8 @@ public class KarpIntProgStandardController : ControllerBase {
 [ApiController]
 [Route("[controller]")]
 public class GareyJohnsonController : ControllerBase {
-
-    [HttpGet]
-    public String getDefault() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         GareyJohnson reduction = new GareyJohnson(defaultSAT3);
@@ -125,10 +126,12 @@ public class GareyJohnsonController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        SAT3 defaultSAT3 = new SAT3(problemInstance);
+        GareyJohnson reduction = new GareyJohnson(defaultSAT3);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 }
