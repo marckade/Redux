@@ -64,8 +64,8 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
 
 public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault(){
+    [HttpGet("info")]
+    public String getInfo(){
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
@@ -75,15 +75,19 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
     }
 
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+
+
+
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance){
+         
+        KarpReduction reduction = new KarpReduction(new SAT3(problemInstance));
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
 }
-// public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
 
 [ApiController]
