@@ -1,7 +1,7 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
- class IgbokweSolver : ISolver {
+ class DanielBrelazSolver : ISolver {
 
 
 
@@ -74,17 +74,19 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 #endregion
 
 #region  Constructors 
-public IgbokweSolver() {
+public DanielBrelazSolver() {
 
 }
 #endregion 
 
 #region Methods
 
+    // Solves graphcoloring 
+
     public string  Solve(GRAPHCOLORING problem){
         _nodeList = initialize(problem);
         _uncoloredNodes = problem.nodes;
-        initializeColors(problem.K);
+        initializeColors(problem.nodes.Count);
         computeSaturation(problem, _uncoloredNodes);
         Dsatur(problem);
         problem.K = getChromaticNumber(problem.nodeColoring);
