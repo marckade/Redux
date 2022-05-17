@@ -68,7 +68,7 @@ public class IgbokweVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class IgbokweSolverController : ControllerBase {
+public class DanielBrelazSolverController : ControllerBase {
 
     [HttpGet("info")]
     public String getGeneric(){
