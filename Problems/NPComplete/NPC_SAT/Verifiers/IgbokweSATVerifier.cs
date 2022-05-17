@@ -1,7 +1,7 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_SAT;
 
-namespace Redux.Problems.NPComplete.NPC_SAT.Verifiers;
+namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
 
     public class IgbokweSATVerifier : IVerifier {
 

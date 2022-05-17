@@ -1,6 +1,7 @@
+using API.Interfaces;
+using API.Problems.NPComplete.NPC_SAT;
 
-
-namespace Redux.Problems.NPComplete.NPC_SAT.Solvers;
+namespace API.Problems.NPComplete.NPC_SAT.Solvers;
 
     public class GenericSolver : ISolver {
 

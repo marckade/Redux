@@ -4,20 +4,22 @@ using API.Problems.NPComplete.NPC_SAT.Verifiers;
 
 
 
-namespace Redux.Problems.NPComplete.NPC_SAT;
+namespace API.Problems.NPComplete.NPC_SAT;
 
-    public class SAT : IProblem<GenericSolver, IgbokweSATVerifier> {
+ class SAT : IProblem<GenericSolver, IgbokweSATVerifier> {
 
 
     #region Fields
 
     // --- Fields ---
     private string _problemName = "SAT";
-    private string _formalDefinition = "PHI | PHI is a satisfiabile Boolean forumla in 3CNF";
-    private string _problemDefinition = "SAT, or the Boolean satisfiability problem, is a problem that asks what is the fastest algorithm to tell for a given formula in Boolean algebra (with unknown number of variables) whether it is satisfiable, that is, whether there is some combination of the (binary) values of the variables that will give 1";
-    private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    private string _formalDefinition = "PHI | PHI is a satisfiable Boolean formula";
+    private string _problemDefinition = "SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi to result in 'True'";
+    private string _source = ".";
     private string _defaultInstance = "(x1,x2*,x3) ^ (x1*,x3,x1) ^ (x2,x3*,x1)";
     private string _instance = string.Empty;
+    private List<List<string>> _clauses = new List<List<string>>();
+    private List<string> _literals = new List<string>();
    
     private GenericSolver _defaultSolver = new GenericSolver();
     private IgbokweSATVerifier _defaultVerifier = new IgbokweSATVerifier();
@@ -58,6 +60,24 @@ namespace Redux.Problems.NPComplete.NPC_SAT;
         }
     }
 
+     public List<List<string>> clauses {
+        get {
+            return _clauses;
+        }
+        set {
+            _clauses = value;
+        }
+    }
+    public List<string> literals {
+        get {
+            return _literals;
+        }
+        set {
+            _literals = value;
+        }
+    }
+
+
     public String instance  {
         get{
             return _instance ;
@@ -74,6 +94,12 @@ namespace Redux.Problems.NPComplete.NPC_SAT;
         }
     }
 
+      public GenericSolver defaultSolver {
+        get {
+            return _defaultSolver;
+        }
+    }
+
 
     #endregion
 
@@ -81,11 +107,11 @@ namespace Redux.Problems.NPComplete.NPC_SAT;
     // --- Methods Including Constructors ---
     public SAT() {
         _instance = defaultInstance;
-        _defaultSolver = new GenericSolver(this);
+        _defaultSolver = new GenericSolver();
     }
     public SAT(string phiInput) {
         _instance = phiInput;
-        _defaultSolver = new GenericSolver(this);
+        _defaultSolver = new GenericSolver();
     }
 
     #endregion
@@ -94,6 +120,48 @@ namespace Redux.Problems.NPComplete.NPC_SAT;
     #region Methods
 
     public void ParseProblem(string phiInput) {
+    }
+
+     public List<List<string>> getClauses(string phiInput) {
+        
+        List<List<string>> clauses = new List<List<string>>();
+
+        // Strip extra characters
+        string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
+
+        // Parse on | to collect each clause
+        string[] rawClauses = strippedInput.Split('|');
+
+        foreach(string clause in rawClauses) {
+            List<string> clauseToAdd = new List<string>();
+            string[] literals = clause.Split('&');
+
+            foreach(string literal in literals) {
+                clauseToAdd.Add(literal);
+            }
+            clauses.Add(clauseToAdd);
+        }
+
+        return clauses;
+
+    }
+
+    public List<string> getLiterals(string phiInput) {
+        
+        List<string> literals = new List<string>();
+        string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
+
+        // Parse on | to collect each clause
+        string[] rawClauses = strippedInput.Split('|');
+
+        foreach(string clause in rawClauses) {
+            string[] rawLiterals = clause.Split('&');
+
+            foreach(string literal in rawLiterals) {
+                literals.Add(literal);
+            }
+        }
+        return literals;
     }
 
     #endregion

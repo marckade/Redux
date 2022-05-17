@@ -3,7 +3,7 @@ using System.Text.Json;
 using API.Problems.NPComplete.NPC_SAT;
 using API.Problems.NPComplete.NPC_SAT.Solvers;
 using API.Problems.NPComplete.NPC_SAT.Verifiers;
-namespace Redux.Problems.NPComplete.NPC_SAT;
+namespace API.Problems.NPComplete.NPC_SAT;
 
 
 
@@ -17,7 +17,7 @@ namespace Redux.Problems.NPComplete.NPC_SAT;
             var options = new JsonSerializerOptions { WriteIndented = true };
             string jsonString = JsonSerializer.Serialize(new SAT(), options);
             return jsonString;
-      }
+        }
 
         [HttpGet("{instance}")]
         public String getInstance() {
@@ -47,7 +47,7 @@ namespace Redux.Problems.NPComplete.NPC_SAT;
         public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
 
            
-       
+         return "";
         }
 
 }
