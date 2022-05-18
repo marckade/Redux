@@ -21,7 +21,7 @@ public class ARCSETGenericController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
+    [HttpGet()]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
@@ -125,4 +125,33 @@ public class ArcsetJsonPayloadController : ControllerBase {
         return jsonString;
     }
 
+}
+    
+[ApiController]
+[Route("[controller]")]
+public class ARCSETDevController : ControllerBase {
+
+    [HttpGet]
+    public String getDefault() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ARCSET arcset = new ARCSET();
+        Console.WriteLine("TEST");
+        DirectedGraph arcGraph = arcset.directedGraph;
+        String jsonString = arcGraph.toDotJson();
+        //string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
+        return jsonString;
     }
+
+    [HttpGet("instance")]
+    public String getInstance([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        
+        ARCSET arcset = new ARCSET(problemInstance);
+        DirectedGraph arcGraph = arcset.directedGraph;
+        String jsonString = arcGraph.toDotJson();
+
+        return jsonString;
+    }
+}
+
+    

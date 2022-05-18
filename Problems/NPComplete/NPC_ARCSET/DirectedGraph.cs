@@ -1,7 +1,10 @@
 //DirectedGraph.cs
 //Can take a string representation of a directed graph and turn it into a directed graph object.
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -496,6 +499,52 @@ class DirectedGraph:Graph{
     return toStr;
 
     }
+
+
+    /** 
+    * Returns an ArrayList of Strings that is essentially a dot representation of the graph.
+    **/
+    public ArrayList toDotArrayList(){
+
+        ArrayList dotList = new ArrayList();
+  
+        string preStr = @"digraph {";
+        dotList.Add(preStr);
+
+        preStr = @"node[style = ""filled""]";
+        dotList.Add(preStr);
+
+        
+        String dotNode = ""; 
+        foreach(Node n in _nodeList){
+        dotNode=$"{n.name}";
+        dotList.Add(dotNode);
+        }
+
+        foreach(Edge e in _edgeList){
+            KeyValuePair<string,string> eKVP = e.toKVP();
+            string edgeStr = $"{eKVP.Key} -> {eKVP.Value}";
+            dotList.Add(edgeStr);
+        }
+
+        dotList.Add("}");
+        
+        return dotList;
+       
+        
+    }
+
+    /**
+    * Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. dependent on toDotArrayList().
+    **/
+    public String toDotJson(){
+        
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ArrayList dotList = this.toDotArrayList();
+        string jsonString = JsonSerializer.Serialize(dotList, options);
+        return jsonString;
+    }
+
 
 
     public List<Node> getNodeList{
