@@ -21,10 +21,10 @@ public class ARCSETGenericController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet()]
-    public String getInstance() {
+    [HttpGet("instance")]
+    public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
+        string jsonString = JsonSerializer.Serialize(new ARCSET(problemInstance), options);
         return jsonString;
     }
 }
@@ -138,6 +138,8 @@ public class ARCSETDevController : ControllerBase {
         Console.WriteLine("TEST");
         DirectedGraph arcGraph = arcset.directedGraph;
         String jsonString = arcGraph.toDotJson();
+                Console.WriteLine(jsonString);
+
         //string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
         return jsonString;
     }

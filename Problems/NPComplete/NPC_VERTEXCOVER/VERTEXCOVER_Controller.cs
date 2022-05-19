@@ -40,9 +40,9 @@ public class VERTEXCOVERGenericController : ControllerBase {
     }
 
     [HttpGet("{instance}")]
-    public String getInstance() {
+    public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new VERTEXCOVER(), options);
+        string jsonString = JsonSerializer.Serialize(new VERTEXCOVER(problemInstance), options);
         return jsonString;
     }
 

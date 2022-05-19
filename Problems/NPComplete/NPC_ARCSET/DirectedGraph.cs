@@ -511,17 +511,19 @@ class DirectedGraph:Graph{
         string preStr = @"digraph {";
         dotList.Add(preStr);
 
-        preStr = @"node[style = ""filled""]";
+        string preStr2 = @"node[style = ""filled""]";
         dotList.Add(preStr);
 
         
-        String dotNode = ""; 
+        string dotNode = ""; 
+        string colorRed = "#d62728";
         foreach(Node n in _nodeList){
-        dotNode=$"{n.name}";
+        dotNode=$"{n.name} [{colorRed}]";
         dotList.Add(dotNode);
         }
 
         foreach(Edge e in _edgeList){
+            
             KeyValuePair<string,string> eKVP = e.toKVP();
             string edgeStr = $"{eKVP.Key} -> {eKVP.Value}";
             dotList.Add(edgeStr);
@@ -531,18 +533,41 @@ class DirectedGraph:Graph{
         
         return dotList;
        
-        
     }
 
     /**
-    * Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. dependent on toDotArrayList().
+    * Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
     **/
     public String toDotJson(){
+
+        string totalString = $"";
+        string preStr = @"digraph {";
+        totalString = totalString + preStr;
+
+        //string preStr2 = @"node[style = ""filled""]";
+        //totalString = totalString+preStr2;
+        
+        string dotNode = ""; 
+        string colorRed = "#d62728";
+        foreach(Node n in _nodeList){
+        dotNode=$"{n.name}";
+        //dotNode=$"{n.name} [{colorRed}]";
+        totalString = totalString+ dotNode + ",";
+        }
+        totalString = totalString.TrimEnd(',');
+
+        foreach(Edge e in _edgeList){
+            KeyValuePair<string,string> eKVP = e.toKVP();
+            string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
+            totalString = totalString + edgeStr;
+        }
+
+        totalString = totalString+ "\n}";
         
         var options = new JsonSerializerOptions { WriteIndented = true };
-        ArrayList dotList = this.toDotArrayList();
-        string jsonString = JsonSerializer.Serialize(dotList, options);
+        string jsonString = JsonSerializer.Serialize(totalString, options);
         return jsonString;
+
     }
 
 
