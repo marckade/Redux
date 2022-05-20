@@ -1,19 +1,19 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
- class IgbokweSolver : ISolver {
+ class DanielBrelazSolver : ISolver {
 
 
 
 #region Fields
-    private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This is a generic solver for GRAPHCOLORING";
-    private string _source = "";
+    private string _solverName = "Dsatur Solver";
+    private string _solverDefinition = "The Dsatur algorithm lables the vertices by choosing the uncolored vertex with the highest number of different adjacent colors, breaking ties using the highest degree induced by the number of uncolored vertices";
+    private string _source = "https://dl.acm.org/doi/10.1145/359094.359101";
     private Dictionary<string, Node> _nodeList = new Dictionary<string, Node>();
     private List<string> _uncoloredNodes = new List<string>();
-    private SortedSet<int> _colors = new SortedSet<int>(){0,1,2};
+    private SortedSet<int> _colors = new SortedSet<int>(){0};
 
-    private string _complexity = "";
+    private string _complexity = "O(n^2)";
 
 #endregion
 
@@ -74,22 +74,46 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 #endregion
 
 #region  Constructors 
-public IgbokweSolver() {
+public DanielBrelazSolver() {
 
 }
 #endregion 
 
 #region Methods
 
-    public Tuple<Dictionary<string, string>, int> Solve(GRAPHCOLORING problem){
+    // Solves graphcoloring 
+
+    public string  Solve(GRAPHCOLORING problem){
         _nodeList = initialize(problem);
         _uncoloredNodes = problem.nodes;
+        initializeColors(problem.nodes.Count);
         computeSaturation(problem, _uncoloredNodes);
         Dsatur(problem);
         problem.K = getChromaticNumber(problem.nodeColoring);
+
+        string solution = "{ ( ";  
+        // int count = 0;
+
+
+        for(int i =0; i< problem.nodeColoring.Count -1; i++ ){
+            KeyValuePair < string, string > value = problem.nodeColoring.ElementAt(i);
+            solution +=  value.Key + " : " + value.Value + ", "; 
+        }
+        // foreach(KeyValuePair < string, string > keyValues in problem.nodeColoring) {  
+        //     count++;
+        //     if(count < problem.nodeColoring.Count -1){
+        //         solution += keyValues.Key + " : " + keyValues.Value + ", ";  
+        //     }else{
+        //         break;
+        //     }
+           
+        // }  
+        KeyValuePair < string, string > keyValue = problem.nodeColoring.ElementAt(problem.nodeColoring.Count -1);
+    
+        solution += keyValue.Key+" : " + keyValue.Value + " ) :"+ problem.K+" }";
        
 
-        return Tuple.Create(problem.nodeColoring, problem.K);
+        return solution;
     }
 
     private int getChromaticNumber( Dictionary<string, string> nodeColoring){
@@ -173,11 +197,6 @@ public IgbokweSolver() {
             }
             
         
-            if(checkColors.Count == 0){
-                colors.Add(colors.Count);
-                checkColors.Add(colors.Count);
-            }
-
 
            int newColor = checkColors.ElementAt(0);
             Node tempNode = _nodeList[currentNode.name];
@@ -226,6 +245,13 @@ public IgbokweSolver() {
         }
 
         return adjNodes;
+    }
+    
+
+    private void initializeColors(int K){
+        for( int i = 0; i< K; i++){
+            _colors.Add(i);
+        }
     }
 #endregion
 

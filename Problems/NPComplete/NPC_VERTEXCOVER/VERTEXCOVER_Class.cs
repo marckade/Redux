@@ -8,11 +8,11 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
 
     // --- Fields ---
     private string _problemName = "VERTEXCOVER";
-    private string _formalDefinition = "<G, k> | G in an undirected graph that has a k-node vertex cover";
+    private string _formalDefinition = "{<G, k> | G in an undirected graph that has a k-node vertex cover}";
     private string _problemDefinition = "A vertex cover is a subset of nodes S, such that every edge in the graph, G, touches a node in S.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{{a,b,c,d,e,f,g} : {{a,b} & {a,c} & {c,d} & {c,e} & {d,f} & {e,f} & {e,g}} : 3}";
-    private string _Gk = string.Empty;
+    private string _instance = string.Empty;
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
@@ -51,12 +51,12 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
             return _defaultInstance;
         }
     }
-    public string Gk {
+    public string instance {
         get {
-            return _Gk;
+            return _instance;
         }
         set {
-            _Gk = value;
+            _instance = value;
         }
     }
 
@@ -103,19 +103,19 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         // string VCDefaultString = _defaultInstance;
         // _VCAsGraph = new UndirectedGraph();
         // _vertexCover = _vertexCover.ToString();
-        _Gk = defaultInstance;
-        nodes = getNodes(_Gk);
-        edges = getEdges(_Gk);
-        K = getK(_Gk);
+        _instance = defaultInstance;
+        nodes = getNodes(_instance);
+        edges = getEdges(_instance);
+        K = getK(_instance);
     
     }
-    public VERTEXCOVER(string GkInput) {
+    public VERTEXCOVER(string instanceInput) {
         // _VCAsGraph = new UndirectedGraph(GkInput);
         // _vertexCover = _VCAsGraph.ToString();
-        _Gk = GkInput;
-        nodes = getNodes(_Gk);
-        edges = getEdges(_Gk);
-        K = getK(_Gk);
+        _instance = instanceInput;
+        nodes = getNodes(_instance);
+        edges = getEdges(_instance);
+        K = getK(_instance);
     }
 
     public List<string> getNodes(string Ginput) {

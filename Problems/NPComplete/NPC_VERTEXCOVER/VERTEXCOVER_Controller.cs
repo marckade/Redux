@@ -17,7 +17,7 @@ public class testController : ControllerBase {
     public String test() {
         VERTEXCOVER testObj = new VERTEXCOVER();
 
-        if (testObj.Gk == null) {
+        if (testObj.instance == null) {
             return testObj.defaultInstance;
         }
         else {
@@ -111,10 +111,26 @@ public class VCSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
         List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problemInstance);
-        string jsonString = JsonSerializer.Serialize(solvedInstance, options);
+        string stringVC = "{";
+        stringVC += Environment.NewLine;
+        foreach (KeyValuePair<string, string> keyValue in solvedInstance)
+        {
+            string key = keyValue.Key;
+            string value = keyValue.Value;    
+            stringVC += "{Key: ";
+            stringVC += key;
+            stringVC += ", Value: ";
+            stringVC += value;
+            stringVC += "}, "; 
+            stringVC += Environment.NewLine;
+        } 
+        stringVC += "}";
+
+        Console.Write(stringVC);
+
+        string jsonString = JsonSerializer.Serialize(stringVC, options);
         return jsonString;
     }
-
 
 }
 

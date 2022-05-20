@@ -103,11 +103,11 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
         }
         dstring += ")";
 
-        string G = Cstring +"<="+dstring;
+        string instance = Cstring +"<="+dstring;
 
         reduced01INT.C = Cmatrix;
         reduced01INT.d = dVector;
-        reduced01INT.G = G;
+        reduced01INT.instance = instance;
         
         //K is the number of clauses
         

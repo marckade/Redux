@@ -3,11 +3,11 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.ReduceTo.NPC_VertexCover;
 
-class Clique_to_VertexCoverReduction : IReduction<CLIQUE, VERTEXCOVER> {
+class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
 
 
     // --- Fields ---
-    private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
+    private string _reductionDefinition = " This Sipsers reduction converts the Clique problem into a Vertex Cover problem";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
     private CLIQUE _reductionFrom;
     private VERTEXCOVER _reductionTo;
@@ -44,7 +44,7 @@ class Clique_to_VertexCoverReduction : IReduction<CLIQUE, VERTEXCOVER> {
     }
 
     // --- Methods Including Constructors ---
-    public Clique_to_VertexCoverReduction(CLIQUE from) {
+    public sipserReduction(CLIQUE from) {
         _reductionFrom = from;
         _reductionTo = reduce();
 
@@ -86,7 +86,24 @@ class Clique_to_VertexCoverReduction : IReduction<CLIQUE, VERTEXCOVER> {
         reducedVERTEXCOVER.edges = edges;
         reducedVERTEXCOVER.K = (CLIQUEInstance.nodes.Count - CLIQUEInstance.K); 
 
+        // --- Generate G string for new CLIQUE ---
+        string nodesString = "";
+        foreach (string nodes in CLIQUEInstance.nodes) {
+            nodesString += nodes + ",";
+        }
+        nodesString = nodesString.Trim(',');
 
+        string edgesString = "";
+        foreach (KeyValuePair<string,string> edge in edges) {
+            edgesString += "(" + edge.Key + "," + edge.Value + ")" + " & ";
+        }
+        edgesString = edgesString.Trim('&');
+
+        int kint = reducedVERTEXCOVER.K;
+
+        string G = "{{" + nodesString + "} : {" + edgesString + "} : " + kint.ToString() + "}";
+        reducedVERTEXCOVER.instance = G; 
+        Console.Write(reducedVERTEXCOVER.instance);
         reductionTo = reducedVERTEXCOVER;
         return reducedVERTEXCOVER;
 

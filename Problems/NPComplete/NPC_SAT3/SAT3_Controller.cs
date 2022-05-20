@@ -64,8 +64,8 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
 
 public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault(){
+    [HttpGet("info")]
+    public String getInfo(){
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
@@ -75,23 +75,27 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
     }
 
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+
+
+
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance){
+         
+        KarpReduction reduction = new KarpReduction(new SAT3(problemInstance));
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
 }
-// public class Karp_ReduceTo_INTPROGRAMMING0_1Controller : ControllerBase {
 
 
 [ApiController]
 [Route("[controller]")]
 public class KarpIntProgStandardController : ControllerBase {
 
-    [HttpGet]
-    public String getDefault() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
         KarpIntProgStandard reduction = new KarpIntProgStandard(defaultSAT3);
@@ -99,10 +103,12 @@ public class KarpIntProgStandardController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        SAT3 defaultSAT3 = new SAT3(problemInstance);
+        KarpIntProgStandard reduction = new KarpIntProgStandard(defaultSAT3);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
@@ -110,21 +116,22 @@ public class KarpIntProgStandardController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class GJDM3Controller : ControllerBase {
-
-    [HttpGet]
-    public String getDefault() {
+public class GareyJohnsonController : ControllerBase {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3();
-        GJDM3 reduction = new GJDM3(defaultSAT3);
+        GareyJohnson reduction = new GareyJohnson(defaultSAT3);
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SAT3(), options);
+        SAT3 defaultSAT3 = new SAT3(problemInstance);
+        GareyJohnson reduction = new GareyJohnson(defaultSAT3);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
 }
@@ -134,8 +141,8 @@ public class GJDM3Controller : ControllerBase {
 public class KadensSimpleVerifierController : ControllerBase {
 
     // Return Generic Solver Class
-    [HttpGet]
-    public String getInstance() {
+    [HttpGet("info")]
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         KadensSimple verifier = new KadensSimple();
 
@@ -145,7 +152,7 @@ public class KadensSimpleVerifierController : ControllerBase {
     }
 
     // Solve a instance given a certificate
-    [HttpGet]
+    [HttpGet("solve")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 SAT3Problem = new SAT3(problemInstance);
@@ -165,7 +172,7 @@ public class SkeletonSolverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
-    public String getGeneric() {
+    public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SkeletonSolver solver = new SkeletonSolver();
 
@@ -176,9 +183,14 @@ public class SkeletonSolverController : ControllerBase {
 
     // Solve a instance given a certificate
     [HttpGet("solve")]
-    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
-        // Implement solver here
-        return "RETURN YOUR SOLVER RESULTS HERE";
+    public String solveInstance([FromQuery]string problemInstance) { //FromQuery]string certificate, 
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 SAT3_PROBLEM = new SAT3(problemInstance);
+        Dictionary<string, bool> solution = SAT3_PROBLEM.defaultSolver.solve(SAT3_PROBLEM);
+
+        string jsonString = JsonSerializer.Serialize(solution, options);
+        return jsonString;
+
     }
 
 }

@@ -69,7 +69,7 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         
     }
     public ARCSET reduce() {
-        API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph ug = new API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph(_reductionFrom.Gk);
+        API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph ug = new API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph(_reductionFrom.instance);
         string dgString = ug.reduction();
         DirectedGraph dg = new DirectedGraph(dgString);
         ARCSET arcset = new ARCSET(dgString);

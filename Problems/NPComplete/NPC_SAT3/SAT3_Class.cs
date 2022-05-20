@@ -125,10 +125,10 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
         string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
 
         // Parse on | to collect each clause
-        string[] rawClauses = strippedInput.Split('|');
+        string[] rawClauses = strippedInput.Split('&');
 
         foreach(string clause in rawClauses) {
-            string[] rawLiterals = clause.Split('&');
+            string[] rawLiterals = clause.Split('|');
 
             foreach(string literal in rawLiterals) {
                 literals.Add(literal);

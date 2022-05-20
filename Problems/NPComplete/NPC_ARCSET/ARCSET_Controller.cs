@@ -79,7 +79,6 @@ public class AlexNaiveSolverController : ControllerBase {
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
         AlexNaiveSolver solver = new AlexNaiveSolver();
         string graphSolvedInstance = solver.solve(ARCSETProblem);
-        Console.Write(ARCSETProblem);
         string prettySolvedInstance = solver.prettySolve(ARCSETProblem);
         string[] totalSolvedInstance  = new string[2];
         totalSolvedInstance[0] = graphSolvedInstance;
@@ -92,6 +91,40 @@ public class AlexNaiveSolverController : ControllerBase {
 
 }
 
+[ApiController]
+[Route("[controller]")]
+public class LawlerKarpController : ControllerBase {
+
+    [HttpGet("info")] // url parameter
+    public String getDefault(){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        LawlerKarp reduction = new LawlerKarp();
+    
+        String jsonString = JsonSerializer.Serialize(reduction,options);
+        return jsonString;
+    }
+
+    
+    [HttpGet]
+    public String getInstance([FromQuery]string problemInstance) {
+        
+        //from query is a query parameter
+
+        Console.WriteLine(problemInstance);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        UndirectedGraph UG = new UndirectedGraph(problemInstance);
+        string reduction = UG.reduction();
+        //Boolean response = verifier.verify(ARCSETProblem,certificate);
+        // Send back to API user
+
+        // LawlerKarp reduction = new LawlerKarp();
+        // reduction.reduce()
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+
+    }
+
+}
 
 [ApiController]
 [Route("[controller]")]
