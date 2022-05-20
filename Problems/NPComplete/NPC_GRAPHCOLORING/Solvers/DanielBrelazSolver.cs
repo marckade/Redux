@@ -1,7 +1,7 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
- class IgbokweSolver : ISolver {
+ class DanielBrelazSolver : ISolver {
 
 
 
@@ -74,25 +74,43 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 #endregion
 
 #region  Constructors 
-public IgbokweSolver() {
+public DanielBrelazSolver() {
 
 }
 #endregion 
 
 #region Methods
 
+    // Solves graphcoloring 
+
     public string  Solve(GRAPHCOLORING problem){
         _nodeList = initialize(problem);
         _uncoloredNodes = problem.nodes;
+        initializeColors(problem.nodes.Count);
         computeSaturation(problem, _uncoloredNodes);
         Dsatur(problem);
         problem.K = getChromaticNumber(problem.nodeColoring);
 
         string solution = "{ ( ";  
-        foreach(KeyValuePair < string, string > keyValues in problem.nodeColoring) {  
-            solution += keyValues.Key + " : " + keyValues.Value + ", ";  
-        }  
-        solution += " ) :"+ problem.K+"}";
+        // int count = 0;
+
+
+        for(int i =0; i< problem.nodeColoring.Count -1; i++ ){
+            KeyValuePair < string, string > value = problem.nodeColoring.ElementAt(i);
+            solution +=  value.Key + " : " + value.Value + ", "; 
+        }
+        // foreach(KeyValuePair < string, string > keyValues in problem.nodeColoring) {  
+        //     count++;
+        //     if(count < problem.nodeColoring.Count -1){
+        //         solution += keyValues.Key + " : " + keyValues.Value + ", ";  
+        //     }else{
+        //         break;
+        //     }
+           
+        // }  
+        KeyValuePair < string, string > keyValue = problem.nodeColoring.ElementAt(problem.nodeColoring.Count -1);
+    
+        solution += keyValue.Key+" : " + keyValue.Value + " ) :"+ problem.K+" }";
        
 
         return solution;
@@ -179,11 +197,6 @@ public IgbokweSolver() {
             }
             
         
-            if(checkColors.Count == 0){
-                colors.Add(colors.Count);
-                checkColors.Add(colors.Count);
-            }
-
 
            int newColor = checkColors.ElementAt(0);
             Node tempNode = _nodeList[currentNode.name];
@@ -232,6 +245,13 @@ public IgbokweSolver() {
         }
 
         return adjNodes;
+    }
+    
+
+    private void initializeColors(int K){
+        for( int i = 0; i< K; i++){
+            _colors.Add(i);
+        }
     }
 #endregion
 

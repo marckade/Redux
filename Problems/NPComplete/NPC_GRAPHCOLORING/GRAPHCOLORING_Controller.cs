@@ -68,12 +68,12 @@ public class IgbokweVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class IgbokweSolverController : ControllerBase {
+public class DanielBrelazSolverController : ControllerBase {
 
     [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
-        IgbokweSolver solver = new IgbokweSolver();
+        DanielBrelazSolver solver = new DanielBrelazSolver();
 
 
         string jsonString  = JsonSerializer.Serialize(solver, options);
@@ -85,7 +85,7 @@ public class IgbokweSolverController : ControllerBase {
          //Example problemInstance = "{ { {a,b,c} : {{a,b} & {b,a} & {b,c} }} : 3}";
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
-        IgbokweSolver solver = new IgbokweSolver();
+        DanielBrelazSolver solver = new DanielBrelazSolver();
         string solvedInstance = solver.Solve(GRAPHCOLORINGProblem);
       
         // Send back to API user

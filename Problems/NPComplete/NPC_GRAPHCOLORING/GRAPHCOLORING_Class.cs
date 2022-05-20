@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
+class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
 
 
@@ -28,7 +28,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
   
     private int _K = 3;
 
-    private IgbokweSolver _defaultSolver = new IgbokweSolver();
+    private DanielBrelazSolver _defaultSolver = new DanielBrelazSolver();
     private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
 
 
@@ -124,7 +124,7 @@ class GRAPHCOLORING : IProblem<IgbokweSolver, IgbokweVerifier>{
         }
     }
     
-    public IgbokweSolver defaultSolver {
+    public DanielBrelazSolver defaultSolver {
         get {
             return _defaultSolver;
         }
