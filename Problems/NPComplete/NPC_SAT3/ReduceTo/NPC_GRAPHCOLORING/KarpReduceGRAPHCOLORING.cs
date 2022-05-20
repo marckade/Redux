@@ -239,18 +239,18 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
             addEdge(clauses[i][4], SAT3Instance.clauses[i][2], edges, instanceEdges);
 
 
-            // Connect color blue to (a V b)
+            // Connect palette base node to (a V b)
             addEdge(clauses[i][2], palette[2], edges, instanceEdges);
             addEdge(palette[2], clauses[i][2], edges, instanceEdges);
 
-            // Connect color blue and red to ((a V b) V c )
+            // Connect palette nodes to clauses ((a V b) V c )
 
-            // color : red 
+            // palette : False  
             addEdge(clauses[i][5], palette[0], edges, instanceEdges);
             addEdge(palette[0], clauses[i][5], edges, instanceEdges);
 
 
-            //  color : blue 
+            //  palette : Base  
             addEdge(clauses[i][5], palette[2], edges, instanceEdges);
             addEdge(palette[2], clauses[i][5], edges, instanceEdges);
 
