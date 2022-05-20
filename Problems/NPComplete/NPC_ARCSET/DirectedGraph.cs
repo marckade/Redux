@@ -1,7 +1,10 @@
 //DirectedGraph.cs
 //Can take a string representation of a directed graph and turn it into a directed graph object.
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -496,6 +499,77 @@ class DirectedGraph:Graph{
     return toStr;
 
     }
+
+
+    /** 
+    * Returns an ArrayList of Strings that is essentially a dot representation of the graph.
+    **/
+    public ArrayList toDotArrayList(){
+
+        ArrayList dotList = new ArrayList();
+  
+        string preStr = @"digraph {";
+        dotList.Add(preStr);
+
+        string preStr2 = @"node[style = ""filled""]";
+        dotList.Add(preStr);
+
+        
+        string dotNode = ""; 
+        string colorRed = "#d62728";
+        foreach(Node n in _nodeList){
+        dotNode=$"{n.name} [{colorRed}]";
+        dotList.Add(dotNode);
+        }
+
+        foreach(Edge e in _edgeList){
+            
+            KeyValuePair<string,string> eKVP = e.toKVP();
+            string edgeStr = $"{eKVP.Key} -> {eKVP.Value}";
+            dotList.Add(edgeStr);
+        }
+
+        dotList.Add("}");
+        
+        return dotList;
+       
+    }
+
+    /**
+    * Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
+    **/
+    public String toDotJson(){
+
+        string totalString = $"";
+        string preStr = @"digraph {";
+        totalString = totalString + preStr;
+
+        //string preStr2 = @"node[style = ""filled""]";
+        //totalString = totalString+preStr2;
+        
+        string dotNode = ""; 
+        string colorRed = "#d62728";
+        foreach(Node n in _nodeList){
+        dotNode=$"{n.name}";
+        //dotNode=$"{n.name} [{colorRed}]";
+        totalString = totalString+ dotNode + ",";
+        }
+        totalString = totalString.TrimEnd(',');
+
+        foreach(Edge e in _edgeList){
+            KeyValuePair<string,string> eKVP = e.toKVP();
+            string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
+            totalString = totalString + edgeStr;
+        }
+
+        totalString = totalString+ "\n}";
+        
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(totalString, options);
+        return jsonString;
+
+    }
+
 
 
     public List<Node> getNodeList{
