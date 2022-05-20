@@ -1,6 +1,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -9,9 +11,9 @@ class UndirectedGraph:Graph{
 
     // --- Fields ---
     //Since we are inheriting from the graph abstract class, fields are blank. There is probably a better way to do this though.
-    //protected List<Node> nodeList;
+    // protected List<Node> _nodeList;
     
-    //protected List<Edge> edgeList;
+    // protected List<Edge> _edgeList;
     
 
     protected int _K;
@@ -79,10 +81,70 @@ class UndirectedGraph:Graph{
             Edge edge = new Edge(n1,n2);
             this._edgeList.Add(edge);
         }
+        foreach(Edge e in _edgeList){
+            Console.Write(e.undirectedString()+ " ");
+        }
 
         _K = k;
 
     }
+
+
+
+     //Constructor for standard graph formatted string input.
+    public UndirectedGraph(String graphStr,bool decoy){
+        string pattern;
+        pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*}:\d*}"; //checks for undirected graph format
+        Regex reg = new Regex(pattern);
+        bool inputIsValid = reg.IsMatch(graphStr);
+        if(inputIsValid){
+            
+            //nodes
+            string nodePattern = @"{((\w)*(\w,)*)+}";
+            MatchCollection nMatches =  Regex.Matches(graphStr,nodePattern);
+            string nodeStr = nMatches[0].ToString();
+            nodeStr = nodeStr.TrimStart('{');
+            nodeStr = nodeStr.TrimEnd('}');
+            string[] nodeStringList = nodeStr.Split(',');
+            foreach(string nodeName in nodeStringList){
+               _nodeList.Add(new Node(nodeName));
+           }
+           Console.WriteLine(nMatches[0]);
+            
+            //edges
+            string edgePattern = @"{(({\w,\w})*({\w,\w},)*)*}";
+            MatchCollection eMatches = Regex.Matches(graphStr,edgePattern);
+            string edgeStr = eMatches[0].ToString();
+            //Console.WriteLine(edgeStr);
+            string edgePatternInner = @"\w,\w";
+            MatchCollection eMatches2 = Regex.Matches(edgeStr,edgePatternInner);
+            foreach(Match medge in eMatches2){
+                string[] edgeSplit = medge.ToString().Split(',');
+                Node n1 = new Node(edgeSplit[0]);
+                Node n2 = new Node(edgeSplit[1]);
+                _edgeList.Add(new Edge(n1,n2));
+            }
+            
+            //end num
+            string endNumPattern = @":\d+"; 
+            MatchCollection numMatches2 = Regex.Matches(graphStr,endNumPattern);
+            string numStr = numMatches2[0].ToString().TrimStart(':');
+            int convNum = Int32.Parse(numStr);
+
+            _K = convNum;
+          
+ 
+        }
+        else
+        {
+           Console.WriteLine("NOT VALID INPUT for Regex evaluation! Attempting to send to legacy constructor for evaluation"); 
+           new UndirectedGraph(graphStr);
+        }
+
+
+    }
+
+
 
     public override string ToString(){
 
@@ -103,7 +165,6 @@ class UndirectedGraph:Graph{
         string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : "+_K+"}";
         return toStr;
     }  
-
 
     //ALEX NOTE: Taken from Kaden's Clique class
 /**
@@ -236,5 +297,20 @@ class UndirectedGraph:Graph{
        // return reductionGraph;
 
     }
+
+//Getters
+ public List<Node> getNodeList{
+        get{
+            return base._nodeList;
+        }
+    }
+    public List<Edge> getEdgeList{
+        get{
+            return base._edgeList;
+        }
+    }
+
+
+
 
 }

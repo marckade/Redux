@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -117,6 +119,60 @@ class DirectedGraph:Graph{
         _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
         generateAdjacencyMatrix();
  
+    }
+
+
+    //Constructor for standard graph formatted string input.
+    public DirectedGraph(String graphStr,bool decoy){
+        string pattern;
+        pattern = @"{{((\w)*(\w,)*)+},{((\(\w,\w\))*(\(\w,\w\),)*)*}:\d*}"; //checks for directed graph format
+        Regex reg = new Regex(pattern);
+        bool inputIsValid = reg.IsMatch(graphStr);
+        if(inputIsValid){
+            
+            //nodes
+            string nodePattern = @"{((\w)*(\w,)*)+}";
+            MatchCollection nMatches =  Regex.Matches(graphStr,nodePattern);
+            string nodeStr = nMatches[0].ToString();
+            nodeStr = nodeStr.TrimStart('{');
+            nodeStr = nodeStr.TrimEnd('}');
+            string[] nodeStringList = nodeStr.Split(',');
+            foreach(string nodeName in nodeStringList){
+               _nodeList.Add(new Node(nodeName));
+           }
+           //Console.WriteLine(nMatches[0]);
+            
+            //edges
+            string edgePattern = @"{((\(\w,\w\))*(\(\w,\w\),)*)*}";
+            MatchCollection eMatches = Regex.Matches(graphStr,edgePattern);
+            string edgeStr = eMatches[0].ToString();
+            string edgePatternInner = @"\w,\w";
+            MatchCollection eMatches2 = Regex.Matches(edgeStr,edgePatternInner);
+            foreach(Match medge in eMatches2){
+                string[] edgeSplit = medge.ToString().Split(',');
+                Node n1 = new Node(edgeSplit[0]);
+                Node n2 = new Node(edgeSplit[1]);
+                _edgeList.Add(new Edge(n1,n2));
+            }
+            
+            //end num
+            string endNumPattern = @":\d+"; 
+            MatchCollection numMatches2 = Regex.Matches(graphStr,endNumPattern);
+            string numStr = numMatches2[0].ToString().TrimStart(':');
+            int convNum = Int32.Parse(numStr);
+
+            _K = convNum;
+            _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
+            generateAdjacencyMatrix();
+ 
+        }
+        else
+        {
+           Console.WriteLine("NOT VALID INPUT for Regex evaluation! Attempting to send to legacy constructor for evaluation"); 
+           new DirectedGraph(graphStr);
+        }
+
+
     }
 
     public override string ToString(){

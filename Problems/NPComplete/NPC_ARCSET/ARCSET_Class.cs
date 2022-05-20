@@ -102,6 +102,8 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
 
 
     }
+
+      
     public void ParseProblem(string arcInput) {
 
 

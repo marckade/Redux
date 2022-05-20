@@ -135,13 +135,27 @@ public class ARCSETDevController : ControllerBase {
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET arcset = new ARCSET();
-        Console.WriteLine("TEST");
         DirectedGraph arcGraph = arcset.directedGraph;
         String jsonString = arcGraph.toDotJson();
-                Console.WriteLine(jsonString);
+                //Console.WriteLine(jsonString);
 
-        //string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
-        return jsonString;
+        string arcRegStr = "{{a,b,c},{(a,b),(b,c)}:10}";
+        string uStr = "{{a,b,c},{{a,b},{b,c}}:10}";
+        string uStr2 = "{{a,b,c}:{{a,b} & {b,c}}:10}";
+
+        DirectedGraph arcTest = new DirectedGraph(arcRegStr,true);
+        UndirectedGraph uTest = new UndirectedGraph(uStr,true);
+        UndirectedGraph uTest2 = new UndirectedGraph(uStr2);
+        //Console.WriteLine(uTest.ToString());
+       // Console.WriteLine(uTest2.ToString());
+       // string printString = JsonSerializer.Serialize(arcTest, options);
+        string printString2 = JsonSerializer.Serialize(uTest, options);
+        //string printString3 = JsonSerializer.Serialize(uTest2);
+
+        //Console.WriteLine(printString);
+        Console.WriteLine(printString2);
+
+        return printString2;
     }
 
     [HttpGet("instance")]
