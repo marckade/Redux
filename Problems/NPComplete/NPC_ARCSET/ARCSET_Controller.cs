@@ -7,6 +7,7 @@ using System;
 using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 

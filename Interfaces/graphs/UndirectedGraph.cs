@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-
-namespace API.Problems.NPComplete.NPC_ARCSET;
+namespace API.Interfaces.Graphs;
 
 class UndirectedGraph:Graph{
 

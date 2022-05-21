@@ -1,6 +1,7 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 

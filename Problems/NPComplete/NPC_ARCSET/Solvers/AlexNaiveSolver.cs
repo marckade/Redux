@@ -1,4 +1,5 @@
 using API.Interfaces;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_ARCSET.Solvers;
 class AlexNaiveSolver : ISolver {

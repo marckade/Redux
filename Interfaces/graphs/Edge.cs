@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-namespace API.Problems.NPComplete.NPC_ARCSET;
+namespace API.Interfaces.Graphs;
 class Edge{
 
 //Fields

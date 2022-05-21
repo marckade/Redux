@@ -2,7 +2,8 @@
 //This is an abstract class for Undirected and Directed graphs to inherit from
 
 using System.Collections.Generic;
-namespace API.Problems.NPComplete.NPC_ARCSET;
+
+namespace API.Interfaces.Graphs;
 
 
  abstract class Graph{
