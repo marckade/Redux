@@ -81,7 +81,7 @@ class UndirectedGraph:Graph{
             this._edgeList.Add(edge);
         }
         foreach(Edge e in _edgeList){
-            Console.Write(e.undirectedString()+ " ");
+            //Console.Write(e.undirectedString()+ " ");
         }
 
         _K = k;
@@ -93,7 +93,7 @@ class UndirectedGraph:Graph{
      //Constructor for standard graph formatted string input.
     public UndirectedGraph(String graphStr,bool decoy){
         string pattern;
-        pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*}:\d*}"; //checks for undirected graph format
+        pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*}:\d+}"; //checks for undirected graph format
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){
@@ -108,7 +108,7 @@ class UndirectedGraph:Graph{
             foreach(string nodeName in nodeStringList){
                _nodeList.Add(new Node(nodeName));
            }
-           Console.WriteLine(nMatches[0]);
+           //Console.WriteLine(nMatches[0]);
             
             //edges
             string edgePattern = @"{(({\w,\w})*({\w,\w},)*)*}";

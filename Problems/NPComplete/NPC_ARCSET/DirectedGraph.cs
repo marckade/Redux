@@ -126,7 +126,7 @@ class DirectedGraph:Graph{
     //Constructor for standard graph formatted string input.
     public DirectedGraph(String graphStr,bool decoy){
         string pattern;
-        pattern = @"{{((\w)*(\w,)*)+},{((\(\w,\w\))*(\(\w,\w\),)*)*}:\d*}"; //checks for directed graph format
+        pattern = @"{{((\w)*(\w,)*)+},{((\(\w,\w\))*(\(\w,\w\),)*)*}:\d+}"; //checks for directed graph format
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){

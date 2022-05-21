@@ -175,6 +175,22 @@ public class ARCSETDevController : ControllerBase {
         string uStr = "{{a,b,c},{{a,b},{b,c}}:10}";
         string uStr2 = "{{a,b,c}:{{a,b} & {b,c}}:10}";
 
+        GraphParser gParser = new GraphParser();
+        List<Edge> arcList = gParser.getGraphEdgeList(arcRegStr);
+        List<Edge> undGList = gParser.getGraphEdgeList(uStr);
+        
+        Console.WriteLine("directed:");
+        foreach(Edge e in arcList){
+            Console.Write(e.directedString()+" ");
+        }
+        Console.WriteLine();
+        Console.WriteLine("undirected:");
+       
+        foreach(Edge e in undGList){
+            
+        Console.Write(e.undirectedString()+" ");
+        }
+
         DirectedGraph arcTest = new DirectedGraph(arcRegStr,true);
         UndirectedGraph uTest = new UndirectedGraph(uStr,true);
         UndirectedGraph uTest2 = new UndirectedGraph(uStr2);
@@ -185,7 +201,7 @@ public class ARCSETDevController : ControllerBase {
         //string printString3 = JsonSerializer.Serialize(uTest2);
 
         //Console.WriteLine(printString);
-        Console.WriteLine(printString2);
+       // Console.WriteLine(printString2);
 
         return printString2;
     }

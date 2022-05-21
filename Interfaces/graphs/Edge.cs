@@ -43,7 +43,7 @@ return node1.name+","+_node2.name;
 }
 
 public string undirectedString(){
-    return "["+node1.name+","+_node2.name+"]";
+    return "{"+node1.name+","+_node2.name+"}";
 }
 public string directedString(){
     return "("+node1.name+","+_node2.name+")";
