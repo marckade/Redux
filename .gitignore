@@ -2,3 +2,4 @@ obj/
 .vscode/
 .vs/
 bin/
+bin/Debug/net6.0/API.exe
