@@ -516,15 +516,25 @@ class DirectedGraph:Graph{
     * Processes a user String input of edges and removes all of the input edges from the graph.
     **/
     public void processCertificate(String certificate){
-        
+
+        string edgePattern = @"\w,\w";
+        MatchCollection nMatches =  Regex.Matches(certificate,edgePattern);
+        List<KeyValuePair<string,string>> certEdges = new List<KeyValuePair<string, string>>();
+
+        //splits edges into a match collection of "a,b" form strings
+        foreach(Match m in nMatches){ 
+            string edgeStr = m.Value;
+            string[] edgePair = edgeStr.Split(',');
+            KeyValuePair<string,string> edgeKVP= new KeyValuePair<string, string>(edgePair[0],edgePair[1]);
+            certEdges.Add(edgeKVP);
+        }
 
         if (!certificate.Equals(String.Empty)){
-        List<KeyValuePair<string,string>> certEdges;
-        certEdges = getEdges(certificate);
         foreach(KeyValuePair<string, string> e in certEdges){
             removeEdge(e);
         }
     }
+
     }
 
 /**

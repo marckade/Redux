@@ -78,14 +78,12 @@ public class AlexNaiveSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
         AlexNaiveSolver solver = new AlexNaiveSolver();
-        string graphSolvedInstance = solver.solve(ARCSETProblem);
-        string prettySolvedInstance = solver.prettySolve(ARCSETProblem);
-        string[] totalSolvedInstance  = new string[2];
-        totalSolvedInstance[0] = graphSolvedInstance;
-        totalSolvedInstance[1] =  prettySolvedInstance;
+
+
+        string solvedInstance = solver.solve(ARCSETProblem);
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
-        string jsonString = JsonSerializer.Serialize(totalSolvedInstance, options);
+        string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }
 
