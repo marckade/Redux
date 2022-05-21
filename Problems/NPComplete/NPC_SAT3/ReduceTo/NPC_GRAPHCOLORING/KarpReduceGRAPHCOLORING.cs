@@ -94,7 +94,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         // color palette 
         // 0 : False, 1 : True,  2 : Base
 
-        string[] palette = { "false", "true", "base" };
+        string[] palette = { "F", "T", "Base" };
 
         SAT3 SAT3Instance = _reductionFrom;
         GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
@@ -269,15 +269,6 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //The number of colors that satisfy the problem
         reducedGRAPHCOLORING.K = 3;
         reducedGRAPHCOLORING.parseProblem(reducedGRAPHCOLORING.nodes, instanceEdges, reducedGRAPHCOLORING.K.ToString());
-
-        foreach (var value in instanceEdges)
-        {
-            Console.WriteLine(value);
-        }
-
-
-        Console.WriteLine("This is the size of instance " + instanceEdges.Count + " \n Vs  \n");
-        Console.WriteLine(reducedGRAPHCOLORING.edges.Count);
 
         return reducedGRAPHCOLORING;
     }

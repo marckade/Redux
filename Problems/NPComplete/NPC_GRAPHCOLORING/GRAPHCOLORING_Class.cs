@@ -14,7 +14,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
+    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,c} & {c, a} & {d,a} & {d,e} & {e, a} & {f,a} & {f,g} & {a,g} & {h,a} & {h,i} & {a,i}  } } : 3}";
 
     private string _instance  =  string.Empty;
 
@@ -278,7 +278,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
         // set problem instance
         this._defaultInstance = problem;
-        this._instance  = this._defaultInstance;
+        this._instance  = problem;
 
     }
 
