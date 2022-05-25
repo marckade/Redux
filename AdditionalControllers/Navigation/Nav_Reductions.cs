@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 [ApiController]
 [Route("Navigation/[controller]")]
 public class All_ReductionsController : ControllerBase {
+
     
     [HttpGet]
     public String getDefault() {
@@ -41,11 +42,15 @@ public class NPC_ReductionsController : ControllerBase {
 [ApiController]
 [Route("Navigation/[controller]")]
 public class Problem_ReductionsController : ControllerBase {
-    
+
+    public const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
+
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
+        
 
         // Determine the directory to search based on prefix. chosenProblem expected to be a problemName like "NPC_PROBLEM"\
+
         string problemTypeDirectory = "";
         string problemType = chosenProblem.Split('_')[0];
 
@@ -56,12 +61,22 @@ public class Problem_ReductionsController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
+        string jsonString = "";
+        var options = new JsonSerializerOptions { WriteIndented = true };
+  
+        try{
         string?[] subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo")
                             .Select(Path.GetFileName)
                             .ToArray();
-                            
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(subdirs, options);
+
+        jsonString = JsonSerializer.Serialize(subdirs, options);
+ 
+        }
+        catch (System.IO.DirectoryNotFoundException dirNotFoundException){
+            Console.WriteLine(NO_REDUCTIONS_ERROR + " directory not found, exception was thrown in Nav_Reductions.cs");
+                        jsonString = NO_REDUCTIONS_ERROR;
+            Console.WriteLine(dirNotFoundException.StackTrace);
+        }
         return jsonString;
     }
 }

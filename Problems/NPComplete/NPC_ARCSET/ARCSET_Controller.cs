@@ -7,6 +7,7 @@ using System;
 using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -78,14 +79,12 @@ public class AlexNaiveSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
         AlexNaiveSolver solver = new AlexNaiveSolver();
-        string graphSolvedInstance = solver.solve(ARCSETProblem);
-        string prettySolvedInstance = solver.prettySolve(ARCSETProblem);
-        string[] totalSolvedInstance  = new string[2];
-        totalSolvedInstance[0] = graphSolvedInstance;
-        totalSolvedInstance[1] =  prettySolvedInstance;
+
+
+        string solvedInstance = solver.solve(ARCSETProblem);
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
-        string jsonString = JsonSerializer.Serialize(totalSolvedInstance, options);
+        string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }
 
@@ -112,7 +111,7 @@ public class LawlerKarpController : ControllerBase {
 
         Console.WriteLine(problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
-        UndirectedGraph UG = new UndirectedGraph(problemInstance);
+        VertexCoverGraph UG = new VertexCoverGraph(problemInstance);
         string reduction = UG.reduction();
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
@@ -136,7 +135,7 @@ public class ArcsetJsonPayloadController : ControllerBase {
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET defaultArcset = new ARCSET();
-        DirectedGraph defaultGraph = defaultArcset.directedGraph;
+        ArcsetGraph defaultGraph = defaultArcset.directedGraph;
         string jsonString = "";
         List<Edge> edgeList = defaultGraph.getEdgeList;
         List<Node> nodeList = defaultGraph.getNodeList;
@@ -168,13 +167,43 @@ public class ARCSETDevController : ControllerBase {
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET arcset = new ARCSET();
-        Console.WriteLine("TEST");
-        DirectedGraph arcGraph = arcset.directedGraph;
+        ArcsetGraph arcGraph = arcset.directedGraph;
         String jsonString = arcGraph.toDotJson();
-                Console.WriteLine(jsonString);
+                //Console.WriteLine(jsonString);
 
-        //string jsonString = JsonSerializer.Serialize(new ARCSET(), options);
-        return jsonString;
+        string arcRegStr = "{{a,b,c},{(a,b),(b,c)},10}";
+        string uStr = "{{a,b,c},{{a,b},{b,c}},10}";
+        string uStr2 = "{{a,b,c}:{{a,b} & {b,c}}:10}";
+
+        GraphParser gParser = new GraphParser();
+        List<Edge> arcList = gParser.getGraphEdgeList(arcRegStr);
+        List<Edge> undGList = gParser.getGraphEdgeList(uStr);
+        
+        Console.WriteLine("directed:");
+        foreach(Edge e in arcList){
+            Console.Write(e.directedString()+" ");
+        }
+        Console.WriteLine();
+        Console.WriteLine("undirected:");
+       
+        foreach(Edge e in undGList){
+            
+        Console.Write(e.undirectedString()+" ");
+        }
+
+        ArcsetGraph arcTest = new ArcsetGraph(arcRegStr,true);
+        VertexCoverGraph uTest = new VertexCoverGraph(uStr,true);
+        VertexCoverGraph uTest2 = new VertexCoverGraph(uStr2);
+        //Console.WriteLine(uTest.ToString());
+       // Console.WriteLine(uTest2.ToString());
+       // string printString = JsonSerializer.Serialize(arcTest, options);
+        string printString2 = JsonSerializer.Serialize(uTest, options);
+        //string printString3 = JsonSerializer.Serialize(uTest2);
+
+        //Console.WriteLine(printString);
+       // Console.WriteLine(printString2);
+
+        return printString2;
     }
 
     [HttpGet("instance")]
@@ -182,7 +211,7 @@ public class ARCSETDevController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         
         ARCSET arcset = new ARCSET(problemInstance);
-        DirectedGraph arcGraph = arcset.directedGraph;
+        ArcsetGraph arcGraph = arcset.directedGraph;
         String jsonString = arcGraph.toDotJson();
 
         return jsonString;

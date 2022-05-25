@@ -1,6 +1,7 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
@@ -107,7 +108,8 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         nodes = getNodes(_instance);
         edges = getEdges(_instance);
         K = getK(_instance);
-    
+        _VCAsGraph = new VertexCoverGraph(_defaultInstance);
+
     }
     public VERTEXCOVER(string instanceInput) {
         // _VCAsGraph = new UndirectedGraph(GkInput);
@@ -116,6 +118,7 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         nodes = getNodes(_instance);
         edges = getEdges(_instance);
         K = getK(_instance);
+        _VCAsGraph = new VertexCoverGraph(instanceInput);
     }
 
     public List<string> getNodes(string Ginput) {

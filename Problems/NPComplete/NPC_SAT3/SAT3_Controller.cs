@@ -152,7 +152,7 @@ public class KadensSimpleVerifierController : ControllerBase {
     }
 
     // Solve a instance given a certificate
-    [HttpGet("solve")]
+    [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 SAT3Problem = new SAT3(problemInstance);

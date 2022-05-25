@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
+namespace API.Interfaces.Graphs;
 class Edge{
 
 //Fields
@@ -43,7 +43,7 @@ return node1.name+","+_node2.name;
 }
 
 public string undirectedString(){
-    return "["+node1.name+","+_node2.name+"]";
+    return "{"+node1.name+","+_node2.name+"}";
 }
 public string directedString(){
     return "("+node1.name+","+_node2.name+")";

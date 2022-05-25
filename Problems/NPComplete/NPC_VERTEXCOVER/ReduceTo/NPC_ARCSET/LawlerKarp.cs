@@ -3,6 +3,7 @@ using API.Problems.NPComplete.NPC_ARCSET;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 
@@ -68,10 +69,16 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         Console.Write(jsonString);
         
     }
+    /// <summary>
+    ///  Uses the VertexCover object's reduction utility to convert to a Arcset Graph and returns that equivalent object.
+    /// </summary>
+    /// <returns>
+    /// An Arcset Object
+    /// </returns>
     public ARCSET reduce() {
-        API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph ug = new API.Problems.NPComplete.NPC_VERTEXCOVER.UndirectedGraph(_reductionFrom.instance);
+        VertexCoverGraph ug = new VertexCoverGraph(_reductionFrom.instance);
         string dgString = ug.reduction();
-        DirectedGraph dg = new DirectedGraph(dgString);
+        ArcsetGraph dg = new ArcsetGraph(dgString);
         ARCSET arcset = new ARCSET(dgString);
         
         return arcset;

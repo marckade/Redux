@@ -63,7 +63,7 @@ public class VCVerifierController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("solve")]
+    [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);

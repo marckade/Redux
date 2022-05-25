@@ -41,7 +41,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("solve")]
+    [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         DM3 DM3_PROBLEM = new DM3(problemInstance);
