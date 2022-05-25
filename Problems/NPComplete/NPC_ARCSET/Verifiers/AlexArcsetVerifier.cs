@@ -40,7 +40,7 @@ class AlexArcsetVerifier : IVerifier {
     **/
     public Boolean verify(ARCSET problem, string userInput){
 
-        DirectedGraph graph = problem.directedGraph; 
+        ArcsetGraph graph = problem.directedGraph; 
         graph.processCertificate(userInput);
         //Console.WriteLine(graph.getBackEdges());
         bool isInARCSET = graph.isCyclical();
@@ -48,5 +48,7 @@ class AlexArcsetVerifier : IVerifier {
         //when userInput is removed from graph is it still Cyclical? 
         return isInARCSET;
     }
+
+    
 
 }

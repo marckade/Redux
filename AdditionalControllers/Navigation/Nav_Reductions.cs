@@ -74,8 +74,8 @@ public class Problem_ReductionsController : ControllerBase {
         }
         catch (System.IO.DirectoryNotFoundException dirNotFoundException){
             Console.WriteLine(NO_REDUCTIONS_ERROR + " directory not found, exception was thrown in Nav_Reductions.cs");
-            
-            jsonString = NO_REDUCTIONS_ERROR;
+                        jsonString = NO_REDUCTIONS_ERROR;
+            Console.WriteLine(dirNotFoundException.StackTrace);
         }
         return jsonString;
     }

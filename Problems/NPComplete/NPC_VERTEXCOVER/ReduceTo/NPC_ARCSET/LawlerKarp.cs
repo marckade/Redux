@@ -69,6 +69,12 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         Console.Write(jsonString);
         
     }
+    /// <summary>
+    ///  Uses the VertexCover object's reduction utility to convert to a Arcset Graph and returns that equivalent object.
+    /// </summary>
+    /// <returns>
+    /// An Arcset Object
+    /// </returns>
     public ARCSET reduce() {
         VertexCoverGraph ug = new VertexCoverGraph(_reductionFrom.instance);
         string dgString = ug.reduction();
