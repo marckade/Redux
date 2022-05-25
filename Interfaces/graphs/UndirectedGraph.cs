@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace API.Interfaces.Graphs;
 
-class UndirectedGraph:Graph{
+abstract class UndirectedGraph:Graph{
 
 
     // --- Fields ---
@@ -140,10 +140,7 @@ class UndirectedGraph:Graph{
         }
         else
         {
-           Console.WriteLine("NOT VALID INPUT for Regex evaluation! Attempting to send to legacy constructor for evaluation"); 
-           new UndirectedGraph(graphStr);
-        }
-
+            Console.WriteLine("NOT VALID INPUT for Regex evaluation! INITIALIZATION FAILED");         }
 
     }
 

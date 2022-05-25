@@ -111,7 +111,7 @@ public class LawlerKarpController : ControllerBase {
 
         Console.WriteLine(problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
-        UndirectedGraph UG = new UndirectedGraph(problemInstance);
+        VertexCoverGraph UG = new VertexCoverGraph(problemInstance);
         string reduction = UG.reduction();
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
@@ -135,7 +135,7 @@ public class ArcsetJsonPayloadController : ControllerBase {
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET defaultArcset = new ARCSET();
-        DirectedGraph defaultGraph = defaultArcset.directedGraph;
+        ArcsetGraph defaultGraph = defaultArcset.directedGraph;
         string jsonString = "";
         List<Edge> edgeList = defaultGraph.getEdgeList;
         List<Node> nodeList = defaultGraph.getNodeList;
@@ -167,7 +167,7 @@ public class ARCSETDevController : ControllerBase {
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET arcset = new ARCSET();
-        DirectedGraph arcGraph = arcset.directedGraph;
+        ArcsetGraph arcGraph = arcset.directedGraph;
         String jsonString = arcGraph.toDotJson();
                 //Console.WriteLine(jsonString);
 
@@ -191,9 +191,9 @@ public class ARCSETDevController : ControllerBase {
         Console.Write(e.undirectedString()+" ");
         }
 
-        DirectedGraph arcTest = new DirectedGraph(arcRegStr,true);
-        UndirectedGraph uTest = new UndirectedGraph(uStr,true);
-        UndirectedGraph uTest2 = new UndirectedGraph(uStr2);
+        ArcsetGraph arcTest = new ArcsetGraph(arcRegStr,true);
+        VertexCoverGraph uTest = new VertexCoverGraph(uStr,true);
+        VertexCoverGraph uTest2 = new VertexCoverGraph(uStr2);
         //Console.WriteLine(uTest.ToString());
        // Console.WriteLine(uTest2.ToString());
        // string printString = JsonSerializer.Serialize(arcTest, options);
@@ -211,7 +211,7 @@ public class ARCSETDevController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         
         ARCSET arcset = new ARCSET(problemInstance);
-        DirectedGraph arcGraph = arcset.directedGraph;
+        ArcsetGraph arcGraph = arcset.directedGraph;
         String jsonString = arcGraph.toDotJson();
 
         return jsonString;

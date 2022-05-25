@@ -1,8 +1,7 @@
 using API.Interfaces;
-
+using API.Interfaces.Graphs;
 namespace API.Problems.NPComplete.NPC_ARCSET.Verifiers;
-using API.Problems.NPComplete.NPC_ARCSET;
-using API.Problems.NPComplete.NPC_VERTEXCOVER;
+
 
 class AlexArcsetVerifier : IVerifier {
 

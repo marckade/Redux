@@ -9,9 +9,9 @@ using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
 
 
-namespace API.Problems.NPComplete.NPC_ARCSET;
+namespace API.Interfaces.Graphs;
 
-class DirectedGraph:Graph{
+abstract class DirectedGraph:Graph{
 
 
     // --- Fields ---
@@ -171,8 +171,7 @@ class DirectedGraph:Graph{
         }
         else
         {
-           Console.WriteLine("NOT VALID INPUT for Regex evaluation! Attempting to send to legacy constructor for evaluation"); 
-           new DirectedGraph(graphStr);
+           Console.WriteLine("NOT VALID INPUT for Regex evaluation! INITIALIZATION FAILED"); 
         }
 
 
