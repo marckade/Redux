@@ -93,7 +93,7 @@ class UndirectedGraph:Graph{
      //Constructor for standard graph formatted string input.
     public UndirectedGraph(String graphStr,bool decoy){
         string pattern;
-        pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*}:\d+}"; //checks for undirected graph format
+        pattern = @"{{(\w(,\w)*)+},{(\{\w,\w\}(,\{\w,\w\})*)*},\d+}"; //checks for undirected graph format
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){
@@ -111,7 +111,7 @@ class UndirectedGraph:Graph{
            //Console.WriteLine(nMatches[0]);
             
             //edges
-            string edgePattern = @"{(({\w,\w})*({\w,\w},)*)*}";
+            string edgePattern = @"{(\{\w,\w\}(,\{\w,\w\})*)*}";
             MatchCollection eMatches = Regex.Matches(graphStr,edgePattern);
             string edgeStr = eMatches[0].ToString();
             //Console.WriteLine(edgeStr);
@@ -125,10 +125,14 @@ class UndirectedGraph:Graph{
             }
             
             //end num
-            string endNumPattern = @":\d+"; 
-            MatchCollection numMatches2 = Regex.Matches(graphStr,endNumPattern);
-            string numStr = numMatches2[0].ToString().TrimStart(':');
-            int convNum = Int32.Parse(numStr);
+            string endNumPatternOuter = @"}\d+}"; //gets the end section of the graph string
+            MatchCollection numMatches = Regex.Matches(graphStr,endNumPatternOuter);
+            string outerString = numMatches[0].ToString();
+            string endNumPatternInner = @"\d+"; //parses out number from end section.
+            MatchCollection numMatches2 = Regex.Matches(outerString,endNumPatternInner);
+            string innerString = numMatches2[0].ToString();
+
+            int convNum = Int32.Parse(innerString);
 
             _K = convNum;
           

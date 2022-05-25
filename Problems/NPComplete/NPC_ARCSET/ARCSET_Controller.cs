@@ -171,8 +171,8 @@ public class ARCSETDevController : ControllerBase {
         String jsonString = arcGraph.toDotJson();
                 //Console.WriteLine(jsonString);
 
-        string arcRegStr = "{{a,b,c},{(a,b),(b,c)}:10}";
-        string uStr = "{{a,b,c},{{a,b},{b,c}}:10}";
+        string arcRegStr = "{{a,b,c},{(a,b),(b,c)},10}";
+        string uStr = "{{a,b,c},{{a,b},{b,c}},10}";
         string uStr2 = "{{a,b,c}:{{a,b} & {b,c}}:10}";
 
         GraphParser gParser = new GraphParser();
