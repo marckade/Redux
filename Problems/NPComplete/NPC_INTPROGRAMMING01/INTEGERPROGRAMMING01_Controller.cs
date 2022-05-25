@@ -38,7 +38,7 @@ public class GenericVerifier0_1INTPController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString;
     }
-    [HttpGet("solve")]
+    [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         INTPROGRAMMING01 INTPROGRAMMING01_Problem = new INTPROGRAMMING01(problemInstance);

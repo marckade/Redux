@@ -45,7 +45,7 @@ public class IgbokweVerifierController : ControllerBase {
     }
 
     //[HttpGet("{certificate}/{problemInstance}")]
-    [HttpGet("solve")]
+    [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
 
         // Example  certificate = "(a:blue, b:red, c:green)";
