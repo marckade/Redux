@@ -152,6 +152,7 @@ public class PossibleReductionsController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
+
         string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + reducingFrom + "/ReduceTo/" + reducingTo)
                             .Select(Path.GetFileName)
                             .ToArray();
