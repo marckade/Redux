@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using System.Collections;
+
 
 // Get all problems regardless of complexity class
 [ApiController]
@@ -34,6 +37,68 @@ public class NPC_ProblemsController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(subdirs, options);
 
         //Response.Headers.Add("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+        return jsonString;
+    }
+
+    [HttpGet("json")]
+    public string getProblemsJson(){
+        string objectPrefix = "problemName";
+        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+                            .Select(Path.GetFileName)
+                            .ToArray();
+
+        ArrayList jsonedList = new ArrayList();
+        foreach(string problemInstance in subdirs){
+        string jsonPair = $"{{\"{objectPrefix}\" : \"{problemInstance}\"}}";
+            jsonedList.Add(jsonPair);
+        }
+        
+         var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(jsonedList, options);
+        return jsonString;
+    }
+}
+
+
+// Get only NP-Complete problems
+[ApiController]
+[Route("Navigation/[controller]")]
+public class NPC_ProblemsRefactorController : ControllerBase {
+    
+    public String getDefault() {
+        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+                            .Select(Path.GetFileName)
+                            .ToArray();
+
+        ArrayList subdirsNoPrefix = new ArrayList();
+        foreach(string problemDirName in subdirs){
+            string[] splitStr = problemDirName.Split('_');
+            string newName = splitStr[1];
+            subdirsNoPrefix.Add(newName);
+        }
+
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(subdirsNoPrefix, options);
+
+        //Response.Headers.Add("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+        return jsonString;
+    }
+
+    [HttpGet("json")]
+    public string getProblemsJson(){
+        string objectPrefix = "problemName";
+        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+                            .Select(Path.GetFileName)
+                            .ToArray();
+
+        ArrayList jsonedList = new ArrayList();
+        foreach(string problemInstance in subdirs){
+        string jsonPair = $"{{\"{objectPrefix}\" : \"{problemInstance}\"}}";
+            jsonedList.Add(jsonPair);
+        }
+        
+         var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(jsonedList, options);
         return jsonString;
     }
 }

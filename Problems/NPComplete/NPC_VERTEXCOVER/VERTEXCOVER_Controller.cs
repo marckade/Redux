@@ -74,7 +74,6 @@ public class VCVerifierController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
     }
-
 }
 
 [ApiController]
