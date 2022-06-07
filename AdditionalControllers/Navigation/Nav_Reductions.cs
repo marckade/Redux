@@ -110,6 +110,7 @@ public class Problem_ReductionsRefactorController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
   
         try{
+
         string?[] subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/"+problemType+"_" + chosenProblem + "/ReduceTo")
                             .Select(Path.GetFileName)
                             .ToArray();
@@ -125,9 +126,12 @@ public class Problem_ReductionsRefactorController : ControllerBase {
  
         }
         catch (System.IO.DirectoryNotFoundException dirNotFoundException){
-            Console.WriteLine(NO_REDUCTIONS_ERROR + " directory not found, exception was thrown in Nav_Reductions.cs");
+            //Console.WriteLine(NO_REDUCTIONS_ERROR + " directory not found, exception was thrown in Nav_Reductions.cs");
                         jsonString = NO_REDUCTIONS_ERROR;
-            Console.WriteLine(dirNotFoundException.StackTrace);
+            //Console.WriteLine(dirNotFoundException.StackTrace);
+        }
+        finally{
+
         }
         return jsonString;
     }
@@ -167,9 +171,11 @@ public class PossibleReductionsController : ControllerBase {
 [ApiController]
 [Route("Navigation/[controller]")]
 public class PossibleReductionsRefactorController : ControllerBase {
-    
+
     [HttpGet]
     public String getDefault([FromQuery]string reducingFrom, [FromQuery]string reducingTo,[FromQuery]string problemType) {
+        string NOT_FOUND_ERR_REDUCTION = "entered a reduce from or to that does not exist";
+
 
         // Determine the directory to search based on prefix. reducingFrom and reducingTo are both expected to be a problemName like "NPC_PROBLEM"
         string problemTypeDirectory = "";
@@ -181,17 +187,32 @@ public class PossibleReductionsRefactorController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + reducingFrom + "/ReduceTo/NPC_" + reducingTo)
-                            .Select(Path.GetFileName)
-                            .ToArray();
-
-        ArrayList subFilesList = new ArrayList();
-        foreach(string file in subfiles){
-            string fileNoExt = file.Split('.')[0];
-            subFilesList.Add(fileNoExt);
-        } 
+        string jsonString = "";
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(subFilesList, options);
+
+        try
+        {
+
+            string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + reducingFrom + "/ReduceTo/NPC_" + reducingTo)
+                                .Select(Path.GetFileName)
+                                .ToArray();
+
+            ArrayList subFilesList = new ArrayList();
+            foreach (string file in subfiles)
+            {
+                string fileNoExt = file.Split('.')[0];
+                subFilesList.Add(fileNoExt);
+            }
+            jsonString = JsonSerializer.Serialize(subFilesList, options);
+
+        }
+        catch(System.IO.DirectoryNotFoundException notFoundEx){
+            Console.WriteLine(NOT_FOUND_ERR_REDUCTION);
+            jsonString = JsonSerializer.Serialize(NOT_FOUND_ERR_REDUCTION, options);
+        }
+        finally{
+            
+        }
         return jsonString;
     }
 }

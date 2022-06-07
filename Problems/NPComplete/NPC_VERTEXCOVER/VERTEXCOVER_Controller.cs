@@ -161,6 +161,7 @@ public class LawlerKarpController : ControllerBase {
         //string reduction = UG.reduction();
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
+        Console.Write(problemInstance);
         VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
         LawlerKarp reduction = new LawlerKarp(vCover);
        // ARCSET reducedArcset = reduction.reduce();

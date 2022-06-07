@@ -55,12 +55,15 @@ public class Problem_SolversController : ControllerBase {
 [ApiController]
 [Route("Navigation/[controller]")]
 public class Problem_SolversRefactorController : ControllerBase {
-    
+            string NOT_FOUND_ERR_SOLVER = "entered a solver that does not exist";
+
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem, [FromQuery]string problemType) {
 
         // Determine the directory to search based on prefix. chosenProblem expected to be a problemName like "NPC_PROBLEM"\
         string problemTypeDirectory = "";
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = "";
 
         if (problemType == "NPC") {
             problemTypeDirectory = "NPComplete";
@@ -69,20 +72,30 @@ public class Problem_SolversRefactorController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType+ "_" + chosenProblem + "/Solvers")
-                            .Select(Path.GetFileName)
-                            .ToArray();
 
-        ArrayList subFilesList = new ArrayList();
-        
-        foreach(string file in subfiles){
-            string fileNoExt = file.Split('.')[0]; //gets the file without the file extension
-            subFilesList.Add(fileNoExt);
+        try
+        {
+            string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + chosenProblem + "/Solvers")
+                                .Select(Path.GetFileName)
+                                .ToArray();
+
+            ArrayList subFilesList = new ArrayList();
+
+            foreach (string file in subfiles)
+            {
+                string fileNoExt = file.Split('.')[0]; //gets the file without the file extension
+                subFilesList.Add(fileNoExt);
+            }
+
+             jsonString = JsonSerializer.Serialize(subFilesList, options);
+
         }
-
+        catch(System.IO.DirectoryNotFoundException){
+            
+            jsonString = JsonSerializer.Serialize(NOT_FOUND_ERR_SOLVER,options);
+        }
+        
         // Not completed. Needs to loop through these directories to get the rest of the problems
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(subFilesList, options);
         return jsonString;
     }
 }
