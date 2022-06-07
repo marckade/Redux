@@ -110,7 +110,7 @@ public class Problem_ReductionsRefactorController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
   
         try{
-        string?[] subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/NPC_" + chosenProblem + "/ReduceTo")
+        string?[] subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/"+problemType+"_" + chosenProblem + "/ReduceTo")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -181,7 +181,7 @@ public class PossibleReductionsRefactorController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/NPC_" + reducingFrom + "/ReduceTo/NPC_" + reducingTo)
+        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + reducingFrom + "/ReduceTo/NPC_" + reducingTo)
                             .Select(Path.GetFileName)
                             .ToArray();
 

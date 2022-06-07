@@ -95,6 +95,7 @@ abstract class DirectedGraph:Graph{
 
         string pattern;
         pattern = @"{{(\w(,\w)*)},{(\(\w,\w\)(,\(\w,\w\))*)*},\d+}"; //checks for directed graph format
+      
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){
