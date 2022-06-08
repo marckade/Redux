@@ -15,7 +15,7 @@ public GraphParser(){
  **/
 public bool isValidUndirectedGraph(string undirectedGraphStr){
     string pattern;
-    pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*}:\d+}"; //checks for undirected graph format
+    pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*},\d+}"; //checks for undirected graph format
     Regex reg = new Regex(pattern);
     bool inputIsValid = reg.IsMatch(undirectedGraphStr);
     return inputIsValid;
@@ -26,7 +26,7 @@ public bool isValidUndirectedGraph(string undirectedGraphStr){
  **/
 public bool isValidDirectedGraph(string directedGraphStr){
  string pattern;
-    pattern = @"{{((\w)*(\w,)*)+},{((\(\w,\w\))*(\(\w,\w\),)*)*}:\d+}"; //checks for directed graph format
+    pattern = @"{{((\w)*(\w,)*)+},{((\(\w,\w\))*(\(\w,\w\),)*)*},\d+}"; //checks for directed graph format
     Regex reg = new Regex(pattern);
     bool inputIsValid = reg.IsMatch(directedGraphStr);
     return inputIsValid;
@@ -39,13 +39,13 @@ public bool isValidDirectedGraph(string directedGraphStr){
 public List<Edge> getGraphEdgeList(string graphString){
     List<Edge> edgeList;
     if(isValidUndirectedGraph(graphString)){
-        string edgePattern = @"{(({\w,\w})*({\w,\w},)*)*}"; //outer edge pattern. from {{a,b,...,z},{{a,b},{c,d},...,{y,z}}:k} --> {{a,b},{b,c},...,{y,z}}. Ie. removes nodes and k from a graph.
+        string edgePattern = @"{(({\w,\w})*({\w,\w},)*)*}"; //outer edge pattern. from {{a,b,...,z},{{a,b},{c,d},...,{y,z}},k} --> {{a,b},{b,c},...,{y,z}}. Ie. removes nodes and k from a graph.
         edgeList =edgesGivenValidGraphAndPattern(graphString, edgePattern);
         }
     
     else if(isValidDirectedGraph(graphString)){
 
-        string edgePattern = @"{((\(\w,\w\))*(\(\w,\w\),)*)*}";  //outer edge pattern. from {{a,b,...,z},{(a,b),(c,d),...,(y,z)}:k} --> {(a,b),(b,c),...,(y,z)}
+        string edgePattern = @"{((\(\w,\w\))*(\(\w,\w\),)*)*}";  //outer edge pattern. from {{a,b,...,z},{(a,b),(c,d),...,(y,z)},k} --> {(a,b),(b,c),...,(y,z)}
         edgeList = edgesGivenValidGraphAndPattern(graphString,edgePattern);
     }
     else{

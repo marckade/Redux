@@ -138,9 +138,9 @@ public class ARCSETDevController : ControllerBase {
         String jsonString = arcGraph.toDotJson();
                 //Console.WriteLine(jsonString);
 
-        string arcRegStr = "{{a,b,c},{(a,b),(b,c)},10}";
+        string arcRegStr = "{{a,b,c,d},{(a,b),(b,c),(c,d)},10}";
         string uStr = "{{a,b,c},{{a,b},{b,c}},10}";
-        string uStr2 = "{{a,b,c}:{{a,b} & {b,c}}:10}";
+        string uStr2 = "{{a,b,c}:{{a,b} 7 {b,c}}:10}";
 
         GraphParser gParser = new GraphParser();
         List<Edge> arcList = gParser.getGraphEdgeList(arcRegStr);
@@ -164,7 +164,7 @@ public class ARCSETDevController : ControllerBase {
         //Console.WriteLine(uTest.ToString());
        // Console.WriteLine(uTest2.ToString());
        // string printString = JsonSerializer.Serialize(arcTest, options);
-        string printString2 = JsonSerializer.Serialize(uTest, options);
+        string printString2 = JsonSerializer.Serialize(arcTest, options);
         //string printString3 = JsonSerializer.Serialize(uTest2);
 
         //Console.WriteLine(printString);

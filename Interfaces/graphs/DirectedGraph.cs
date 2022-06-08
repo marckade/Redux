@@ -90,18 +90,18 @@ abstract class DirectedGraph:Graph{
     ///<param name="graphStr">A Directed Graph string</param>
     ///<param name = "decoy"> This is a temp variable for constructor overloading while deprecating the original format </param>
     public DirectedGraph(String graphStr,bool decoy){
+
         _nodeDict = new Dictionary<string,Node>();
         _adjacencyMatrix = new Dictionary<string, List<KeyValuePair<string, Node>>>();
 
         string pattern;
         pattern = @"{{(\w(,\w)*)},{(\(\w,\w\)(,\(\w,\w\))*)*},\d+}"; //checks for directed graph format
-      
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){
             
             //nodes
-            string nodePattern = @"{\w(,\w)*)}";
+            string nodePattern = @"{((\w)*(\w,)*)+}";
             MatchCollection nMatches =  Regex.Matches(graphStr,nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');
@@ -126,7 +126,7 @@ abstract class DirectedGraph:Graph{
             }
             
             //end num
-             string endNumPatternOuter = @"}\d+}"; //gets the end section of the graph string
+             string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
             MatchCollection numMatches = Regex.Matches(graphStr,endNumPatternOuter);
             string outerString = numMatches[0].ToString();
             string endNumPatternInner = @"\d+"; //parses out number from end section.
