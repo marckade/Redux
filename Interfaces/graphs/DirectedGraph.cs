@@ -357,7 +357,7 @@ abstract class DirectedGraph:Graph{
     //     foreach(Node n in _nodeList){
     //     dotNode=$"{n.name}";
     //     //dotNode=$"{n.name} [{colorRed}]";
-    //     totalString = totalString+ dotNode + ",";
+    //     totalString = totalString+ dotNode + ";";
     //     }
     //     totalString = totalString.TrimEnd(',');
 
@@ -367,7 +367,7 @@ abstract class DirectedGraph:Graph{
     //         totalString = totalString + edgeStr;
     //     }
 
-    //     totalString = totalString+ "\n}";
+    //     totalString = totalString}";
 
     //     var options = new JsonSerializerOptions { WriteIndented = true };
     //     string jsonString = JsonSerializer.Serialize(totalString, options);
