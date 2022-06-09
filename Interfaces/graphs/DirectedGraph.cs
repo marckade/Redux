@@ -338,41 +338,42 @@ abstract class DirectedGraph:Graph{
        
     }
 
-/// <summary>
-/// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
-/// </summary>
-/// <returns></returns>
-    public String toDotJson(){
+    /// <summary>
+    /// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
+    /// </summary>
+    /// <returns></returns>
+    public abstract String toDotJson();
+    //{
 
-        string totalString = $"";
-        string preStr = @"digraph {";
-        totalString = totalString + preStr;
+    //     string totalString = $"";
+    //     string preStr = @"digraph {";
+    //     totalString = totalString + preStr;
 
-        //string preStr2 = @"node[style = ""filled""]";
-        //totalString = totalString+preStr2;
-        
-        string dotNode = ""; 
-       // string colorRed = "#d62728";
-        foreach(Node n in _nodeList){
-        dotNode=$"{n.name}";
-        //dotNode=$"{n.name} [{colorRed}]";
-        totalString = totalString+ dotNode + ",";
-        }
-        totalString = totalString.TrimEnd(',');
+    //     //string preStr2 = @"node[style = ""filled""]";
+    //     //totalString = totalString+preStr2;
 
-        foreach(Edge e in _edgeList){
-            KeyValuePair<string,string> eKVP = e.toKVP();
-            string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
-            totalString = totalString + edgeStr;
-        }
+    //     string dotNode = ""; 
+    //    // string colorRed = "#d62728";
+    //     foreach(Node n in _nodeList){
+    //     dotNode=$"{n.name}";
+    //     //dotNode=$"{n.name} [{colorRed}]";
+    //     totalString = totalString+ dotNode + ",";
+    //     }
+    //     totalString = totalString.TrimEnd(',');
 
-        totalString = totalString+ "\n}";
-        
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(totalString, options);
-        return jsonString;
+    //     foreach(Edge e in _edgeList){
+    //         KeyValuePair<string,string> eKVP = e.toKVP();
+    //         string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
+    //         totalString = totalString + edgeStr;
+    //     }
 
-    }
+    //     totalString = totalString+ "\n}";
+
+    //     var options = new JsonSerializerOptions { WriteIndented = true };
+    //     string jsonString = JsonSerializer.Serialize(totalString, options);
+    //     return jsonString;
+
+    //}
 
 
 

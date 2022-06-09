@@ -185,4 +185,31 @@ public class ARCSETDevController : ControllerBase {
     }
 }
 
+[ApiController]
+[Route("[controller]")]
+public class ARCSETVisualizerController : ControllerBase {
+
+    [HttpGet]
+    public String getDefault() {
+        ARCSET arcProblem = new ARCSET();
+        ArcsetGraph arcsetGraph = arcProblem.directedGraph;
+        string dotStr = arcsetGraph.toDotJson();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(dotStr, options);
+        return jsonString;
+
+    }
+
+    [HttpGet("visualize")]
+    public String getInstance([FromQuery]string problemInstance) {
+        ARCSET arcProblem = new ARCSET(problemInstance);
+        ArcsetGraph arcsetGraph = arcProblem.directedGraph;
+        string dotStr = arcsetGraph.toDotJson();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(dotStr, options);
+        return jsonString;
+    }
+}
+
+
     
