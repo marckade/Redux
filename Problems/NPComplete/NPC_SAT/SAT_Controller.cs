@@ -35,7 +35,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
         [HttpGet("info")]
         public String getGeneric(){
             var options = new JsonSerializerOptions {WriteIndented = true};
-            IgbokweSATVerifier verifier = new IgbokweSATVerifier();
+            GenericVerifier verifier = new GenericVerifier();
 
 
             string jsonString  = JsonSerializer.Serialize(verifier, options);
@@ -50,7 +50,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
          return "";
         }
 
-}
+    }
 
 
 

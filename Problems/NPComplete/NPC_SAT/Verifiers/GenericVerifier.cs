@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_SAT;
 
 namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
 
-    public class IgbokweSATVerifier : IVerifier {
+    public class GenericVerifier : IVerifier {
 
     #region Fields
     private string _verifierName = "Generic Verifier";
@@ -51,7 +51,7 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
     #region Constructors
 
     // --- Methods Including Constructors ---
-    public IgbokweSATVerifier() {
+    public GenericVerifier() {
 
     }
 

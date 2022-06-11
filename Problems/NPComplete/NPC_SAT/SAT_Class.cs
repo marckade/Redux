@@ -6,7 +6,7 @@ using API.Problems.NPComplete.NPC_SAT.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SAT;
 
- class SAT : IProblem<GenericSolver, IgbokweSATVerifier> {
+ class SAT : IProblem<GenericSolver, GenericVerifier> {
 
 
     #region Fields
@@ -16,13 +16,13 @@ namespace API.Problems.NPComplete.NPC_SAT;
     private string _formalDefinition = "PHI | PHI is a satisfiable Boolean formula";
     private string _problemDefinition = "SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi to result in 'True'";
     private string _source = ".";
-    private string _defaultInstance = "(x1,x2*,x3) ^ (x1*,x3,x1) ^ (x2,x3*,x1)";
+    private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
     private string _instance = string.Empty;
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
    
     private GenericSolver _defaultSolver = new GenericSolver();
-    private IgbokweSATVerifier _defaultVerifier = new IgbokweSATVerifier();
+    private GenericVerifier _defaultVerifier = new GenericVerifier();
 
     #endregion
 
@@ -88,7 +88,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
         }
     }
 
-    public IgbokweSATVerifier defaultVerifier {
+    public GenericVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -107,11 +107,15 @@ namespace API.Problems.NPComplete.NPC_SAT;
     // --- Methods Including Constructors ---
     public SAT() {
         _instance = defaultInstance;
-        _defaultSolver = new GenericSolver();
+         clauses = getClauses(_instance);
+        literals = getLiterals(_instance);
+      
     }
     public SAT(string phiInput) {
         _instance = phiInput;
-        _defaultSolver = new GenericSolver();
+         clauses = getClauses(phiInput);
+        literals = getLiterals(phiInput);
+     
     }
 
     #endregion
