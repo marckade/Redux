@@ -14,7 +14,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
+    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,c} & {c, a} & {d,a} & {d,e} & {e, a} & {f,a} & {f,g} & {a,g} & {h,a} & {h,i} & {a,i}  } } : 3}";
 
     private string _instance  =  string.Empty;
 
@@ -196,7 +196,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     }
 
 
-
     public List<KeyValuePair<string, string>> getEdges(string Ginput) {
 
         
@@ -213,7 +212,9 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
             string nodeTo = fromTo[1];
             
             KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+            KeyValuePair<string,string> reverseEdge = new KeyValuePair<string,string>(nodeTo, nodeFrom);
             allGEdges.Add(fullEdge);
+            allGEdges.Add(reverseEdge);
         }
 
         return allGEdges;
@@ -226,9 +227,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
             this.nodeColoring.Add(node, "-1");
         }
     }
-
-
-
 
     public int getK(string Ginput) {
 
@@ -258,25 +256,29 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
 
 
-    public void parseProblem() {
+    public void parseProblem(List<string> nodes, List<string> edges, string K) {
 
         string problem = "{{ {";
 
         // Parse nodes
-        for(int i = 0; i < this._nodes.Count - 1; i++){
-            problem += this._nodes[i] + ",";
+        for(int i = 0; i < nodes.Count - 1; i++){
+            problem += nodes[i] + ",";
         }
-        problem += this._nodes[this._nodes.Count - 1] + "}  : {";
+        problem += this._nodes[nodes.Count - 1] + "}:{";
 
         // Parse edges
-        for(int i= 0; i< this._edges.Count -1 ; i++){
-            problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
-        
+        for(int i= 0; i< edges.Count -1 ; i++){
+            problem += edges[i]+ " &";
         }
+        problem += edges[edges.Count -1] + "} :";
+
+        
         // Parse k
-        problem += this._K + "}";
+        problem += K + "}";
+
+        // set problem instance
         this._defaultInstance = problem;
-        this._instance  = this._defaultInstance;
+        this._instance  = problem;
 
     }
 
