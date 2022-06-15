@@ -135,7 +135,7 @@ abstract class UndirectedGraph:Graph{
             }
             
             //end num
-            string endNumPatternOuter = @"}\d+}"; //gets the end section of the graph string
+            string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
             MatchCollection numMatches = Regex.Matches(graphStr,endNumPatternOuter);
             string outerString = numMatches[0].ToString();
             string endNumPatternInner = @"\d+"; //parses out number from end section.

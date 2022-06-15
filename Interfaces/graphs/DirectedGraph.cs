@@ -90,6 +90,7 @@ abstract class DirectedGraph:Graph{
     ///<param name="graphStr">A Directed Graph string</param>
     ///<param name = "decoy"> This is a temp variable for constructor overloading while deprecating the original format </param>
     public DirectedGraph(String graphStr,bool decoy){
+
         _nodeDict = new Dictionary<string,Node>();
         _adjacencyMatrix = new Dictionary<string, List<KeyValuePair<string, Node>>>();
 
@@ -100,7 +101,7 @@ abstract class DirectedGraph:Graph{
         if(inputIsValid){
             
             //nodes
-            string nodePattern = @"{\w(,\w)*)}";
+            string nodePattern = @"{((\w)*(\w,)*)+}";
             MatchCollection nMatches =  Regex.Matches(graphStr,nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');
@@ -125,7 +126,7 @@ abstract class DirectedGraph:Graph{
             }
             
             //end num
-             string endNumPatternOuter = @"}\d+}"; //gets the end section of the graph string
+             string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
             MatchCollection numMatches = Regex.Matches(graphStr,endNumPatternOuter);
             string outerString = numMatches[0].ToString();
             string endNumPatternInner = @"\d+"; //parses out number from end section.
@@ -337,41 +338,42 @@ abstract class DirectedGraph:Graph{
        
     }
 
-/// <summary>
-/// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
-/// </summary>
-/// <returns></returns>
-    public String toDotJson(){
+    /// <summary>
+    /// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
+    /// </summary>
+    /// <returns></returns>
+    public abstract String toDotJson();
+    //{
 
-        string totalString = $"";
-        string preStr = @"digraph {";
-        totalString = totalString + preStr;
+    //     string totalString = $"";
+    //     string preStr = @"digraph {";
+    //     totalString = totalString + preStr;
 
-        //string preStr2 = @"node[style = ""filled""]";
-        //totalString = totalString+preStr2;
-        
-        string dotNode = ""; 
-       // string colorRed = "#d62728";
-        foreach(Node n in _nodeList){
-        dotNode=$"{n.name}";
-        //dotNode=$"{n.name} [{colorRed}]";
-        totalString = totalString+ dotNode + ",";
-        }
-        totalString = totalString.TrimEnd(',');
+    //     //string preStr2 = @"node[style = ""filled""]";
+    //     //totalString = totalString+preStr2;
 
-        foreach(Edge e in _edgeList){
-            KeyValuePair<string,string> eKVP = e.toKVP();
-            string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
-            totalString = totalString + edgeStr;
-        }
+    //     string dotNode = ""; 
+    //    // string colorRed = "#d62728";
+    //     foreach(Node n in _nodeList){
+    //     dotNode=$"{n.name}";
+    //     //dotNode=$"{n.name} [{colorRed}]";
+    //     totalString = totalString+ dotNode + ";";
+    //     }
+    //     totalString = totalString.TrimEnd(',');
 
-        totalString = totalString+ "\n}";
-        
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(totalString, options);
-        return jsonString;
+    //     foreach(Edge e in _edgeList){
+    //         KeyValuePair<string,string> eKVP = e.toKVP();
+    //         string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
+    //         totalString = totalString + edgeStr;
+    //     }
 
-    }
+    //     totalString = totalString}";
+
+    //     var options = new JsonSerializerOptions { WriteIndented = true };
+    //     string jsonString = JsonSerializer.Serialize(totalString, options);
+    //     return jsonString;
+
+    //}
 
 
 

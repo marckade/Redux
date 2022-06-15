@@ -90,40 +90,7 @@ public class AlexNaiveSolverController : ControllerBase {
 
 }
 
-[ApiController]
-[Route("[controller]")]
-public class LawlerKarpController : ControllerBase {
 
-    [HttpGet("info")] // url parameter
-    public String getDefault(){
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        LawlerKarp reduction = new LawlerKarp();
-    
-        String jsonString = JsonSerializer.Serialize(reduction,options);
-        return jsonString;
-    }
-
-    
-    [HttpGet]
-    public String getInstance([FromQuery]string problemInstance) {
-        
-        //from query is a query parameter
-
-        Console.WriteLine(problemInstance);
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        VertexCoverGraph UG = new VertexCoverGraph(problemInstance);
-        string reduction = UG.reduction();
-        //Boolean response = verifier.verify(ARCSETProblem,certificate);
-        // Send back to API user
-
-        // LawlerKarp reduction = new LawlerKarp();
-        // reduction.reduce()
-        string jsonString = JsonSerializer.Serialize(reduction, options);
-        return jsonString;
-
-    }
-
-}
 
 [ApiController]
 [Route("[controller]")]
@@ -171,9 +138,9 @@ public class ARCSETDevController : ControllerBase {
         String jsonString = arcGraph.toDotJson();
                 //Console.WriteLine(jsonString);
 
-        string arcRegStr = "{{a,b,c},{(a,b),(b,c)},10}";
+        string arcRegStr = "{{a,b,c,d},{(a,b),(b,c),(c,d)},10}";
         string uStr = "{{a,b,c},{{a,b},{b,c}},10}";
-        string uStr2 = "{{a,b,c}:{{a,b} & {b,c}}:10}";
+        string uStr2 = "{{a,b,c}:{{a,b} 7 {b,c}}:10}";
 
         GraphParser gParser = new GraphParser();
         List<Edge> arcList = gParser.getGraphEdgeList(arcRegStr);
@@ -197,7 +164,7 @@ public class ARCSETDevController : ControllerBase {
         //Console.WriteLine(uTest.ToString());
        // Console.WriteLine(uTest2.ToString());
        // string printString = JsonSerializer.Serialize(arcTest, options);
-        string printString2 = JsonSerializer.Serialize(uTest, options);
+        string printString2 = JsonSerializer.Serialize(arcTest, options);
         //string printString3 = JsonSerializer.Serialize(uTest2);
 
         //Console.WriteLine(printString);
@@ -217,5 +184,32 @@ public class ARCSETDevController : ControllerBase {
         return jsonString;
     }
 }
+
+[ApiController]
+[Route("[controller]")]
+public class ARCSETVisualizerController : ControllerBase {
+
+    [HttpGet]
+    public String getDefault() {
+        ARCSET arcProblem = new ARCSET();
+        ArcsetGraph arcsetGraph = arcProblem.directedGraph;
+        string dotStr = arcsetGraph.toDotJson();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(dotStr, options);
+        return jsonString;
+
+    }
+
+    [HttpGet("visualize")]
+    public String getInstance([FromQuery]string problemInstance) {
+        ARCSET arcProblem = new ARCSET(problemInstance);
+        ArcsetGraph arcsetGraph = arcProblem.directedGraph;
+        string dotStr = arcsetGraph.toDotJson();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(dotStr, options);
+        return jsonString;
+    }
+}
+
 
     
