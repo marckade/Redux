@@ -16,6 +16,9 @@ abstract class UndirectedGraph:Graph{
     
 
     protected int _K;
+    protected List<string> _nodeStringList = new List<string>();
+    protected List<KeyValuePair<string, string>> _edgesKVP = new List<KeyValuePair<string, string>>();
+
 
     //Constructor
     public UndirectedGraph(){
@@ -23,6 +26,7 @@ abstract class UndirectedGraph:Graph{
         _nodeList = new List<Node>();
         _edgeList = new List<Edge>();
         _K=0;
+        
     }
 
 
@@ -51,9 +55,7 @@ abstract class UndirectedGraph:Graph{
             Edge edge = new Edge(n1,n2);
             this._edgeList.Add(edge);
         }
-
         _K = kVal;
-
     }
  
  /// <summary>
@@ -88,7 +90,6 @@ abstract class UndirectedGraph:Graph{
         }
 
         _K = k;
-
     }
 
 
@@ -146,6 +147,14 @@ abstract class UndirectedGraph:Graph{
 
             _K = convNum;
           
+
+          foreach(Node n in _nodeList){
+            _nodeStringList.Add(n.name);
+        }
+        foreach(Edge e in _edgeList){
+                KeyValuePair<string, string> tempKVP = new KeyValuePair<string, string>(e.node1.name, e.node2.name);
+                _edgesKVP.Add(tempKVP);
+            }
  
         }
         else
@@ -183,7 +192,7 @@ abstract class UndirectedGraph:Graph{
     protected override List<string> getNodes(string Ginput) {
 
         List<string> allGNodes = new List<string>();
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("[", "").Replace("]",""); //uses [ ] as delimiters for edge pairs
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")",""); //uses [ ] as delimiters for edge pairs
         
         // [0] is nodes,  [1] is edges,  [2] is k.
         string[] Gsections = strippedInput.Split(':');
@@ -196,7 +205,6 @@ abstract class UndirectedGraph:Graph{
         return allGNodes;
     }
 
-
         //ALEX NOTE: Taken from Kaden's Clique class
   /**
   * Takes a string representation of a directed graph and returns its edges as a list of strings.
@@ -206,7 +214,7 @@ abstract class UndirectedGraph:Graph{
 
         List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
 
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("[", "").Replace("]","");
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
         
         // [0] is nodes,  [1] is edges,  [2] is k.
         string[] Gsections = strippedInput.Split(':');
@@ -232,7 +240,7 @@ abstract class UndirectedGraph:Graph{
 /// <param name="Ginput"></param>
 /// <returns></returns>
     protected override int getK(string Ginput) {
-            string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("[", "").Replace("]","");
+            string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
             
             // [0] is nodes,  [1] is edges,  [2] is k.
             string[] Gsections = strippedInput.Split(':');
@@ -254,7 +262,22 @@ abstract class UndirectedGraph:Graph{
         }
     }
 
+    public List<string> nodesStringList{
+        get{
+            return _nodeStringList;
+        }
+    }
+    public List<KeyValuePair<string,string>> edgesKVP{
+        get{
+            return _edgesKVP;
+        }
+    }
 
+    public int K{
+        get{
+            return _K;
+        }
+    }
 
 
 }
