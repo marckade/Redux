@@ -86,7 +86,6 @@ class VertexCoverGraph:UndirectedGraph{
         edgeListStr = edgeListStr.TrimEnd(',',' ');
         //edgeListStr = edgeListStr.TrimEnd(' ');
         string toStr = "{{"+nodeListStr+"}"+ ",{" + edgeListStr+"}"+","+_K+"}";
-        Console.WriteLine(toStr);
         return toStr;
 
         //DirectedGraph reductionGraph = new DirectedGraph(newNodes,newEdges,_K);
