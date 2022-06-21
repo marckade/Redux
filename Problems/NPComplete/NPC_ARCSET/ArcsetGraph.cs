@@ -75,7 +75,7 @@ class ArcsetGraph:DirectedGraph{
 /// A list of all backedges. 
 /// </returns>
   public List<Edge> DFS(){
-      
+    
     bool[] visited = new bool[_nodeList.Count]; //makes array equal entry for entry to nodeList
    // bool[] mapNodeNum = new bool[nodeList.Count];
     int[] preVisitArr = new int[_nodeList.Count];
@@ -89,9 +89,13 @@ class ArcsetGraph:DirectedGraph{
         nameNodeInit = _nodeList[0].name; //This will start the DFS using the first node in the list as the first one. need to add error handling
 
         Node currentNode = new Node(); //Instantiates Object. This is messy solution, but avoids a O(n) search of nodeList. 
+        Console.WriteLine(_nodeDict.ToString());
+
         try{
+            
             currentNode = _nodeDict[nameNodeInit];
-        }
+                Console.WriteLine(currentNode);
+            }
         catch(KeyNotFoundException k){
             Console.WriteLine("Key not found "+k.StackTrace);
         }

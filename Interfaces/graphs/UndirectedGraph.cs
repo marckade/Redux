@@ -104,13 +104,13 @@ abstract class UndirectedGraph:Graph{
      /// <param name="decoy"></param>
     public UndirectedGraph(String graphStr,bool decoy){
         string pattern;
-        pattern = @"{{(\w(,\w)*)+},{(\{\w,\w\}(,\{\w,\w\})*)*},\d+}"; //checks for undirected graph format
+        pattern = @"{{(\w+(,\w+)*)+},{(\{\w+,\w+\}(,\{\w+,\w+\})*)*},\d+}"; //checks for undirected graph format
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){
             
             //nodes
-            string nodePattern = @"{((\w)*(\w,)*)+}";
+            string nodePattern = @"{((\w+)*(\w+,)*)+}";
             MatchCollection nMatches =  Regex.Matches(graphStr,nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');
@@ -122,11 +122,11 @@ abstract class UndirectedGraph:Graph{
            //Console.WriteLine(nMatches[0]);
             
             //edges
-            string edgePattern = @"{(\{\w,\w\}(,\{\w,\w\})*)*}";
+            string edgePattern = @"{(\{\w+,\w+\}(,\{\w+,\w+\})*)*}";
             MatchCollection eMatches = Regex.Matches(graphStr,edgePattern);
             string edgeStr = eMatches[0].ToString();
             //Console.WriteLine(edgeStr);
-            string edgePatternInner = @"\w,\w";
+            string edgePatternInner = @"\w+,\w+";
             MatchCollection eMatches2 = Regex.Matches(edgeStr,edgePatternInner);
             foreach(Match medge in eMatches2){
                 string[] edgeSplit = medge.ToString().Split(',');
@@ -181,9 +181,30 @@ abstract class UndirectedGraph:Graph{
         }
         edgeListStr = edgeListStr.TrimEnd('&',' ');
         //edgeListStr = edgeListStr.TrimEnd(' ');
-        string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : "+_K+"}";
+        string toStr = "{{"+nodeListStr+"}" + ": {" + edgeListStr+"}"+" : "+_K+"}";
         return toStr;
     }  
+
+    public string formalString(){
+
+        string nodeListStr = "";
+        foreach(Node node in _nodeList){
+    
+            nodeListStr = nodeListStr+ node.name +",";
+        }
+        nodeListStr = nodeListStr.TrimEnd(',');
+
+        string edgeListStr = "";
+        foreach(Edge edge in _edgeList){
+           string edgeStr = edge.undirectedString() +","; //This line makes this distinct from DirectedGraph
+            edgeListStr = edgeListStr + edgeStr+""; 
+        }
+        edgeListStr = edgeListStr.TrimEnd(',',' ');
+        //edgeListStr = edgeListStr.TrimEnd(' ');
+        string toStr = "{{"+nodeListStr+"}"+ ",{" + edgeListStr+"}"+","+_K+"}";
+        return toStr;
+
+    }
 
     //ALEX NOTE: Taken from Kaden's Clique class
 /**

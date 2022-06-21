@@ -96,6 +96,9 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
         get{
             return _cliqueAsGraph;
         }
+        set{
+            _cliqueAsGraph = value;
+        }
     }
 
     // --- Methods Including Constructors ---
