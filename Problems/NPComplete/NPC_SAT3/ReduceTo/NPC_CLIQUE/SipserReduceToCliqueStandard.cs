@@ -100,14 +100,16 @@ class SipserReduction : IReduction<SAT3, CLIQUE> {
         foreach (KeyValuePair<string,string> edge in edges) {
             edgesString += "(" + edge.Key + "," + edge.Value + ")" + " & ";
         }
-        edgesString = edgesString.Trim('&');
+        edgesString = edgesString.Trim(' ').TrimEnd('&');
 
         int kint = SAT3Instance.clauses.Count;
         // "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
         string G = "{{" + nodesString + "} : {" + edgesString + "} : " + kint.ToString() + "}";
 
         // Assign and return
-        reducedCLIQUE.instance = G;
+        Console.WriteLine(G);
+        reducedCLIQUE.cliqueAsGraph = new CliqueGraph(G);
+        reducedCLIQUE.instance = reducedCLIQUE.cliqueAsGraph.formalString();
         reductionTo = reducedCLIQUE;
         return reducedCLIQUE;
     }

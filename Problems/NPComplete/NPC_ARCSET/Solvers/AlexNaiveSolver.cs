@@ -42,7 +42,7 @@ class AlexNaiveSolver : ISolver {
     */
     public string solve(ARCSET arc){
         string retStr = "";
-        List<Edge> backEdges =arc.directedGraph.DFS();
+        List<Edge> backEdges = arc.directedGraph.DFS();
         foreach(Edge be in backEdges){
             retStr =retStr + be.directedString()+",";
         }

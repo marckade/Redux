@@ -70,7 +70,7 @@ class VertexCoverGraph:UndirectedGraph{
           //  Console.WriteLine(e.directedString());
         }
         
-        //"{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}" //formatting
+        //"{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}" //formatting
         string nodeListStr = "";
         foreach(Node node in newNodes){
     
@@ -79,13 +79,13 @@ class VertexCoverGraph:UndirectedGraph{
         nodeListStr = nodeListStr.TrimEnd(',');
         string edgeListStr = "";
         foreach(Edge edge in newEdges){
-           string edgeStr = edge.directedString() +" & "; //this line is what makes this class distinct from Undirected Graph
+           string edgeStr = edge.directedString() +","; //this line is what makes this class distinct from Undirected Graph
            //Console.WriteLine("Edge: "+ edge.directedString());
             edgeListStr = edgeListStr+ edgeStr+""; 
         }
-        edgeListStr = edgeListStr.TrimEnd('&',' ');
+        edgeListStr = edgeListStr.TrimEnd(',',' ');
         //edgeListStr = edgeListStr.TrimEnd(' ');
-        string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : "+_K+"}";
+        string toStr = "{{"+nodeListStr+"}"+ ",{" + edgeListStr+"}"+","+_K+"}";
         return toStr;
 
         //DirectedGraph reductionGraph = new DirectedGraph(newNodes,newEdges,_K);
