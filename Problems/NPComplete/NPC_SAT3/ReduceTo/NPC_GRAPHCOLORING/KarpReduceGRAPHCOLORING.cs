@@ -247,7 +247,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         }
 
 
-
+        
 
         // Set GRAPHCOLORING edges 
         reducedGRAPHCOLORING.edges = edges;
@@ -257,7 +257,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
     
         //The number of colors that satisfy the problem
-        reducedGRAPHCOLORING.K = 3;
+        reducedGRAPHCOLORING.K = 3; //ALEX NOTE: This is a hardcoded magic number. Beware. 
         reducedGRAPHCOLORING.parseProblem();
 
    
