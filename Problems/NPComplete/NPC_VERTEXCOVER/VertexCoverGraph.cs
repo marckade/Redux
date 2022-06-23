@@ -13,10 +13,24 @@ class VertexCoverGraph:UndirectedGraph{
     public VertexCoverGraph() : base(){
         
     }
+
+    /// <summary>
+ /// Takes a String and creates a VertexCoverGraph from it
+ /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} & {b,c}} : 1}
+ /// </summary>
+ /// <param name="graphStr"> string input</param>
     public VertexCoverGraph(string vertInput) : base (vertInput){
         
     }
 
+    //Constructor for standard graph formatted string input.
+     /// <summary>
+     /// 
+     /// </summary>
+     /// <param name="graphStr"> Undirected Graph string input
+     /// ex. {{1,2,3},{{1,2},{2,3}},0}
+     /// </param>
+     /// <param name="decoy"></param>
     public VertexCoverGraph(string vertInput, bool decoy) : base (vertInput, decoy){
     
     }

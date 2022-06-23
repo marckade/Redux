@@ -5,17 +5,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
-namespace API.Problems.NPComplete.NPC_CLIQUE;
+namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class CliqueGraph : UndirectedGraph
+class GraphColoringGraph : UndirectedGraph
 {
 
    /// <summary>
  /// Takes a String and creates a VertexCoverGraph from it
  /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} & {b,c}} : 1}
  /// </summary>
- /// <param name="graphStr"> string input</param>
-  public CliqueGraph(string cliqueInput) : base (cliqueInput){
+ /// <param name="cliqueInput"> string input</param>
+  public GraphColoringGraph(string cliqueInput) : base (cliqueInput){
         
     }
 
@@ -23,12 +23,11 @@ class CliqueGraph : UndirectedGraph
      /// <summary>
      /// 
      /// </summary>
-     /// <param name="graphStr"> Undirected Graph string input
+     /// <param name="cliqueInput"> Undirected Graph string input
      /// ex. {{1,2,3},{{1,2},{2,3}},0}
      /// </param>
      /// <param name="decoy"></param>
-    public CliqueGraph(string cliqueInput, bool decoy) : base (cliqueInput, decoy){
-    
+    public GraphColoringGraph(string cliqueInput, bool decoy) : base (cliqueInput, decoy){
 
     }
 
