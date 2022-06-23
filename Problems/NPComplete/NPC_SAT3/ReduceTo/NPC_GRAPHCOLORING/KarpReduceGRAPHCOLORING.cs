@@ -7,19 +7,19 @@ namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_GRAPHCOLORING;
 class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 {
 
-    
-    # region Fields
+
+    #region Fields
     private string _reductionDefinition = "Karp's reduction converts each clause from a 3CNF into an OR gadgets to establish the truth assignments using labels.";
     private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private SAT3 _reductionFrom;
     private GRAPHCOLORING _reductionTo;
-     private string _complexity = "O(n^2)";
+    private string _complexity = "O(n^2)";
 
-    # endregion
+    #endregion
 
-    # region Properties
+    #region Properties
 
-     public string reductionDefinition
+    public string reductionDefinition
     {
         get
         {
@@ -34,12 +34,15 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         }
     }
 
-    public string complexity {
-        get {
+    public string complexity
+    {
+        get
+        {
             return _complexity;
         }
 
-        set{
+        set
+        {
             _complexity = value;
         }
     }
@@ -68,10 +71,10 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         }
     }
 
-    # endregion
-   
-    # region Constructors
-     public KarpReduction(SAT3 from)
+    #endregion
+
+    #region Constructors
+    public KarpReduction(SAT3 from)
     {
         _reductionFrom = from;
         _reductionTo = reduce();
@@ -85,45 +88,47 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
 
     //The below code is reducing the SAT3 instance to a GRAPHCOLORING instance.
-    public  GRAPHCOLORING reduce() {
+    public GRAPHCOLORING reduce()
+    {
 
         // color palette 
-          // 0 : False, 1 : True,  2 : Base
+        // 0 : False, 1 : True,  2 : Base
 
-        string[] palette = { "false", "true", "base" };
+        string[] palette = { "F", "T", "Base" };
 
         SAT3 SAT3Instance = _reductionFrom;
         GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
         Dictionary<string, string> coloring = new Dictionary<string, string>();
-
-       for(int i = 0; i < palette.Length; i++){
-           coloring.Add(palette[i], i.ToString());
-       }
 
 
         // ------- Add nodes -------
 
         List<string> nodes = new List<string>(palette);
 
+        for (int i = 0; i < palette.Length; i++)
+        {
+            coloring.Add(palette[i], i.ToString());
+        }
+
         List<string> variables = SAT3Instance.literals.Distinct().ToList();
 
-        for(int i = 0; i < variables.Count; i++){
+        for (int i = 0; i < variables.Count; i++)
+        {
             nodes.Add(variables[i]);
             coloring.Add(variables[i], "-1");
         }
-       
+
         // Create clause nodes 
         List<List<string>> clauses = new List<List<string>>();
         for (int i = 0; i < SAT3Instance.clauses.Count; i++)
         {
-            int clauseIndex = i + 1;
 
             List<string> tempClause = new List<string>();
 
             for (int j = 0; j < 6; j++)
             {
-                tempClause.Add("C" + clauseIndex + "N" + j);
-                coloring.Add("C" + clauseIndex + "N" + j , "-1");
+                tempClause.Add("C" + i + "N" + j);
+                coloring.Add("C" + i + "N" + j, "-1");
             }
 
             // Add clause-nodes to list of clauses 
@@ -137,9 +142,12 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         reducedGRAPHCOLORING.nodes = nodes;
 
 
-     // -------------  Add edges -----------------------
-     List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
-    
+        // -------------  Add edges -----------------------
+        List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
+
+        // holds edges for parsing problem instance 
+        List<string> instanceEdges = new List<string>();
+
 
         // Connect palette edges 
         for (int i = 0; i < palette.Length; i++)
@@ -148,7 +156,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
             {
                 if (i != j)
                 {
-                    addEdge(palette[i], palette[j], edges);
+                    addEdge(palette[i], palette[j], edges, instanceEdges);
                 }
             }
         }
@@ -158,8 +166,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         // Can only be colored True or false can't be base 
         for (int i = 0; i < variables.Count; i++)
         {
-            addEdge(variables[i], palette[2], edges);
-            addEdge(palette[2], variables[i], edges);
+            addEdge(variables[i], palette[2], edges, instanceEdges);
 
         }
 
@@ -171,7 +178,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
             {
                 if (variables[i].Replace("!", "") == variables[j].Replace("!", "") && variables[i] != variables[j])
                 {
-                    addEdge(variables[i], variables[j], edges);
+                    addEdge(variables[i], variables[j], edges, instanceEdges);
                 }
             }
         }
@@ -185,7 +192,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
             {
                 for (int k = 0; k < 3; k++)
                 {
-                    if (k != j) { addEdge(clauses[i][j], clauses[i][k], edges); }
+                    if (k != j) { addEdge(clauses[i][j], clauses[i][k], edges, instanceEdges); }
                 }
 
             }
@@ -195,7 +202,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
             {
                 for (int k = 3; k < clauses[i].Count; k++)
                 {
-                    if (k != j) { addEdge(clauses[i][j], clauses[i][k], edges); }
+                    if (k != j) { addEdge(clauses[i][j], clauses[i][k], edges, instanceEdges); }
                 }
             }
 
@@ -207,43 +214,46 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
                 for (int k = 2; k < 4; k++)
                 {
 
-                    if (k != j) { addEdge(clauses[i][j], clauses[i][k], edges); }
+                    if (k != j) { addEdge(clauses[i][j], clauses[i][k], edges, instanceEdges); }
                 }
             }
 
         }
 
 
-        // add edges between clauses and literals
-         for (int i = 0; i < clauses.Count; i++)
+        // Combine clause, variable and palette  
+
+        for (int i = 0; i < clauses.Count; i++)
         {
 
-               // Connect variables to clause gadgets 
-                addEdge(SAT3Instance.clauses[i][0],clauses[i][0], edges);
-                addEdge(SAT3Instance.clauses[i][1],clauses[i][1], edges);
-                addEdge(SAT3Instance.clauses[i][2],clauses[i][4], edges);
 
-                addEdge(clauses[i][0], SAT3Instance.clauses[i][0], edges);
-                addEdge(clauses[i][1], SAT3Instance.clauses[i][1], edges);
-                addEdge(clauses[i][4], SAT3Instance.clauses[i][2], edges);
+            // Connect variables to clause gadgets 
+            addEdge(SAT3Instance.clauses[i][0], clauses[i][0], edges, instanceEdges);
+            addEdge(SAT3Instance.clauses[i][1], clauses[i][1], edges, instanceEdges);
+            addEdge(SAT3Instance.clauses[i][2], clauses[i][4], edges, instanceEdges);
 
 
 
-                // Connect color blue to (a V b)
-                addEdge(clauses[i][2] , palette[2], edges);
-                addEdge(palette[2], clauses[i][2],edges);
+            addEdge(clauses[i][0], SAT3Instance.clauses[i][0], edges, instanceEdges);
+            addEdge(clauses[i][1], SAT3Instance.clauses[i][1], edges, instanceEdges);
+            addEdge(clauses[i][4], SAT3Instance.clauses[i][2], edges, instanceEdges);
 
 
-                // Connect color blue and red to ((a V b) V c )
-                // color : red 
-                addEdge(clauses[i][5] , palette[0], edges);
-                addEdge(palette[0], clauses[i][5],edges);
+            // Connect palette base node to (a V b)
+            addEdge(clauses[i][2], palette[2], edges, instanceEdges);
+            addEdge(palette[2], clauses[i][2], edges, instanceEdges);
+
+            // Connect palette nodes to clauses ((a V b) V c )
+
+            // palette : False  
+            addEdge(clauses[i][5], palette[0], edges, instanceEdges);
+            addEdge(palette[0], clauses[i][5], edges, instanceEdges);
 
 
-                //  color : blue 
-                addEdge(clauses[i][5] , palette[2], edges);
-                addEdge(palette[2], clauses[i][5],edges);
-            
+            //  palette : Base  
+            addEdge(clauses[i][5], palette[2], edges, instanceEdges);
+            addEdge(palette[2], clauses[i][5], edges, instanceEdges);
+
         }
 
 
@@ -255,32 +265,39 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         //Set NodeColoring 
         reducedGRAPHCOLORING.nodeColoring = coloring;
 
-    
+
         //The number of colors that satisfy the problem
         reducedGRAPHCOLORING.K = 3; //ALEX NOTE: This is a hardcoded magic number. Beware. 
         reducedGRAPHCOLORING.parseProblem();
 
-   
         return reducedGRAPHCOLORING;
     }
 
 
-     // This method is adding the edges to the list of edges.
-    public void addEdge(string x, string y, List<KeyValuePair<string, string>> edges)
+    // This method is adding the edges to the list of edges.
+    public void addEdge(string x, string y, List<KeyValuePair<string, string>> edges, List<string> instanceEdges)
     {
         KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(x, y);
         edges.Add(fullEdge);
+
+        string edge = "{" + x + "," + y + "}";
+        string reverseEdge = "{" + y + "," + x + "}";
+
+        if (!instanceEdges.Contains(reverseEdge))
+        {
+            instanceEdges.Add(edge);
+        }
     }
 
-    # endregion
+    #endregion
 
-  
 
-   
 
-  
 
-  
+
+
+
+
 
 
 

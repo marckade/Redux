@@ -198,7 +198,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     }
 
 
-
     public List<KeyValuePair<string, string>> getEdges(string Ginput) {
 
         
@@ -215,7 +214,9 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
             string nodeTo = fromTo[1];
             
             KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+            KeyValuePair<string,string> reverseEdge = new KeyValuePair<string,string>(nodeTo, nodeFrom);
             allGEdges.Add(fullEdge);
+            allGEdges.Add(reverseEdge);
         }
 
         return allGEdges;
@@ -228,9 +229,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
             this.nodeColoring.Add(node, "-1");
         }
     }
-
-
-
 
     public int getK(string Ginput) {
 
@@ -271,8 +269,8 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
         string problem = "{{";
 
         // Parse nodes
-        for(int i = 0; i < this._nodes.Count - 1; i++){
-            problem += this._nodes[i] + ",";
+        for(int i = 0; i < nodes.Count - 1; i++){
+            problem += nodes[i] + ",";
         }
         problem += this._nodes[this._nodes.Count - 1] + "},{";
 

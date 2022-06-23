@@ -4,6 +4,7 @@ using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 using System.Text.Json;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
+using API.Problems.NPComplete.NPC_GRAPHCOLORING.ReduceTo.NPC_SAT;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
@@ -95,6 +96,37 @@ public class DanielBrelazSolverController : ControllerBase {
         return jsonString;
     }
 
+
+}
+
+
+[ApiController]
+[Route("[controller]")]
+
+public class KarpReduceSATController : ControllerBase {
+
+    [HttpGet("info")]
+    public String getInfo(){
+
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GRAPHCOLORING defaultGRAPHCOLORING = new GRAPHCOLORING();
+        KarpReduceSAT reduction = new KarpReduceSAT(defaultGRAPHCOLORING);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+
+
+
+
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance){
+         
+        KarpReduceSAT reduction = new KarpReduceSAT(new GRAPHCOLORING(problemInstance));
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
 
 }
 
