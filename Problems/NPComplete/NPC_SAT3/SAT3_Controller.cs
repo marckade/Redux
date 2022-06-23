@@ -140,7 +140,7 @@ public class GareyJohnsonController : ControllerBase {
 [Route("[controller]")]
 public class KadensSimpleVerifierController : ControllerBase {
 
-    // Return Generic Solver Class
+    // Return Generic Verifier Class
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -151,7 +151,7 @@ public class KadensSimpleVerifierController : ControllerBase {
         return jsonString;
     }
 
-    // Solve a instance given a certificate
+    // Verify a instance given a certificate
     [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -188,7 +188,14 @@ public class SkeletonSolverController : ControllerBase {
         SAT3 SAT3_PROBLEM = new SAT3(problemInstance);
         Dictionary<string, bool> solution = SAT3_PROBLEM.defaultSolver.solve(SAT3_PROBLEM);
 
-        string jsonString = JsonSerializer.Serialize(solution, options);
+        //ALEX NOTE: This is a temporary fix. This logic should be moved to the SAT3 solver class soon. 
+        string solutionString = "(";
+        foreach(KeyValuePair<string,bool> kvp in solution){
+            solutionString = solutionString + kvp.Key + ":" + kvp.Value.ToString() + ",";
+        }
+        solutionString = solutionString.TrimEnd(',');
+        solutionString = solutionString + ")"; 
+        string jsonString = JsonSerializer.Serialize(solutionString, options);
         return jsonString;
 
     }
