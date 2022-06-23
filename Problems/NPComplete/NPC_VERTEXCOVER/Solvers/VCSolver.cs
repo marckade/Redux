@@ -34,9 +34,19 @@ class VCSolverJanita : ISolver {
     }
 
 
-    public List<KeyValuePair<string, string>> Solve(String G){
+/// <summary>
+/// Solves a VERTEXCOVER instance input.
+/// </summary>
+/// <param name="G"> G is an undirected graph instance string</param>
+/// <returns></returns>
+/// <remarks>
+/// Authored by Janita Aamir
+/// Refactored to use a standard undirected graph object by Alex Diviney
+/// </remarks>
+    public List<KeyValuePair<string, string>> Solve(VERTEXCOVER G){
         //{{a,b,c,d,e,f,g} : {(a,b) & (a,c) & (c,d) & (c,e) & (d,f) & (e,f) & (e,g)}}
-        List<KeyValuePair<string, string>> edges = getEdges(G);
+
+        List<KeyValuePair<string, string>> edges = G.edges;
         List<KeyValuePair<string, string>> C = new List<KeyValuePair<string, string>>();
         Random rnd = new Random();
 

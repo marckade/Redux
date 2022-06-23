@@ -64,7 +64,7 @@ public class VCVerifierController : ControllerBase {
     }
 
     [HttpGet("verify")]
-    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+    public String verifyInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
         VCVerifierJanita verifier = new VCVerifierJanita();
@@ -109,7 +109,7 @@ public class VCSolverController : ControllerBase {
     public String solveInstance([FromQuery]string problemInstance){
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
-        List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problemInstance);
+        List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problem);
         string stringVC = "{";
         stringVC += Environment.NewLine;
         foreach (KeyValuePair<string, string> keyValue in solvedInstance)
