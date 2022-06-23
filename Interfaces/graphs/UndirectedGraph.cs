@@ -58,9 +58,9 @@ abstract class UndirectedGraph:Graph{
         _K = kVal;
     }
  
- /// <summary>
+    /// <summary>
  /// Takes a String and creates a VertexCoverGraph from it
- /// NOTE: DEPRECATED
+ /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} & {b,c}} : 1}
  /// </summary>
  /// <param name="graphStr"> string input</param>
     public UndirectedGraph(String graphStr){

@@ -76,7 +76,7 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
     /// An Arcset Object
     /// </returns>
     public ARCSET reduce() {
-        VertexCoverGraph ug = new VertexCoverGraph(_reductionFrom.instance);
+        VertexCoverGraph ug = new VertexCoverGraph(_reductionFrom.instance,true);
         string dgString = ug.reduction();
         //ArcsetGraph dg = new ArcsetGraph(dgString,true);
         ARCSET arcset = new ARCSET(dgString);
