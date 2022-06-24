@@ -8,6 +8,7 @@ class TSPVerifier : IVerifier
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for TSP";
     private string _source = " ";
+    private string _certificate ="";
 
     // --- Properties ---
     public string verifierName
@@ -31,6 +32,12 @@ class TSPVerifier : IVerifier
             return _source;
         }
     }
+     public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+    
 
     // --- Methods Including Constructors ---
     public TSPVerifier()

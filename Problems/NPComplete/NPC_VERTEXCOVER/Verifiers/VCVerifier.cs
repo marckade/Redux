@@ -9,6 +9,7 @@ class VCVerifierJanita : IVerifier {
     private string _verifierDefinition = "This verifier is a naive solver for Vertex Cover that does not have a clear origination. ";
     private string _source = "No clear origination.";
     private string _complexity = "";
+    private string _certificate ="";
 
     // --- Properties ---
     public string verifierName {
@@ -26,6 +27,14 @@ class VCVerifierJanita : IVerifier {
             return _source;
         }
     }
+
+     public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+    
+
 
     // --- Methods Including Constructors ---
     public VCVerifierJanita() {

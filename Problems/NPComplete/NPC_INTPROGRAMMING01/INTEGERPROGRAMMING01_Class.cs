@@ -8,10 +8,11 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
 
     // --- Fields ---
     private string _problemName = "0-1 Integer Programming";
-    private string _formalDefinition = "{<C,d> | C is an m*n matrix, d is a m-vector, and a n-vector x exicst such that Cx is <= d. }";
+    private string _formalDefinition = "0-1 Integer Programming = {<C,d> | C is an m*n matrix, d is a m-vector, and a n-vector x exicst such that Cx is <= d. }";
     private string _problemDefinition = "0-1 Integer Programming is a system of inequalities, where each variable can be either a 0 or a 1. It is represented by a matrix, where each collumn is a variable, and each row is an inequality. In this implementation the inequality is alway <=. A problem is 0-1 integer programable, if each variable has an assignment of 0 or 1, such that each inequality is satisfiable.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "(-1 1 -1),(0 0 -1),(-1 -1 1)<=(0 0 0)";
+    private string _wikiName ="";
     private List<List<int>> _C = new List<List<int>>();
     private List<int> _d = new List<int>();
     private GenericSolver _defaultSolver = new GenericSolver();
@@ -39,6 +40,13 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
             return _source;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+
     public string defaultInstance {
         get {
             return _defaultInstance;

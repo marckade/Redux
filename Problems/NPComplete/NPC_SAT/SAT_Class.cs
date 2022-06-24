@@ -13,11 +13,12 @@ namespace API.Problems.NPComplete.NPC_SAT;
 
     // --- Fields ---
     private string _problemName = "SAT";
-    private string _formalDefinition = "PHI | PHI is a satisfiable Boolean formula";
+    private string _formalDefinition = "SAT = {PHI | PHI is a satisfiable Boolean formula}";
     private string _problemDefinition = "SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi to result in 'True'";
     private string _source = ".";
     private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
     private string _instance = string.Empty;
+    private string _wikiName ="";
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
    
@@ -57,6 +58,12 @@ namespace API.Problems.NPComplete.NPC_SAT;
     public string defaultInstance {
         get {
             return _defaultInstance;
+        }
+    }
+    
+      public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 

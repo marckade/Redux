@@ -8,6 +8,7 @@ class GenericVerifierDM3 : IVerifier {
     private string _verifierName = "Generic 3-Dimensional Matching Verifier";
     private string _verifierDefinition = "This verifier checks that a given certificate is the correct size, and contains all elements of X, Y and Z";
     private string _source = "Caleb Eardley";
+    private string _certificate ="";
 
     // --- Properties ---
     public string verifierName {
@@ -23,6 +24,12 @@ class GenericVerifierDM3 : IVerifier {
     public string source {
         get {
             return _source;
+        }
+    }
+
+    public string certificate {
+        get {
+            return _certificate;
         }
     }
 

@@ -9,11 +9,12 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
 
     // --- Fields ---
     private string _problemName = "3-Dimensional Matching";
-    private string _formalDefinition = "{<M,X,Y,Z> | M is a subset of X*Y*Z,|X|=|Y|=|Z| and a subset of M, M', exists, where |M'| = |A|,|B|,|C|, and no two elements of M' agree in any cooridinate}" ;
+    private string _formalDefinition = "3-Dimensional Matching = {<M,X,Y,Z> | M is a subset of X*Y*Z,|X|=|Y|=|Z| and a subset of M, M', exists, where |M'| = |A|,|B|,|C|, and no two elements of M' agree in any cooridinate}" ;
     private string _problemDefinition = "3-Dimensional Matching is when, given 3 equally sized sets, X, Y, and Z, and a set of constraints M, being a subset of XxYxZ, are you able to select a set of constraints which contain each element of X, Y, and Z in one and only one 3-tuple.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
     private string _instance = string.Empty;
+    private string _wikiName ="";
     private List<List<List<string>>> _problem;
     private List<string> _X;
     private List<string> _Y;
@@ -55,6 +56,11 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
         }
         set {
             _instance = value;
+        }
+    }
+      public string wikiName {
+        get {
+            return _wikiName;
         }
     }
     public List<string> X {

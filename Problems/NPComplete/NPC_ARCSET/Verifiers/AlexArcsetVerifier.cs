@@ -12,6 +12,8 @@ class AlexArcsetVerifier : IVerifier {
     
     private string _source = "This verifier is essentially common knowledge, as it utilizes a widely recognized algorithm in computer science: The Depth First Search.";
 
+    private string _certificate = "";
+
     // --- Properties ---
     public string verifierName {
         get {
@@ -26,6 +28,11 @@ class AlexArcsetVerifier : IVerifier {
     public string source {
         get {
             return _source;
+        }
+    }
+      public string certificate {
+        get {
+            return _certificate;
         }
     }
 

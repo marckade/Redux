@@ -10,11 +10,12 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
     #region Fields
     private readonly string _problemName = "GRAPHCOLORING";
-    private readonly string _formalDefinition = "{<G,k> | G is a graph that has a k-coloring}";
+    private readonly string _formalDefinition = "GRAPHCOLORING = {<G,k> | G is a graph that has a k-coloring}";
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,c} & {c, a} & {d,a} & {d,e} & {e, a} & {f,a} & {f,g} & {a,g} & {h,a} & {h,i} & {a,i}  } } : 3}";
+    private string _wikiName ="";
 
     private string _instance  =  string.Empty;
 
@@ -71,6 +72,12 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
         set {
             _instance  = value;
+        }
+    }
+
+      public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 

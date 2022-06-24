@@ -13,6 +13,7 @@ class IgbokweVerifier : IVerifier
     private string _verifierDefinition = "This is a verifier for GRAPHCOLORING made by Daniel Igbokwe. it checks if adjacent vertices are labeled differently, and that their labels are valid using a depth first search";
     private string _source = "";
     private string _complexity = " O(V + E)";
+    private string _certificate ="";
 
     #endregion
 
@@ -46,6 +47,11 @@ class IgbokweVerifier : IVerifier
 
         set{
             _complexity = value;
+        }
+    }
+     public string certificate {
+        get {
+            return _certificate;
         }
     }
 

@@ -8,10 +8,11 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
 
     // --- Fields ---
     private string _problemName = "Subset Sum";
-    private string _formalDefinition = "<G, T> | G is a set of positive integers and there exists a subset of G, K where the sum of K's elements equals T";
+    private string _formalDefinition = "Subset Sum = {<G, T> | G is a set of positive integers and there exists a subset of G, K where the sum of K's elements equals T}";
     private string _problemDefinition = "The problem is to determine whether there exists a sum of elements that totals to the number T.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{{1,7,12,15} : 28}";
+    private string _wikiName ="";
     private string _SS = string.Empty;
     private List<string> _Integers = new List<string>();
     private int _T = 3;
@@ -43,6 +44,11 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
     public string defaultInstance {
         get {
             return _defaultInstance;
+        }
+    }
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
     public string SS {

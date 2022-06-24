@@ -13,6 +13,7 @@ class TSP : IProblem<BranchAndBoundSolver, TSPVerifier>
     private string _problemDefinition = "The traveling salesperson problem finds an optimal tour (a path of minimum distance) given a matrix of cities and distances between them. The tour must start and end in the same city and each other city must be visited exactly once.";
     private string _source = "Dasgupta, Sanjoy, Christos H. Papadimitriou, and Umesh V. Vazirani. Algorithms. Boston: McGraw-Hill Higher Education, 2008.";
     private string _defaultInstance = "{ { int.MaxValue, 5, 12, 8 },{ 4, int.MaxValue, 10, 7 },{ 9, 14, int.MaxValue, 5 },{ 16, 3, 10, int.MaxValue } }";
+    private string _wikiName ="";
     private string _D;
     private BranchAndBoundSolver _defaultSolver = new BranchAndBoundSolver();
     private TSPVerifier _defaultVerifier = new TSPVerifier();
@@ -60,6 +61,11 @@ class TSP : IProblem<BranchAndBoundSolver, TSPVerifier>
         get 
         { 
             return _D; 
+        }
+    }
+      public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 
