@@ -88,9 +88,22 @@ public class TSPVerifierController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class TSPSolverController : ControllerBase
+public class BranchAndBoundSolverController : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("info")]
+    public String getInfo()
+    {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        TSP TSPProblem = new TSP();
+        BranchAndBoundSolver solver = new BranchAndBoundSolver();
+        string certificate = solver.branchAndBound(TSPProblem);
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(certificate, options);
+        return jsonString;
+    }
+
+    [HttpGet("solve")]
     public String getInstance([FromQuery] string problemInstance)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -106,9 +119,9 @@ public class TSPSolverController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class TSPGreedySolverController : ControllerBase
+public class GreedySolverController : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("solve")]
     public String getInstance([FromQuery] string problemInstance)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
