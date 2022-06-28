@@ -1,6 +1,7 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
+
  class DanielBrelazSolver : ISolver {
 
 

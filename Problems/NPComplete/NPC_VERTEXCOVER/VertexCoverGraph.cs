@@ -13,10 +13,24 @@ class VertexCoverGraph:UndirectedGraph{
     public VertexCoverGraph() : base(){
         
     }
+
+    /// <summary>
+ /// Takes a String and creates a VertexCoverGraph from it
+ /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} & {b,c}} : 1}
+ /// </summary>
+ /// <param name="graphStr"> string input</param>
     public VertexCoverGraph(string vertInput) : base (vertInput){
         
     }
 
+    //Constructor for standard graph formatted string input.
+     /// <summary>
+     /// 
+     /// </summary>
+     /// <param name="graphStr"> Undirected Graph string input
+     /// ex. {{1,2,3},{{1,2},{2,3}},0}
+     /// </param>
+     /// <param name="decoy"></param>
     public VertexCoverGraph(string vertInput, bool decoy) : base (vertInput, decoy){
     
     }
@@ -70,7 +84,7 @@ class VertexCoverGraph:UndirectedGraph{
           //  Console.WriteLine(e.directedString());
         }
         
-        //"{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}" //formatting
+        //"{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}" //formatting
         string nodeListStr = "";
         foreach(Node node in newNodes){
     
@@ -79,13 +93,13 @@ class VertexCoverGraph:UndirectedGraph{
         nodeListStr = nodeListStr.TrimEnd(',');
         string edgeListStr = "";
         foreach(Edge edge in newEdges){
-           string edgeStr = edge.directedString() +" & "; //this line is what makes this class distinct from Undirected Graph
+           string edgeStr = edge.directedString() +","; //this line is what makes this class distinct from Undirected Graph
            //Console.WriteLine("Edge: "+ edge.directedString());
             edgeListStr = edgeListStr+ edgeStr+""; 
         }
-        edgeListStr = edgeListStr.TrimEnd('&',' ');
+        edgeListStr = edgeListStr.TrimEnd(',',' ');
         //edgeListStr = edgeListStr.TrimEnd(' ');
-        string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : "+_K+"}";
+        string toStr = "{{"+nodeListStr+"}"+ ",{" + edgeListStr+"}"+","+_K+"}";
         return toStr;
 
         //DirectedGraph reductionGraph = new DirectedGraph(newNodes,newEdges,_K);

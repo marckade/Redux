@@ -106,14 +106,16 @@ class SipserReduction : IReduction<SAT3, SipserClique> {
         foreach (KeyValuePair<string,string> edge in edges) {
             edgesString += "(" + edge.Key + "," + edge.Value + ")" + " & ";
         }
-        edgesString = edgesString.Trim('&');
+        edgesString = edgesString.Trim(' ').TrimEnd('&');
 
         int kint = SAT3Instance.clauses.Count;
         // "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
         string G = "{{" + nodesString + "} : {" + edgesString + "} : " + kint.ToString() + "}";
 
         // Assign and return
-        reducedCLIQUE.instance = G;
+        Console.WriteLine(G);
+        reducedCLIQUE.cliqueAsGraph = new CliqueGraph(G); //ALEX NOTE: Since undirected graphs are backwards compatible, I am able to take in an old format string here. This is a bandaid solution
+        reducedCLIQUE.instance = reducedCLIQUE.cliqueAsGraph.formalString(); //Outputs a standard graph notation instance.
         reductionTo = reducedCLIQUE;
         return reducedCLIQUE;
     }

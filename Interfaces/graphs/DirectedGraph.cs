@@ -90,17 +90,18 @@ abstract class DirectedGraph:Graph{
     ///<param name="graphStr">A Directed Graph string</param>
     ///<param name = "decoy"> This is a temp variable for constructor overloading while deprecating the original format </param>
     public DirectedGraph(String graphStr,bool decoy){
+
         _nodeDict = new Dictionary<string,Node>();
         _adjacencyMatrix = new Dictionary<string, List<KeyValuePair<string, Node>>>();
 
         string pattern;
-        pattern = @"{{(\w(,\w)*)},{(\(\w,\w\)(,\(\w,\w\))*)*},\d+}"; //checks for directed graph format
+        pattern = @"{{(([\w!]+)+(,([\w!]+))*)},{(\(([\w!]+),([\w!]+)\)(,\(([\w!]+),([\w!]+)\))*)*},\d+}"; //checks for directed graph format
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);
         if(inputIsValid){
             
             //nodes
-            string nodePattern = @"{\w(,\w)*)}";
+            string nodePattern = @"{((([\w!]+))*(([\w!]+),)*)+}";
             MatchCollection nMatches =  Regex.Matches(graphStr,nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');
@@ -108,14 +109,15 @@ abstract class DirectedGraph:Graph{
             string[] nodeStringList = nodeStr.Split(',');
             foreach(string nodeName in nodeStringList){
                _nodeList.Add(new Node(nodeName));
-           }
+               _nodeDict.Add(nodeName, new Node(nodeName));
+            }
            //Console.WriteLine(nMatches[0]);
             
             //edges
-            string edgePattern = @"{(\(\w,\w\)(,\(\w,\w\))*)*}";
+            string edgePattern = @"{(\(([\w!]+),([\w!]+)\)(,\(([\w!]+),([\w!]+)\))*)*}";
             MatchCollection eMatches = Regex.Matches(graphStr,edgePattern);
             string edgeStr = eMatches[0].ToString();
-            string edgePatternInner = @"\w,\w";
+            string edgePatternInner = @"([\w!]+)+,([\w!]+)";
             MatchCollection eMatches2 = Regex.Matches(edgeStr,edgePatternInner);
             foreach(Match medge in eMatches2){
                 string[] edgeSplit = medge.ToString().Split(',');
@@ -125,14 +127,14 @@ abstract class DirectedGraph:Graph{
             }
             
             //end num
-             string endNumPatternOuter = @"}\d+}"; //gets the end section of the graph string
+             string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
             MatchCollection numMatches = Regex.Matches(graphStr,endNumPatternOuter);
             string outerString = numMatches[0].ToString();
             string endNumPatternInner = @"\d+"; //parses out number from end section.
             MatchCollection numMatches2 = Regex.Matches(outerString,endNumPatternInner);
             string innerString = numMatches2[0].ToString();
-
             int convNum = Int32.Parse(innerString);
+            _K = convNum;
             _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
             generateAdjacencyMatrix();
  
@@ -155,13 +157,13 @@ abstract class DirectedGraph:Graph{
 
         string edgeListStr = "";
         foreach(Edge edge in _edgeList){
-           string edgeStr = edge.directedString() +" & "; //this line is what makes this class distinct from Undirected Graph
+           string edgeStr = edge.directedString() +","; //this line is what makes this class distinct from Undirected Graph
            //Console.WriteLine("Edge: "+ edge.directedString());
             edgeListStr = edgeListStr+ edgeStr+""; 
         }
-        edgeListStr = edgeListStr.TrimEnd('&',' ');
+        edgeListStr = edgeListStr.TrimEnd(',',' ');
         //edgeListStr = edgeListStr.TrimEnd(' ');
-        string toStr = "{{"+nodeListStr+"}"+ " : {" + edgeListStr+"}"+" : "+_K+"}";
+        string toStr = "{{"+nodeListStr+"}"+ ",{" + edgeListStr+"}"+","+_K+"}";
         return toStr;
     }  
 
@@ -337,41 +339,42 @@ abstract class DirectedGraph:Graph{
        
     }
 
-/// <summary>
-/// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
-/// </summary>
-/// <returns></returns>
-    public String toDotJson(){
+    /// <summary>
+    /// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
+    /// </summary>
+    /// <returns></returns>
+    public abstract String toDotJson();
+    //{
 
-        string totalString = $"";
-        string preStr = @"digraph {";
-        totalString = totalString + preStr;
+    //     string totalString = $"";
+    //     string preStr = @"digraph {";
+    //     totalString = totalString + preStr;
 
-        //string preStr2 = @"node[style = ""filled""]";
-        //totalString = totalString+preStr2;
-        
-        string dotNode = ""; 
-       // string colorRed = "#d62728";
-        foreach(Node n in _nodeList){
-        dotNode=$"{n.name}";
-        //dotNode=$"{n.name} [{colorRed}]";
-        totalString = totalString+ dotNode + ",";
-        }
-        totalString = totalString.TrimEnd(',');
+    //     //string preStr2 = @"node[style = ""filled""]";
+    //     //totalString = totalString+preStr2;
 
-        foreach(Edge e in _edgeList){
-            KeyValuePair<string,string> eKVP = e.toKVP();
-            string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
-            totalString = totalString + edgeStr;
-        }
+    //     string dotNode = ""; 
+    //    // string colorRed = "#d62728";
+    //     foreach(Node n in _nodeList){
+    //     dotNode=$"{n.name}";
+    //     //dotNode=$"{n.name} [{colorRed}]";
+    //     totalString = totalString+ dotNode + ";";
+    //     }
+    //     totalString = totalString.TrimEnd(',');
 
-        totalString = totalString+ "\n}";
-        
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(totalString, options);
-        return jsonString;
+    //     foreach(Edge e in _edgeList){
+    //         KeyValuePair<string,string> eKVP = e.toKVP();
+    //         string edgeStr = $" {eKVP.Key} -> {eKVP.Value}";
+    //         totalString = totalString + edgeStr;
+    //     }
 
-    }
+    //     totalString = totalString}";
+
+    //     var options = new JsonSerializerOptions { WriteIndented = true };
+    //     string jsonString = JsonSerializer.Serialize(totalString, options);
+    //     return jsonString;
+
+    //}
 
 
 

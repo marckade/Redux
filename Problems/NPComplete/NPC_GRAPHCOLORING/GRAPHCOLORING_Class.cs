@@ -7,14 +7,13 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
 
-
     #region Fields
     private readonly string _problemName = "GRAPHCOLORING";
     private readonly string _formalDefinition = "{<G,k> | G is a graph that has a k-coloring}";
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{ { {a,b,c,d,e,f,g,h,i} : { {a,b} & {b,a} & {b,c} & {c, a} & {a,c} & {c,b} & {a,d} & {d,a} & {d,e} & {e, a} & {a,e} & {e,d} & {a,f} & {f,a} & {f,g} & {g, a}&{a,g} & {g,f} & {a,h} & {h,a} & {h,i} & {i, a} & {a,i}  & {i,h}  } } : 3}";
+    private string _defaultInstance = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},3}";
 
     private string _instance  =  string.Empty;
 
@@ -31,6 +30,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     private DanielBrelazSolver _defaultSolver = new DanielBrelazSolver();
     private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
 
+    private GraphColoringGraph _graphColoringAsGraph;
 
     #endregion
 
@@ -140,19 +140,21 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
     #region Constructors
       public GRAPHCOLORING() {
-        _instance  = defaultInstance;
-        nodes = getNodes(_instance );
-        edges  = getEdges(_instance );
-        K = getK(_instance );
+        _instance  = _defaultInstance;
+        _graphColoringAsGraph = new GraphColoringGraph(_instance,true);
+        nodes = _graphColoringAsGraph.nodesStringList;
+        edges  = _graphColoringAsGraph.edgesKVP;
+        K = _graphColoringAsGraph.K;
         setColors(K);
         initializeDictionary();
       
     }
     public GRAPHCOLORING(string GInput) {
         _instance  = GInput;
-        nodes = getNodes(_instance );
-        edges  = getEdges(_instance );
-        K = getK(_instance );
+        _graphColoringAsGraph = new GraphColoringGraph(_instance,true);
+        nodes = _graphColoringAsGraph.nodesStringList;
+        edges  = _graphColoringAsGraph.edgesKVP;
+        K = _graphColoringAsGraph.K;
         setColors(K);
         initializeDictionary();
         
@@ -196,7 +198,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     }
 
 
-
     public List<KeyValuePair<string, string>> getEdges(string Ginput) {
 
         
@@ -213,7 +214,9 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
             string nodeTo = fromTo[1];
             
             KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+            KeyValuePair<string,string> reverseEdge = new KeyValuePair<string,string>(nodeTo, nodeFrom);
             allGEdges.Add(fullEdge);
+            allGEdges.Add(reverseEdge);
         }
 
         return allGEdges;
@@ -226,9 +229,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
             this.nodeColoring.Add(node, "-1");
         }
     }
-
-
-
 
     public int getK(string Ginput) {
 
@@ -257,26 +257,33 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
 
 
-
+/// <summary>
+/// This method sets the instance attribute of the graph and is called by a problem's constructor.
+/// </summary>
+/// <remarks>
+/// Authored by Daniel Igbokwe.
+/// Contributed to by Alex Diviney
+/// </remarks>
     public void parseProblem() {
 
-        string problem = "{{ {";
+        string problem = "{{";
 
         // Parse nodes
-        for(int i = 0; i < this._nodes.Count - 1; i++){
-            problem += this._nodes[i] + ",";
+        for(int i = 0; i < nodes.Count - 1; i++){
+            problem += nodes[i] + ",";
         }
-        problem += this._nodes[this._nodes.Count - 1] + "}  : {";
+        problem += this._nodes[this._nodes.Count - 1] + "},{";
 
         // Parse edges
         for(int i= 0; i< this._edges.Count -1 ; i++){
-            problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "} &";
+            problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "},";
         
         }
+        problem = problem.TrimEnd(',');
         // Parse k
-        problem += this._K + "}";
-        this._defaultInstance = problem;
-        this._instance  = this._defaultInstance;
+        problem +="}," +this._K + "}";
+        //this._defaultInstance = problem; //ALEX NOTE: We shouldn't ever update the defaultIntance. DEPRECATING
+        this._instance  = problem;
 
     }
 

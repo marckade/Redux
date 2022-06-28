@@ -69,3 +69,32 @@ public class sipserReduceToVCController : ControllerBase {
     }
 
 }
+
+[ApiController]
+[Route("[controller]")]
+public class CLIQUEDevController : ControllerBase
+{
+
+    [HttpGet]
+    public String getDefault()
+    {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+
+        CLIQUE devClique = new CLIQUE();
+        
+        string jsonString = JsonSerializer.Serialize(devClique, options);
+        return jsonString;
+    }
+    
+        [HttpGet("instance")]
+    public String getDefault([FromQuery] string problemInstance)
+    {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+
+        CLIQUE devClique = new CLIQUE(problemInstance);
+        
+        string jsonString = JsonSerializer.Serialize(devClique, options);
+        return jsonString;
+    }
+
+}
