@@ -2,10 +2,10 @@ using Xunit;
 
 namespace redux_tests;
 
-public class UnitTest1
+public class ExampleTest
 {
     [Fact]
-    public void Test1()
+    public void exampleAddTest()
     {
         Assert.Equal(3, (1 + 2));
     }
