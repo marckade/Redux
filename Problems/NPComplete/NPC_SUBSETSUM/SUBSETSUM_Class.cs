@@ -15,6 +15,8 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
     private string _SS = string.Empty;
     private List<string> _Integers = new List<string>();
     private int _T = 3;
+
+    private string _wikiName = "";
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
@@ -45,6 +47,13 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
             return _defaultInstance;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+
     public string SS {
         get {
             return _SS;

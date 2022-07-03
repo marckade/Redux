@@ -12,6 +12,7 @@ class ExactCover : IProblem<GenericSolver,GenericVerifier> {
     private string _problemDefinition = "The exact cover problem is a decision problem to determine if an exact cover exists for some <S, X>";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{{ (), (1 & 3), (2 & 3), (2 & 4)} : {1,2,3,4} : {(1 & 3), (2 & 4)}}";
+    private string _wikiName = "";
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
@@ -29,6 +30,11 @@ class ExactCover : IProblem<GenericSolver,GenericVerifier> {
     public string problemDefinition {
         get {
             return _problemDefinition;
+        }
+    }
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 

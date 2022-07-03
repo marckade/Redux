@@ -14,6 +14,8 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     //{{a,b,c,d,e,f} : {(a,b) & (a,f) & (a,e) & (b,c) & (b,e) & (b,d) & (d,c) & (d,e) & (c,f) & (c,e)} : 4}
     private string _defaultInstance = "{{1,2,3,4} : {(4,1) & (1,2) & (4,3) & (3,2) & (2,4)} : 1}";
     private string _instance = string.Empty;
+
+    private string _wikiName = "";
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
@@ -53,6 +55,11 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
         }
         set {
             _instance = value;
+        }
+    }
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
     public List<string> nodes {

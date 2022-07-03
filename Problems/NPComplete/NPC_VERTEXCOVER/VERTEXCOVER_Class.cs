@@ -17,6 +17,7 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
+    private string _wikiName = "";
     private VCSolverJanita _defaultSolver = new VCSolverJanita();
     private VCVerifierJanita _defaultVerifier = new VCVerifierJanita();
 
@@ -58,6 +59,12 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         }
         set {
             _instance = value;
+        }
+    }
+
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 

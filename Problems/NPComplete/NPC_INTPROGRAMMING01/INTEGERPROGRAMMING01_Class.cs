@@ -14,6 +14,7 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     private string _defaultInstance = "(-1 1 -1),(0 0 -1),(-1 -1 1)<=(0 0 0)";
     private List<List<int>> _C = new List<List<int>>();
     private List<int> _d = new List<int>();
+    private string _wikiName  = "";
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
     private string _instance = string.Empty;
@@ -39,6 +40,13 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
             return _source;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+
     public string defaultInstance {
         get {
             return _defaultInstance;

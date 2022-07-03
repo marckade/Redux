@@ -11,8 +11,9 @@ class IgbokweVerifier : IVerifier
     #region Fields
     private string _verifierName = "Igbokwe's Verifier";
     private string _verifierDefinition = "This is a verifier for GRAPHCOLORING made by Daniel Igbokwe. it checks if adjacent vertices are labeled differently, and that their labels are valid using a depth first search";
-    private string _source = "";
+    private string _source = "Daniel Igbokwe";
     private string _complexity = " O(V + E)";
+    private string _certificate = "";
 
     #endregion
 
@@ -48,6 +49,13 @@ class IgbokweVerifier : IVerifier
             _complexity = value;
         }
     }
+
+      public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+
 
 
     #endregion 

@@ -18,6 +18,8 @@ namespace API.Problems.NPComplete.NPC_SAT;
     private string _source = ".";
     private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
     private string _instance = string.Empty;
+
+    private string _wikiName = "";
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
    
@@ -59,6 +61,13 @@ namespace API.Problems.NPComplete.NPC_SAT;
             return _defaultInstance;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+
 
      public List<List<string>> clauses {
         get {

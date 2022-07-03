@@ -17,6 +17,8 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
     private string _defaultInstance = " {{(1, 5) & (2,7) & (3, 9) & (1, 7)} : 5}";
     private string _HWV = string.Empty;
 
+    private string _wikiName = "";
+
     private List<KeyValuePair<String, String>> _items = new List<KeyValuePair<String, String>>();
 
     private int _W = 0;
@@ -60,6 +62,13 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
             _HWV = value;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+
     public List<KeyValuePair<String, String>> items {
         get {
             return _items;

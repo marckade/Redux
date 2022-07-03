@@ -28,6 +28,8 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
   
     private int _K = 3;
 
+    private string _wikiName = "";
+
     private DanielBrelazSolver _defaultSolver = new DanielBrelazSolver();
     private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
 
@@ -71,6 +73,12 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
         set {
             _instance  = value;
+        }
+    }
+
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 

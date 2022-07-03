@@ -15,6 +15,8 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
     private SkeletonSolver _defaultSolver = new SkeletonSolver();
     private KadensSimple _defaultVerifier = new KadensSimple();
     private string _instance = string.Empty;
+
+    private string _wikiName = "";
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
 
@@ -39,6 +41,13 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
             return _source;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+    
     public string defaultInstance {
         get {
             return _defaultInstance;
