@@ -8,7 +8,7 @@ class ExactCover : IProblem<GenericSolver,GenericVerifier> {
 
     // --- Fields ---
     private string _problemName = "Exact Cover";
-    private string _formalDefinition = "<S, X, S*> | S is a collection of subsets of a set X and S* is a subcollection, exact cover, of S ";
+    private string _formalDefinition = "Exact Cover = {<S, X, S*> | S is a collection of subsets of a set X and S* is a subcollection, exact cover, of S} ";
     private string _problemDefinition = "The exact cover problem is a decision problem to determine if an exact cover exists for some <S, X>";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{{ (), (1 & 3), (2 & 3), (2 & 4)} : {1,2,3,4} : {(1 & 3), (2 & 4)}}";

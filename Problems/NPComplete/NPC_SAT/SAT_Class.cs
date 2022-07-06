@@ -13,7 +13,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
 
     // --- Fields ---
     private string _problemName = "SAT";
-    private string _formalDefinition = "PHI | PHI is a satisfiable Boolean formula";
+    private string _formalDefinition = "SAT = {Φ | Φ is a satisfiable Boolean formula}";
     private string _problemDefinition = "SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi to result in 'True'";
     private string _source = ".";
     private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
