@@ -6,6 +6,7 @@ interface IProblem<T,U> where T : ISolver where U : IVerifier{
     string formalDefinition{get;}
     string problemDefinition{get;}
     string source {get;}
+    string wikiName {get;}
     string defaultInstance{get;}
     T defaultSolver{get;}
     U defaultVerifier{get;}

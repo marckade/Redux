@@ -20,6 +20,8 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     //private string _defaultInstance = "A = {1,2,3,4} r = {(4,1),(1,2),(4,3),(3,2),(2,4)} k = 1";
     private string _defaultInstance = "{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}"; //final formal version. This is standard mathmatical digraph notation with a K element appended. 
     private string _instance = string.Empty;
+
+    private string _wikiName ="";
     private ArcsetGraph _arcsetAsGraph;
     private AlexNaiveSolver _defaultSolver = new AlexNaiveSolver();
     private AlexArcsetVerifier _defaultVerifier = new  AlexArcsetVerifier(); //Verifier implements a Depth First Search. 
@@ -50,6 +52,11 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     public string defaultInstance {
         get {
             return _defaultInstance;
+        }
+    }
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
     public string instance {

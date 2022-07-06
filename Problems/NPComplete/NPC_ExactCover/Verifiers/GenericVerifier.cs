@@ -9,6 +9,8 @@ class GenericVerifier : IVerifier {
     private string _verifierDefinition = "This is a verifier for 3SAT";
     private string _source = " ";
 
+    private string _certificate = "";
+
     // --- Properties ---
     public string verifierName {
         get {
@@ -25,6 +27,12 @@ class GenericVerifier : IVerifier {
             return _source;
         }
     }
+      public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+
 
     // --- Methods Including Constructors ---
     public GenericVerifier() {

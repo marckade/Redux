@@ -9,7 +9,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
     #region Fields
     private readonly string _problemName = "GRAPHCOLORING";
-    private readonly string _formalDefinition = "{<G,k> | G is a graph that has a k-coloring}";
+    private readonly string _formalDefinition = "GRAPHCOLORING = {<G,k> | G is a graph that has a k-coloring}";
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
@@ -26,6 +26,8 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     private SortedSet<string> _colors = new SortedSet<string>(){"0", "1","2"};
   
     private int _K = 3;
+
+    private string _wikiName = "";
 
     private DanielBrelazSolver _defaultSolver = new DanielBrelazSolver();
     private IgbokweVerifier _defaultVerifier = new IgbokweVerifier();
@@ -71,6 +73,12 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
         set {
             _instance  = value;
+        }
+    }
+
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 
