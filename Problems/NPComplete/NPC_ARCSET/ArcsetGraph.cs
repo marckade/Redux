@@ -25,7 +25,7 @@ class ArcsetGraph:DirectedGraph{
  /// <param name="certificate"></param>
     public void processCertificate(String certificate){
 
-        string edgePattern = @"\w,\w";
+        string edgePattern = @"\w+,\w+";
         MatchCollection nMatches =  Regex.Matches(certificate,edgePattern);
         List<KeyValuePair<string,string>> certEdges = new List<KeyValuePair<string, string>>();
 
