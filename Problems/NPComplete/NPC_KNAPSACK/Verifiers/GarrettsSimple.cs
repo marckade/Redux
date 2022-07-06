@@ -13,6 +13,8 @@ class GarrettsSimple : IVerifier {
     
     private string _complexity =" _____";
 
+    private string _certificate = "";
+
 
     // --- Properties ---
     public string verifierName {
@@ -35,6 +37,13 @@ class GarrettsSimple : IVerifier {
             return _complexity;
         }
     }
+
+      public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+
 
     // --- Methods Including Constructors ---
     public GarrettsSimple() {

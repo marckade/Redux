@@ -14,6 +14,8 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}"; // simply a list of sets with the elements divided by commas, the first three are asumed to be X, Y, and Z, and all subsequent sets are sets in M
     private string _instance = string.Empty;
+
+    private string _wikiName = "";
     private List<List<List<string>>> _problem;
     private List<string> _X;
     private List<string> _Y;
@@ -36,6 +38,12 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     public string problemDefinition {
         get {
             return _problemDefinition;
+        }
+    }
+
+    public string wikiName {
+        get {
+            return _wikiName;
         }
     }
 

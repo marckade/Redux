@@ -10,6 +10,8 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
     private string _verifierDefinition = "This is a verifier for SAT";
     private string _source = " ";
     private string _complexity = " ";
+
+    private string _certificate = "";
     
     #endregion
 
@@ -45,6 +47,13 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
             _complexity = value;
         }
     }
+
+      public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+
 
     #endregion 
 

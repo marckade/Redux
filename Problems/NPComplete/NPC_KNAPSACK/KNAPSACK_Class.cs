@@ -9,13 +9,15 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
     // --- Fields ---
     private string _problemName = "KNAPSACK";
 
-    private string _formalDefinition = "{<H, W> | H is a set of items (w,v) and there is a subset of items in H whose collective weight is less than or equal to W and whose collective value is optimized.}";
+    private string _formalDefinition = "KNAPSACK = {<H, W> | H is a set of items (w,v) and there is a subset of items in H whose collective weight is less than or equal to W and whose collective value is optimized.}";
     private string _problemDefinition = "The 0-1 KNAPSACK problem is given a knapsack with a maximum capacity W and a set of n items x_1, x_2,... x_n with weights w_1,w_2,... w_n and values v_1,v_2,... v_n optimize the combination of singular items that provide the most value while staying under W. ";
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = " {{(1, 5) & (2,7) & (3, 9) & (1, 7)} : 5}";
     private string _HWV = string.Empty;
+
+    private string _wikiName = "";
 
     private List<KeyValuePair<String, String>> _items = new List<KeyValuePair<String, String>>();
 
@@ -60,6 +62,13 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
             _HWV = value;
         }
     }
+
+    public string wikiName {
+        get {
+            return _wikiName;
+        }
+    }
+
     public List<KeyValuePair<String, String>> items {
         get {
             return _items;

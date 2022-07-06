@@ -10,6 +10,8 @@ class VCVerifierJanita : IVerifier {
     private string _source = "No clear origination.";
     private string _complexity = "";
 
+    private string _certificate = "";
+
     // --- Properties ---
     public string verifierName {
         get {
@@ -26,6 +28,13 @@ class VCVerifierJanita : IVerifier {
             return _source;
         }
     }
+
+      public string certificate {
+        get {
+            return _certificate;
+        }
+    }
+
 
     // --- Methods Including Constructors ---
     public VCVerifierJanita() {
