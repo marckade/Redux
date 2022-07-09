@@ -13,7 +13,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},3}";
+    private string _defaultInstance = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,c},{c,a},{a,d},{d,e},{e,a},{f,a},{f,g},{g,a},{h,a},{h,i},{i,a}},3}";
 
     private string _instance  =  string.Empty;
 
@@ -174,20 +174,48 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     #region Methods
 
     
-    public List<string> getNodes(string Ginput){
-        List<string> allGNodes = new List<string>();
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
+    // public List<string> getNodes(string Ginput){
+    //     List<string> allGNodes = new List<string>();
+    //     string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
 
-        // [0] is nodes,  [1] is edges,  [2] is k.
-        string[] Gsections = strippedInput.Split(':');
-        string[] Gnodes = Gsections[0].Split(',');
+    //     // [0] is nodes,  [1] is edges,  [2] is k.
+    //     string[] Gsections = strippedInput.Split(':');
+    //     string[] Gnodes = Gsections[0].Split(',');
         
-        foreach(string node in Gnodes) {
-            allGNodes.Add(node);
-        }
+    //     foreach(string node in Gnodes) {
+    //         allGNodes.Add(node);
+    //     }
 
-        return allGNodes;
-    }
+    //     return allGNodes;
+    // }
+
+    
+
+
+    // public List<KeyValuePair<string, string>> getEdges(string Ginput) {
+
+        
+    //     List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
+    //     string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
+
+    //     // [0] is nodes,  [1] is edges,  [2] is k.
+    //     string[] Gsections = strippedInput.Split(':');
+    //     string[] Gedges = Gsections[1].Split('&');
+        
+    //     foreach (string edge in Gedges) {
+    //         string[] fromTo = edge.Split(',');
+    //         string nodeFrom = fromTo[0];
+    //         string nodeTo = fromTo[1];
+            
+    //         KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+    //         KeyValuePair<string,string> reverseEdge = new KeyValuePair<string,string>(nodeTo, nodeFrom);
+    //         allGEdges.Add(fullEdge);
+    //         allGEdges.Add(reverseEdge);
+    //     }
+
+    //     return allGEdges;
+    // }
+
 
     public List<string> getAdjNodes(string node){
 
@@ -203,31 +231,6 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
         }
 
         return adjNodes;
-    }
-
-
-    public List<KeyValuePair<string, string>> getEdges(string Ginput) {
-
-        
-        List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
-
-        // [0] is nodes,  [1] is edges,  [2] is k.
-        string[] Gsections = strippedInput.Split(':');
-        string[] Gedges = Gsections[1].Split('&');
-        
-        foreach (string edge in Gedges) {
-            string[] fromTo = edge.Split(',');
-            string nodeFrom = fromTo[0];
-            string nodeTo = fromTo[1];
-            
-            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
-            KeyValuePair<string,string> reverseEdge = new KeyValuePair<string,string>(nodeTo, nodeFrom);
-            allGEdges.Add(fullEdge);
-            allGEdges.Add(reverseEdge);
-        }
-
-        return allGEdges;
     }
 
 
@@ -283,7 +286,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
         problem += this._nodes[this._nodes.Count - 1] + "},{";
 
         // Parse edges
-        for(int i= 0; i< this._edges.Count -1 ; i++){
+        for(int i= 0; i< this._edges.Count; i++){
             problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "},";
         
         }

@@ -94,7 +94,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
         // color palette 
         // 0 : False, 1 : True,  2 : Base
 
-        string[] palette = { "F", "T", "Base" };
+        string[] palette = { "F", "T", "B" };
 
         SAT3 SAT3Instance = _reductionFrom;
         GRAPHCOLORING reducedGRAPHCOLORING = new GRAPHCOLORING();
@@ -256,6 +256,21 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
         }
 
+        
+
+        // for (int i = 0; i < edges.Count; i++){
+        //     for (int j = 0; j < edges.Count; j++){
+        //         if (edges[i].Key == edges[j].Value && edges[i].Value == edges[j].Key){
+        //             edges.Remove(new KeyValuePair<string,string>(edges[j].Key, edges[j].Value));
+        //         }
+        //     }
+        // }
+
+        // The list of KVP(edges) need to have {a,b} && {b, a} for the GC problem
+        // because we wont know if b is connected to a in the solver && verifier with out that in the list 
+        // we might need to make an adjustment to how undirected graphs are parsed out.
+        // if an instance has {a,b} then the KVP list should have {a,b} && {b, a}
+
 
         
 
@@ -277,16 +292,23 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     // This method is adding the edges to the list of edges.
     public void addEdge(string x, string y, List<KeyValuePair<string, string>> edges, List<string> instanceEdges)
     {
+
+        // foreach(var elem in edges){
+        //     if(elem.Key.Equals(y) && elem.Value.Equals(x)){
+        //         // Console.WriteLine("This is this the key: "+ y + " This is the val: "+x + "\n");
+        //         return;
+        //     }
+        // }
+
+
+
+
         KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(x, y);
+
+        //  Console.WriteLine("This is allowed edge the key: "+ x + " This is allowed the val: "+y+ "\n");
         edges.Add(fullEdge);
 
-        string edge = "{" + x + "," + y + "}";
-        string reverseEdge = "{" + y + "," + x + "}";
-
-        if (!instanceEdges.Contains(reverseEdge))
-        {
-            instanceEdges.Add(edge);
-        }
+      
     }
 
     #endregion
