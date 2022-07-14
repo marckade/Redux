@@ -93,22 +93,13 @@ public DanielBrelazSolver() {
         problem.K = getChromaticNumber(problem.nodeColoring);
 
         string solution = "{ ( ";  
-        // int count = 0;
-
-
+   
         for(int i =0; i< problem.nodeColoring.Count -1; i++ ){
+
             KeyValuePair < string, string > value = problem.nodeColoring.ElementAt(i);
             solution +=  value.Key + " : " + value.Value + ", "; 
         }
-        // foreach(KeyValuePair < string, string > keyValues in problem.nodeColoring) {  
-        //     count++;
-        //     if(count < problem.nodeColoring.Count -1){
-        //         solution += keyValues.Key + " : " + keyValues.Value + ", ";  
-        //     }else{
-        //         break;
-        //     }
-           
-        // }  
+      
         KeyValuePair < string, string > keyValue = problem.nodeColoring.ElementAt(problem.nodeColoring.Count -1);
     
         solution += keyValue.Key+" : " + keyValue.Value + " ) :"+ problem.K+" }";

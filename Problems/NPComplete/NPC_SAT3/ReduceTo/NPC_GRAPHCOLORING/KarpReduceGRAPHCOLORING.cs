@@ -293,20 +293,23 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     public void addEdge(string x, string y, List<KeyValuePair<string, string>> edges, List<string> instanceEdges)
     {
 
-        // foreach(var elem in edges){
-        //     if(elem.Key.Equals(y) && elem.Value.Equals(x)){
-        //         // Console.WriteLine("This is this the key: "+ y + " This is the val: "+x + "\n");
-        //         return;
-        //     }
-        // }
+        foreach(var elem in edges){
+            if(elem.Key.Equals(y) && elem.Value.Equals(x)){
+                // Console.WriteLine("This is this the key: "+ y + " This is the val: "+x + "\n");
+                return;
+            }
+        }
 
 
 
 
         KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(x, y);
+          KeyValuePair<string, string> reverseEdge = new KeyValuePair<string, string>(y, x);
+
 
         //  Console.WriteLine("This is allowed edge the key: "+ x + " This is allowed the val: "+y+ "\n");
         edges.Add(fullEdge);
+         edges.Add(reverseEdge);
 
       
     }
