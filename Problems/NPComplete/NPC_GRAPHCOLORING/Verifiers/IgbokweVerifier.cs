@@ -10,10 +10,13 @@ class IgbokweVerifier : IVerifier
 
     #region Fields
     private string _verifierName = "Igbokwe's Verifier";
-    private string _verifierDefinition = "This is a verifier for GRAPHCOLORING made by Daniel Igbokwe. it checks if adjacent vertices are labeled differently, and that their labels are valid using a depth first search";
+    private string _verifierDefinition = "This is a verifier for Graph Coloring made by Daniel Igbokwe. it checks if adjacent vertices are labeled differently, and that their labels are valid using a depth first search";
     private string _source = "Daniel Igbokwe";
     private string _complexity = " O(V + E)";
     private string _certificate = "";
+
+    private Dictionary<string, string> _coloring = new Dictionary<string, string>();
+    private int _k = 3;
 
     #endregion
 
@@ -56,6 +59,26 @@ class IgbokweVerifier : IVerifier
         }
     }
 
+    public Dictionary<string, string> coloring{
+        get{
+            return _coloring;
+        }
+
+        set{
+            _coloring = value;
+        }
+    }
+
+    public int k{
+        get{
+            return _k;
+        }
+
+        set{
+            _k  = value;
+        }
+    }
+
 
 
     #endregion 
@@ -73,7 +96,8 @@ class IgbokweVerifier : IVerifier
 
         // Parse Certificate 
 
-        problem.nodeColoring = parseCertificate(userInput);
+         parseCertificate(userInput);
+         problem.nodeColoring = _coloring;
 
         string node =  problem.nodes[0];
         string color = problem.getNodeColor(node);
@@ -82,10 +106,33 @@ class IgbokweVerifier : IVerifier
 
             verified = DFS(problem, node);
 
+            int count =  getChromaticNumber(_coloring);
+            if(_k < count){
+                verified = false;
+            }
+
         }
 
         return verified;
 }
+
+
+  private int getChromaticNumber(Dictionary<string, string> nodeColoring){
+
+        int colors = 0;
+        SortedSet<int> colorList = new SortedSet<int>();
+        
+
+        foreach(var elem in nodeColoring){
+            colorList.Add(Int32.Parse(elem.Value));
+        }
+
+        colors = colorList.Count();
+
+        return colors;
+    }
+
+
 
 
     private Boolean DFS(GRAPHCOLORING problem, string source){
@@ -139,17 +186,23 @@ class IgbokweVerifier : IVerifier
 }
 
 
-    private Dictionary<string, string> parseCertificate(string certificate)
-    {
+    private void  parseCertificate(string certificate) {
 
-        string parseCertificate = certificate.Replace("(", "").Replace(")","");
+
+
+       // string parseCertificate = certificate.Replace("(", "").Replace(")","");
+    string parseCertificate = certificate.Trim().Replace("{", "").Replace("}","");
+       string [] splitCertificate = parseCertificate.Split("):");
+       string dictionary = splitCertificate[0].Replace("(", "").Replace(")","");
+       int k = Int32.Parse(splitCertificate[1]);
 
         Dictionary<string, string> nodeColoring = new Dictionary<string, string>();
         
 
         if (parseCertificate.Length != 0)
         {
-            string[] nodes = parseCertificate.Split(',');
+            // string[] nodes = parseCertificate.Split(',');
+            string[] nodes = dictionary.Split(',');
 
             foreach (string node in nodes)
             { 
@@ -160,7 +213,8 @@ class IgbokweVerifier : IVerifier
 
         }
 
-        return nodeColoring;
+        _coloring =  nodeColoring;
+        _k =  k;
     }
 
 

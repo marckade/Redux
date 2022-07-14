@@ -52,6 +52,7 @@ public class IgbokweVerifierController : ControllerBase {
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
 
         // Example  certificate = "(a:0, b:1, c:2, d:1, e:2, f:1, g:2, h:1, i:2)";
+        // Example newCertificate = {(a:0, b:1, c:2, d:1, e:2, f:1, g:2, h:1, i:2),3}
         // Example problemInstance = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},3}";
 
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -85,7 +86,7 @@ public class DanielBrelazSolverController : ControllerBase {
 
     [HttpGet("solve")]
     public String solvedInstance([FromQuery]string problemInstance) {
-         //Example problemInstance = "{ { {a,b,c} : {{a,b} & {b,a} & {b,c} }} : 3}";
+         
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
         DanielBrelazSolver solver = new DanielBrelazSolver();

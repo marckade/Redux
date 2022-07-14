@@ -149,7 +149,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     #region Constructors
       public GRAPHCOLORING() {
         _instance  = _defaultInstance;
-        _graphColoringAsGraph = new GraphColoringGraph(_instance,true);
+        _graphColoringAsGraph = new GraphColoringGraph(_instance);
         nodes = _graphColoringAsGraph.nodesStringList;
         edges  = _graphColoringAsGraph.edgesKVP;
         K = _graphColoringAsGraph.K;
@@ -159,7 +159,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     }
     public GRAPHCOLORING(string GInput) {
         _instance  = GInput;
-        _graphColoringAsGraph = new GraphColoringGraph(_instance,true);
+        _graphColoringAsGraph = new GraphColoringGraph(_instance);
         nodes = _graphColoringAsGraph.nodesStringList;
         edges  = _graphColoringAsGraph.edgesKVP;
         K = _graphColoringAsGraph.K;
