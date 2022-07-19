@@ -94,7 +94,7 @@ public DanielBrelazSolver() {
 
         string solution = "{ ( ";  
    
-        for(int i =0; i< problem.nodeColoring.Count -1; i++ ){
+        for(int i =0; i< problem.nodeColoring.Count ; i++ ){
 
             KeyValuePair < string, string > value = problem.nodeColoring.ElementAt(i);
             solution +=  value.Key + " : " + value.Value + ", "; 

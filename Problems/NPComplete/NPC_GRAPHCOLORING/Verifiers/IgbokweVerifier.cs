@@ -13,7 +13,7 @@ class IgbokweVerifier : IVerifier
     private string _verifierDefinition = "This is a verifier for Graph Coloring made by Daniel Igbokwe. it checks if adjacent vertices are labeled differently, and that their labels are valid using a depth first search";
     private string _source = "Daniel Igbokwe";
     private string _complexity = " O(V + E)";
-    private string _certificate = "";
+    private string _certificate = " { ( a : 0, b : 1, c : 2, d : 1, e : 2, f : 1, g : 2, h : 1, i : 2 ) :3 }";
 
     private Dictionary<string, string> _coloring = new Dictionary<string, string>();
     private int _k = 3;
@@ -97,6 +97,9 @@ class IgbokweVerifier : IVerifier
         // Parse Certificate 
 
          parseCertificate(userInput);
+
+         // check if each dictionary node is a node in the problem.
+
          problem.nodeColoring = _coloring;
 
         string node =  problem.nodes[0];
@@ -191,7 +194,7 @@ class IgbokweVerifier : IVerifier
 
 
        // string parseCertificate = certificate.Replace("(", "").Replace(")","");
-    string parseCertificate = certificate.Trim().Replace("{", "").Replace("}","");
+       string parseCertificate = certificate.Trim().Replace("{", "").Replace("}","").Replace(" ","");
        string [] splitCertificate = parseCertificate.Split("):");
        string dictionary = splitCertificate[0].Replace("(", "").Replace(")","");
        int k = Int32.Parse(splitCertificate[1]);
@@ -207,8 +210,17 @@ class IgbokweVerifier : IVerifier
             foreach (string node in nodes)
             { 
                 string [] nodeColor  = node.Split(':');
-                nodeColoring.Add(nodeColor[0].ToLower().Trim(), nodeColor[1].ToLower().Trim());
+               
 
+                string key = nodeColor[0].ToLower().Trim();
+                string val = nodeColor[1].ToLower().Trim();
+
+
+                 // check if dictionary contains key first
+                if(!nodeColoring.ContainsKey(key)){
+                     nodeColoring.Add(key, val);
+                }
+                
             }
 
         }

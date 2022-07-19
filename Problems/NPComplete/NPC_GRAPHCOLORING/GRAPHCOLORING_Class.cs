@@ -287,8 +287,9 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 
         // Parse edges
         for(int i= 0; i< this._edges.Count; i++){
-            problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "},";
-        
+            if(i % 2 == 0){
+                 problem += "{"+ this._edges[i].Key + "," + this._edges[i].Value + "},";
+            }
         }
         problem = problem.TrimEnd(',');
         // Parse k

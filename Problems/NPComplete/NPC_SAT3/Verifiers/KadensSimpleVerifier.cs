@@ -11,7 +11,7 @@ class KadensSimple : IVerifier {
                                          "the user and validates that every clause contains a true literal";
     private string _source = " ";
 
-    private string _certificate = "";
+    private string _certificate = "(x1:True)";
     
     // --- Properties ---
     public string verifierName {

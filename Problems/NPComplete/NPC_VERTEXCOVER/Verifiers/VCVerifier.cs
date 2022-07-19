@@ -75,6 +75,19 @@ class VCVerifierJanita : IVerifier {
 
     }
 
+    // public List<string> demoNodes(string Ginput) {
+    //     HashSet<String> nodes = new HashSet<string>();
+
+    //       string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
+    //       string [] kvp = strippedInput.Split(',');
+
+
+
+
+
+    //     return null;
+    // }
+
     public List<string> getNodes(string Ginput) {
         List<string> allGNodes = new List<string>();
         string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
