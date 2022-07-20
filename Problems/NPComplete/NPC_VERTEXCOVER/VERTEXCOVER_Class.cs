@@ -25,7 +25,8 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
     private UndirectedGraph _VCAsGraph;
     private string _vertexCover = string.Empty;
 
-    
+    private string[] _contributers = { "Janita Aamir", "Alex Diviney" };
+
 
     // --- Properties ---
     public string problemName {
@@ -106,6 +107,11 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         }
     }
 
+    public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
 
     // --- Methods Including Constructors ---
     public VERTEXCOVER() {

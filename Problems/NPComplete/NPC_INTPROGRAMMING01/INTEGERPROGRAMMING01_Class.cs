@@ -18,6 +18,7 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
     private string _instance = string.Empty;
+    private string[] _contributers = { "Author Unknown"};
 
     // --- Properties ---
     public string problemName {
@@ -38,6 +39,11 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     public string source {
         get {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
 
