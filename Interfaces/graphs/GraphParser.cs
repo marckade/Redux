@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace API.Interfaces.Graphs;
+namespace API.Interfaces.Graphs.GraphParser;
 
 class GraphParser {
      
@@ -73,6 +73,38 @@ private List<Edge> edgesGivenValidGraphAndPattern(string validGraphStr,string ed
     return edgeList;
 
 }
+
+/// <summary>
+/// Given a list of nodes in the string format {a,b,c} 
+/// returns a list of strings ["a","b","c"]
+/// </summary>
+/// <returns></returns>
+/// <remarks>
+/// only supports word characters  (multicharacter supported) currently, not special characters or ! symbols.
+public List<string> getNodesFromNodeListString(string input){
+        List<string> retList = new List<string>();
+
+        try{
+        string pattern = @"{(\w+)(,\w+)*}";
+        MatchCollection matches = Regex.Matches(input,pattern);
+        string foundString = matches[0].ToString();
+        string innerPattern = @"(\w+)(,\w+)*";
+        MatchCollection matchesInner = Regex.Matches(input,innerPattern);
+        string foundString2 = matchesInner[0].ToString();
+            string[] splitStr = foundString2.Split(',');
+            foreach(string n in splitStr){
+                retList.Add(n);
+            }
+
+
+        }
+        catch(Exception e){
+            Console.WriteLine("Invalid input GraphParser getNodesFromNodeListString");
+        }
+        
+
+        return retList;
+    }
 
 }
 

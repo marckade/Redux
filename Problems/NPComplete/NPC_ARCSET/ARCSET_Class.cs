@@ -1,3 +1,10 @@
+/**
+* Arcset_Class.cs
+* @author Alex Diviney
+**/
+
+
+
 using API.Interfaces;
 using API.Interfaces.Graphs;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
@@ -12,12 +19,14 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     private string _formalDefinition = "ARCSET = {<G,k> | G is a directed graph that can be rendered acyclic by removal of at most k edges}";
      private string _problemDefinition = "ARCSET, or the Feedback Arc Set satisfiability problem, is an NP-complete problem that can be described like the following. Given a directed graph, does removing a given set of edges render the graph acyclical? That is, does removing the edges break every cycle in the graph?";
 
-    // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
 
-    //ALEX NOTE: The standard mathematical form for a DIGRAPH is A = { x,y,z} r = {(x,y),(y,z),(z,x)} where A is a set of nodes and r is a set of pairs of edges. (r stands for relation)
+    //ALEX NOTE: The standard mathematical form for a DIGRAPH is A = {x,y,z} r = {(x,y),(y,z),(z,x)} where A is a set of nodes and r is a set of pairs of edges. (r stands for relation)
+    //           However we are using a slightly tweaked (but still pretty standard) format: A = {{x,y,z},{(x,y),(y,z),(z,x)},1} where the first internal set is the nodes,
+    //           the second internal set is the edges, and the last number is related to the solution value for the NP-Complete problem, in this case: 
+    //           the question is "how many edges would you have to remove to break this graph's cycle?" and the answer is 1. 
     // G = {A,r} 
-    //private string _defaultInstance = "A = {1,2,3,4} r = {(4,1),(1,2),(4,3),(3,2),(2,4)} k = 1";
+    //Mathmatical notation of the following default instance: "A = {1,2,3,4} r = {(4,1),(1,2),(4,3),(3,2),(2,4)} k = 1"; 
     private string _defaultInstance = "{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}"; //final formal version. This is standard mathmatical digraph notation with a K element appended. 
     private string _instance = string.Empty;
 
