@@ -12,7 +12,7 @@ class AlexArcsetVerifier : IVerifier {
     
     private string _source = "This verifier is essentially common knowledge, as it utilizes a widely recognized algorithm in computer science: The Depth First Search.";
 
-    private string _certificate = "";
+    private string _certificate = "(4,1),(3,2)"; //this certificate is technically overkill, we only have to remove one edge
 
     // --- Properties ---
     public string verifierName {

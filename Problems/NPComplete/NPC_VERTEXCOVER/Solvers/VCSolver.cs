@@ -41,40 +41,64 @@ class VCSolverJanita : ISolver {
 /// <returns></returns>
 /// <remarks>
 /// Authored by Janita Aamir
-/// Refactored to use a standard undirected graph object by Alex Diviney
+/// Refactored to use a standard undirected graph object by Alex Diviney,
+/// Refactored again to return a list of nodes instead of a list of key value pairs.
+/// Some notes by Alex about potential applications of this solver. This solver grows more efficient the more tightly connected the graph is,
+/// if the graph has n nodes and has a n-clique, this solver is maximally efficient. (I believe.) This has interesting implications in reducing from a clique problem then solving it.
 /// </remarks>
-    public List<KeyValuePair<string, string>> Solve(VERTEXCOVER G){
+    public List<string> Solve(VERTEXCOVER G){
         //{{a,b,c,d,e,f,g} : {(a,b) & (a,c) & (c,d) & (c,e) & (d,f) & (e,f) & (e,g)}}
 
         List<KeyValuePair<string, string>> edges = G.edges;
-        List<KeyValuePair<string, string>> C = new List<KeyValuePair<string, string>>();
-        Random rnd = new Random();
-
-        while (edges.Count > 0){
-            int index = rnd.Next(edges.Count);
-            KeyValuePair<string, string> edge = edges[index];
-            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(edge.Key, edge.Value);
-            C.Add(fullEdge);
-            foreach (KeyValuePair<string, string> e in new List<KeyValuePair<string, string>>(edges)){
-                if (e.Key.Equals(edge.Key)){
-                    KeyValuePair<string,string> rmEdge = new KeyValuePair<string,string>(edge.Key, edge.Value);
-                    edges.Remove(rmEdge);
+        List<KeyValuePair<string, string>> C = new List<KeyValuePair<string, string>>(); //This becomes our maximal matching
+        Random rnd = new Random(); 
+        while (edges.Count > 0)
+        {
+            int index = rnd.Next(edges.Count); //gets a random edge index
+            KeyValuePair<string, string> edge = edges[index]; //gets a random edge
+            KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(edge.Key, edge.Value); //makes previous line more explicit
+            C.Add(fullEdge); //Adds the random edge to C. 
+            // string tempString = "";
+            // foreach(KeyValuePair<string,string> tEdge in edges){
+            //     tempString += tEdge.Key + " " + tEdge.Value + ",";
+            // }
+            // Console.WriteLine(tempString);
+            foreach (KeyValuePair<string, string> e in new List<KeyValuePair<string, string>>(edges))
+            { //For the random edge {u,v}, remove every edge in vertexcover that has a node u or v.
+                
+                if (e.Key.Equals(edge.Key))
+                {
+                    edges.Remove(e);
                 }
-                if (e.Key.Equals(edge.Value)){
-                    KeyValuePair<string,string> rmEdge = new KeyValuePair<string,string>(edge.Key, edge.Value);
-                    edges.Remove(rmEdge);
+                if (e.Key.Equals(edge.Value))
+                {
+                    edges.Remove(e);
+                    
                 }
-                if (e.Value.Equals(edge.Key)){
-                    KeyValuePair<string,string> rmEdge = new KeyValuePair<string,string>(edge.Key, edge.Value);
-                    edges.Remove(rmEdge);
+                if (e.Value.Equals(edge.Key))
+                {
+                    edges.Remove(e);
                 }
-                if (e.Value.Equals(edge.Value)){
-                    KeyValuePair<string,string> rmEdge = new KeyValuePair<string,string>(edge.Key, edge.Value);
-                    edges.Remove(rmEdge);
+                if (e.Value.Equals(edge.Value))
+                {
+                    KeyValuePair<string, string> rmEdge = new KeyValuePair<string, string>(edge.Key, edge.Value);
+                    edges.Remove(e);
                 }
             }
         }
-        return C; 
+
+        List<string> leftoverNodes = new List<string>();
+            foreach(KeyValuePair<string,string> cEdge in C){
+            Console.WriteLine(cEdge.Key + " " + cEdge.Value);
+            if(!leftoverNodes.Contains(cEdge.Key)){
+                leftoverNodes.Add(cEdge.Key);
+                }
+                if(!leftoverNodes.Contains(cEdge.Value)){
+                    leftoverNodes.Add(cEdge.Value);
+                }
+            }
+
+        return leftoverNodes; 
 
     }
 
@@ -96,7 +120,6 @@ class VCSolverJanita : ISolver {
             KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
             allGEdges.Add(fullEdge);
         }
-
         return allGEdges;
     }
 }
