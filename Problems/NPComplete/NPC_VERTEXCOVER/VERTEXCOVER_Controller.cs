@@ -115,6 +115,13 @@ public class VCSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
         List<string> solvedInstance = problem.defaultSolver.Solve(problem);
+
+        string undirectedSetString = "{";
+        foreach(string nodeStr in solvedInstance){
+            undirectedSetString = undirectedSetString + nodeStr + ",";
+        }
+        undirectedSetString = undirectedSetString.TrimEnd(',');
+        undirectedSetString = undirectedSetString + "}";
         // List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problem);
         // string stringVC = "{";
         // stringVC += Environment.NewLine;
@@ -133,9 +140,9 @@ public class VCSolverController : ControllerBase {
 
         // Console.Write(stringVC);
 
-        
 
-        string jsonString = JsonSerializer.Serialize(solvedInstance, options);
+
+        string jsonString = JsonSerializer.Serialize(undirectedSetString, options);
         return jsonString;
     }
 
