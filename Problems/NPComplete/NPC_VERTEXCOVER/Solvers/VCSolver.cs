@@ -102,24 +102,4 @@ class VCSolverJanita : ISolver {
 
     }
 
-    private static List<KeyValuePair<string, string>> getEdges(string Ginput) {
-
-        List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
-
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
-        
-        // [0] is nodes,  [1] is edges,  [2] is k.
-        string[] Gsections = strippedInput.Split(':');
-        string[] Gedges = Gsections[1].Split('&');
-        
-        foreach (string edge in Gedges) {
-            string[] fromTo = edge.Split(',');
-            string nodeFrom = fromTo[0];
-            string nodeTo = fromTo[1];
-            
-            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
-            allGEdges.Add(fullEdge);
-        }
-        return allGEdges;
-    }
 }
