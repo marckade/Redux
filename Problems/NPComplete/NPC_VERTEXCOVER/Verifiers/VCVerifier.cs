@@ -41,7 +41,8 @@ class VCVerifierJanita : IVerifier {
     public VCVerifierJanita() {
         
     }
- /// <summary>
+
+    /// <summary>
     /// This Method Verifies whether a passed in Vertexcover (problem) is covered by the set of nodes (c). 
     /// </summary>
     /// <param name="problem"></param>
