@@ -123,7 +123,7 @@ public class VCSolverController : ControllerBase {
             stringVC += "}, "; 
             stringVC += Environment.NewLine;
         } 
-        stringVC = stringVC.TrimEnd(',');
+      
         stringVC += "}";
 
         Console.Write(stringVC);

@@ -119,6 +119,11 @@ class IgbokweVerifier : IVerifier
         return verified;
 }
 
+  public Boolean verifyNodes(GRAPHCOLORING problem, Dictionary<string, string> nodeColoring ){
+    
+    return true;
+  }
+
 
   private int getChromaticNumber(Dictionary<string, string> nodeColoring){
 

@@ -42,6 +42,7 @@ class VCVerifierJanita : IVerifier {
     }
 
     public Boolean Verify(VERTEXCOVER Problem, string c){
+       // string problem = c.Replace(" ","");
         //{{a,b,c,d,e,f,g} : {(a,b) & (a,c) & (c,d) & (c,e) & (d,f) & (e,f) & (e,g)} : 3}
         //{{a,d,e} : {(a,b) & (a,c) & (c,d) & (c,e) & (d,f) & (e,f) & (e,g)} }
         List<string> nodes = getNodes(c);
