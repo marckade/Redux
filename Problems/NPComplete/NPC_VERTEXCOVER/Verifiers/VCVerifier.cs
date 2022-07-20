@@ -1,4 +1,5 @@
 using API.Interfaces;
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
 
@@ -40,68 +41,70 @@ class VCVerifierJanita : IVerifier {
     public VCVerifierJanita() {
         
     }
-
-    public Boolean Verify(VERTEXCOVER Problem, string c){
-       // string problem = c.Replace(" ","");
+ /// <summary>
+    /// This Method Verifies whether a passed in Vertexcover (problem) is covered by the set of nodes (c). 
+    /// </summary>
+    /// <param name="problem"></param>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public Boolean Verify(VERTEXCOVER problem, string c){
         //{{a,b,c,d,e,f,g} : {(a,b) & (a,c) & (c,d) & (c,e) & (d,f) & (e,f) & (e,g)} : 3}
         //{{a,d,e} : {(a,b) & (a,c) & (c,d) & (c,e) & (d,f) & (e,f) & (e,g)} }
-        List<string> nodes = getNodes(c);
-        List<KeyValuePair<string, string>> edges = getEdges(c);
-        List<string> GNodes = Problem.nodes;
-        List<KeyValuePair<string, string>> Gedges = Problem.edges;
+        List<string> certificateNodes = getNodes(c);
+       // List<KeyValuePair<string, string>> edges = getEdges(c);
+        List<string> GNodes = problem.nodes;
+        List<KeyValuePair<string, string>> Gedges = problem.edges;
 
 
-        var list = nodes.Except(GNodes);
-        bool result1 = list?.Any() != true;
+        //var list = nodes.Except(GNodes);
 
-        int count = 0;
-        foreach (KeyValuePair<string, string> edge in edges)
-        {
-            foreach (KeyValuePair<string, string> Gedge in Gedges){
-                if (edge.Key.Equals(Gedge.Key) && edge.Value.Equals(Gedge.Value)){
-                    count += 1;
-                }
-                if (edge.Key.Equals(Gedge.Value) && edge.Value.Equals(Gedge.Key)){
-                    count += 1; 
-                }
-            }                
-        }
-        int size = Gedges.Count;
-        bool result2 = false;
-        if (size == count){
-            result2 = true;
-        }
+        // bool result1 = list?.Any() != true;
+
+        // int count = 0;
+        // foreach (KeyValuePair<string, string> edge in edges)
+        // {
+        //     foreach (KeyValuePair<string, string> Gedge in Gedges){
+        //         if (edge.Key.Equals(Gedge.Key) && edge.Value.Equals(Gedge.Value)){
+        //             count += 1;
+        //         }
+        //         if (edge.Key.Equals(Gedge.Value) && edge.Value.Equals(Gedge.Key)){
+        //             count += 1; 
+        //         }
+        //     }                
+        // }
+        // int size = Gedges.Count;
+        // bool result2 = false;
+        // if (size == count){
+        //     result2 = true;
+        // }
     
-        return (result1 == true) && (result2 == true) ? true : false;
+        // return (result1 == true) && (result2 == true) ? true : false;
+
+        //Step one of the verify method. Check if the input graph contains all the nodes in the certificate. If not, reject.
+        foreach(string cNode in certificateNodes){
+            if(!GNodes.Contains(cNode)){
+                return false; //reject
+            }
+        }
+
+        //Step two of the verify method. Test whether the set of all edges incident to nodes in c equals the set of edges in G
+        //A node being incident to an edge means that that edge has the node as one of its two endpoints.
+        
+        //To test incidence, we will ask the graph if it has any edges that don't have an endpoint contained in the certificate set.
+        foreach(KeyValuePair<string,string> kvp in Gedges){
+            if(!certificateNodes.Contains(kvp.Key) && !certificateNodes.Contains(kvp.Value)){ //if a kvp doesnt have a key or value found in the nodeset
+                return false; //reject
+            }
+           
+        }
+        return true;
 
     }
 
-    // public List<string> demoNodes(string Ginput) {
-    //     HashSet<String> nodes = new HashSet<string>();
+    public List<string> getNodes(string nodesInput) {
+        GraphParser gParser = new GraphParser();
+       return gParser.getNodesFromNodeListString(nodesInput);
 
-    //       string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "");
-    //       string [] kvp = strippedInput.Split(',');
-
-
-
-
-
-    //     return null;
-    // }
-
-    public List<string> getNodes(string Ginput) {
-        List<string> allGNodes = new List<string>();
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
-        
-        // [0] is nodes,  [1] is edges,  [2] is k.
-        string[] Gsections = strippedInput.Split(':');
-        string[] Gnodes = Gsections[0].Split(',');
-        
-        foreach(string node in Gnodes) {
-            allGNodes.Add(node);
-        }
-
-        return allGNodes;
     }
 
     public List<KeyValuePair<string, string>> getEdges(string Ginput) {

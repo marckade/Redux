@@ -132,39 +132,14 @@ public class ARCSETDevController : ControllerBase {
 
     [HttpGet]
     public String getDefault() {
+
+        ARCSET arcTest = new ARCSET();
+
+        AlexArcsetVerifier verifier = new AlexArcsetVerifier();
+       bool vOut = verifier.verify(arcTest, "(3,2),(4,1)");
+        // string printString = JsonSerializer.Serialize(arcTest, options);
         var options = new JsonSerializerOptions { WriteIndented = true };
-        ARCSET arcset = new ARCSET();
-        ArcsetGraph arcGraph = arcset.directedGraph;
-        String jsonString = arcGraph.toDotJson();
-                //Console.WriteLine(jsonString);
-
-        string arcRegStr = "{{a,b,c,d},{(a,b),(b,c),(c,d)},10}";
-        string uStr = "{{a,b,c},{{a,b},{b,c}},10}";
-        string uStr2 = "{{a,b,c}:{{a,b} 7 {b,c}}:10}";
-
-        GraphParser gParser = new GraphParser();
-        List<Edge> arcList = gParser.getGraphEdgeList(arcRegStr);
-        List<Edge> undGList = gParser.getGraphEdgeList(uStr);
-        
-        Console.WriteLine("directed:");
-        foreach(Edge e in arcList){
-            Console.Write(e.directedString()+" ");
-        }
-        Console.WriteLine();
-        Console.WriteLine("undirected:");
-       
-        foreach(Edge e in undGList){
-            
-        Console.Write(e.undirectedString()+" ");
-        }
-
-        ArcsetGraph arcTest = new ArcsetGraph(arcRegStr,true);
-        VertexCoverGraph uTest = new VertexCoverGraph(uStr,true);
-        VertexCoverGraph uTest2 = new VertexCoverGraph(uStr2);
-        //Console.WriteLine(uTest.ToString());
-       // Console.WriteLine(uTest2.ToString());
-       // string printString = JsonSerializer.Serialize(arcTest, options);
-        string printString2 = JsonSerializer.Serialize(arcTest, options);
+        string printString2 = JsonSerializer.Serialize(vOut, options);
         //string printString3 = JsonSerializer.Serialize(uTest2);
 
         //Console.WriteLine(printString);

@@ -109,26 +109,35 @@ public class VCSolverController : ControllerBase {
     public String solveInstance([FromQuery]string problemInstance){
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
-        List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problem);
-        string stringVC = "{";
-        stringVC += Environment.NewLine;
-        foreach (KeyValuePair<string, string> keyValue in solvedInstance)
-        {
-            string key = keyValue.Key;
-            string value = keyValue.Value;    
-            stringVC += "{Key: ";
-            stringVC += key;
-            stringVC += ", Value: ";
-            stringVC += value;
-            stringVC += "}, "; 
-            stringVC += Environment.NewLine;
-        } 
-      
-        stringVC += "}";
+        List<string> solvedInstance = problem.defaultSolver.Solve(problem);
 
-        Console.Write(stringVC);
+        string undirectedSetString = "{";
+        foreach(string nodeStr in solvedInstance){
+            undirectedSetString = undirectedSetString + nodeStr + ",";
+        }
+        undirectedSetString = undirectedSetString.TrimEnd(',');
+        undirectedSetString = undirectedSetString + "}";
+        // List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problem);
+        // string stringVC = "{";
+        // stringVC += Environment.NewLine;
+        // foreach (KeyValuePair<string, string> keyValue in solvedInstance)
+        // {
+        //     string key = keyValue.Key;
+        //     string value = keyValue.Value;    
+        //     stringVC += "{Key: ";
+        //     stringVC += key;
+        //     stringVC += ", Value: ";
+        //     stringVC += value;
+        //     stringVC += "}, "; 
+        //     stringVC += Environment.NewLine;
+        // } 
+        // stringVC += "}";
 
-        string jsonString = JsonSerializer.Serialize(stringVC, options);
+        // Console.Write(stringVC);
+
+
+
+        string jsonString = JsonSerializer.Serialize(undirectedSetString, options);
         return jsonString;
     }
 
