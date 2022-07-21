@@ -15,6 +15,8 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     private SortedSet<int> _colors = new SortedSet<int>(){0};
 
     private string _complexity = "O(n^2)";
+    private string[] _contributers = { "Daniel Igbokwe"};
+
 
 #endregion
 
@@ -32,6 +34,11 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     public string source {
         get {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
 
