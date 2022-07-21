@@ -41,7 +41,6 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
             return _contributers;
         }
     }
-
      public string complexity {
         get {
             return _complexity;

@@ -50,7 +50,7 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
 
     public string[] contributers{
         get{
-            return contributers;
+            return _contributers;
         }
     }
     public string defaultInstance {
