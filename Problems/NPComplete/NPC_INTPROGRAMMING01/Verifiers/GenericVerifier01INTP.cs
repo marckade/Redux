@@ -10,6 +10,8 @@ class GenericVerifier01INTP : IVerifier {
     private string _source = " ";
 
     private string _certificate = "";
+    private string[] _contributers = { "Author Unknown"};
+
 
     // --- Properties ---
     public string verifierName {
@@ -28,6 +30,11 @@ class GenericVerifier01INTP : IVerifier {
         }
     }
 
+    public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
       public string certificate {
         get {
             return _certificate;

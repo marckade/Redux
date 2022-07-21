@@ -12,6 +12,8 @@ class IgbokweVerifier : IVerifier
     private string _verifierName = "Igbokwe's Verifier";
     private string _verifierDefinition = "This is a verifier for GRAPHCOLORING made by Daniel Igbokwe. it checks if adjacent vertices are labeled differently, and that their labels are valid using a depth first search";
     private string _source = "Daniel Igbokwe";
+    private string[] _contributers = { "Daniel Igbokwe"};
+
     private string _complexity = " O(V + E)";
     private string _certificate = "";
 
@@ -37,6 +39,11 @@ class IgbokweVerifier : IVerifier
         get
         {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
 

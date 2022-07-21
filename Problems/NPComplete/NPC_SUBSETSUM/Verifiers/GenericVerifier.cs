@@ -8,6 +8,7 @@ class GenericVerifier : IVerifier {
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for Subset Summ";
     private string _source = " ";
+    private string[] _contributers = { "Garret Stouffer"};
 
     private string _certificate = "";
 
@@ -27,7 +28,11 @@ class GenericVerifier : IVerifier {
             return _source;
         }
     }
-
+ public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
      public string certificate {
         get {
             return _certificate;

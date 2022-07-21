@@ -9,6 +9,8 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for SAT";
     private string _source = " ";
+    private string[] _contributers = { "Daniel Igbokwe"};
+
     private string _complexity = " ";
 
     private string _certificate = "";
@@ -38,6 +40,11 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
             return _source;
         }
     }
+      public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
     public string complexity {
         get {
             return _complexity;
@@ -53,6 +60,7 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
             return _certificate;
         }
     }
+    
 
 
     #endregion 
