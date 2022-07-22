@@ -6,8 +6,7 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
-using API.Interfaces.JSON_Objects.API_Solution;
-using API.Interfaces.JSON_Objects.API_UndirectedGraphJSON;
+using API.Interfaces.JSON_Objects;
 using System.Collections;
 
 

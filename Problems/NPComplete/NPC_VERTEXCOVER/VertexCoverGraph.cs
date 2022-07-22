@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
-using API.Interfaces.JSON_Objects.API_UndirectedGraphJSON;
+using API.Interfaces.JSON_Objects;
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 class VertexCoverGraph:UndirectedGraph{
