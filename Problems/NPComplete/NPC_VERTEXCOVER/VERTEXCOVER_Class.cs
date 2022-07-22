@@ -22,7 +22,7 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
     private VCSolverJanita _defaultSolver = new VCSolverJanita();
     private VCVerifierJanita _defaultVerifier = new VCVerifierJanita();
 
-    private UndirectedGraph _VCAsGraph;
+    private VertexCoverGraph _VCAsGraph;
     private string _vertexCover = string.Empty;
 
     private string[] _contributers = { "Janita Aamir", "Alex Diviney" };
@@ -93,6 +93,11 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         }
         set {
             _K = value;
+        }
+    }
+    public VertexCoverGraph VCAsGraph{
+        get{
+            return _VCAsGraph;
         }
     }
 

@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 using API.Interfaces.JSON_Objects.API_Solution;
+using API.Interfaces.JSON_Objects.API_UndirectedGraphJSON;
 using System.Collections;
 
 
@@ -45,6 +46,16 @@ public class VERTEXCOVERGenericController : ControllerBase {
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new VERTEXCOVER(problemInstance), options);
+        return jsonString;
+    }
+
+    [HttpGet("visualize")]
+    public String getVisualization([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER vCov = new VERTEXCOVER(problemInstance);
+        VertexCoverGraph vGraph = vCov.VCAsGraph;
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(vGraph.getNodeList, vGraph.getEdgeList);
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
     }
 

@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
+using API.Interfaces.JSON_Objects.API_UndirectedGraphJSON;
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 class VertexCoverGraph:UndirectedGraph{
@@ -36,6 +37,12 @@ class VertexCoverGraph:UndirectedGraph{
     }
 
 
+    public API_UndirectedGraphJSON visualizeOutput(){
+        API_UndirectedGraphJSON apiGraphRepresentation = new API_UndirectedGraphJSON(this._nodeList,this._edgeList);
+        return apiGraphRepresentation;
+    }
+
+
      public string reduction(){
         List<Node> newNodes = new List<Node>();
         foreach(Node n in _nodeList){
@@ -50,16 +57,16 @@ class VertexCoverGraph:UndirectedGraph{
         List<Edge> newEdges = new List<Edge>();
         List<Edge> numberedEdges = new List<Edge>();
         foreach(Edge e in _edgeList){
-            Edge newEdge1 = new Edge(e.node1,e.node2);
-            Edge newEdge2 = new Edge(e.node2,e.node1);
+            Edge newEdge1 = new Edge(e.source,e.target);
+            Edge newEdge2 = new Edge(e.target,e.source);
             newEdges.Add(newEdge1);
             newEdges.Add(newEdge2);
         }
 
         //map edges to to nodes
         foreach(Edge e in newEdges){
-            Node newNode1 = new Node(e.node1.name+"1");
-            Node newNode2 = new Node(e.node2.name+"0");
+            Node newNode1 = new Node(e.source.name+"1");
+            Node newNode2 = new Node(e.target.name+"0");
             Edge numberedEdge = new Edge(newNode1,newNode2);
             numberedEdges.Add(numberedEdge);
         }

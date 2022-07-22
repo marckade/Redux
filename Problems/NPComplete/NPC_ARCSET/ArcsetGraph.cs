@@ -140,8 +140,8 @@ class ArcsetGraph:DirectedGraph{
             //checks for backedges.  O(e)      
             foreach(Edge e in _edgeList){
            // Console.WriteLine(e.ToString());
-            String nodeFrom = e.node1.name;
-            String nodeTo = e.node2.name;
+            String nodeFrom = e.source.name;
+            String nodeTo = e.target.name;
 
             int node1Pos;
             int node2Pos;
@@ -265,7 +265,7 @@ private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] pos
         List<Edge> foundEdgeList = new List<Edge>();
         
         foreach(Edge e in this._edgeList){ //O(n) search operation. This is due to not having a data structure that maps edge names to edges. 
-            if(e.node1.name.Equals(edgeKey) && e.node2.name.Equals(edgeValue)){
+            if(e.source.name.Equals(edgeKey) && e.target.name.Equals(edgeValue)){
                 foundEdgeList.Add(e);
             }
         }

@@ -249,16 +249,16 @@ abstract class DirectedGraph:Graph{
             KeyValuePair<string,Node>kvp;
             foreach(Edge e in _edgeList){ //creates the y columns. 
                 
-                bool hasKey =_adjacencyMatrix.ContainsKey(e.node1.name);
+                bool hasKey =_adjacencyMatrix.ContainsKey(e.source.name);
                 if (!hasKey){
                 posList = new List<KeyValuePair<string, Node>>();
-                kvp = new KeyValuePair<string, Node>(e.node2.name,e.node2);
+                kvp = new KeyValuePair<string, Node>(e.target.name,e.target);
 
                 }
                 else{
                     try{
-                   posList = _adjacencyMatrix[e.node1.name];
-                    kvp = new KeyValuePair<string, Node>(e.node2.name,e.node2);
+                   posList = _adjacencyMatrix[e.source.name];
+                    kvp = new KeyValuePair<string, Node>(e.target.name,e.target);
                     posList.Add(kvp); //adds the node kvp to the list of kvps associated with "e1" (current node).
 
                     }
@@ -266,7 +266,7 @@ abstract class DirectedGraph:Graph{
                         Console.WriteLine("Key not found");
                         Console.WriteLine(k.StackTrace);
                     }
-                 //_adjacencyMatrix.TryGetValue(e.node1.name,out posList); //given name of node 1 in edge, add the KVP (node2.name, node2) to list. 
+                 //_adjacencyMatrix.TryGetValue(e.source.name,out posList); //given name of node 1 in edge, add the KVP (target.name, target) to list. 
 
                 }
                   
