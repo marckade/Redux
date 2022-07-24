@@ -5,7 +5,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
-using API.Interfaces.JSON_Objects;
+using API.Interfaces.JSON_Objects.Graphs;
+using API.Interfaces.Graphs.GraphParser;
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 class VertexCoverGraph:UndirectedGraph{
@@ -37,11 +38,31 @@ class VertexCoverGraph:UndirectedGraph{
     }
 
 
-    public API_UndirectedGraphJSON visualizeOutput(){
+    public API_UndirectedGraphJSON visualizeGraph(){
         API_UndirectedGraphJSON apiGraphRepresentation = new API_UndirectedGraphJSON(this._nodeList,this._edgeList);
         return apiGraphRepresentation;
     }
 
+/// <summary>
+/// This method allows us to, given a solution string, return an API Undirected graph that can be jsoned with each node's attribute1 characteristic being used 
+/// by the api to mark if the node is in the solution set or not. 
+/// </summary>
+/// <param name="solutionString"></param>
+/// <returns></returns>
+    public API_UndirectedGraphJSON visualizeSolution(string solutionString){
+        API_UndirectedGraphJSON apiGraph = visualizeGraph();
+        GraphParser gParser = new GraphParser();
+        List<string> parsedNodes = gParser.getNodesFromNodeListString(solutionString);
+        foreach(API_Node_Programmable_Small progNode in apiGraph.nodes){ //For every node in the graph
+            if(parsedNodes.Contains(progNode.name)){ //if that node is found in the solution set. (note, inefficient)
+                progNode.attribute1 = "true"; //we mark the programmable attribute1 value as true.
+            }
+            else{
+                progNode.attribute1 = "false";
+            }
+        }
+        return apiGraph;
+    }
 
      public string reduction(){
         List<Node> newNodes = new List<Node>();

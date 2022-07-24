@@ -2,7 +2,7 @@
 //However, in serializing links (edges) for the use of d3, we need to point links to purely the names of the nodes, not the nodes themselves
 //Author: Alex Diviney
 
-namespace API.Interfaces.JSON_Objects;
+namespace API.Interfaces.JSON_Objects.Graphs;
 
 class API_Link{
     private string _source;

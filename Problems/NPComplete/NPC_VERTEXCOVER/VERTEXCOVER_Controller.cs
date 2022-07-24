@@ -6,7 +6,9 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
+using API.Interfaces.JSON_Objects.Graphs;
 using API.Interfaces.JSON_Objects;
+
 using System.Collections;
 
 
@@ -155,6 +157,20 @@ public class VCSolverController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(undirectedSetString, options);
         return jsonString;
     }
+
+    [HttpGet("visualize")]
+    public String getVisualization([FromQuery]string problemInstance, [FromQuery]string solutionString) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER vCov = new VERTEXCOVER(problemInstance);
+        VertexCoverGraph vGraph = vCov.VCAsGraph;
+        API_UndirectedGraphJSON apiGraph = vGraph.visualizeSolution(solutionString);
+
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
+
+     return jsonString;
+
+    }
+    
 
 }
 
