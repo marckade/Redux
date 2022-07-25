@@ -9,16 +9,16 @@ namespace API.Problems.NPComplete.NPC_CLIQUE;
 
 class CliqueNode : Node
 {
-string _cluster;
-    public CliqueNode(string name, string cluster){
+string _clique;
+    public CliqueNode(string name, string clique){
         this._name = name;
-        this._cluster = cluster;
+        this._clique = clique;
 
     }
 
-public string cluster{
+public string clique{
     get{
-            return _cluster;
+            return _clique;
         }
 }
 }
