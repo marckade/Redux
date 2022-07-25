@@ -24,6 +24,9 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     private HurkensShrijver _defaultSolver = new HurkensShrijver();
     private GenericVerifierDM3 _defaultVerifier = new GenericVerifierDM3();
 
+    private string[] _contributers = { "Caleb Eardley" };
+
+
     // --- Properties ---
     public string problemName {
         get {
@@ -50,6 +53,11 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     public string source {
         get {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public string defaultInstance {

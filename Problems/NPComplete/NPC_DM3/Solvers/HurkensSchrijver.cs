@@ -7,6 +7,7 @@ class HurkensShrijver : ISolver {
     private string _solverName = "Hurkens Shriver";
     private string _solverDefinition = "This is a generic local search solver for 3-Dimensional Matching, which, while possible, removes one constraint from the current solution, and swaps in two more constraints.";
     private string _source = "Hurkens, C. A. J., and A. Schrijver. “On the Size of Systems of Sets Every t of Which Have an SDR, with an Application to the Worst-Case Ratio of Heuristics for Packing Problems.” SIAM Journal on Discrete Mathematics 2, no. 1 (February 1989): 68–72. https://doi.org/10.1137/0402008.";
+    private string[] _contributers = { "Caleb Eardley"};
 
     // --- Properties ---
     public string solverName {
@@ -22,6 +23,12 @@ class HurkensShrijver : ISolver {
     public string source {
         get {
             return _source;
+        }
+    }
+    
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     // --- Methods Including Constructors ---

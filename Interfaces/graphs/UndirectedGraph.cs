@@ -152,7 +152,7 @@ abstract class UndirectedGraph:Graph{
             _nodeStringList.Add(n.name);
         }
         foreach(Edge e in _edgeList){
-                KeyValuePair<string, string> tempKVP = new KeyValuePair<string, string>(e.node1.name, e.node2.name);
+                KeyValuePair<string, string> tempKVP = new KeyValuePair<string, string>(e.source.name, e.target.name);
                 _edgesKVP.Add(tempKVP);
             }
  

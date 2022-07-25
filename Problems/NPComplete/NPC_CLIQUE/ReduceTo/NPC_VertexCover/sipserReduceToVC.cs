@@ -11,6 +11,7 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
                                             This is done by first taking all possible edges in the original clique graph, and removing
                                             the edges that are actually in the clique graph from that set.";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
+    private string[] _contributers = {"Janita Aamir","Alex Diviney"};
     private CLIQUE _reductionFrom;
     private VERTEXCOVER _reductionTo;
 
@@ -26,6 +27,11 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
     public string source {
         get {
             return _source;
+        }
+    }
+       public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public CLIQUE reductionFrom {

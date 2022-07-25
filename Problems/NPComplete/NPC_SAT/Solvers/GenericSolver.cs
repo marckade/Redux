@@ -12,6 +12,8 @@ namespace API.Problems.NPComplete.NPC_SAT.Solvers;
     private string _solverName = "Generic Solver";
     private string _solverDefinition = "This is a generic solver for SAT";
     private string _source = "This person ____";
+    private string[] _contributers = { "Daniel Igbokwe"};
+
     private string _complexity = "";
 
 
@@ -35,7 +37,11 @@ namespace API.Problems.NPComplete.NPC_SAT.Solvers;
             return _source;
         }
     }
-
+    public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
     public string complexity {
         get {
             return _complexity;

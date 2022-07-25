@@ -7,6 +7,8 @@ class GarrettKnapsackSolver : ISolver {
     private string _solverName = "Generic Solver";
     private string _solverDefinition = "This solver is for the 0-1 Knapsack problem";
     private string _source = "This person ____";
+    private string[] _contributers = { "Garret Stouffer"};
+
 
     private string _complexity = "complexity of this problem depends on size of input values. When inputs are binary it's complexity is exponential.";
 
@@ -24,6 +26,11 @@ class GarrettKnapsackSolver : ISolver {
     public string source {
         get {
             return _source;
+        }
+    }
+     public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public string complexity {

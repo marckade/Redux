@@ -10,6 +10,8 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
     private string _problemName = "3SAT";
     private string _formalDefinition = "3SAT = {Φ | Φ is a satisfiabile Boolean forumla in 3CNF}";
     private string _problemDefinition = "3SAT, or the Boolean satisfiability problem, is a problem that asks for a list of assignments to the literals of phi (with a maximum of 3 literals per clause) to result in 'True'";
+    private string[] _contributers = { "Kaden Marchetti"};
+    
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "(x1 | !x2 | x3) & (!x1 | x3 | x1) & (x2 | !x3 | x1)";
     private SkeletonSolver _defaultSolver = new SkeletonSolver();
@@ -39,6 +41,11 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
     public string source {
         get {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
 

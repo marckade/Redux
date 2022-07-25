@@ -10,7 +10,8 @@ class GarrettsSimple : IVerifier {
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for KNAPSACK";
     private string _source = " ";
-    
+    private string[] _contributers = { "Garret Stouffer"};
+
     private string _complexity =" _____";
 
     private string _certificate = "";
@@ -30,6 +31,11 @@ class GarrettsSimple : IVerifier {
     public string source {
         get {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public string complexity {

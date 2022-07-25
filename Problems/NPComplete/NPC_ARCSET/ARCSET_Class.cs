@@ -35,6 +35,8 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     private AlexNaiveSolver _defaultSolver = new AlexNaiveSolver();
     private AlexArcsetVerifier _defaultVerifier = new  AlexArcsetVerifier(); //Verifier implements a Depth First Search. 
     
+    private string[] _contributers = { "Alex Diviney" };
+
 
     // --- Properties ---
     public string problemName {
@@ -56,6 +58,12 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
     public string source {
         get {
             return _source;
+        }
+    }
+    
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public string defaultInstance {

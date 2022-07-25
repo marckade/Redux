@@ -23,6 +23,8 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     private GenericSolver _defaultSolver = new GenericSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
     private CliqueGraph _cliqueAsGraph;
+    private string[] _contributers = { "Kaden Marchetti", "Alex Diviney" };
+
     // --- Properties ---
     public string problemName {
         get {
@@ -43,6 +45,12 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     public string source {
         get {
             return _source;
+        }
+    }
+
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public string defaultInstance {

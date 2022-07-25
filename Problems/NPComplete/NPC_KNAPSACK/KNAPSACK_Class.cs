@@ -14,6 +14,8 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    private string[] _contributers = { "Garret Stouffer"};
+
     private string _defaultInstance = " {{(1, 5) & (2,7) & (3, 9) & (1, 7)} : 5}";
     private string _HWV = string.Empty;
 
@@ -52,6 +54,12 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
     public string defaultInstance {
         get {
             return _defaultInstance;
+        }
+    }
+
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public string HWV {

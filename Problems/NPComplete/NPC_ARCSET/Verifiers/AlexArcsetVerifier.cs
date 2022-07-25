@@ -13,6 +13,7 @@ class AlexArcsetVerifier : IVerifier {
     private string _source = "This verifier is essentially common knowledge, as it utilizes a widely recognized algorithm in computer science: The Depth First Search.";
 
     private string _certificate = "(4,1),(3,2)"; //this certificate is technically overkill, we only have to remove one edge
+    private string[] _contributers = {"Alex Diviney"};
 
     // --- Properties ---
     public string verifierName {
@@ -30,7 +31,12 @@ class AlexArcsetVerifier : IVerifier {
             return _source;
         }
     }
+public string[] contributers{
 
+        get{
+            return _contributers;
+        }
+    }
       public string certificate {
         get {
             return _certificate;

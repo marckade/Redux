@@ -9,6 +9,8 @@ class SkeletonSolver : ISolver {
     private string _solverName = "Generic Solver";
     private string _solverDefinition = "This is a skeleton for the solver for SAT3";
     private string _source = "Kaden";
+    private string[] _contributers = {"Kaden Marchetti"};
+
 
     // --- Properties ---
     public string solverName {
@@ -27,7 +29,11 @@ class SkeletonSolver : ISolver {
         }
     }
 
-
+    public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
     // --- Methods Including Constructors ---
     public SkeletonSolver() {
     }

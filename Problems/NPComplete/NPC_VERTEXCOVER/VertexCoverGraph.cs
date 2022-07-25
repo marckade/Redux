@@ -5,6 +5,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
+using API.Interfaces.JSON_Objects.Graphs;
+using API.Interfaces.Graphs.GraphParser;
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 class VertexCoverGraph:UndirectedGraph{
@@ -36,6 +38,32 @@ class VertexCoverGraph:UndirectedGraph{
     }
 
 
+    public API_UndirectedGraphJSON visualizeGraph(){
+        API_UndirectedGraphJSON apiGraphRepresentation = new API_UndirectedGraphJSON(this._nodeList,this._edgeList);
+        return apiGraphRepresentation;
+    }
+
+/// <summary>
+/// This method allows us to, given a solution string, return an API Undirected graph that can be jsoned with each node's attribute1 characteristic being used 
+/// by the api to mark if the node is in the solution set or not. 
+/// </summary>
+/// <param name="solutionString"></param>
+/// <returns></returns>
+    public API_UndirectedGraphJSON visualizeSolution(string solutionString){
+        API_UndirectedGraphJSON apiGraph = visualizeGraph();
+        GraphParser gParser = new GraphParser();
+        List<string> parsedNodes = gParser.getNodesFromNodeListString(solutionString);
+        foreach(API_Node_Programmable_Small progNode in apiGraph.nodes){ //For every node in the graph
+            if(parsedNodes.Contains(progNode.name)){ //if that node is found in the solution set. (note, inefficient)
+                progNode.attribute1 = "true"; //we mark the programmable attribute1 value as true.
+            }
+            else{
+                progNode.attribute1 = "false";
+            }
+        }
+        return apiGraph;
+    }
+
      public string reduction(){
         List<Node> newNodes = new List<Node>();
         foreach(Node n in _nodeList){
@@ -50,16 +78,16 @@ class VertexCoverGraph:UndirectedGraph{
         List<Edge> newEdges = new List<Edge>();
         List<Edge> numberedEdges = new List<Edge>();
         foreach(Edge e in _edgeList){
-            Edge newEdge1 = new Edge(e.node1,e.node2);
-            Edge newEdge2 = new Edge(e.node2,e.node1);
+            Edge newEdge1 = new Edge(e.source,e.target);
+            Edge newEdge2 = new Edge(e.target,e.source);
             newEdges.Add(newEdge1);
             newEdges.Add(newEdge2);
         }
 
         //map edges to to nodes
         foreach(Edge e in newEdges){
-            Node newNode1 = new Node(e.node1.name+"1");
-            Node newNode2 = new Node(e.node2.name+"0");
+            Node newNode1 = new Node(e.source.name+"1");
+            Node newNode2 = new Node(e.target.name+"0");
             Edge numberedEdge = new Edge(newNode1,newNode2);
             numberedEdges.Add(numberedEdge);
         }

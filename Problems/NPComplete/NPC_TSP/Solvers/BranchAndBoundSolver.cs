@@ -9,6 +9,8 @@ class BranchAndBoundSolver : ISolver
     private string _solverName = "Branch and Bound Solver";
     private string _solverDefinition = "This is a branch and bound solver for TSP";
     private string _source = "Daniel Whitaker";
+    private string[] _contributers = { "Daniel Whitaker"};
+
     private GreedySolver _gs = new GreedySolver();
 
     // --- Properties ---
@@ -31,6 +33,11 @@ class BranchAndBoundSolver : ISolver
         get
         {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public GreedySolver gs

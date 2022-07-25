@@ -6,7 +6,7 @@ namespace API.Interfaces.Graphs;
 class Node:ICloneable{
 
 //Fields
-private string _name;
+protected string _name;
 
 //Constructors
 public Node(){

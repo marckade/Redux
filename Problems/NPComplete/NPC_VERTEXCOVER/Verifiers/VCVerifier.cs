@@ -9,6 +9,8 @@ class VCVerifierJanita : IVerifier {
     private string _verifierName = "Janita's Generic Verifier";
     private string _verifierDefinition = "This verifier is a naive solver for Vertex Cover that does not have a clear origination. ";
     private string _source = "No clear origination.";
+    private string[] _contributers = { "Janita Aamir","Alex Diviney"};
+
     private string _complexity = "";
 
     private string _certificate = "";
@@ -29,7 +31,11 @@ class VCVerifierJanita : IVerifier {
             return _source;
         }
     }
-
+ public string[] contributers{
+        get{
+            return _contributers;
+        }
+    }
       public string certificate {
         get {
             return _certificate;

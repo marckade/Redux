@@ -10,6 +10,7 @@ class KadensSimple : IVerifier {
     private string _verifierDefinition = "This is a verifier for 3SAT made by Kaden Marchetti. It takes the certificate from " + 
                                          "the user and validates that every clause contains a true literal";
     private string _source = " ";
+    private string[] _contributers = { "Kaden Marchetti"};
 
     private string _certificate = "(x1:True)";
     
@@ -27,6 +28,11 @@ class KadensSimple : IVerifier {
     public string source {
         get {
             return _source;
+        }
+    }
+      public string[] contributers{
+        get{
+            return _contributers;
         }
     }
       public string certificate {

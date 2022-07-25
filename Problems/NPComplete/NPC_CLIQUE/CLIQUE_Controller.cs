@@ -3,6 +3,8 @@ using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_CLIQUE.ReduceTo.NPC_VertexCover;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using API.Interfaces.JSON_Objects.Graphs;
+
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
 
@@ -17,10 +19,25 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [HttpGet("instance")]
+    public String getDefault([FromQuery] string problemInstance)
+    {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
+
+        CLIQUE devClique = new CLIQUE(problemInstance);
+        
+        string jsonString = JsonSerializer.Serialize(devClique, options);
+        return jsonString;
+    }
+
+      [HttpGet("visualize")]
+    public String getVisualization([FromQuery] string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE clique = new CLIQUE(problemInstance);
+        CliqueGraph cGraph = clique.cliqueAsGraph;
+        API_UndirectedGraphJSON apiFormat = new API_UndirectedGraphJSON(cGraph.getNodeList, cGraph.getEdgeList);
+
+        string jsonString = JsonSerializer.Serialize(apiFormat, options);
         return jsonString;
     }
 
@@ -94,6 +111,17 @@ public class CLIQUEDevController : ControllerBase
         CLIQUE devClique = new CLIQUE(problemInstance);
         
         string jsonString = JsonSerializer.Serialize(devClique, options);
+        return jsonString;
+    }
+
+
+     [HttpGet("visualize")]
+    public String getVisualization([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE clique = new CLIQUE(problemInstance);
+        CliqueGraph cGraph = clique.cliqueAsGraph;
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(cGraph.getNodeList, cGraph.getEdgeList);
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
     }
 

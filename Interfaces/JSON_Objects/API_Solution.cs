@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-namespace API.Interfaces.JSON_Objects.API_Solution;
+namespace API.Interfaces.JSON_Objects;
 
 class API_Solution
 {

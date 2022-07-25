@@ -8,6 +8,7 @@ class TSPVerifier : IVerifier
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for TSP";
     private string _source = "";
+    private string[] _contributers = { "Daniel Whitaker"};
 
     private string _certificate = "";
 
@@ -33,7 +34,11 @@ class TSPVerifier : IVerifier
             return _source;
         }
     }
-
+    public string[] contributers{
+            get{
+                return _contributers;
+            }
+        }
       public string certificate {
         get {
             return _certificate;

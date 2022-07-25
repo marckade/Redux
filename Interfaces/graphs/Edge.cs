@@ -8,48 +8,48 @@ namespace API.Interfaces.Graphs;
 class Edge{
 
 //Fields
-private Node _node1;
-private Node _node2;
+private Node _source;
+private Node _target;
 
 public Edge(){
-_node1 = new Node();
-_node2 = new Node();
+_source = new Node();
+_target = new Node();
 }
 public Edge(Node n1,Node n2){
-    _node1 = n1;
-    _node2 = n2;
+    _source = n1;
+    _target = n2;
 }
 
-public Node node1{
+public Node source{
     get{
-        return _node1;
+        return _source;
     }
     set{
-        _node1 = value;
+        _source = value;
     }
 }
 
-public Node node2{
+public Node target{
     get{
-        return _node2;
+        return _target;
     }
     set{
-        _node2 = value;
+        _target = value;
     }
 }
 
 public override string ToString(){
-return node1.name+","+_node2.name;
+return source.name+","+_target.name;
 }
 
 public string undirectedString(){
-    return "{"+node1.name+","+_node2.name+"}";
+    return "{"+source.name+","+_target.name+"}";
 }
 public string directedString(){
-    return "("+node1.name+","+_node2.name+")";
+    return "("+source.name+","+_target.name+")";
 }
 public KeyValuePair<string,string> toKVP(){
-    KeyValuePair<string,string> asKVP = new KeyValuePair<string, string>(node1.name,node2.name);
+    KeyValuePair<string,string> asKVP = new KeyValuePair<string, string>(source.name,target.name);
     return asKVP;
 }
 

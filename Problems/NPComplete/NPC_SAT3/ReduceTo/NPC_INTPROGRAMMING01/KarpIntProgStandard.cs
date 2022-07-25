@@ -8,6 +8,8 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
     // --- Fields ---
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
+    private string[] _contributers = { "Author Unknown"};
+
     private SAT3 _reductionFrom;
     private INTPROGRAMMING01 _reductionTo;
 
@@ -21,6 +23,11 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
     public string source {
         get {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     public SAT3 reductionFrom {

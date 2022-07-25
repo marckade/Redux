@@ -8,6 +8,8 @@ class GreedySolver : ISolver
     private string _solverName = "Greedy Solver";
     private string _solverDefinition = "This is a greedy solver for TSP";
     private string _source = "Daniel Whitaker";
+    private string[] _contributers = { "Daniel Whitaker"};
+
 
     // --- Properties ---
     public string solverName
@@ -29,6 +31,11 @@ class GreedySolver : ISolver
         get
         {
             return _source;
+        }
+    }
+    public string[] contributers{
+        get{
+            return _contributers;
         }
     }
     // --- Methods Including Constructors ---
