@@ -12,7 +12,7 @@ class KadensSimple : IVerifier {
     private string _source = " ";
     private string[] _contributers = { "Kaden Marchetti"};
 
-    private string _certificate = "";
+    private string _certificate = "(x1:True)";
     
     // --- Properties ---
     public string verifierName {
@@ -66,7 +66,7 @@ class KadensSimple : IVerifier {
 
         // If True, just add literalName, if False, add literalName with ! prepending. Then add it to the trueLiterals list
         foreach (string assignment in assignments) {
-            string[] assignmentParts = assignment.Split('=');
+            string[] assignmentParts = assignment.Split(':');
             string literalName = assignmentParts[0];
             string TF = assignmentParts[1];
 
