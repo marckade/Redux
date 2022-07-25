@@ -6,6 +6,8 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
+using API.Interfaces.JSON_Objects.API_Solution;
+using System.Collections;
 
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
@@ -99,10 +101,13 @@ public class VCSolverController : ControllerBase {
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VCSolverJanita solver = new VCSolverJanita();
-        
-        string jsonString = JsonSerializer.Serialize(solver, options);
-        return jsonString;
-        
+        ArrayList testDataArr = new ArrayList();
+        testDataArr.Add("DATA ARRAYLIST");
+        API_Solution api_instance = new API_Solution("HELLO WORLD", testDataArr);
+        string jsonString = JsonSerializer.Serialize(api_instance, options);
+
+     return jsonString;
+
     }
 
     [HttpGet("solve")]
