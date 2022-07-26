@@ -45,4 +45,12 @@ public List<API_Link> links {
         return _links;
     }
 }
+
+public void setAttribute1(API_Node_Programmable_Small n, string attribute){
+        if(_nodes.Contains(n)){
+            int index = _nodes.BinarySearch(n);
+            _nodes[index].attribute1 = attribute;
+        }
+
+    }
 }
