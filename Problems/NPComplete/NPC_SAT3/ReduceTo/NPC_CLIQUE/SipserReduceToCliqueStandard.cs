@@ -138,5 +138,36 @@ class SipserReduction : IReduction<SAT3, SipserClique> {
         return name;
     }
 
+    /// <summary>
+    ///  Given a solution string and a reduced to problem instance, map the solution to the problem. 
+    /// </summary>
+    /// <param name="problemInstance"></param>
+    /// <param name="sat3SolutionString"></param>
+    /// <returns></returns>
+    public SipserClique solutionMappedToClusterNodes(SipserClique sipserInput, Dictionary<string,bool> solutionDict){
+        // string sat3SolutionString2 = sat3SolutionString.TrimStart('(').TrimEnd(')');
+        // string[] solArr = sat3SolutionString2.Split(',');
+        // List<string> solList = new List<string>();
+        // foreach(string s in solArr){
+        //     solList.Add(s.Split(':')[0]); //Given x1:True, outputs x1, adds x1 to the List.
+        // }
+        
+        SipserClique sipserClique = sipserInput;
+        Console.WriteLine("TEST CLIQUE INTERNAL");
+        List<SipserNode> clusterNodes = sipserClique.clusterNodes;
+    
+        foreach(SipserNode s in clusterNodes){
+            Console.Write(s.name+ " clusterNode");
+            if(solutionDict.ContainsKey(s.name)){ //if the name of the node is in the solutionList
+                bool result;
+                if(solutionDict.TryGetValue(s.name, out result)){
+                    s.solutionState = result.ToString();
+                }
+            }
+        }
+        return sipserClique;
+
+    }
+
 }
 // return an instance of what you are reducing to
