@@ -62,12 +62,12 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         //Console.WriteLine("solvedvisualization:" + problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3(problemInstance);
-        Console.WriteLine("problemInstance: "+defaultSAT3.instance);
+        //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
         SkeletonSolver solver = defaultSAT3.defaultSolver;
         Dictionary<string,bool> solutionDict = solver.solve(defaultSAT3);
         bool solBool;
         solutionDict.TryGetValue("x1", out solBool);
-        Console.WriteLine(solBool);
+        //Console.WriteLine(solBool);
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();
         //string cliqueString = reducedClique.instance;

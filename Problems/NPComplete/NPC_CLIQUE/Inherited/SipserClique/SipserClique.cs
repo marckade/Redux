@@ -11,6 +11,7 @@ class SipserClique : CLIQUE {
     // --- Fields ---
     // Adding cluster field to class
     private List<SipserNode> _clusterNodes = new List<SipserNode>();
+    private int _numberOfClusters;
     public SipserClique():base(){
 
     }
@@ -27,6 +28,14 @@ class SipserClique : CLIQUE {
         }
         set {
             _clusterNodes = value;
+        }
+    }
+    public int numberOfClusters {
+        get {
+            return _numberOfClusters;
+        }
+        set {
+            _numberOfClusters = value;
         }
     }
 }
