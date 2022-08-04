@@ -169,16 +169,17 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     /// </summary>
     /// <param name="problemInstance"></param>
     /// <param name="sat3SolutionString"></param>
-    /// <returns></returns>
+    /// <returns> A Sipser Clique with a cluster nodes attribute (list of SipserNodes) that has a solution state mapped to each node.</returns>
     public SipserClique solutionMappedToClusterNodes(SipserClique sipserInput, Dictionary<string, bool> solutionDict)
     {
-
 
         SipserClique sipserClique = sipserInput;
         //Console.WriteLine("TEST CLIQUE INTERNAL");
         List<SipserNode> clusterNodes = sipserClique.clusterNodes;
         int numberOfClusters = sipserClique.numberOfClusters; //Not guaranteed to not be null, this value is set by the reduction that should have happened to sipserInput previously.
-        foreach (SipserNode s in clusterNodes)
+        foreach (SipserNode s in clusterNodes) 
+        //This loop will set all nodes matching the format true. This means that we can have multiple nodes in a single "clause" true, but we need to 
+        // instead arbitrarily pick one per clause (per cluster). A cleanup loop will follow and choose one candidate per cluster.
         {
             bool result = false;
             if (solutionDict.ContainsKey(s.name))
@@ -202,10 +203,40 @@ class SipserReduction : IReduction<SAT3, SipserClique>
             }
 
         }
+
+        //Cleanup loops. First we sort the nodes into sublists by cluster. 
+        List<SipserNode>[] nodeListSortedByCluster = new List<SipserNode>[numberOfClusters];
+        for (int i = 0; i < numberOfClusters;i++){
+            nodeListSortedByCluster[i] = new List<SipserNode>();
+        }
+        foreach (SipserNode s in clusterNodes)
+        {
+            int clusterNum = Int32.Parse(s.cluster); //gets the number
+            nodeListSortedByCluster[clusterNum].Add(s); //array position is mapped to cluster. Every node in this sublist has the same cluster.
+        }
+        //then we look through sublists and unset duplicates.
+        foreach(List<SipserNode> subList in nodeListSortedByCluster){
+            bool foundTrueFlag = false;
+            foreach(SipserNode cNode in subList){
+                if(cNode.solutionState.Equals("True") && !foundTrueFlag){
+                    foundTrueFlag = true; //This is the first true node found, dont edit it.
+                }
+                else if(cNode.solutionState.Equals("True") && foundTrueFlag){
+                    cNode.solutionState = ""; //This is another true node in a cluster so we will set it back to false. 
+                }
+            }
+        }
+
         return sipserClique;
 
     }
 
+    /// <summary>
+    ///  This maps a name prefix, ie. x1, to the possible clusters that it could appear in, ie. [x1_1, x1_2] and returns that list
+    /// </summary>
+    /// <param name="primaryName"></param>
+    /// <param name="amountOfClusters"></param>
+    /// <returns> A list of possible names</returns>
     private List<string> getclusterNodeSearchList(string primaryName, int amountOfClusters)
     {
         List<string> searchList = new List<string>();
