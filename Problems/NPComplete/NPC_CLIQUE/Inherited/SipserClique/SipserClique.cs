@@ -9,9 +9,17 @@ namespace API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 class SipserClique : CLIQUE {
 
     // --- Fields ---
-
     // Adding cluster field to class
     private List<SipserNode> _clusterNodes = new List<SipserNode>();
+    private int _numberOfClusters;
+    public SipserClique():base(){
+
+    }
+    public SipserClique(string Ginput): base(Ginput){
+        
+    }
+
+
 
     // --- Properties ---
     public List<SipserNode> clusterNodes {
@@ -20,6 +28,14 @@ class SipserClique : CLIQUE {
         }
         set {
             _clusterNodes = value;
+        }
+    }
+    public int numberOfClusters {
+        get {
+            return _numberOfClusters;
+        }
+        set {
+            _numberOfClusters = value;
         }
     }
 }

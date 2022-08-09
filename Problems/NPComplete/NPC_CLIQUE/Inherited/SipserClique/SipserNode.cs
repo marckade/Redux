@@ -1,36 +1,33 @@
+using API.Problems.NPComplete.NPC_CLIQUE;
 namespace API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 
-class SipserNode {
+class SipserNode:CliqueNode {
 
     // --- Fields ---
-    private string _name = string.Empty;
-    private string _cluster = string.Empty;
 
-    // --- Properties ---
-    public string name {
-        get {
-            return _name;
-        }
-        set {
-            _name = value;
-        }
-    }
-    public string cluster {
-        get {
-            return _cluster;
-        }
-        set {
-            _cluster = value;
-        }
-    }
 
     // --- Methods Including Constructors ---
-    public SipserNode() {
+    protected string _solutionState;
 
+    public SipserNode(string nodeName, string nodeCluster) : base( nodeName, nodeCluster) {
+        _solutionState = "";
     }
 
-    public SipserNode(string nodeName, string nodeCluster) {
-        name = nodeName;
-        cluster = nodeCluster;
+    public SipserNode(string nodeName, string nodeCluster,string solState){
+        this._name = nodeName;
+        this._cluster = nodeCluster;
+        this._solutionState = solState;
     }
+
+
+    public string solutionState {
+        get {
+            return _solutionState;
+        }
+        set {
+            _solutionState = value;
+        }
+    }
+
+
 }

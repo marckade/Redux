@@ -9,9 +9,9 @@ using API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING01;
 using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 using API.Problems.NPComplete.NPC_SAT3.Solvers;
+using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
 namespace API.Problems.NPComplete.NPC_SAT3;
 
 [ApiController]
@@ -54,6 +54,28 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         SAT3 defaultSAT3 = new SAT3(problemInstance);
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+    [HttpGet("solvedVisualization")]
+    public String getSolvedVisualization([FromQuery]string problemInstance) {
+        //Console.WriteLine("solvedvisualization:" + problemInstance);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 defaultSAT3 = new SAT3(problemInstance);
+        //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
+        SkeletonSolver solver = defaultSAT3.defaultSolver;
+        Dictionary<string,bool> solutionDict = solver.solve(defaultSAT3);
+        bool solBool;
+        solutionDict.TryGetValue("x1", out solBool);
+        //Console.WriteLine(solBool);
+        SipserReduction reduction = new SipserReduction(defaultSAT3);
+        SipserClique reducedClique = reduction.reduce();
+        //string cliqueString = reducedClique.instance;
+        //Console.WriteLine(cliqueString);
+        SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionDict);
+                //Console.WriteLine(sClique.clusterNodes[0].ToString());
+
+        string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         return jsonString;
     }
 
