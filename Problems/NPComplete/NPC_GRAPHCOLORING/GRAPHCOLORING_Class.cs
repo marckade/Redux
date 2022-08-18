@@ -15,7 +15,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string[] _contributers = { "Daniel Igbokwe", "Alex Diviney" };
 
-    private string _defaultInstance = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},3}";
+    private string _defaultInstance = "{a,b,c,d,e,f,g,h,i},{{a,b},{b,c},{a,c},{d,a},{a,e},{e,d},{a,f},{f,g},{g,a},{h,a},{h,i},{i,a}},3}";
 
     private string _instance  =  string.Empty;
 
