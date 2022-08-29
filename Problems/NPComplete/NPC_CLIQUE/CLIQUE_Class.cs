@@ -13,7 +13,7 @@ class CLIQUE : IProblem<GenericSolver,GenericVerifier> {
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     //{{a,b,c,d,e,f} : {(a,b) & (a,f) & (a,e) & (b,c) & (b,e) & (b,d) & (d,c) & (d,e) & (c,f) & (c,e)} : 4}
     // private string _defaultInstance = "{{1,2,3,4} : {{4,1} & {1,2} & {4,3} & {3,2} & {2,4}} : 1}";
-    private string _defaultInstance = "{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},1}";
+    private string _defaultInstance = "{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}";
     private string _instance = string.Empty;
 
     private string _wikiName = "";

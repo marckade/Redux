@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Problems.NPComplete.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 using API.Problems.NPComplete.NPC_CLIQUE.ReduceTo.NPC_VertexCover;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -147,4 +148,32 @@ public class CLIQUEDevController : ControllerBase
         return jsonString;
     }
 
+}
+
+[ApiController]
+[Route("[controller]")]
+public class GenericSolverController : ControllerBase {
+
+    // Return Generic Solver Class
+    [HttpGet("info")]
+    public String getGeneric() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GenericSolver solver = new GenericSolver();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(solver, options);
+        return jsonString;
+    }
+
+    // Solve a instance given a certificate
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string problemInstance) {
+        // Implement solver here
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE problem = new CLIQUE(problemInstance);
+        string solution = problem.defaultSolver.solve(problem);
+
+        string jsonString = JsonSerializer.Serialize(solution, options);
+        return jsonString;
+    }
 }
