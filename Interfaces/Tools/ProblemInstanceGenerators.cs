@@ -101,9 +101,9 @@ public static class ProblemInstanceGenerators{
         }
         string S = "";
         foreach(var clause in clauses){
-            S += " ^ "+clause;
+            S += " %26 "+clause;
         }
-        if(S.Length != 0) S = S.Substring(3);
+        if(S.Length != 0) S = S.Substring(5);
         return S;
     }
 };
@@ -117,9 +117,9 @@ public class ProblemGeneratorController : ControllerBase {
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
 
-        string graphInstance = ProblemInstanceGenerators.UndirectedGraphInstance(n,k,density);
+        string satInstance = ProblemInstanceGenerators.UndirectedGraphInstance(n,k,density);
         
-        string jsonString = JsonSerializer.Serialize(graphInstance, options);
+        string jsonString = JsonSerializer.Serialize(satInstance, options);
         return jsonString;
     }
 
