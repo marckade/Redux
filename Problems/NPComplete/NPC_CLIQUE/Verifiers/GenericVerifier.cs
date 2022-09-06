@@ -57,29 +57,15 @@ class GenericVerifier : IVerifier {
     }
     public bool verify(CLIQUE problem, string certificate){
         List<string> nodeList = parseCertificate(certificate);
-        Console.WriteLine(nodeList.Count);
-        // for(int i=0; i<problem.nodes.Count; i++){
-        //     Console.WriteLine(problem.nodes[i]);
-        // }
-        // Console.WriteLine("--------------------------");
-        // for(int i=0; i<problem.edges.Count; i++){
-        //     Console.WriteLine(problem.edges[i]);
-        // }
-        // Console.WriteLine("--------------------------");
-        // for(int i=0; i<nodeList.Count; i++){
-        //     Console.WriteLine(nodeList[i]);
-        // }
         foreach(var i in nodeList){
             foreach(var j in nodeList){
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
                 KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
                 if(!(problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) || i==j)){
-                    Console.WriteLine("false");
                     return false;
                 }
             }
         }
-        Console.WriteLine("true");
         return true;
     }
 }

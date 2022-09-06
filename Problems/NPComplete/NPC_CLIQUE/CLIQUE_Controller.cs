@@ -152,13 +152,13 @@ public class CLIQUEDevController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class GenericSolverController : ControllerBase {
+public class BruteForceSolverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        GenericSolver solver = new GenericSolver();
+        CliqueBruteForce solver = new CliqueBruteForce();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
