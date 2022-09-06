@@ -97,11 +97,11 @@ public static class ProblemInstanceGenerators{
                     literals.Add(literal);
                 }
             }
-            clauses.Add(string.Format("({0} ^ {1} ^ {2})",literals[0],literals[1],literals[2]));
+            clauses.Add(string.Format("({0} | {1} | {2})",literals[0],literals[1],literals[2]));
         }
         string S = "";
         foreach(var clause in clauses){
-            S += " | "+clause;
+            S += " ^ "+clause;
         }
         if(S.Length != 0) S = S.Substring(3);
         return S;
