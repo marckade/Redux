@@ -98,9 +98,13 @@ class CliqueBruteForce : ISolver {
 
         Dictionary<string, bool> solutionDict = new Dictionary<string, bool>();
         GraphParser gParser = new GraphParser();
-        CliqueGraph cGraph = new CliqueGraph(problemInstance);
+        CliqueGraph cGraph = new CliqueGraph(problemInstance, true);
         List<string> problemInstanceNodes = cGraph.nodesStringList;
         List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
+
+        // Remove solvedNodes from instanceNodes
+        // Add solved nodes to dict as {name, true}
+        // Add remaining instance nodes as {name, false}
         IEnumerable<string> intersect = problemInstanceNodes.Intersect(solvedNodes);
         foreach(string node in problemInstanceNodes){
             if(intersect.Contains(node)){ 

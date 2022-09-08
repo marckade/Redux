@@ -134,7 +134,7 @@ class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
         //nodes = getNodes(_instance);
         //edges = getEdges(_instance);
         //K = getK(_instance);
-        _cliqueAsGraph = new CliqueGraph(_instance,true);
+        _cliqueAsGraph = new CliqueGraph(_instance, true);
         nodes = _cliqueAsGraph.nodesStringList;
         edges = _cliqueAsGraph.edgesKVP;
         _K = _cliqueAsGraph.K;
