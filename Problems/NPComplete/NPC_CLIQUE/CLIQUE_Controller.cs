@@ -53,9 +53,9 @@ public class CLIQUEGenericController : ControllerBase {
         //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
         CliqueBruteForce solver = new CliqueBruteForce();
         string solution = solver.solve(clique);
-        Dictionary<string,bool> solutionDict = solver.getDictSolution();
-        bool solBool;
-        solutionDict.TryGetValue("x1", out solBool);
+        Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
+        // bool solBool;
+        // solutionDict.TryGetValue("x1", out solBool);
         //Console.WriteLine(solBool);
         SipserReduction reduction = new SipserReduction(new NPC_SAT3.SAT3());
         SipserClique reducedClique = new SipserClique(problemInstance);
