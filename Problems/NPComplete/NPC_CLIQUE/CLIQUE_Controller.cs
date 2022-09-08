@@ -6,6 +6,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Interfaces.JSON_Objects.Graphs;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
+using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
+using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
@@ -40,6 +42,30 @@ public class CLIQUEGenericController : ControllerBase {
         API_UndirectedGraphJSON apiFormat = new API_UndirectedGraphJSON(cGraph.getNodeList, cGraph.getEdgeList);
 
         string jsonString = JsonSerializer.Serialize(apiFormat, options);
+        return jsonString;
+    }
+
+     [HttpGet("solvedVisualization")]
+    public String getSolvedVisualization([FromQuery]string problemInstance) {
+        //Console.WriteLine("solvedvisualization:" + problemInstance);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE clique = new CLIQUE(problemInstance);
+        //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
+        CliqueBruteForce solver = new CliqueBruteForce();
+        string solution = solver.solve(clique);
+        Dictionary<string,bool> solutionDict = solver.getDictSolution();
+        bool solBool;
+        solutionDict.TryGetValue("x1", out solBool);
+        //Console.WriteLine(solBool);
+        SipserReduction reduction = new SipserReduction(new NPC_SAT3.SAT3());
+        SipserClique reducedClique = new SipserClique(problemInstance);
+        //string cliqueString = reducedClique.instance;
+        //Console.WriteLine(cliqueString);
+        SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionDict);
+                //Console.WriteLine(sClique.clusterNodes[0].ToString());
+
+        string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
+        
         return jsonString;
     }
 
