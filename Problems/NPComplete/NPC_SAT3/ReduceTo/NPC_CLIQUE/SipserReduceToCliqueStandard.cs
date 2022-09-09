@@ -209,8 +209,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         for (int i = 0; i < numberOfClusters;i++){
             nodeListSortedByCluster[i] = new List<SipserNode>();
         }
-        foreach (SipserNode s in clusterNodes)
-        {
+        foreach (SipserNode s in clusterNodes){
+            
             int clusterNum = Int32.Parse(s.cluster); //gets the number
             nodeListSortedByCluster[clusterNum].Add(s); //array position is mapped to cluster. Every node in this sublist has the same cluster.
         }

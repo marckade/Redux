@@ -103,16 +103,17 @@ class CliqueBruteForce : ISolver {
         List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
 
         // Remove solvedNodes from instanceNodes
+       foreach(string node in solvedNodes){
+        problemInstanceNodes.Remove(node);
+         Console.WriteLine("SOLved nodes: "+node);
+        solutionDict.Add(node, true);
+       }
         // Add solved nodes to dict as {name, true}
         // Add remaining instance nodes as {name, false}
-        IEnumerable<string> intersect = problemInstanceNodes.Intersect(solvedNodes);
+
         foreach(string node in problemInstanceNodes){
-            if(intersect.Contains(node)){ 
-                solutionDict.Add(node, true);
-            }
-            else{
+          
                 solutionDict.Add(node, false);
-            }
         }
 
 

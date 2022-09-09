@@ -16,6 +16,11 @@ class SipserClique : CLIQUE {
 
     }
     public SipserClique(string Ginput): base(Ginput){
+        foreach(string elem in this.nodes){
+             Console.WriteLine("Node name: "+elem);
+            _clusterNodes.Add(new SipserNode(elem, "0"));
+        }
+        _numberOfClusters = 1;
         
     }
 

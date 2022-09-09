@@ -54,16 +54,31 @@ public class CLIQUEGenericController : ControllerBase {
         CliqueBruteForce solver = new CliqueBruteForce();
         string solution = solver.solve(clique);
         Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
-        // bool solBool;
-        // solutionDict.TryGetValue("x1", out solBool);
-        //Console.WriteLine(solBool);
+
+    // PRINTS DICTIONARY 
+
+    //    solution = "{ ( ";  
+   
+    //     for(int i =0; i< solutionDict.Count -1; i++ ){
+
+    //         KeyValuePair < string, bool > value = solutionDict.ElementAt(i);
+    //         solution +=  value.Key + " : " + value.Value + ", "; 
+    //         Console.WriteLine(solution);
+    //     }
+      
+    //     KeyValuePair < string, bool > keyValue = solutionDict.ElementAt(solutionDict.Count -1);
+    
+    //     solution += keyValue.Key+" : " + keyValue.Value + " ) }";
+    //      Console.WriteLine(solution);
+
+    // PRINTS DICTIONARY 
+         
         SipserReduction reduction = new SipserReduction(new NPC_SAT3.SAT3());
         SipserClique reducedClique = new SipserClique(problemInstance);
         //string cliqueString = reducedClique.instance;
         //Console.WriteLine(cliqueString);
         SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionDict);
-                //Console.WriteLine(sClique.clusterNodes[0].ToString());
-
+        // Console.WriteLine(sClique.clusterNodes.Count.ToString());
         string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         
         return jsonString;
