@@ -69,15 +69,15 @@ public class CLIQUEGenericController : ControllerBase {
     //     KeyValuePair < string, bool > keyValue = solutionDict.ElementAt(solutionDict.Count -1);
     
     //     solution += keyValue.Key+" : " + keyValue.Value + " ) }";
-    //      Console.WriteLine(solution);
+    //     Console.WriteLine(solution);
 
     // PRINTS DICTIONARY 
          
-        SipserReduction reduction = new SipserReduction(new NPC_SAT3.SAT3());
-        SipserClique reducedClique = new SipserClique(problemInstance);
+        // SipserReduction reduction = new SipserReduction(new NPC_SAT3.SAT3());
+        // SipserClique reducedClique = new SipserClique(problemInstance);
         //string cliqueString = reducedClique.instance;
         //Console.WriteLine(cliqueString);
-        SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionDict);
+        SipserClique sClique =new SipserClique(problemInstance,solutionDict);
         // Console.WriteLine(sClique.clusterNodes.Count.ToString());
         string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         
