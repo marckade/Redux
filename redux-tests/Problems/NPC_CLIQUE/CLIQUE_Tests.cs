@@ -41,7 +41,9 @@ public class CLIQUE_Tests
 
         CLIQUE testArc = new CLIQUE();
         GenericVerifier verifier = new GenericVerifier();
-        verifier.verify(testArc, "{1,2,4}");
+        bool vBool = verifier.verify(testArc, "{1,2,4}");
+        Assert.True(vBool);
+
     }
 
     [Theory] //tests with default graph string Certificates of this test represent junk or empty data. 
@@ -52,8 +54,8 @@ public class CLIQUE_Tests
     {
         CLIQUE testArc = new CLIQUE(ARCSET_Instance);
         GenericVerifier verifier = new GenericVerifier();
-        bool isStillArcset = verifier.verify(testArc, testCertificate);
-        Assert.True(isStillArcset);
+        bool notValid = verifier.verify(testArc, testCertificate);
+        Assert.False(notValid);
     }
 
     [Theory] //tests with default graph string and various certificates, this shows that certificates can be accepted in many formats. (false case)
@@ -64,7 +66,7 @@ public class CLIQUE_Tests
         CLIQUE testCli = new CLIQUE(CLIQUE_Instance);
         GenericVerifier verifier = new GenericVerifier();
         bool hasClique = verifier.verify(testCli, testCertificate);
-        Assert.False(hasClique);
+        Assert.True(hasClique);
     }
 
 

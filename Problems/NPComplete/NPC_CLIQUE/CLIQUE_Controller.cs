@@ -8,6 +8,8 @@ using API.Interfaces.JSON_Objects.Graphs;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
+using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
@@ -90,21 +92,6 @@ public class CLIQUEGenericController : ControllerBase {
 [Route("[controller]")]
 public class sipserReduceToVCController : ControllerBase {
 
-    // [HttpGet]
-    // public String getDefault() {
-    //     var options = new JsonSerializerOptions { WriteIndented = true };
-    //     CLIQUE defaultCLIQUE = new CLIQUE();
-    //     Clique_to_VertexCoverReduction reduction = new Clique_to_VertexCoverReduction(defaultCLIQUE);
-    //     string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
-    //     return jsonString;
-    // }
-
-    // [HttpGet("{instance}")]
-    // public String getInstance() {
-    //     var options = new JsonSerializerOptions { WriteIndented = true };
-    //     string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
-    //     return jsonString;
-    // }
 
     [HttpGet("info")]
 
@@ -148,7 +135,6 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(apiArr, options);
         return jsonString;
     }
-
 }
 
 [ApiController]
@@ -193,11 +179,13 @@ public class CLIQUEDevController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class BruteForceSolverController : ControllerBase {
+public class BruteForceSolverController : ControllerBase
+{
 
     // Return Generic Solver Class
     [HttpGet("info")]
-    public String getGeneric() {
+    public String getGeneric()
+    {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CliqueBruteForce solver = new CliqueBruteForce();
 
@@ -208,7 +196,8 @@ public class BruteForceSolverController : ControllerBase {
 
     // Solve a instance given a certificate
     [HttpGet("solve")]
-    public String solveInstance([FromQuery]string problemInstance) {
+    public String solveInstance([FromQuery] string problemInstance)
+    {
         // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE problem = new CLIQUE(problemInstance);
@@ -217,4 +206,21 @@ public class BruteForceSolverController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
+
 }
+
+    [ApiController]
+    [Route("[controller]")]
+    public class CliqueVerifierController : ControllerBase {
+
+        [HttpGet("verify")]
+        public String verifyInstance([FromQuery]string problemInstance, string certificate){
+
+            CLIQUE vClique = new CLIQUE(problemInstance);
+            GenericVerifier verifier = vClique.defaultVerifier;
+            bool validClique = verifier.verify(vClique, certificate);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonString = JsonSerializer.Serialize(validClique, options);
+            return jsonString;
+        }
+    }
