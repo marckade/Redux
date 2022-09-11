@@ -130,7 +130,6 @@ class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
 
     }
     public CLIQUE(string GInput) {
-        _instance = GInput;
         //nodes = getNodes(_instance);
         //edges = getEdges(_instance);
         //K = getK(_instance);
@@ -138,6 +137,8 @@ class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
         nodes = _cliqueAsGraph.nodesStringList;
         edges = _cliqueAsGraph.edgesKVP;
         _K = _cliqueAsGraph.K;
+        _instance = _cliqueAsGraph.formalString();
+
 
     }
 
