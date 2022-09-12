@@ -58,7 +58,9 @@ public class CLIQUEGenericController : ControllerBase {
         string solution = solver.solve(clique);
         Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
 
-    // PRINTS DICTIONARY 
+
+        
+       // PRINTS DICTIONARY 
 
     //    solution = "{ ( ";  
    
@@ -81,10 +83,22 @@ public class CLIQUEGenericController : ControllerBase {
         //string cliqueString = reducedClique.instance;
         //Console.WriteLine(cliqueString);
         SipserClique sClique =new SipserClique(problemInstance,solutionDict);
-        // Console.WriteLine(sClique.clusterNodes.Count.ToString());
-        string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
-        
+
+        CliqueGraph cGraph = sClique.cliqueAsGraph;
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(cGraph.getNodeList,cGraph.getEdgeList);
+        for(int i=0;i<apiGraph.nodes.Count;i++){
+            apiGraph.nodes[i].attribute1 = i.ToString();
+            bool nodeVal = false;
+            solutionDict.TryGetValue(apiGraph.nodes[i].name, out nodeVal);
+            apiGraph.nodes[i].attribute2 = nodeVal.ToString();
+        }
+        //SAT3 defaultSAT3 = new SAT3(problemInstance);
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+    
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
+        // Console.WriteLine(sClique.clusterNodes.Count.ToString());
+        
     }
 
 }
