@@ -39,29 +39,29 @@ public class CLIQUE_Tests
     public void CLIQUE_verify_trueOutput()
     {
 
-        CLIQUE testArc = new CLIQUE();
+        CLIQUE testCli = new CLIQUE();
         GenericVerifier verifier = new GenericVerifier();
-        bool vBool = verifier.verify(testArc, "{1,2,4}");
+        bool vBool = verifier.verify(testCli, "{1,2,4}");
         Assert.True(vBool);
 
     }
 
     [Theory] //tests with default graph string Certificates of this test represent junk or empty data. 
-    [InlineData("{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}", "")]
-    [InlineData("{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}", "(3,2) (4,2)")]
-    [InlineData("{{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,3}},3}", "{1,2}")]
-    public void CLIQUE_verify_theory_false(string ARCSET_Instance, string testCertificate)
-    {
-        CLIQUE testArc = new CLIQUE(ARCSET_Instance);
+    [InlineData("{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}", "{5,2,3,4,1}")]
+    // [InlineData("{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}", "(3,2) (4,2)")]
+    [InlineData("{{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,3}},3}", "{1,2,3,4}")]
+    public void CLIQUE_verify_theory_false(string CLIQUE_Instance, string testCertificate)
+    {   
+        CLIQUE testArc = new CLIQUE(CLIQUE_Instance);
         GenericVerifier verifier = new GenericVerifier();
-        bool notValid = verifier.verify(testArc, testCertificate);
-        Assert.False(notValid);
+        bool valid = verifier.verify(testArc, testCertificate);
+        Assert.False(valid);
     }
 
     [Theory] //tests with default graph string and various certificates, this shows that certificates can be accepted in many formats. (false case)
     [InlineData("{{1,2,3},{{1,2},{2,3},{3,1}},3}", "{1,2,3}")]
-    [InlineData("{{1,2,3,4},{{1,2},{2,3},{3,4},{3,1},{1,4},{2,4}}},3}", "{1,2,3,4}")]
-    [InlineData("{{1,2,3,4},{1,2},{3,4}","{1,2}")]
+    [InlineData("{{1,2,3,4},{{1,2},{2,3},{3,4},{3,1},{1,4},{2,4}},3}", "{1,2,3,4}")]
+    [InlineData("{{1,2,3,4},{{1,2},{3,4}},2}","{1,2}")]
      public void CLIQUE_verify_theory_true(string CLIQUE_Instance, string testCertificate){
         CLIQUE testCli = new CLIQUE(CLIQUE_Instance);
         GenericVerifier verifier = new GenericVerifier();
@@ -72,9 +72,9 @@ public class CLIQUE_Tests
 
     [Fact]
     public void CLIQUE_solve(){
-        CLIQUE testArc = new CLIQUE();
-        CliqueBruteForce solver = testArc.defaultSolver;
-        string solvedString = solver.solve(testArc);
+        CLIQUE testCli = new CLIQUE();
+        CliqueBruteForce solver = testCli.defaultSolver;
+        string solvedString = solver.solve(testCli);
         Assert.Equal("{1,2,4}", solvedString);
     }
 

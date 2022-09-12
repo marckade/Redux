@@ -54,6 +54,7 @@ class GenericVerifier : IVerifier {
         return nodeList;
     }
     public bool verify(CLIQUE problem, string certificate){
+        
         List<string> nodeList = parseCertificate(certificate);
         foreach(var i in nodeList){
             foreach(var j in nodeList){

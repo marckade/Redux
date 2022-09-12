@@ -105,7 +105,7 @@ class CliqueBruteForce : ISolver {
         // Remove solvedNodes from instanceNodes
        foreach(string node in solvedNodes){
         problemInstanceNodes.Remove(node);
-         Console.WriteLine("SOLved nodes: "+node);
+         Console.WriteLine("Solved nodes: "+node);
         solutionDict.Add(node, true);
        }
         // Add solved nodes to dict as {name, true}

@@ -10,6 +10,7 @@ using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
+using API.Interfaces.Graphs.GraphParser;
 
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
@@ -215,12 +216,20 @@ public class BruteForceSolverController : ControllerBase
 
         [HttpGet("verify")]
         public String verifyInstance([FromQuery]string problemInstance, string certificate){
-
+        string jsonString = String.Empty;
+        GraphParser gParser = new GraphParser();
+        bool isInvalidString = gParser.isValidUndirectedGraph(problemInstance);
+        if (!isInvalidString)
+        {
             CLIQUE vClique = new CLIQUE(problemInstance);
             GenericVerifier verifier = vClique.defaultVerifier;
             bool validClique = verifier.verify(vClique, certificate);
             var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(validClique, options);
-            return jsonString;
+            jsonString = JsonSerializer.Serialize(validClique, options);
+        }
+        else{
+            jsonString = "ERROR: PROBLEM ENTERED IS INVALID";
+        }
+        return jsonString;
         }
     }
