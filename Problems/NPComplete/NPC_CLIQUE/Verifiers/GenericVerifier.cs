@@ -1,4 +1,5 @@
 using API.Interfaces;
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 
@@ -47,12 +48,9 @@ class GenericVerifier : IVerifier {
         
     }
     private List<string> parseCertificate(string certificate){
-        List<string> nodeList = new List<string>();
-        string tempCert = certificate.Replace(" ","");
-        string[] nodeArray = tempCert.Split(",");
-        foreach(var node in nodeArray){
-            nodeList.Add(node);
-        }
+
+        GraphParser gParser = new GraphParser();
+        List<string> nodeList = gParser.getNodesFromNodeListString(certificate);
         return nodeList;
     }
     public bool verify(CLIQUE problem, string certificate){
@@ -61,7 +59,7 @@ class GenericVerifier : IVerifier {
             foreach(var j in nodeList){
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
                 KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
-                if(!(problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) || i==j)){
+                if(!(problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) || i.Equals(j))){
                     return false;
                 }
             }
