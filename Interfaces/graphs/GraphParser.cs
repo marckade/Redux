@@ -39,13 +39,13 @@ public bool isValidDirectedGraph(string directedGraphStr){
 public List<Edge> getGraphEdgeList(string graphString){
     List<Edge> edgeList;
     if(isValidUndirectedGraph(graphString)){
-        string edgePattern = @"{(({\w,\w})*({\w,\w},)*)*}"; //outer edge pattern. from {{a,b,...,z},{{a,b},{c,d},...,{y,z}},k} --> {{a,b},{b,c},...,{y,z}}. Ie. removes nodes and k from a graph.
+        string edgePattern = @"{(({\w+,\w+})*({\w+,\w+},)*)*}"; //outer edge pattern. from {{a,b,...,z},{{a,b},{c,d},...,{y,z}},k} --> {{a,b},{b,c},...,{y,z}}. Ie. removes nodes and k from a graph.
         edgeList =edgesGivenValidGraphAndPattern(graphString, edgePattern);
         }
     
     else if(isValidDirectedGraph(graphString)){
 
-        string edgePattern = @"{((\(\w,\w\))*(\(\w,\w\),)*)*}";  //outer edge pattern. from {{a,b,...,z},{(a,b),(c,d),...,(y,z)},k} --> {(a,b),(b,c),...,(y,z)}
+        string edgePattern = @"{((\(\w+,\w+\))*(\(\w+,\w+\),)*)*}";  //outer edge pattern. from {{a,b,...,z},{(a,b),(c,d),...,(y,z)},k} --> {(a,b),(b,c),...,(y,z)}
         edgeList = edgesGivenValidGraphAndPattern(graphString,edgePattern);
     }
     else{
@@ -57,7 +57,7 @@ public List<Edge> getGraphEdgeList(string graphString){
 public List<string> getNodeList(string graphString){
         List<string> nodeList = new List<string>();
         if(isValidUndirectedGraph(graphString)){
-        string nodePatternOuter = @"{{((\w)*(\w,)*)+},{";
+        string nodePatternOuter = @"{{((\w+)*(\w+,)*)+},{";
             nodeList = nodesGivenValidGraphAndPattern(graphString, nodePatternOuter);
         }
         return nodeList;
@@ -71,7 +71,7 @@ private List<Edge> edgesGivenValidGraphAndPattern(string validGraphStr,string ed
     List<Edge> edgeList = new List<Edge>();
     MatchCollection eMatches = Regex.Matches(validGraphStr,edgePattern);
     string edgeStr = eMatches[0].ToString();
-    string edgePatternInner = @"\w,\w"; //inner edge patten. Spots any "a,b" pattern from {{a,b},{b,c},...,{y,z}} (directed or undirected)
+    string edgePatternInner = @"\w+,\w+"; //inner edge patten. Spots any "a,b" pattern from {{a,b},{b,c},...,{y,z}} (directed or undirected)
     MatchCollection eMatches2 = Regex.Matches(edgeStr,edgePatternInner);
     foreach(Match medge in eMatches2){
         string[] edgeSplit = medge.ToString().Split(','); //splits "a,b" string literal into ["a","b"] array.
