@@ -15,7 +15,7 @@ public GraphParser(){
  **/
 public bool isValidUndirectedGraph(string undirectedGraphStr){
     string pattern;
-    pattern = @"{{((\w)*(\w,)*)+},{(({\w,\w})*({\w,\w},)*)*},\d+}"; //checks for undirected graph format
+    pattern = @"{{((\w+)*(\w+,)*)+},{(({\w+,\w+})*({\w+,\w+},)*)*},\d+}"; //checks for undirected graph format
     Regex reg = new Regex(pattern);
     bool inputIsValid = reg.IsMatch(undirectedGraphStr);
     return inputIsValid;
@@ -26,7 +26,7 @@ public bool isValidUndirectedGraph(string undirectedGraphStr){
  **/
 public bool isValidDirectedGraph(string directedGraphStr){
  string pattern;
-    pattern = @"{{((\w)*(\w,)*)+},{((\(\w,\w\))*(\(\w,\w\),)*)*},\d+}"; //checks for directed graph format
+    pattern = @"{{((\w+)*(\w+,)*)+},{((\(\w+,\w+\))*(\(\w+,\w+\),)*)*},\d+}"; //checks for directed graph format
     Regex reg = new Regex(pattern);
     bool inputIsValid = reg.IsMatch(directedGraphStr);
     return inputIsValid;
