@@ -40,7 +40,7 @@ public class CLIQUE_Tests
     {
 
         CLIQUE testCli = new CLIQUE();
-        GenericVerifier verifier = new GenericVerifier();
+        CliqueVerifier verifier = new CliqueVerifier();
         bool vBool = verifier.verify(testCli, "{1,2,4}");
         Assert.True(vBool);
 
@@ -52,9 +52,9 @@ public class CLIQUE_Tests
     [InlineData("{{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,3}},3}", "{1,2,3,4}")]
     public void CLIQUE_verify_theory_false(string CLIQUE_Instance, string testCertificate)
     {   
-        CLIQUE testArc = new CLIQUE(CLIQUE_Instance);
-        GenericVerifier verifier = new GenericVerifier();
-        bool valid = verifier.verify(testArc, testCertificate);
+        CLIQUE testCli = new CLIQUE(CLIQUE_Instance);
+        CliqueVerifier verifier = new CliqueVerifier();
+        bool valid = verifier.verify(testCli, testCertificate);
         Assert.False(valid);
     }
 
@@ -64,7 +64,7 @@ public class CLIQUE_Tests
     [InlineData("{{1,2,3,4},{{1,2},{3,4}},2}","{1,2}")]
      public void CLIQUE_verify_theory_true(string CLIQUE_Instance, string testCertificate){
         CLIQUE testCli = new CLIQUE(CLIQUE_Instance);
-        GenericVerifier verifier = new GenericVerifier();
+        CliqueVerifier verifier = new CliqueVerifier();
         bool hasClique = verifier.verify(testCli, testCertificate);
         Assert.True(hasClique);
     }

@@ -199,7 +199,7 @@ public class CLIQUEDevController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class BruteForceSolverController : ControllerBase
+public class CliqueBruteForceController : ControllerBase
 {
 
     // Return Generic Solver Class
@@ -237,11 +237,12 @@ public class BruteForceSolverController : ControllerBase
         public String verifyInstance([FromQuery]string problemInstance, string certificate){
         string jsonString = String.Empty;
         GraphParser gParser = new GraphParser();
-        bool isInvalidString = gParser.isValidUndirectedGraph(problemInstance);
-        if (!isInvalidString)
+        bool isValidString = gParser.isValidUndirectedGraph(problemInstance);
+        
+        if (isValidString)
         {
             CLIQUE vClique = new CLIQUE(problemInstance);
-            GenericVerifier verifier = vClique.defaultVerifier;
+            CliqueVerifier verifier = vClique.defaultVerifier;
             bool validClique = verifier.verify(vClique, certificate);
             var options = new JsonSerializerOptions { WriteIndented = true };
             jsonString = JsonSerializer.Serialize(validClique, options);

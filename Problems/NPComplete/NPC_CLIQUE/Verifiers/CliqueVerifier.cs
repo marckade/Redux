@@ -3,7 +3,7 @@ using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 
-class GenericVerifier : IVerifier {
+class CliqueVerifier : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";
@@ -44,7 +44,7 @@ class GenericVerifier : IVerifier {
 
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
+    public CliqueVerifier() {
         
     }
     private List<string> parseCertificate(string certificate){
