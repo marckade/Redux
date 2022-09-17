@@ -54,6 +54,15 @@ public List<Edge> getGraphEdgeList(string graphString){
     return edgeList;
 }
 
+public List<string> getNodeList(string graphString){
+        List<string> nodeList = new List<string>();
+        if(isValidUndirectedGraph(graphString)){
+        string nodePatternOuter = @"{{((\w)*(\w,)*)+},{";
+            nodeList = nodesGivenValidGraphAndPattern(graphString, nodePatternOuter);
+        }
+        return nodeList;
+    }
+
 
 /**
 * Helper parser method for getGraphEdgeList();
@@ -73,6 +82,36 @@ private List<Edge> edgesGivenValidGraphAndPattern(string validGraphStr,string ed
     return edgeList;
 
 }
+
+/// <summary>
+/// Given a graph string, returns a string list of the nodes. Doesn't do graph initialization, this is pure regex.
+/// Note that node names with trailing whitespace may be affected strangely. 
+/// </summary>
+/// <param name="validGraphStr"></param>
+/// <param name="nodePattern"></param>
+/// <returns></returns>
+private List<string> nodesGivenValidGraphAndPattern(string validGraphStr,string nodePattern){
+        List<string> retList = new List<string>();
+
+
+        try
+        {
+            MatchCollection eMatches = Regex.Matches(validGraphStr, nodePattern);
+            string matchedStr = eMatches[0].ToString();
+            string parsedInput = matchedStr.Replace('{', ' ').Replace('}', ' ').TrimStart().TrimEnd().TrimEnd(',').TrimEnd(); //takes out starting {{ and ending },}
+            string[] splitArr = parsedInput.Split(',');
+            foreach (string nStr in splitArr)
+            {
+                retList.Add(nStr);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Invalid input GraphParser nodesGivenValidGraphAndPattern");
+        }
+        return retList;
+    }
+
 
 /// <summary>
 /// Given a list of nodes in the string format {a,b,c} 

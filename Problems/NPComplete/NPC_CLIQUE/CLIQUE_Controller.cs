@@ -174,8 +174,13 @@ public class CLIQUEDevController : ControllerBase
         var options = new JsonSerializerOptions { WriteIndented = true };
 
         CLIQUE devClique = new CLIQUE(problemInstance);
+        GraphParser gParser = new GraphParser();
+        Console.WriteLine(devClique.cliqueAsGraph.formalString());
+        List<string> nList = gParser.getNodeList(devClique.cliqueAsGraph.formalString());
         
-        string jsonString = JsonSerializer.Serialize(devClique, options);
+
+
+        string jsonString = JsonSerializer.Serialize(nList, options);
         return jsonString;
     }
 
