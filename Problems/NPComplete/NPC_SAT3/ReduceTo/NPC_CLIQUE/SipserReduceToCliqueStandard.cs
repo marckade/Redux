@@ -126,11 +126,14 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
         // --- Generate G string for new CLIQUE ---
         string nodesString = "";
+        string literalName = String.Empty;
+        List<string> usedNamesLiterals = new List<string>();
         foreach (string literal in SAT3Instance.literals)
         {
-            nodesString += literal + ",";
+            literalName = duplicateName(literal, usedNamesLiterals, 1, literal);
+            nodesString += literalName + ",";
+            usedNamesLiterals.Add(literalName);
         }
-        nodesString = nodesString.Trim(',');
 
         string edgesString = "";
         foreach (KeyValuePair<string, string> edge in edges)
