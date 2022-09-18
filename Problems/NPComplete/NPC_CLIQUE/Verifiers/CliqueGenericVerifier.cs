@@ -2,7 +2,7 @@ using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 
-class GenericVerifier : IVerifier {
+class CliqueGenericVerifier : IVerifier {
 
     // --- Fields ---
     private string _verifierName = "Generic Verifier";
@@ -43,12 +43,12 @@ class GenericVerifier : IVerifier {
 
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
+    public CliqueGenericVerifier() {
         
     }
     private List<string> parseCertificate(string certificate){
         List<string> nodeList = new List<string>();
-        string tempCert = certificate.Replace(" ","");
+        string tempCert = certificate.Replace(" ","").Replace("{","").Replace("}","").Replace("\"","");
         string[] nodeArray = tempCert.Split(",");
         foreach(var node in nodeArray){
             nodeList.Add(node);
@@ -62,6 +62,8 @@ class GenericVerifier : IVerifier {
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
                 KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
                 if(!(problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) || i==j)){
+                    Console.WriteLine("{0},{1}",pairCheck1.Key,pairCheck1.Value);
+                    Console.WriteLine(certificate);
                     return false;
                 }
             }

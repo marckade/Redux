@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using API.Problems.NPComplete.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 using API.Problems.NPComplete.NPC_CLIQUE.ReduceTo.NPC_VertexCover;
 using System.Text.Json;
@@ -176,4 +176,33 @@ public class BruteForceSolverController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
+}
+[ApiController]
+[Route("[controller]")]
+public class CliqueGenericVerifierController : ControllerBase {
+
+    // Return Generic Verifier Class
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CliqueGenericVerifier verifier = new CliqueGenericVerifier();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(verifier, options);
+        return jsonString;
+    }
+
+    // Verify a instance given a certificate
+    [HttpGet("verify")]
+    public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE CLIQUEProblem = new CLIQUE(problemInstance);
+        CliqueGenericVerifier verifier = new CliqueGenericVerifier();
+
+        Boolean response = verifier.verify(CLIQUEProblem,certificate);
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+        return jsonString;
+    }
+
 }

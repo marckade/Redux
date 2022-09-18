@@ -70,18 +70,11 @@ class CliqueBruteForce : ISolver {
         for(int i=0; i<reps; i++){
             string certificate = indexListToCertificate(combination,clique.nodes);
             if(clique.defaultVerifier.verify(clique, certificate)){
-                Console.WriteLine(combination.ToString());
-                Console.WriteLine("n={0} k={1} reps={2}, 16! = {3}",clique.nodes.Count,clique.K,reps,factorial(16));
                 return "{"+certificate+"}";
             }
             combination = nextComb(combination, clique.nodes.Count);
-            if(i%1000==0){
-                Console.WriteLine(i);
-            }
 
         }
-        Console.WriteLine(combination.ToString());
-        Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
         return "{}";
     }
 }
