@@ -62,8 +62,6 @@ class CliqueGenericVerifier : IVerifier {
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
                 KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
                 if(!(problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) || i==j)){
-                    Console.WriteLine("{0},{1}",pairCheck1.Key,pairCheck1.Value);
-                    Console.WriteLine(certificate);
                     return false;
                 }
             }
