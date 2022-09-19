@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
 
-class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
+class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
 
     // --- Fields ---
     private string _problemName = "Clique";
@@ -21,7 +21,7 @@ class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
     private CliqueBruteForce _defaultSolver = new CliqueBruteForce();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private CliqueVerifier _defaultVerifier = new CliqueVerifier();
     private CliqueGraph _cliqueAsGraph;
     private string[] _contributers = { "Kaden Marchetti", "Alex Diviney" };
 
@@ -101,7 +101,7 @@ class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public CliqueVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -130,14 +130,15 @@ class CLIQUE : IProblem<CliqueBruteForce,GenericVerifier> {
 
     }
     public CLIQUE(string GInput) {
-        _instance = GInput;
         //nodes = getNodes(_instance);
         //edges = getEdges(_instance);
         //K = getK(_instance);
-        _cliqueAsGraph = new CliqueGraph(_instance,true);
+        _cliqueAsGraph = new CliqueGraph(GInput, true);
         nodes = _cliqueAsGraph.nodesStringList;
         edges = _cliqueAsGraph.edgesKVP;
         _K = _cliqueAsGraph.K;
+        _instance = _cliqueAsGraph.ToString();
+
 
     }
 

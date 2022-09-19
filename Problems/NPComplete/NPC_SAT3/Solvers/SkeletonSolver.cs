@@ -2,6 +2,7 @@ using API.Interfaces;
 
 using API.Problems.NPComplete.NPC_SAT3;
 
+
 namespace API.Problems.NPComplete.NPC_SAT3.Solvers;
 class SkeletonSolver : ISolver {
 

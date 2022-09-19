@@ -65,8 +65,8 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
         SkeletonSolver solver = defaultSAT3.defaultSolver;
         Dictionary<string,bool> solutionDict = solver.solve(defaultSAT3);
-        bool solBool;
-        solutionDict.TryGetValue("x1", out solBool);
+        // bool solBool;
+        // solutionDict.TryGetValue("x1", out solBool);
         //Console.WriteLine(solBool);
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();

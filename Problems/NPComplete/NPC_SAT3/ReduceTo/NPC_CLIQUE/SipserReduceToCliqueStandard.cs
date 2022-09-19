@@ -126,11 +126,14 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
         // --- Generate G string for new CLIQUE ---
         string nodesString = "";
+        string literalName = String.Empty;
+        List<string> usedNamesLiterals = new List<string>();
         foreach (string literal in SAT3Instance.literals)
         {
-            nodesString += literal + ",";
+            literalName = duplicateName(literal, usedNamesLiterals, 1, literal);
+            nodesString += literalName + ",";
+            usedNamesLiterals.Add(literalName);
         }
-        nodesString = nodesString.Trim(',');
 
         string edgesString = "";
         foreach (KeyValuePair<string, string> edge in edges)
@@ -209,8 +212,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         for (int i = 0; i < numberOfClusters;i++){
             nodeListSortedByCluster[i] = new List<SipserNode>();
         }
-        foreach (SipserNode s in clusterNodes)
-        {
+        foreach (SipserNode s in clusterNodes){
+            
             int clusterNum = Int32.Parse(s.cluster); //gets the number
             nodeListSortedByCluster[clusterNum].Add(s); //array position is mapped to cluster. Every node in this sublist has the same cluster.
         }

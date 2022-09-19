@@ -16,6 +16,20 @@ class SipserClique : CLIQUE {
 
     }
     public SipserClique(string Ginput): base(Ginput){
+        foreach(string elem in this.nodes){
+             Console.WriteLine("Node name: "+elem);
+            _clusterNodes.Add(new SipserNode(elem, "0"));
+        }
+        _numberOfClusters = 1;
+        
+    }
+
+        public SipserClique(string Ginput, Dictionary<string, bool> solutionDict): base(Ginput){
+        foreach(string elem in this.nodes){
+             Console.WriteLine("Node name: "+elem + " Solution State: "+solutionDict[elem].ToString() );
+            _clusterNodes.Add(new SipserNode(elem, "0", solutionDict[elem].ToString()));
+        }
+        _numberOfClusters = 1;
         
     }
 

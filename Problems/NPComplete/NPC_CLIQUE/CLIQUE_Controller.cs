@@ -6,6 +6,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Interfaces.JSON_Objects.Graphs;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
+using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
+using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
+using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
+using API.Interfaces.Graphs.GraphParser;
 
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
@@ -43,27 +48,65 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+     [HttpGet("solvedVisualization")]
+    public String getSolvedVisualization([FromQuery]string problemInstance) {
+        //Console.WriteLine("solvedvisualization:" + problemInstance);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE clique = new CLIQUE(problemInstance);
+        //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
+        CliqueBruteForce solver = new CliqueBruteForce();
+        string solution = solver.solve(clique);
+        Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
+
+
+        
+       // PRINTS DICTIONARY 
+
+    //    solution = "{ ( ";  
+   
+    //     for(int i =0; i< solutionDict.Count -1; i++ ){
+
+    //         KeyValuePair < string, bool > value = solutionDict.ElementAt(i);
+    //         solution +=  value.Key + " : " + value.Value + ", "; 
+    //         Console.WriteLine(solution);
+    //     }
+      
+    //     KeyValuePair < string, bool > keyValue = solutionDict.ElementAt(solutionDict.Count -1);
+    
+    //     solution += keyValue.Key+" : " + keyValue.Value + " ) }";
+    //     Console.WriteLine(solution);
+
+    // PRINTS DICTIONARY 
+         
+        // SipserReduction reduction = new SipserReduction(new NPC_SAT3.SAT3());
+        // SipserClique reducedClique = new SipserClique(problemInstance);
+        //string cliqueString = reducedClique.instance;
+        //Console.WriteLine(cliqueString);
+        SipserClique sClique =new SipserClique(problemInstance,solutionDict);
+
+        CliqueGraph cGraph = sClique.cliqueAsGraph;
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(cGraph.getNodeList,cGraph.getEdgeList);
+        for(int i=0;i<apiGraph.nodes.Count;i++){
+            apiGraph.nodes[i].attribute1 = i.ToString();
+            bool nodeVal = false;
+            solutionDict.TryGetValue(apiGraph.nodes[i].name, out nodeVal);
+            apiGraph.nodes[i].attribute2 = nodeVal.ToString();
+        }
+        //SAT3 defaultSAT3 = new SAT3(problemInstance);
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+    
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
+        return jsonString;
+        // Console.WriteLine(sClique.clusterNodes.Count.ToString());
+        
+    }
+
 }
 
 [ApiController]
 [Route("[controller]")]
 public class sipserReduceToVCController : ControllerBase {
 
-    // [HttpGet]
-    // public String getDefault() {
-    //     var options = new JsonSerializerOptions { WriteIndented = true };
-    //     CLIQUE defaultCLIQUE = new CLIQUE();
-    //     Clique_to_VertexCoverReduction reduction = new Clique_to_VertexCoverReduction(defaultCLIQUE);
-    //     string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
-    //     return jsonString;
-    // }
-
-    // [HttpGet("{instance}")]
-    // public String getInstance() {
-    //     var options = new JsonSerializerOptions { WriteIndented = true };
-    //     string jsonString = JsonSerializer.Serialize(new CLIQUE(), options);
-    //     return jsonString;
-    // }
 
     [HttpGet("info")]
 
@@ -107,7 +150,6 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(apiArr, options);
         return jsonString;
     }
-
 }
 
 [ApiController]
@@ -132,8 +174,13 @@ public class CLIQUEDevController : ControllerBase
         var options = new JsonSerializerOptions { WriteIndented = true };
 
         CLIQUE devClique = new CLIQUE(problemInstance);
+        GraphParser gParser = new GraphParser();
+        Console.WriteLine(devClique.cliqueAsGraph.formalString());
+        List<string> nList = gParser.getNodeList(devClique.cliqueAsGraph.formalString());
         
-        string jsonString = JsonSerializer.Serialize(devClique, options);
+
+
+        string jsonString = JsonSerializer.Serialize(nList, options);
         return jsonString;
     }
 
@@ -152,11 +199,13 @@ public class CLIQUEDevController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class BruteForceSolverController : ControllerBase {
+public class CliqueBruteForceController : ControllerBase
+{
 
     // Return Generic Solver Class
     [HttpGet("info")]
-    public String getGeneric() {
+    public String getGeneric()
+    {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CliqueBruteForce solver = new CliqueBruteForce();
 
@@ -167,7 +216,8 @@ public class BruteForceSolverController : ControllerBase {
 
     // Solve a instance given a certificate
     [HttpGet("solve")]
-    public String solveInstance([FromQuery]string problemInstance) {
+    public String solveInstance([FromQuery] string problemInstance)
+    {
         // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE problem = new CLIQUE(problemInstance);
@@ -176,4 +226,30 @@ public class BruteForceSolverController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
+
 }
+
+    [ApiController]
+    [Route("[controller]")]
+    public class CliqueVerifierController : ControllerBase {
+
+        [HttpGet("verify")]
+        public String verifyInstance([FromQuery]string problemInstance, string certificate){
+        string jsonString = String.Empty;
+        GraphParser gParser = new GraphParser();
+        bool isValidString = gParser.isValidUndirectedGraph(problemInstance);
+        
+        if (isValidString)
+        {
+            CLIQUE vClique = new CLIQUE(problemInstance);
+            CliqueVerifier verifier = vClique.defaultVerifier;
+            bool validClique = verifier.verify(vClique, certificate);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            jsonString = JsonSerializer.Serialize(validClique, options);
+        }
+        else{
+            jsonString = "ERROR: PROBLEM ENTERED IS INVALID";
+        }
+        return jsonString;
+        }
+    }

@@ -164,25 +164,14 @@ abstract class UndirectedGraph:Graph{
     }
 
 
-
+/// <summary>
+/// The toString method used to use an old graph format, now it an alias for
+/// formalString
+/// </summary>
+/// <returns></returns>
     public override string ToString(){
 
-        string nodeListStr = "";
-        foreach(Node node in _nodeList){
-    
-            nodeListStr= nodeListStr+ node.name +",";
-        }
-        nodeListStr = nodeListStr.TrimEnd(',');
-
-        string edgeListStr = "";
-        foreach(Edge edge in _edgeList){
-           string edgeStr = edge.undirectedString() +" & "; //This line makes this distinct from DirectedGraph
-            edgeListStr = edgeListStr+ edgeStr+""; 
-        }
-        edgeListStr = edgeListStr.TrimEnd('&',' ');
-        //edgeListStr = edgeListStr.TrimEnd(' ');
-        string toStr = "{{"+nodeListStr+"}" + ": {" + edgeListStr+"}"+" : "+_K+"}";
-        return toStr;
+        return formalString();
     }  
 
     public string formalString(){

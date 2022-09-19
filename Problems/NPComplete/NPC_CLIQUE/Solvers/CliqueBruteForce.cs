@@ -1,4 +1,6 @@
 using API.Interfaces;
+using API.Interfaces.Graphs.GraphParser;
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 class CliqueBruteForce : ISolver {
@@ -83,5 +85,38 @@ class CliqueBruteForce : ISolver {
         Console.WriteLine(combination.ToString());
         Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
         return "{}";
+    }
+
+    /// <summary>
+    /// Given Clique instance in string format and solution string, outputs a solution dictionary with 
+    /// true values mapped to nodes that are in the solution set else false. 
+    /// </summary>
+    /// <param name="problemInstance"></param>
+    /// <param name="solutionString"></param>
+    /// <returns></returns>
+    public Dictionary<string,bool> getSolutionDict(string problemInstance, string solutionString){
+
+        Dictionary<string, bool> solutionDict = new Dictionary<string, bool>();
+        GraphParser gParser = new GraphParser();
+        CliqueGraph cGraph = new CliqueGraph(problemInstance, true);
+        List<string> problemInstanceNodes = cGraph.nodesStringList;
+        List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
+
+        // Remove solvedNodes from instanceNodes
+       foreach(string node in solvedNodes){
+        problemInstanceNodes.Remove(node);
+         Console.WriteLine("Solved nodes: "+node);
+        solutionDict.Add(node, true);
+       }
+        // Add solved nodes to dict as {name, true}
+        // Add remaining instance nodes as {name, false}
+
+        foreach(string node in problemInstanceNodes){
+          
+                solutionDict.Add(node, false);
+        }
+
+
+        return solutionDict;
     }
 }
