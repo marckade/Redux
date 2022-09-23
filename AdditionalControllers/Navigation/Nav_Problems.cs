@@ -80,6 +80,9 @@ public class NPC_ProblemsRefactorController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(subdirsNoPrefix, options);
 
+        ProblemGraph graph = new ProblemGraph();
+        graph.getConnectedNodes("SAT3");
+
         //Response.Headers.Add("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
         return jsonString;
     }
