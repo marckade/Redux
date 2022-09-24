@@ -35,9 +35,12 @@ class ProblemNode{
 
 class ProblemGraph {
 
-    private Dictionary<string,  List<ProblemNode>> _graph = new Dictionary<string,  List<ProblemNode>>();
+   // private Dictionary<string,  List<ProblemNode>> _graph = new Dictionary<string,  List<ProblemNode>>();
 
-    public  Dictionary<string,  List<ProblemNode>> graph{
+    private Dictionary<string, Dictionary<string, List<string> >> _graph = 
+    new Dictionary<string, Dictionary<string, List<string>>>();
+
+    public Dictionary<string, Dictionary<string, List<string> >> graph{
         get{
             return _graph;
         }
@@ -48,67 +51,137 @@ class ProblemGraph {
         string? [] problems = parseNpProblems();
     
        if(problems != null){
+
          foreach(string? problem in problems ){
            // Console.WriteLine("ProblemNode:  "+problem);
             string[] splitStr = problem.Split('_');
             this.graph.Add(splitStr[1].ToLower(), parseReducesTo(problem));
-        }
-
-        foreach(KeyValuePair<string,  List<ProblemNode>> entry in this.graph){
-            //Console.WriteLine("Problem name:  "+entry.Key + "\n");
-            foreach(ProblemNode elem in entry.Value){
-            Console.WriteLine("Problem name:  "+ entry.Key +" || Reduce to: "+ elem.reduceToName+" || Reduce method: "+ elem.methodName+ "\n");
-            }
-        }
-   
+         }
        }
 
-        
-    }
+        foreach(KeyValuePair<string,  Dictionary<string, List<string>>> entry in this.graph){
+            //Console.WriteLine("Problem name:  "+entry.Key + "\n");
+            foreach(KeyValuePair<string, List<string>> elem in entry.Value){
+                   foreach(string method in elem.Value){
+           Console.WriteLine("Problem name:  "+ entry.Key +" || Reduce to: "+ elem.Key+" || Reduce method: "+ method+ "\n \n");
+                      
+
+                  }
+
+            
+            }
+        }
+       }  
 
 
-    public List<KeyValuePair<string, string>> getConnectedNodes(string problemName){
-        List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
-
+    public  Dictionary<string, List<string>> getConnectedNodes(string problemName){
+        Dictionary<string, List<string>> edges = new Dictionary<string, List<string>>();
         Stack<string> stack = new Stack<string>();
         HashSet<string> visited = new HashSet<string>();
-        stack.Push(problemName);
+        stack.Push(problemName.ToLower());
+        while(stack.Count > 0) {
+            string currentNode =  stack.Pop();
 
-       while(stack.Count > 0){
-         string currentNode =  stack.Pop();
-         List<ProblemNode> nodes =  this.graph[currentNode.ToLower()];
+            Dictionary<string, List<string>> nodes = this.graph[currentNode];
 
+               // add node to visited
+            if(!visited.Contains(currentNode)){ 
+                visited.Add(currentNode);
+            }
 
-        // add node to visited
-        if(!visited.Contains(currentNode)){ 
-            visited.Add(currentNode);
+            foreach(KeyValuePair<string, List<string>> elem in nodes){
+                if(edges.ContainsKey(elem.Key)){
+                    foreach(string method in elem.Value){
+                        if(!currentNode.Equals(problemName)){
+                            edges[elem.Key].Add("*"+method); 
+
+                        }else{
+                            edges[elem.Key].Add(method);
+                        }
+
+                    }
+                } else {
+                     if(currentNode.Equals(problemName.ToLower())){
+                        edges.Add(elem.Key, elem.Value);
+                              
+                    }else{
+                        List<string> temp = new List<string>();
+                        foreach(string method in elem.Value){
+                            temp.Add("*"+method);
+                        }
+                          edges.Add(elem.Key, temp);
+                    }
+                      
+                }
+
+                 if(!visited.Contains(elem.Key)){
+
+                    stack.Push(elem.Key);
+                }
+
+            }
 
         }
+
+         Console.WriteLine(problemName+ "Reductions \n");
+
+
+         foreach(KeyValuePair<string, List<string>> elem in edges){
+            foreach(string method in elem.Value){
+
+                Console.WriteLine("Problem name:  "+problemName +" || Reduce to: "+ elem.Key+" || Reduce method: "+ method+ "\n");
+                     
+                }
+            }
+
+        return edges;
+    }
+
+    
+
+
+    // public List<KeyValuePair<string, string>> getConnectedNodes(string problemName){
+    //     List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
+
+    //     Stack<string> stack = new Stack<string>();
+    //     HashSet<string> visited = new HashSet<string>();
+    //     stack.Push(problemName);
+
+    //    while(stack.Count > 0){
+    //      string currentNode =  stack.Pop();
+    //      List<ProblemNode> nodes =  this.graph[currentNode.ToLower()];
+
+
+    //     // add node to visited
+    //     if(!visited.Contains(currentNode)){ 
+    //         visited.Add(currentNode);
+
+    //     }
        
 
-        foreach(ProblemNode nodeTo in nodes){
+    //     foreach(ProblemNode nodeTo in nodes){
 
-            // Transverse problem 
-            if(!currentNode.Equals(problemName)){
-                edges.Add(new KeyValuePair<string,string>(nodeTo.reduceToName, "*"+nodeTo.methodName));
+    //         // Transverse problem 
+    //         if(!currentNode.Equals(problemName)){
+    //             edges.Add(new KeyValuePair<string,string>(nodeTo.reduceToName, "*"+nodeTo.methodName));
 
-            }else{
-                edges.Add(new KeyValuePair<string,string>(nodeTo.reduceToName, nodeTo.methodName));
-            }
+    //         }else{
+    //             edges.Add(new KeyValuePair<string,string>(nodeTo.reduceToName, nodeTo.methodName));
+    //         }
 
-            // 
-            if(!visited.Contains(nodeTo.reduceToName)){
-                stack.Push(nodeTo.reduceToName);
-            }
-        }
+    //         // 
+    //         if(!visited.Contains(nodeTo.reduceToName)){
+    //             stack.Push(nodeTo.reduceToName);
+    //         }
+    //     }
 
-       }
-       foreach(KeyValuePair<string, string> entry in edges){
-       Console.WriteLine("Problem: :  "+problemName+" || ReduceTo name:  "+entry.Key + " || Reduce Method: "+ entry.Value + "\n");
-       }
+    //    }
+    //    foreach(KeyValuePair<string, string> entry in edges){
+    //    Console.WriteLine("Problem: :  "+problemName+" || ReduceTo name:  "+entry.Key + " || Reduce Method: "+ entry.Value + "\n");
+    //    }
 
-       return edges;
-    }
+    //    return edges;
+    // }
 
 
     public string? [] parseNpProblems(){
@@ -120,10 +193,11 @@ class ProblemGraph {
     }
 
 
-    public List<ProblemNode> parseReducesTo(string chosenProblem){
+    public Dictionary<string, List<string>> parseReducesTo(string chosenProblem){
         string problemTypeDirectory = "";
         string problemType = chosenProblem.Split('_')[0];
         List<ProblemNode> problemsReducedTo = new List<ProblemNode>();
+        Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
         string?[] subdirs =  {};
         ArrayList subdirsNoPrefix = new ArrayList();
  
@@ -155,27 +229,31 @@ class ProblemGraph {
 
         }
 
-        for(int i=0; i < subdirs.Length; i++){
+        for(int i = 0; i < subdirs.Length; i++){
+            string problemName = subdirsNoPrefix[i].ToString();
 
                 string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo/" + subdirs[i])
                             .Select(Path.GetFileName)
                             .ToArray();
 
-                string reductionMethods = "";
-                foreach(string? method in subfiles){
-                    reductionMethods += method+", "; 
-                }
-                reductionMethods = reductionMethods.TrimEnd(',').Trim();
-                problemsReducedTo.Add(new ProblemNode(subdirsNoPrefix[i].ToString(), reductionMethods));
+                // string reductionMethods = "";
+                // foreach(string? method in subfiles){
+                //     reductionMethods += method+", "; 
+                // }
+                dict.Add(problemName.ToLower(), subfiles.ToList());
+
+                // reductionMethods = reductionMethods.TrimEnd(',').Trim();
+                // problemsReducedTo.Add(new ProblemNode(subdirsNoPrefix[i].ToString(), reductionMethods));
 
         }
            
 
-        return problemsReducedTo;
+        return dict;
 
+}
 }
 
 
-}
+
 
 
