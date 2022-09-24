@@ -74,7 +74,7 @@ class ProblemGraph {
        }  
 
 
-    public  Dictionary<string, List<string>> getConnectedNodes(string problemName){
+    public Dictionary<string, List<string>> getConnectedNodes(string problemName){
         Dictionary<string, List<string>> edges = new Dictionary<string, List<string>>();
         Stack<string> stack = new Stack<string>();
         HashSet<string> visited = new HashSet<string>();
