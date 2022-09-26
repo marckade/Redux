@@ -11,7 +11,8 @@ public class All_ReductionsController : ControllerBase {
     
     [HttpGet]
     public String getDefault() {
-        string?[] subdirs = Directory.GetDirectories("Problems")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -29,7 +30,8 @@ public class NPC_ReductionsController : ControllerBase {
     
     [HttpGet]
     public String getDefault() {
-        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
                             .Select(Path.GetFileName)
                             .ToArray();
                             
@@ -66,7 +68,8 @@ public class Problem_ReductionsController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
   
         try{
-        string?[] subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -110,8 +113,9 @@ public class Problem_ReductionsRefactorController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
   
         try{
+        string projectSourcePath = ProjectSourcePath.Value;
 
-        string?[] subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/"+problemType+"_" + chosenProblem + "/ReduceTo")
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/"+problemType+"_" + chosenProblem + "/ReduceTo")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -156,8 +160,8 @@ public class PossibleReductionsController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
-
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + reducingFrom + "/ReduceTo/" + reducingTo)
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + reducingFrom + "/ReduceTo/" + reducingTo)
                             .Select(Path.GetFileName)
                             .ToArray();
                   
@@ -193,7 +197,8 @@ public class PossibleReductionsRefactorController : ControllerBase {
         try
         {
 
-            string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + reducingFrom + "/ReduceTo/NPC_" + reducingTo)
+            string projectSourcePath = ProjectSourcePath.Value;
+            string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + problemType + "_" + reducingFrom + "/ReduceTo/NPC_" + reducingTo)
                                 .Select(Path.GetFileName)
                                 .ToArray();
 
@@ -224,7 +229,8 @@ public class Reverse_ReductionsController : ControllerBase {
     
     [HttpGet]
     public String getDefault([FromQuery]string chosenReduction) {
-        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
                             .Select(Path.GetFileName)
                             .ToArray();
                             

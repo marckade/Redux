@@ -22,7 +22,8 @@ public class All_VerifiersController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/Verifiers")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + chosenProblem + "/Verifiers")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -50,8 +51,8 @@ public class Problem_VerifiersController : ControllerBase {
         else if (problemType == "P") {
             problemTypeDirectory = "Polynomial";
         }
-
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/Verifiers")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + chosenProblem + "/Verifiers")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -85,8 +86,8 @@ public class Problem_VerifiersRefactorController : ControllerBase {
 
         try
         {
-
-            string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + chosenProblem + "/Verifiers")
+            string projectSourcePath = ProjectSourcePath.Value;
+            string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + problemType + "_" + chosenProblem + "/Verifiers")
                                 .Select(Path.GetFileName)
                                 .ToArray();
 
