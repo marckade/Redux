@@ -157,7 +157,7 @@ class ProblemGraph {
                     connectedNodes.Add(node.Key);
                 }
                 else if(!connectedNodes.Contains(node.Key)){
-                    connectedNodes.Add("*"+node.Key);
+                    connectedNodes.Add(node.Key); //transitive
                 }
 
                 if(!visited.Contains(node.Key)){
@@ -165,7 +165,9 @@ class ProblemGraph {
                 }
             }
         }
-        getReductionPath("sat3","arcset");
+        for(int i=0; i<connectedNodes.Count; i++){
+            connectedNodes[i] = connectedNodes[i].ToUpper();
+        }
         return connectedNodes;
     }
 
@@ -192,9 +194,9 @@ class ProblemGraph {
             currentProblem = links[currentProblem];
         }
         path.Reverse();
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        Console.WriteLine(JsonSerializer.Serialize(path,options));
-        Console.WriteLine("-------------------------------");
+        // var options = new JsonSerializerOptions { WriteIndented = true };
+        // Console.WriteLine(JsonSerializer.Serialize(path,options));
+        // Console.WriteLine("-------------------------------");
         return path;
     }
 
