@@ -165,13 +165,36 @@ class ProblemGraph {
                 }
             }
         }
+        getReductionPath("sat3","arcset");
         return connectedNodes;
     }
 
-    public List<List<string>> getReductionPaths(string startProblem, string endProblem){
+    public List<List<string>> getReductionPath(string startProblem, string endProblem){
         List<List<string>> path = new List<List<string>>();
-
-
+        Dictionary<string,string> links = new Dictionary<string,string>();
+        Queue<string> Q = new Queue<string>();
+        Q.Enqueue(startProblem);
+        while(Q.Count != 0){
+            string u = Q.Dequeue();
+            Dictionary<string, List<string>> adjacentNodes = this.graph[u];
+            foreach(KeyValuePair<string, List<string>> node in adjacentNodes){
+                if(!links.ContainsKey(node.Key)){
+                    links.Add(node.Key,u);
+                    Q.Enqueue(node.Key);
+                }
+                if(node.Key == endProblem) {Q.Clear();}
+            }
+        }
+        string currentProblem = endProblem;
+        while(links.ContainsKey(currentProblem)){
+            List<string> templist = this.graph[links[currentProblem]][currentProblem];
+            path.Add(templist);
+            currentProblem = links[currentProblem];
+        }
+        path.Reverse();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        Console.WriteLine(JsonSerializer.Serialize(path,options));
+        Console.WriteLine("-------------------------------");
         return path;
     }
 

@@ -131,11 +131,11 @@ public class NPC_NavGraph : ControllerBase {
         return jsonString;
     }
 
-    [HttpGet("ReductionPath")]
+    [HttpGet("reductionPath")]
     public string getPaths([FromQuery]string startProblem, string endProblem){
         ProblemGraph nav_graph = new ProblemGraph();
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(nav_graph.getReductionPaths(startProblem.ToLower(),endProblem.ToLower()), options);
+        string jsonString = JsonSerializer.Serialize(nav_graph.getReductionPath(startProblem.ToLower(),endProblem.ToLower()), options);
 
         return jsonString;
     }
