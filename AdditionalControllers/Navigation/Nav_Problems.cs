@@ -126,11 +126,19 @@ public class NPC_NavGraph : ControllerBase {
     public string getConnectedProblems([FromQuery]string chosenProblem){
         ProblemGraph nav_graph = new ProblemGraph();
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(nav_graph.getConnectedNodes(chosenProblem.ToLower()), options);
+        string jsonString = JsonSerializer.Serialize(nav_graph.getConnectedProblems(chosenProblem.ToLower()), options);
 
         return jsonString;
     }
 
+    [HttpGet("ReductionPath")]
+    public string getPaths([FromQuery]string startProblem, string endProblem){
+        ProblemGraph nav_graph = new ProblemGraph();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(nav_graph.getReductionPaths(startProblem.ToLower(),endProblem.ToLower()), options);
+
+        return jsonString;
+    }
 
 
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Collections;
 
 
@@ -50,20 +51,20 @@ class ProblemGraph {
     public ProblemGraph(){
         string? [] problems = parseNpProblems();
     
-       if(problems != null){
+        if(problems != null){
 
-         foreach(string? problem in problems ){
-           // Console.WriteLine("ProblemNode:  "+problem);
-            string[] splitStr = problem.Split('_');
-            this.graph.Add(splitStr[1].ToLower(), parseReducesTo(problem));
-         }
-       }
+            foreach(string? problem in problems ){
+                // Console.WriteLine("ProblemNode:  "+problem);
+                string[] splitStr = problem.Split('_');
+                this.graph.Add(splitStr[1].ToLower(), parseReducesTo(problem));
+            }
+        }
 
         foreach(KeyValuePair<string,  Dictionary<string, List<string>>> entry in this.graph){
             //Console.WriteLine("Problem name:  "+entry.Key + "\n");
             foreach(KeyValuePair<string, List<string>> elem in entry.Value){
                    foreach(string method in elem.Value){
-           Console.WriteLine("Problem name:  "+ entry.Key +" || Reduce to: "+ elem.Key+" || Reduce method: "+ method+ "\n \n");
+        //    Console.WriteLine("Problem name:  "+ entry.Key +" || Reduce to: "+ elem.Key+" || Reduce method: "+ method+ "\n \n");
                       
 
                   }
@@ -80,17 +81,25 @@ class ProblemGraph {
         HashSet<string> visited = new HashSet<string>();
         stack.Push(problemName.ToLower());
         while(stack.Count > 0) {
-            string currentNode =  stack.Pop();
+            string currentNode = stack.Pop();
 
             Dictionary<string, List<string>> nodes = this.graph[currentNode];
 
+            // Console.WriteLine(currentNode);
+            // var options = new JsonSerializerOptions { WriteIndented = true };
+            // Console.WriteLine(JsonSerializer.Serialize(nodes,options));
+            // Console.WriteLine("-------------------------------");
                // add node to visited
             if(!visited.Contains(currentNode)){ 
                 visited.Add(currentNode);
             }
-
             foreach(KeyValuePair<string, List<string>> elem in nodes){
+                Console.WriteLine(elem.Key);
+                // for(int i=0; i<elem.Value.Count; i++){
+                //     Console.WriteLine("     "+elem.Value[i]);
+                // }
                 if(edges.ContainsKey(elem.Key)){
+                    Console.WriteLine("1");
                     foreach(string method in elem.Value){
                         if(!currentNode.Equals(problemName)){
                             edges[elem.Key].Add("*"+method); 
@@ -98,10 +107,10 @@ class ProblemGraph {
                         }else{
                             edges[elem.Key].Add(method);
                         }
-
                     }
                 } else {
-                     if(currentNode.Equals(problemName.ToLower())){
+                    Console.WriteLine("2");
+                    if(currentNode.Equals(problemName.ToLower())){
                         edges.Add(elem.Key, elem.Value);
                               
                     }else{
@@ -110,31 +119,60 @@ class ProblemGraph {
                             temp.Add("*"+method);
                         }
                           edges.Add(elem.Key, temp);
-                    }
-                      
+                    }   
                 }
-
                  if(!visited.Contains(elem.Key)){
-
                     stack.Push(elem.Key);
                 }
-
             }
-
         }
+        //  Console.WriteLine(problemName+ "Reductions \n");
+        // foreach(KeyValuePair<string, List<string>> elem in edges){
+        //     foreach(string method in elem.Value){
+        //         Console.WriteLine("Problem name:  "+problemName +" || Reduce to: "+ elem.Key+" || Reduce method: "+ method+ "\n");       
+        // }}
+        return edges;
+    }
 
-         Console.WriteLine(problemName+ "Reductions \n");
+    public List<string> getConnectedProblems(string problemName){
+        List<string> connectedNodes = new List<string>();
+        Stack<string> stack = new Stack<string>();
+        HashSet<string> visited = new HashSet<string>();
+        stack.Push(problemName);
+        while(stack.Count > 0) {
+            string currentNode = stack.Pop();
 
+            Dictionary<string, List<string>> adjacentNodes = this.graph[currentNode];
 
-         foreach(KeyValuePair<string, List<string>> elem in edges){
-            foreach(string method in elem.Value){
+            // Console.WriteLine(currentNode);
+            // var options = new JsonSerializerOptions { WriteIndented = true };
+            // Console.WriteLine(JsonSerializer.Serialize(nodes,options));
+            // Console.WriteLine("-------------------------------");
+               // add node to visited
+            if(!visited.Contains(currentNode)){ 
+                visited.Add(currentNode);
+            }
+            foreach(KeyValuePair<string, List<string>> node in adjacentNodes){
+                if(problemName == currentNode){
+                    connectedNodes.Add(node.Key);
+                }
+                else if(!connectedNodes.Contains(node.Key)){
+                    connectedNodes.Add("*"+node.Key);
+                }
 
-                Console.WriteLine("Problem name:  "+problemName +" || Reduce to: "+ elem.Key+" || Reduce method: "+ method+ "\n");
-                     
+                if(!visited.Contains(node.Key)){
+                    stack.Push(node.Key);
                 }
             }
+        }
+        return connectedNodes;
+    }
 
-        return edges;
+    public List<List<string>> getReductionPaths(string startProblem, string endProblem){
+        List<List<string>> path = new List<List<string>>();
+
+
+        return path;
     }
 
     
