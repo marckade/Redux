@@ -132,10 +132,10 @@ public class NPC_NavGraph : ControllerBase {
     }
 
     [HttpGet("reductionPath")]
-    public string getPaths([FromQuery]string startProblem, string endProblem){
+    public string getPaths([FromQuery]string reducingFrom, string reducingTo){
         ProblemGraph nav_graph = new ProblemGraph();
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(nav_graph.getReductionPath(startProblem.ToLower(),endProblem.ToLower()), options);
+        string jsonString = JsonSerializer.Serialize(nav_graph.getReductionPath(reducingFrom.ToLower(),reducingTo.ToLower()), options);
 
         return jsonString;
     }

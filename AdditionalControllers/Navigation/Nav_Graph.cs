@@ -190,6 +190,9 @@ class ProblemGraph {
         string currentProblem = endProblem;
         while(links.ContainsKey(currentProblem)){
             List<string> templist = this.graph[links[currentProblem]][currentProblem];
+            for(int i=0; i<templist.Count; i++){
+                templist[i] = templist[i].Replace(".cs","");
+            }
             path.Add(templist);
             currentProblem = links[currentProblem];
         }
