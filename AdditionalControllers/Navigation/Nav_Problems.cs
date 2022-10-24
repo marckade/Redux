@@ -80,6 +80,11 @@ public class NPC_ProblemsRefactorController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(subdirsNoPrefix, options);
 
+        // ProblemGraph graph = new ProblemGraph();
+        // graph.getConnectedNodes("SAT3");
+        // string ring = JsonSerializer.Serialize(graph.getConnectedNodes("SAT3"), options);
+        //  Console.WriteLine("\n"+ring );
+
         //Response.Headers.Add("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
         return jsonString;
     }
@@ -101,4 +106,39 @@ public class NPC_ProblemsRefactorController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(jsonedList, options);
         return jsonString;
     }
+}
+
+[ApiController]
+[Route("Navigation/[controller]")]
+public class NPC_NavGraph : ControllerBase {
+
+    [HttpGet("info")]
+    public string getProblemGraph(){
+        ProblemGraph nav_graph = new ProblemGraph();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(nav_graph.graph, options);
+
+        return jsonString;
+
+    }
+
+    [HttpGet("availableReductions")]
+    public string getConnectedProblems([FromQuery]string chosenProblem){
+        ProblemGraph nav_graph = new ProblemGraph();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(nav_graph.getConnectedProblems(chosenProblem.ToLower()), options);
+
+        return jsonString;
+    }
+
+    [HttpGet("reductionPath")]
+    public string getPaths([FromQuery]string reducingFrom, string reducingTo){
+        ProblemGraph nav_graph = new ProblemGraph();
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(nav_graph.getReductionPath(reducingFrom.ToLower(),reducingTo.ToLower()), options);
+
+        return jsonString;
+    }
+
+
 }
