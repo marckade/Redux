@@ -157,7 +157,7 @@ class ProblemGraph {
                     connectedNodes.Add(node.Key);
                 }
                 else if(!connectedNodes.Contains(node.Key)){
-                    connectedNodes.Add(node.Key); //transitive
+                    connectedNodes.Add("*"+node.Key); //transitive
                 }
 
                 if(!visited.Contains(node.Key)){
