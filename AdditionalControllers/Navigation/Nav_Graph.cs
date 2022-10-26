@@ -172,6 +172,9 @@ class ProblemGraph {
     }
 
     public List<List<string>> getReductionPath(string startProblem, string endProblem){
+        if(endProblem.Contains("*")){
+            endProblem = endProblem.Replace("*","");
+        }
         List<List<string>> path = new List<List<string>>();
         Dictionary<string,string> links = new Dictionary<string,string>();
         Queue<string> Q = new Queue<string>();
