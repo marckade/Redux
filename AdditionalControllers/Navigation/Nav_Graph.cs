@@ -255,8 +255,8 @@ class ProblemGraph {
 
 
     public string? [] parseNpProblems(){
-
-        return Directory.GetDirectories("Problems/NPComplete")
+        string projectSourcePath = ProjectSourcePath.Value;
+        return Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -264,6 +264,7 @@ class ProblemGraph {
 
 
     public Dictionary<string, List<string>> parseReducesTo(string chosenProblem){
+        string projectSourcePath = ProjectSourcePath.Value;
         string problemTypeDirectory = "";
         string problemType = chosenProblem.Split('_')[0];
         List<ProblemNode> problemsReducedTo = new List<ProblemNode>();
@@ -277,7 +278,7 @@ class ProblemGraph {
 
         try{
 
-                 subdirs = Directory.GetDirectories("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo")
+                 subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -302,7 +303,7 @@ class ProblemGraph {
         for(int i = 0; i < subdirs.Length; i++){
             string problemName = subdirsNoPrefix[i].ToString();
 
-                string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo/" + subdirs[i])
+                string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + chosenProblem + "/ReduceTo/" + subdirs[i])
                             .Select(Path.GetFileName)
                             .ToArray();
 
