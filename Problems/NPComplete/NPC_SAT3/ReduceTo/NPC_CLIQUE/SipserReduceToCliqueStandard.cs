@@ -71,6 +71,40 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     public SipserClique reduce()
     {
         SAT3 SAT3Instance = _reductionFrom;
+
+        //number literals of sat before reduction
+        List<List<String>> newClauses = new List<List<string>>();
+        foreach(var clause in SAT3Instance.clauses){
+            List<String> temp = new List<String>();
+            foreach(var element in clause){
+                temp.Add(element);
+            }
+            newClauses.Add(temp);
+        }
+        for (int i = 0; i < SAT3Instance.clauses.Count; i++){
+            for (int j = 0; j < SAT3Instance.clauses[i].Count; j++){
+                int count = 0;
+                for( int k = 0; k<i; k++){
+                    foreach(var element in SAT3Instance.clauses[k]){
+                        if(element == SAT3Instance.clauses[i][j]){
+                            count ++;
+                        }
+                    }
+                }
+                for( int k = 0; k<j; k++){
+                    if(SAT3Instance.clauses[i][j] == SAT3Instance.clauses[i][k]){
+                        count ++;
+                    }
+                }
+                if(count >0){
+                    newClauses[i][j] = SAT3Instance.clauses[i][j] + "_" +count;
+                }
+                else{
+                    newClauses[i][j] = SAT3Instance.clauses[i][j];
+                }
+            }
+        }
+        SAT3Instance.clauses = newClauses;
         SipserClique reducedCLIQUE = new SipserClique();
         // SAT3 literals become nodes.
         reducedCLIQUE.nodes = SAT3Instance.literals;
@@ -86,17 +120,18 @@ class SipserReduction : IReduction<SAT3, SipserClique>
             for (int j = 0; j < SAT3Instance.clauses[i].Count; j++)
             {
                 string nodeFrom = SAT3Instance.clauses[i][j];
-                nodeFrom = duplicateName(nodeFrom, usedNames, 1, nodeFrom);
+                // nodeFrom = duplicateName(nodeFrom, usedNames, 1, nodeFrom);
 
                 SipserNode newNode = new SipserNode(nodeFrom, i.ToString());
                 reducedCLIQUE.clusterNodes.Add(newNode);
-                usedNames.Add(nodeFrom);
+                // usedNames.Add(nodeFrom);
                 //Four loops? Sounds efficent
                 for (int a = 0; a < SAT3Instance.clauses.Count; a++)
                 {
 
                     for (int b = 0; b < SAT3Instance.clauses[a].Count; b++)
                     {
+                        
                         string nodeTo = SAT3Instance.clauses[a][b];
                         bool inverse = false;
                         bool samecluser = false;
@@ -112,9 +147,15 @@ class SipserReduction : IReduction<SAT3, SipserClique>
                             samecluser = true;
                         }
 
-                        if (!inverse && !samecluser)
+                        if (!inverse && !samecluser && nodeFrom != nodeTo)
                         {
                             KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(nodeFrom, nodeTo);
+                            Console.WriteLine("i:{0} a:{1} edge:{2}",i,a,fullEdge);
+                            if(i == 0 && a ==1 && j == 0 && b == 1){
+                                foreach(var name in usedNames){
+                                    Console.WriteLine(name);
+                                }
+                            }
                             edges.Add(fullEdge);
                         }
                     }
