@@ -8,12 +8,12 @@ class AlexArcsetVerifier : IVerifier {
     // --- Fields ---
     private string _verifierName = "ARCSET Verifier";
     private string _verifierDefinition =  @"This Verifier takes in an arcset problem and a list of edges to remove from that problem. It removes those edges and then checks if the problem is still an instance of ARCSET
-                                            ie. Does this input graph continue to have cycles after these input edges are removed? Returns true or false ";
+                                            ie. Does this input graph no longer have cycles after these input edges are removed? Returns true or false ";
     
     private string _source = "This verifier is essentially common knowledge, as it utilizes a widely recognized algorithm in computer science: The Depth First Search.";
 
-    private string _certificate = "(4,1),(3,2)"; //this certificate is technically overkill, we only have to remove one edge
-    private string[] _contributers = {"Alex Diviney"};
+    private string _certificate = "{(2,4)}"; //The certificate should be in the form of a set of directed edges
+    private string[] _contributers = {"Alex Diviney","Caleb Eardley"};
 
     // --- Properties ---
     public string verifierName {
@@ -56,12 +56,19 @@ public string[] contributers{
     public Boolean verify(ARCSET problem, string userInput){
 
         ArcsetGraph graph = problem.directedGraph; 
+
+        //Checks if certificate matches k-value;
+        if(graph.cerfitficateLength(userInput) > graph.K){
+            return false;
+        }
         graph.processCertificate(userInput);
         //Console.WriteLine(graph.getBackEdges());
         bool isInARCSET = graph.isCyclical();
+        // Console.WriteLine("Return : {0}, Cert : {1}",!isInARCSET,userInput);
+        graph.reverseCertificate(userInput);
 
-        //when userInput is removed from graph is it still Cyclical? 
-        return isInARCSET;
+        //when userInput is removed from graph is it no longer Cyclical? 
+        return !isInARCSET;
     }
 
     
