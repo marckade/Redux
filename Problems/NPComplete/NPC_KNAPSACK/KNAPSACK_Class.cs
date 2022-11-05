@@ -14,16 +14,23 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
 
     // How we want format
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string[] _contributers = { "Garret Stouffer"};
+    private string[] _contributers = { "Garret Stouffer", "Daniel Igbokwe"};
+    
+    private string _instance = string.Empty;
 
-    private string _defaultInstance = " {{(1, 5) & (2,7) & (3, 9) & (1, 7)} : 5}";
-    private string _HWV = string.Empty;
 
-    private string _wikiName = "";
+    private string _defaultInstance = " {{1,2,3,5,7,9},{(1,5),(2,7),(3,9),(1,7)},1}";
+ 
 
-    private List<KeyValuePair<String, String>> _items = new List<KeyValuePair<String, String>>();
+    private string _wikiName = "Knapsack";
+    private List<string> _nodes =  new List<string>();
+
+    private List<KeyValuePair<string, string>> _items = new List<KeyValuePair<string, string>>();
+
 
     private int _W = 0;
+
+    private KnapsackGraph _knapsackGraph;
 
 
     private GarrettKnapsackSolver _defaultSolver = new GarrettKnapsackSolver();
@@ -62,12 +69,12 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
             return _contributers;
         }
     }
-    public string HWV {
+    public string instance {
         get {
-            return _HWV;
+            return _instance;
         }
         set {
-            _HWV = value;
+            _instance = value;
         }
     }
 
@@ -77,14 +84,6 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
         }
     }
 
-    public List<KeyValuePair<String, String>> items {
-        get {
-            return _items;
-        }
-        set {
-            _items = value;
-        }
-    }
 
     public int W {
         get {
@@ -92,6 +91,23 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
         }
         set {
             _W = value;
+        }
+    }
+
+          public List<string> nodes {
+        get {
+            return _nodes;
+        }
+        set {
+            _nodes = value;
+        }
+    }
+    public List<KeyValuePair<string, string>> items {
+        get {
+            return _items;
+        }
+        set {
+            _items = value;
         }
     }
 
@@ -110,45 +126,51 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
 
     // --- Methods Including Constructors ---
     public KNAPSACK() {
-        _HWV = defaultInstance;
-        items = getItems(_HWV);
-        W = getW(_HWV);
+          
+        _knapsackGraph = new KnapsackGraph(_defaultInstance, true);
+        _instance  = _knapsackGraph.ToString();
+        nodes = _knapsackGraph.nodesStringList;
+        items  = _knapsackGraph.edgesKVP;
+   
+     
     }
     public KNAPSACK(string HWVInput) {
-        _HWV = HWVInput;
-        items = getItems(_HWV);
-        W = getW(_HWV);
-    }
-
-    public List<KeyValuePair<string, string>> getItems(string HWVInput){
+        _knapsackGraph = new KnapsackGraph(_instance, true);
+        _instance  = _knapsackGraph.ToString();
+        nodes = _knapsackGraph.nodesStringList;
+        items  = _knapsackGraph.edgesKVP;
        
-       List<KeyValuePair<string,string>> allItems = new List<KeyValuePair<string, string>>(); 
-
-       string strippedInput = HWVInput.Replace("{", "").Replace("{","").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
-
-        //HWVsections[0] is the items and HWVsections[1] is W 
-       string[] HWVsections = strippedInput.Split(":");
-       string[] HWVitems = HWVsections[0].Split("&");
-
-        foreach(string item in HWVitems) {
-            string[] fromTo = item.Split(",");
-            string nodeFrom = fromTo[0];
-            string nodeTo = fromTo[1];
-
-            KeyValuePair<string, string> fullItem = new KeyValuePair<string, string>(nodeFrom, nodeTo);
-            allItems.Add(fullItem);
-        }
-        return allItems;
     }
 
-    public int getW(string HWVInput){
+    // public List<KeyValuePair<string, string>> getItems(string HWVInput){
+       
+    //    List<KeyValuePair<string,string>> allItems = new List<KeyValuePair<string, string>>(); 
+
+    //    string strippedInput = HWVInput.Replace("{", "").Replace("{","").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+
+    //     //HWVsections[0] is the items and HWVsections[1] is W 
+    //    string[] HWVsections = strippedInput.Split(":");
+    //    string[] HWVitems = HWVsections[0].Split("&");
+
+    //     foreach(string item in HWVitems) {
+    //         string[] fromTo = item.Split(",");
+    //         string nodeFrom = fromTo[0];
+    //         string nodeTo = fromTo[1];
+
+    //         KeyValuePair<string, string> fullItem = new KeyValuePair<string, string>(nodeFrom, nodeTo);
+    //         allItems.Add(fullItem);
+    //     }
+    //     return allItems;
+    // }
+
+    // public int getW(string HWVInput){
         
-        string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+    //     string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
 
-        //HWVsections[0] is the items [1] is W and [2] is V.
-       string[] HWVsections = strippedInput.Split(":");
-       return Int32.Parse(HWVsections[1]);
-    }
+    //     //HWVsections[0] is the items [1] is W and [2] is V.
+    //    string[] HWVsections = strippedInput.Split(":");
+    //    return Int32.Parse(HWVsections[1]);
+    // }
 
 
 
