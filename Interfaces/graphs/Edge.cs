@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 namespace API.Interfaces.Graphs;
-class Edge{
+class Edge : IComparable<Edge>{
 
 //Fields
 private Node _source;
@@ -48,6 +48,14 @@ public string undirectedString(){
 public string directedString(){
     return "("+source.name+","+_target.name+")";
 }
+public int CompareTo(Edge other)
+    {
+        int compare =  this.toKVP().Key.CompareTo(other.toKVP().Key);
+        if(compare == 0){
+            compare = this.toKVP().Value.CompareTo(other.toKVP().Value);
+        }
+        return compare;
+    }
 public KeyValuePair<string,string> toKVP(){
     KeyValuePair<string,string> asKVP = new KeyValuePair<string, string>(source.name,target.name);
     return asKVP;

@@ -99,9 +99,9 @@ public class ARCSET_Tests
     [Fact]
     public void ARCSET_solve(){
         ARCSET testArc = new ARCSET();
-        AlexNaiveSolver solver = testArc.defaultSolver;
+        ArcSetBruteForce solver = testArc.defaultSolver;
         string solvedString = solver.solve(testArc);
-        Assert.Equal("(4,1),(3,2)", solvedString);
+        Assert.Equal("{1,2}", solvedString);
     }
 
 

@@ -15,7 +15,7 @@ class ArcsetGraph:DirectedGraph{
     }
 
     public ArcsetGraph(string arcInput, bool decoy) : base (arcInput, decoy){
-    
+        _edgeList.Sort();
     }
 
 
@@ -43,6 +43,43 @@ class ArcsetGraph:DirectedGraph{
         }
     }
 
+    }
+
+    public void reverseCertificate(String certificate){
+
+        string edgePattern = @"([\w!]+)+,([\w!]+)";
+        MatchCollection nMatches =  Regex.Matches(certificate,edgePattern);
+        List<KeyValuePair<string,string>> certEdges = new List<KeyValuePair<string, string>>();
+
+        //splits edges into a match collection of "a,b" form strings
+        foreach(Match m in nMatches){ 
+            string edgeStr = m.Value;
+            string[] edgePair = edgeStr.Split(',');
+            KeyValuePair<string,string> edgeKVP= new KeyValuePair<string, string>(edgePair[0],edgePair[1]);
+            certEdges.Add(edgeKVP);
+        }
+
+        if (!certificate.Equals(String.Empty)){
+        foreach(KeyValuePair<string, string> e in certEdges){
+            addEdge(e);
+        }
+    }
+
+    }
+    public int cerfitficateLength(String certificate){
+
+        string edgePattern = @"([\w!]+)+,([\w!]+)";
+        MatchCollection nMatches =  Regex.Matches(certificate,edgePattern);
+        List<KeyValuePair<string,string>> certEdges = new List<KeyValuePair<string, string>>();
+
+        //splits edges into a match collection of "a,b" form strings
+        foreach(Match m in nMatches){ 
+            string edgeStr = m.Value;
+            string[] edgePair = edgeStr.Split(',');
+            KeyValuePair<string,string> edgeKVP= new KeyValuePair<string, string>(edgePair[0],edgePair[1]);
+            certEdges.Add(edgeKVP);
+        }
+        return nMatches.Count;
     }
 
 /// <summary>
@@ -89,12 +126,10 @@ class ArcsetGraph:DirectedGraph{
         nameNodeInit = _nodeList[0].name; //This will start the DFS using the first node in the list as the first one. need to add error handling
 
         Node currentNode = new Node(); //Instantiates Object. This is messy solution, but avoids a O(n) search of nodeList. 
-        Console.WriteLine(_nodeDict.ToString());
 
         try{
             
             currentNode = _nodeDict[nameNodeInit];
-                Console.WriteLine(currentNode);
             }
         catch(KeyNotFoundException k){
             Console.WriteLine("Key not found "+k.StackTrace);
@@ -252,6 +287,7 @@ private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] pos
         Node newNode2 = new Node(edge.Value);
         Edge newEdge = new Edge(newNode1,newNode2);
         this._edgeList.Add(newEdge);
+        this._edgeList.Sort();
         generateAdjacencyMatrix();
 
     }

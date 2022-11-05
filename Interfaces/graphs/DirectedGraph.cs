@@ -388,6 +388,11 @@ abstract class DirectedGraph:Graph{
             return base._edgeList;
         }
     }
+    public int K{
+        get{
+            return _K;
+        }
+    }
 
    public Dictionary<string,Node> nodeDict{
        get{
