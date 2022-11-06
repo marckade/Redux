@@ -1,4 +1,5 @@
 using API.Interfaces;
+using API.Interfaces.Graphs.GraphParser;
 
 
 
@@ -45,7 +46,9 @@ class VCSolverJanita : ISolver {
 /// Solves a VERTEXCOVER instance input.
 /// </summary>
 /// <param name="G"> G is an undirected graph instance string</param>
-/// <returns></returns>
+/// <returns>
+///  Subset of nodes that cover whole graph. 
+/// </returns>
 /// <remarks>
 /// Authored by Janita Aamir
 /// Refactored to use a standard undirected graph object by Alex Diviney,
@@ -102,11 +105,44 @@ class VCSolverJanita : ISolver {
                 }
                 if(!leftoverNodes.Contains(cEdge.Value)){
                     leftoverNodes.Add(cEdge.Value);
+                    
                 }
             }
 
         return leftoverNodes; 
 
+    }
+
+
+    /// <summary>
+    ///  Copy of CliqueBruteForceMethod except with list input, note that we might want to encapsulate and have these solvers all implement a "nodeSolution" method. 
+    /// </summary>
+    /// <param name="problemInstance"></param>
+    /// <param name="solutionString"></param>
+    /// <returns></returns>
+    public Dictionary<string,bool> getSolutionDict(string problemInstance, List<string> solutionStringList){
+        Dictionary<string, bool> solutionDict = new Dictionary<string, bool>();
+        // GraphParser gParser = new GraphParser();
+        VertexCoverGraph vGraph = new VertexCoverGraph(problemInstance, true);
+        List<string> problemInstanceNodes = vGraph.nodesStringList;
+        // List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
+        List<string> solvedNodes = solutionStringList;
+
+        // Remove solvedNodes from instanceNodes
+        foreach(string node in solvedNodes){
+        problemInstanceNodes.Remove(node);
+        //  Console.WriteLine("Solved nodes: "+node);
+        solutionDict.Add(node, true);
+       }
+        // Add solved nodes to dict as {name, true}
+        // Add remaining instance nodes as {name, false}
+
+        foreach(string node in problemInstanceNodes){
+          
+                solutionDict.Add(node, false);
+        }
+
+        return solutionDict;
     }
 
 }
