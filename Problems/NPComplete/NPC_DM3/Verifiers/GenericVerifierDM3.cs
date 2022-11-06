@@ -78,6 +78,7 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
 ***************************************************/
     private List<List<string>> ParseCertificate(string certificate) {
         List<List<string>> Certificate = new List<List<string>>();
+        certificate = certificate.Replace("{{","{").Replace("}}","}");
         for(int i = 0; i< certificate.Length; i++){
             if(certificate[i] == '{'){
                 List<string> Set = new List<string>();
@@ -95,12 +96,23 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
     public Boolean verify(DM3 Problem, string c){
         bool match;
         List<List<string>> certificate = ParseCertificate(c);
-        if(!certificate.Except(Problem.M).Any()){  // Checks if c is a subset of M
-            //Console.WriteLine("c is not a subset");
-            return false;
+
+        foreach(var cSet in certificate){ // checks if c is a subset of M
+
+            bool inM = false;
+            foreach(var mSet in Problem.M){
+                if(mSet.SequenceEqual(cSet)){
+                    inM = true;
+                }
+            }
+            if(!inM){
+                // Console.WriteLine("The certificate is not a subset");
+                return false;
+            }
         }
+
         if(certificate.Count != Problem.X.Count){   //Checks is c is the size of X, if not it cannot conatin each element.
-            //Console.WriteLine("c is not the right size");
+            // Console.WriteLine("c is not the right size");
             return false;   
         }
         foreach(var set in Problem.problem[0]){   //Checks that each element of X Y and Z are in a set of c
@@ -112,7 +124,7 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
                     }
                 }
                 if(match == false){
-                    //Console.WriteLine(item + " is not in the certificate");
+                    // Console.WriteLine(item + " is not in the certificate");
                     return false;
                 }
             }
