@@ -12,7 +12,7 @@ using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using System;
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
-class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
+class ARCSET : IProblem<ArcSetBruteForce,AlexArcsetVerifier>{
 
     // --- Fields ---
     private string _problemName = "ARCSET";
@@ -32,7 +32,7 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
 
     private string _wikiName ="";
     private ArcsetGraph _arcsetAsGraph;
-    private AlexNaiveSolver _defaultSolver = new AlexNaiveSolver();
+    private ArcSetBruteForce _defaultSolver = new ArcSetBruteForce();
     private AlexArcsetVerifier _defaultVerifier = new  AlexArcsetVerifier(); //Verifier implements a Depth First Search. 
     
     private string[] _contributers = { "Alex Diviney" };
@@ -84,7 +84,7 @@ class ARCSET : IProblem<AlexNaiveSolver,AlexArcsetVerifier>{
             _instance = value;
         }
     }
-    public AlexNaiveSolver defaultSolver {
+    public ArcSetBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }

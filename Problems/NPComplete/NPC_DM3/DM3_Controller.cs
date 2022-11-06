@@ -62,13 +62,13 @@ public class GenericVerifierDM3Controller : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class HurkensSchrijverController : ControllerBase {
+public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        HurkensShrijver solver = new HurkensShrijver();
+        ThreeDimensionalMatchingBruteForce solver = new ThreeDimensionalMatchingBruteForce();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
@@ -81,15 +81,9 @@ public class HurkensSchrijverController : ControllerBase {
         // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
         DM3 problem = new DM3(problemInstance);
-        List<List<string>> solution = problem.defaultSolver.solve(problem);
-
-        string solutionString = string.Empty;
-        foreach(var list in solution){
-            solutionString += "{" + list[0]+", "+list[1]+", "+list[2]+"}";
-                
-        }
-
-        string jsonString = JsonSerializer.Serialize(solutionString, options);
+        string solution = problem.defaultSolver.solve(problem);
+        
+        string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
 
