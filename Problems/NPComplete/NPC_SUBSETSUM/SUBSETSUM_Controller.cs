@@ -29,7 +29,7 @@ public class SUBSETSUMGenericController : ControllerBase {
 [ApiController]
 [Route("[controller]")]
 
-public class Feng_ReduceTo_KNAPSACKController : ControllerBase {
+public class FengController : ControllerBase {
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -43,6 +43,26 @@ public class Feng_ReduceTo_KNAPSACKController : ControllerBase {
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new SUBSETSUM(), options);
+        return jsonString;
+    }
+
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SUBSETSUM defaultSUBSETSUM = new SUBSETSUM();
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+        FengReduction reduction = new FengReduction(defaultSUBSETSUM);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SUBSETSUM defaultSUBSETSUM = new SUBSETSUM(problemInstance);
+        FengReduction reduction = new FengReduction(defaultSUBSETSUM);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        Console.WriteLine("reduced form is: "+ jsonString);
         return jsonString;
     }
 }

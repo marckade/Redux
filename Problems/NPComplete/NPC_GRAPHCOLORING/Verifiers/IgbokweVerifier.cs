@@ -1,6 +1,6 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING;
-
+using System.Text.RegularExpressions;
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 
 class IgbokweVerifier : IVerifier
@@ -202,8 +202,6 @@ class IgbokweVerifier : IVerifier
 
 
     private void  parseCertificate(string certificate) {
-
-
 
        // string parseCertificate = certificate.Replace("(", "").Replace(")","");
        string parseCertificate = certificate.Trim().Replace("{", "").Replace("}","").Replace(" ","");

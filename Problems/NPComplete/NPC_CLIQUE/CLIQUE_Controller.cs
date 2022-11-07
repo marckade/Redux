@@ -58,7 +58,6 @@ public class CLIQUEGenericController : ControllerBase {
         string solution = solver.solve(clique);
         Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
 
-
         
        // PRINTS DICTIONARY 
 
@@ -82,7 +81,7 @@ public class CLIQUEGenericController : ControllerBase {
         // SipserClique reducedClique = new SipserClique(problemInstance);
         //string cliqueString = reducedClique.instance;
         //Console.WriteLine(cliqueString);
-        SipserClique sClique =new SipserClique(problemInstance,solutionDict);
+        SipserClique sClique = new SipserClique(problemInstance,solutionDict);
 
         CliqueGraph cGraph = sClique.cliqueAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(cGraph.getNodeList,cGraph.getEdgeList);

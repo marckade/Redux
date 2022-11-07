@@ -49,7 +49,7 @@ class CliqueBruteForce : ISolver {
         foreach(int i in indecies){
             certificate += ","+nodes[i];
         }
-        return certificate.Substring(1);
+        return "{" + certificate.Substring(1) + "}";
     }
     private List<int> nextComb(List<int> combination, int size){
         for(int i=combination.Count-1; i>=0; i--){
@@ -72,18 +72,13 @@ class CliqueBruteForce : ISolver {
         for(int i=0; i<reps; i++){
             string certificate = indexListToCertificate(combination,clique.nodes);
             if(clique.defaultVerifier.verify(clique, certificate)){
-                Console.WriteLine(combination.ToString());
-                Console.WriteLine("n={0} k={1} reps={2}, 16! = {3}",clique.nodes.Count,clique.K,reps,factorial(16));
-                return "{"+certificate+"}";
+                return certificate;
             }
             combination = nextComb(combination, clique.nodes.Count);
-            if(i%1000==0){
-                Console.WriteLine(i);
-            }
 
         }
-        Console.WriteLine(combination.ToString());
-        Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
+        // Console.WriteLine(combination.ToString());
+        // Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
         return "{}";
     }
 
@@ -103,9 +98,9 @@ class CliqueBruteForce : ISolver {
         List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
 
         // Remove solvedNodes from instanceNodes
-       foreach(string node in solvedNodes){
+        foreach(string node in solvedNodes){
         problemInstanceNodes.Remove(node);
-         Console.WriteLine("Solved nodes: "+node);
+        Console.WriteLine("Solved nodes: "+node);
         solutionDict.Add(node, true);
        }
         // Add solved nodes to dict as {name, true}

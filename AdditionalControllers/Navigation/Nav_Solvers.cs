@@ -10,7 +10,8 @@ public class All_SolversController : ControllerBase {
     
     [HttpGet]
     public String getDefault() {
-        string?[] subdirs = Directory.GetDirectories("Solvers")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"/Solvers")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -40,7 +41,8 @@ public class Problem_SolversController : ControllerBase {
             problemTypeDirectory = "Polynomial";
         }
 
-        string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + chosenProblem + "/Solvers")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + chosenProblem + "/Solvers")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -75,7 +77,8 @@ public class Problem_SolversRefactorController : ControllerBase {
 
         try
         {
-            string?[] subfiles = Directory.GetFiles("Problems/" + problemTypeDirectory + "/" + problemType + "_" + chosenProblem + "/Solvers")
+            string projectSourcePath = ProjectSourcePath.Value;
+            string?[] subfiles = Directory.GetFiles(projectSourcePath+ @"Problems/" + problemTypeDirectory + "/" + problemType + "_" + chosenProblem + "/Solvers")
                                 .Select(Path.GetFileName)
                                 .ToArray();
 

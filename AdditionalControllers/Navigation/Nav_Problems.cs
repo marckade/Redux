@@ -11,7 +11,8 @@ using System.Collections;
 public class All_ProblemsController : ControllerBase {
     
     public String getDefault() {
-        string?[] subdirs = Directory.GetDirectories("Problems")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -29,7 +30,8 @@ public class All_ProblemsController : ControllerBase {
 public class NPC_ProblemsController : ControllerBase {
     
     public String getDefault() {
-        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
                             .Select(Path.GetFileName)
                             .ToArray();
                             
@@ -42,8 +44,9 @@ public class NPC_ProblemsController : ControllerBase {
 
     [HttpGet("json")]
     public string getProblemsJson(){
+        string projectSourcePath = ProjectSourcePath.Value;
         string objectPrefix = "problemName";
-        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
                             .Select(Path.GetFileName)
                             .ToArray();
 
@@ -64,11 +67,12 @@ public class NPC_ProblemsController : ControllerBase {
 [ApiController]
 [Route("Navigation/[controller]")]
 public class NPC_ProblemsRefactorController : ControllerBase {
-    
     public String getDefault() {
-        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
-                            .Select(Path.GetFileName)
-                            .ToArray();
+        // File system patch that should work on both Window/Linux enviroments
+        string projectSourcePath = ProjectSourcePath.Value;
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"/Problems/NPComplete")
+                        .Select(Path.GetFileName)
+                        .ToArray();
 
         ArrayList subdirsNoPrefix = new ArrayList();
         foreach(string problemDirName in subdirs){
@@ -91,8 +95,9 @@ public class NPC_ProblemsRefactorController : ControllerBase {
 
     [HttpGet("json")]
     public string getProblemsJson(){
+        string projectSourcePath = ProjectSourcePath.Value;
         string objectPrefix = "problemName";
-        string?[] subdirs = Directory.GetDirectories("Problems/NPComplete")
+        string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
                             .Select(Path.GetFileName)
                             .ToArray();
 

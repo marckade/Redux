@@ -22,6 +22,9 @@ abstract class DirectedGraph:Graph{
     //protected List<Edge> _edgeList;
 
     protected Dictionary<string,Node> _nodeDict;
+    protected List<string> _nodeStringList = new List<string>();
+    protected List<KeyValuePair<string, string>> _edgesKVP = new List<KeyValuePair<string, string>>();
+
   
 
     protected int _K;
@@ -137,6 +140,15 @@ abstract class DirectedGraph:Graph{
             _K = convNum;
             _adjacencyMatrix = new Dictionary<string,List<KeyValuePair<string,Node>>>();
             generateAdjacencyMatrix();
+
+            
+          foreach(Node n in _nodeList){
+            _nodeStringList.Add(n.name);
+        }
+        foreach(Edge e in _edgeList){
+                KeyValuePair<string, string> tempKVP = new KeyValuePair<string, string>(e.source.name, e.target.name);
+                _edgesKVP.Add(tempKVP);
+            }
  
         }
         else
@@ -388,6 +400,11 @@ abstract class DirectedGraph:Graph{
             return base._edgeList;
         }
     }
+    public int K{
+        get{
+            return _K;
+        }
+    }
 
    public Dictionary<string,Node> nodeDict{
        get{
@@ -402,6 +419,17 @@ abstract class DirectedGraph:Graph{
            return _adjacencyMatrix;
        }
    }
+
+       public List<string> nodesStringList{
+        get{
+            return _nodeStringList;
+        }
+    }
+    public List<KeyValuePair<string,string>> edgesKVP{
+        get{
+            return _edgesKVP;
+        }
+    }
 
 
 }

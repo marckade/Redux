@@ -55,9 +55,48 @@ public class AlexArcsetVerifierController : ControllerBase {
 
 }
 
-[ApiController]
+// Comented out as we're transitioning to desision problem solvers
+// The algorithm for this is in NPC_ARCSET/ NPHSolver,and can be reused when we 
+//begin implementing NPHard problems
+
+// [ApiController]                    
+// [Route("[controller]")]
+// public class AlexNaiveSolverController : ControllerBase {
+
+//     [HttpGet("info")]
+//     //without params, just returns the solver.
+//     public String getDefault(){
+        
+//         var options = new JsonSerializerOptions { WriteIndented = true };
+
+//         ARCSET ARCSETProblem = new ARCSET();
+//         AlexNaiveSolver solver = new AlexNaiveSolver();
+        
+//         // Send back to API user
+//         string jsonString = JsonSerializer.Serialize(solver, options);
+//         return jsonString;
+//     }
+
+//       [HttpGet("solve")]
+//      //With query.
+//     public String getInstance([FromQuery]string problemInstance) {
+//         var options = new JsonSerializerOptions { WriteIndented = true };
+//         ARCSET ARCSETProblem = new ARCSET(problemInstance);
+//         AlexNaiveSolver solver = new AlexNaiveSolver();
+
+
+//         string solvedInstance = solver.solve(ARCSETProblem);
+//         //Boolean response = verifier.verify(ARCSETProblem,certificate);
+//         // Send back to API user
+//         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
+//         return jsonString;
+//     }
+
+// }
+
+[ApiController]                    
 [Route("[controller]")]
-public class AlexNaiveSolverController : ControllerBase {
+public class ArcSetBruteForceController : ControllerBase {
 
     [HttpGet("info")]
     //without params, just returns the solver.
@@ -66,7 +105,7 @@ public class AlexNaiveSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
 
         ARCSET ARCSETProblem = new ARCSET();
-        AlexNaiveSolver solver = new AlexNaiveSolver();
+        ArcSetBruteForce solver = new ArcSetBruteForce();
         
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
@@ -78,7 +117,7 @@ public class AlexNaiveSolverController : ControllerBase {
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
-        AlexNaiveSolver solver = new AlexNaiveSolver();
+        ArcSetBruteForce solver = new ArcSetBruteForce();
 
 
         string solvedInstance = solver.solve(ARCSETProblem);
