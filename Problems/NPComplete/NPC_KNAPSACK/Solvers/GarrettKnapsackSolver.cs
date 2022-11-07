@@ -40,7 +40,7 @@ class GarrettKnapsackSolver : ISolver {
     }
     // --- Methods Including Constructors ---
     //solver for 0-1 knapsack problem
-    public int solve(KNAPSACK knapsack) {
+    public string solve(KNAPSACK knapsack) {
         // returns the maximum value achievable given the the weight constraints on the given knapsack.
         
         List<KeyValuePair<String, String>> allitems = knapsack.items; 
@@ -60,7 +60,7 @@ class GarrettKnapsackSolver : ISolver {
                     continue;
                 }
                 var currentItem = allitems[i-1];
-
+ 
                 if (Int32.Parse(currentItem.Key) > j){
                     matrix[i,j] = matrix[i-1,j];
                 }
@@ -70,7 +70,7 @@ class GarrettKnapsackSolver : ISolver {
                 }
             }
         }
-        return  matrix[allitems.Count, Capacity];
+        return  matrix[allitems.Count, Capacity].ToString();
     }
 
 }

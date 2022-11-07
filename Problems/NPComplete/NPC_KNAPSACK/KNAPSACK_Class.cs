@@ -131,6 +131,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
         _instance  = _knapsackGraph.ToString();
         nodes = _knapsackGraph.nodesStringList;
         items  = _knapsackGraph.edgesKVP;
+        _W = _knapsackGraph.K;
    
      
     }
@@ -139,6 +140,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
         _instance  = _knapsackGraph.ToString();
         nodes = _knapsackGraph.nodesStringList;
         items  = _knapsackGraph.edgesKVP;
+        _W = _knapsackGraph.K;
        
     }
 
