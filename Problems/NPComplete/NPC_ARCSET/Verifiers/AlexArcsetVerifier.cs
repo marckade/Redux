@@ -63,12 +63,17 @@ public string[] contributers{
         }
         graph.processCertificate(userInput);
         //Console.WriteLine(graph.getBackEdges());
-        bool isInARCSET = graph.isCyclical();
-        // Console.WriteLine("Return : {0}, Cert : {1}",!isInARCSET,userInput);
+        bool isACyclical = true;
+        for(int i=0; i<graph.getNodeList.Count; i++){
+            if(graph.isCyclical(i)){
+                isACyclical = false;
+            }
+        }
+        
         graph.reverseCertificate(userInput);
 
         //when userInput is removed from graph is it no longer Cyclical? 
-        return !isInARCSET;
+        return isACyclical;
     }
 
     

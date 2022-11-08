@@ -150,7 +150,7 @@ class SipserReduction : IReduction<SAT3, SipserClique>
                         if (!inverse && !samecluser && nodeFrom != nodeTo)
                         {
                             KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(nodeFrom, nodeTo);
-                            Console.WriteLine("i:{0} a:{1} edge:{2}",i,a,fullEdge);
+                            // Console.WriteLine("i:{0} a:{1} edge:{2}",i,a,fullEdge);
                             if(i == 0 && a ==1 && j == 0 && b == 1){
                                 foreach(var name in usedNames){
                                     Console.WriteLine(name);

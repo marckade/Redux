@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace API.Problems.NPComplete.NPC_DM3;
 
-class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
+class DM3 : IProblem<ThreeDimensionalMatchingBruteForce,GenericVerifierDM3> {
 
     // --- Fields ---
     private string _problemName = "3-Dimensional Matching";
@@ -21,7 +21,7 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
     private List<string> _Y;
     private List<string> _Z;
     private List<List<string>> _M;
-    private HurkensShrijver _defaultSolver = new HurkensShrijver();
+    private ThreeDimensionalMatchingBruteForce _defaultSolver = new ThreeDimensionalMatchingBruteForce();
     private GenericVerifierDM3 _defaultVerifier = new GenericVerifierDM3();
 
     private string[] _contributers = { "Caleb Eardley" };
@@ -114,7 +114,7 @@ class DM3 : IProblem<HurkensShrijver,GenericVerifierDM3> {
             return _problem;
         }
     }
-    public HurkensShrijver defaultSolver {
+    public ThreeDimensionalMatchingBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }

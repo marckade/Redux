@@ -101,7 +101,7 @@ public class ARCSET_Tests
         ARCSET testArc = new ARCSET();
         ArcSetBruteForce solver = testArc.defaultSolver;
         string solvedString = solver.solve(testArc);
-        Assert.Equal("{1,2}", solvedString);
+        Assert.Equal("{2,4}", solvedString);
     }
 
 
