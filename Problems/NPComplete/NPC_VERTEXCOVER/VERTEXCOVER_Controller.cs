@@ -60,6 +60,28 @@ public class VERTEXCOVERGenericController : ControllerBase {
         return jsonString;
     }
 
+    [HttpGet("solvedVisualization")]
+    public String solvedVisualization([FromQuery]string problemInstance){
+
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
+        VertexCoverGraph vGraph = vCover.VCAsGraph;
+        List<string> solutionStr = vCover.defaultSolver.Solve(vCover);
+        Dictionary<string, bool> solutionDict = vCover.defaultSolver.getSolutionDict(problemInstance, solutionStr);
+        
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(vGraph.getNodeList,vGraph.getEdgeList);
+        for(int i=0;i<apiGraph.nodes.Count;i++){
+            apiGraph.nodes[i].attribute1 = i.ToString();
+            bool nodeVal = false;
+            solutionDict.TryGetValue(apiGraph.nodes[i].name, out nodeVal);
+            apiGraph.nodes[i].attribute2 = nodeVal.ToString();
+        }
+
+        
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
+        return jsonString;
+
+    }
 
 }
 

@@ -67,8 +67,8 @@ class VertexCoverGraph:UndirectedGraph{
      public string reduction(){
         List<Node> newNodes = new List<Node>();
         foreach(Node n in _nodeList){
-            Node newNode1 = new Node(n.name);
-            Node newNode2 = new Node(n.name);
+            Node newNode1 = new VertexCoverNode(n.name);
+            Node newNode2 = new VertexCoverNode(n.name);
             newNode1.name = n.name+"0";
             newNode2.name = n.name+"1";
             newNodes.Add(newNode1);
@@ -86,8 +86,8 @@ class VertexCoverGraph:UndirectedGraph{
 
         //map edges to to nodes
         foreach(Edge e in newEdges){
-            Node newNode1 = new Node(e.source.name+"1");
-            Node newNode2 = new Node(e.target.name+"0");
+            Node newNode1 = new VertexCoverNode(e.source.name+"1");
+            Node newNode2 = new VertexCoverNode(e.target.name+"0");
             Edge numberedEdge = new Edge(newNode1,newNode2);
             numberedEdges.Add(numberedEdge);
         }
