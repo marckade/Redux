@@ -4,13 +4,13 @@ namespace API.Problems.NPComplete.NPC_KNAPSACK.Solvers;
 class GarrettKnapsackSolver : ISolver {
 
     // --- Fields ---
-    private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This solver is for the 0-1 Knapsack problem";
+    private string _solverName = "GarrettKnapsack Solver";
+    private string _solverDefinition = "This a Dynamic programming solver for the 0-1 Knapsack problem made by Garrett Stouffer.";
     private string _source = "This person ____";
-    private string[] _contributers = { "Garret Stouffer"};
+    private string[] _contributers = { "Garrett Stouffer"};
 
 
-    private string _complexity = "complexity of this problem depends on size of input values. When inputs are binary it's complexity is exponential.";
+    private string _complexity = " O(v*w). Complexity of this problem depends on size of input values. When inputs are binary it's complexity is exponential.";
 
     // --- Properties ---
     public string solverName {
@@ -46,7 +46,8 @@ class GarrettKnapsackSolver : ISolver {
         List<KeyValuePair<String, String>> allitems = knapsack.items; 
         int Capacity = knapsack.W;
 
-
+     // {{10,20,30},{(10,60),(20,100),(30,120)},50}
+     // {{1,2,3,5,7,9},{(1,5),(2,7),(3,9),(1,7)},5}
 
         int[,] matrix = new int[allitems.Count +1 , Capacity + 1];
         //iterate through each item
@@ -65,12 +66,36 @@ class GarrettKnapsackSolver : ISolver {
                     matrix[i,j] = matrix[i-1,j];
                 }
                 else {
-                    matrix[i,j] = Math.Max(Int32.Parse(currentItem.Value) + matrix[i-1,j- Int32.Parse(currentItem.Key)], matrix[i-1,j]);
+                    matrix[i,j] = Math.Max(Int32.Parse(currentItem.Value) + matrix[i-1, j- Int32.Parse(currentItem.Key)], matrix[i-1,j]);
 
                 }
             }
         }
-        return  matrix[allitems.Count, Capacity].ToString();
+
+        int count = allitems.Count;
+        int tempCap = Capacity;
+        string solution = "{(";
+   
+
+        while(count != 0){
+
+            if(matrix[count , tempCap] != matrix[count -1, tempCap]){
+                
+                var current = allitems[count-1];
+                tempCap = tempCap - Int32.Parse(current.Key);
+              //  Console.WriteLine("Package " + count.ToString() + "with W = " + Int32.Parse(current.Key).ToString() + " and Value = "+Int32.Parse(current.Value).ToString());
+            // solution +=  current.Key + " : " + current.Value + ", ";
+                solution +=  current.Key + ":" + current.Value + ",";
+            }
+
+            count--;
+
+        }
+        solution = solution.Trim(',');
+
+        solution += "):"+ matrix[allitems.Count, Capacity].ToString()+"}";
+        
+        return solution;
     }
 
 }
