@@ -6,7 +6,7 @@ using API.Problems.NPComplete.NPC_SAT.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SAT;
 
- class SAT : IProblem<GenericSolver, GenericVerifier> {
+ class SAT : IProblem<SATBruteForceSolver, GenericVerifier> {
 
 
     #region Fields
@@ -18,14 +18,14 @@ namespace API.Problems.NPComplete.NPC_SAT;
     private string _source = ".";
     private string[] _contributers = { "Daniel Igbokwe" };
 
-    private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
+    private string _defaultInstance = "(x1 | !x2 | x3) & (!x1 | x3 | x1) & (x2 | !x3 | x1)";
     private string _instance = string.Empty;
 
     private string _wikiName = "";
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
    
-    private GenericSolver _defaultSolver = new GenericSolver();
+    private SATBruteForceSolver _defaultSolver = new SATBruteForceSolver();
     private GenericVerifier _defaultVerifier = new GenericVerifier();
 
     #endregion
@@ -110,7 +110,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
         }
     }
 
-      public GenericSolver defaultSolver {
+      public SATBruteForceSolver defaultSolver {
         get {
             return _defaultSolver;
         }

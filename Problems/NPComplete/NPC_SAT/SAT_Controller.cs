@@ -52,6 +52,30 @@ namespace API.Problems.NPComplete.NPC_SAT;
 
     }
 
+    [ApiController]
+    [Route("[controller]")]
+    public class SATBruteForceSolverController : ControllerBase {
+        [HttpGet("info")]
+        public String getInfo(){
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            SATBruteForceSolver solver = new SATBruteForceSolver();
+
+            // Send back to API user
+            string jsonString = JsonSerializer.Serialize(solver, options);
+            return jsonString;
+        }
+
+        [HttpGet("solve")]
+        public String solveInstance([FromQuery]string problemInstance) {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            SATBruteForceSolver solver = new SATBruteForceSolver();
+
+            string testString = solver.Solver(problemInstance);
+            string jsonString = JsonSerializer.Serialize(testString, options);
+            return jsonString;
+        }
+    }
+
 
 
 
