@@ -33,9 +33,9 @@ namespace API.Problems.NPComplete.NPC_SAT;
     public class IgbokweSATVerifierController : ControllerBase {
 
         [HttpGet("info")]
-        public String getGeneric(){
+        public String getInfo(){
             var options = new JsonSerializerOptions {WriteIndented = true};
-            GenericVerifier verifier = new GenericVerifier();
+            IgbokweSATVerifier verifier = new IgbokweSATVerifier();
 
 
             string jsonString  = JsonSerializer.Serialize(verifier, options);
@@ -43,11 +43,19 @@ namespace API.Problems.NPComplete.NPC_SAT;
         }
 
         //[HttpGet("{certificate}/{problemInstance}")]
-        [HttpGet("solve")]
+        [HttpGet("verify")]
         public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            SAT SATProblem = new SAT(problemInstance);
+            IgbokweSATVerifier verifier = new IgbokweSATVerifier();
 
-           
-         return "";
+            Boolean response = verifier.verify(SATProblem,certificate);
+            // Send back to API user
+            string jsonString = JsonSerializer.Serialize(response.ToString(), options);
+            return jsonString;
+
+            
+            //return "";
         }
 
     }
