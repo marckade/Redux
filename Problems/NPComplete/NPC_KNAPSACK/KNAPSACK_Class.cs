@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;
 
-class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
+class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettVerifier>{
 
     // --- Fields ---
     private string _problemName = "KNAPSACK";
@@ -34,7 +34,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
 
 
     private GarrettKnapsackSolver _defaultSolver = new GarrettKnapsackSolver();
-    private GarrettsSimple _defaultVerifier = new GarrettsSimple();
+    private GarrettVerifier _defaultVerifier = new GarrettVerifier();
 
     // --- Properties ---
     public string problemName {
@@ -117,7 +117,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
             return _defaultSolver;
         }
     }
-    public GarrettsSimple defaultVerifier {
+    public GarrettVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }

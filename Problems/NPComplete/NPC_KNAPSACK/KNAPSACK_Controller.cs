@@ -35,7 +35,7 @@ public class GarrettVerifierController : ControllerBase {
         [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
-        GarrettsSimple verifier = new GarrettsSimple();
+        GarrettVerifier verifier = new GarrettVerifier();
         string jsonString  = JsonSerializer.Serialize(verifier, options);
         return jsonString; 
     }
@@ -43,7 +43,7 @@ public class GarrettVerifierController : ControllerBase {
     public String getInstance([FromQuery]string certifcate, [FromQuery] string problemInstance){
         var options = new JsonSerializerOptions {WriteIndented = true};
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
-        GarrettsSimple verifier = new GarrettsSimple();
+        GarrettVerifier verifier = new GarrettVerifier();
 
         Boolean response = verifier.verify(KNAPSACKProblem, certifcate);
         //send back to API user
@@ -55,7 +55,7 @@ public class GarrettVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class GarrettSolverController : ControllerBase {
+public class GarrettKnapsackSolverController : ControllerBase {
 
     [HttpGet("info")]
     public String getGeneric(){

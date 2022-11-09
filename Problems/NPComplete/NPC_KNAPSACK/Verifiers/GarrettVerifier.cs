@@ -4,7 +4,7 @@ using System;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
-class GarrettsSimple : IVerifier
+class GarrettVerifier : IVerifier
 {
 
     // --- Fields ---
@@ -65,7 +65,7 @@ class GarrettsSimple : IVerifier
 
 
     // --- Methods Including Constructors ---
-    public GarrettsSimple()
+    public GarrettVerifier()
     {
 
     }
