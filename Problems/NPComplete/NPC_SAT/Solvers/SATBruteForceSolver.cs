@@ -98,10 +98,6 @@ namespace API.Problems.NPComplete.NPC_SAT.Solvers;
             char intBool = incrementedNumber[i];
             convertedDict.Add(originalDictKey[i], charToBool(intBool));
         }
-
-        foreach(bool curBool in convertedDict.Values.ToList()){
-            Console.WriteLine(curBool);
-        }
         return convertedDict;
     }
 
@@ -126,13 +122,14 @@ namespace API.Problems.NPComplete.NPC_SAT.Solvers;
             }
         }
 
-        // Iterate through our boolean list, if any are false the clause is not satisfied.
+        // Iterate through our boolean list, if any are true the clause is satisfied.
         foreach(bool currentBool in booleanClause){
-            if (currentBool == false){
-                return false;
+            if (currentBool == true){
+                return true;
             }
         }
-        return true;
+        // All literals in the clause evaluated to false. Thus the whole clause is false.
+        return false;
     }
 
         public string Solver(string SATInstance){
@@ -157,23 +154,28 @@ namespace API.Problems.NPComplete.NPC_SAT.Solvers;
         for (int currentCombination = 0; currentCombination < Math.Pow(2, literals.Count); currentCombination++){
             int trueClauses = 0;
                 foreach (List<string> currentClause in clause){
-                    foreach(string c in currentClause){Console.WriteLine(c);}
-                        bool currentEvaluation = evaluate(literalDict, currentClause);
-                        
-                        if (currentEvaluation == false){
-                            break;// A clause is false, so the whole SAT is false.
-                        }
+                    // change the T/F values of the literals. Starts with at least 1 being true by incrementing at the start.
+                    literalDict = increment(literalDict); 
+                    bool currentEvaluation = evaluate(literalDict, currentClause);
+                    
+                    if (currentEvaluation == false){
+                        break;// A clause is false, so the whole SAT is false.
+                    }
 
-                        trueClauses++; // All clauses are true. We found a valid SAT solution
-                        if (clause.Count == trueClauses){
-                            string solutionString = "";
-                            foreach (KeyValuePair<string, bool> pair in literalDict){
-                                solutionString += string.Format("{0} = {1}\n", pair.Key, pair.Value);
-                            }
-                            return solutionString;
+                    trueClauses++; // All clauses are true. We found a valid SAT solution
+                    if (clause.Count == trueClauses){
+                        string solutionString = "(";
+                        foreach (KeyValuePair<string, bool> pair in literalDict){
+                        
+                            solutionString += string.Format("{0}:{1},", pair.Key, pair.Value);
                         }
+                        solutionString += ")";
+                        // Just getting rid of the extra comma at the end.
+                        solutionString = solutionString.Remove(solutionString.Length - 2, 1);
+                        return solutionString;
+                    }
                 }
-                        literalDict = increment(literalDict); // change the T/F values of the literals.
+                        //literalDict = increment(literalDict); // Incrementing here starts with the formula being all false.
         }
             return "No solution exists";
         }
