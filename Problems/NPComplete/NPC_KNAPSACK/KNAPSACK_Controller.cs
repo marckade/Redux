@@ -39,13 +39,13 @@ public class GarrettVerifierController : ControllerBase {
         string jsonString  = JsonSerializer.Serialize(verifier, options);
         return jsonString; 
     }
-    [HttpGet]
-    public String getInstance([FromQuery]string certifcate, [FromQuery] string problemInstance){
+    [HttpGet("verify")]
+    public String getInstance([FromQuery]string certificate, [FromQuery] string problemInstance){
         var options = new JsonSerializerOptions {WriteIndented = true};
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
         GarrettVerifier verifier = new GarrettVerifier();
 
-        Boolean response = verifier.verify(KNAPSACKProblem, certifcate);
+        Boolean response = verifier.verify(KNAPSACKProblem, certificate);
         //send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
