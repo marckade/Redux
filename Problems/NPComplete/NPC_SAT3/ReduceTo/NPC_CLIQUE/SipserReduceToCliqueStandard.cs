@@ -11,6 +11,7 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
     private string[] _contributers = { "Kaden Marchetti", "Alex Diviney" };
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SAT3 _reductionFrom;
     private SipserClique _reductionTo;
@@ -36,6 +37,14 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         get
         {
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public SAT3 reductionFrom

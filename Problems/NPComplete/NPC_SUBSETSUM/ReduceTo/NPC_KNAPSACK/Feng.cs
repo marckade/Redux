@@ -11,6 +11,7 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
     private string[] _contributers = {"Garret Stouffer"};
 
     private string _complexity ="______";
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SUBSETSUM _reductionFrom;
     private KNAPSACK _reductionTo;
@@ -31,6 +32,14 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         get
         {
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public SUBSETSUM reductionFrom {
