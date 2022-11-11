@@ -1,4 +1,5 @@
 using API.Interfaces;
+using API.Interfaces.Graphs.GraphParser;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.ReduceTo.NPC_VertexCover;
@@ -143,7 +144,30 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
     }
 
     public string mapSolutions(CLIQUE problemFrom, VERTEXCOVER problemTo, string problemFromSolution){
-        return "No mapping currently implemented.";
+        //Check if the colution is correct
+        if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
+            return "Solution is inccorect";
+        }
+
+        //NOTE :: should we verify if the reduction is correct, if so we might as well just take the problemFrom and create the problemTo
+
+        //Parse problemFromSolution into a list of nodes
+        GraphParser gParser = new GraphParser();
+        List<string> solutionList = gParser.getNodesFromNodeListString(problemFromSolution);
+
+        //Map solution
+        List<string> mappedSolutionList = new List<string>();
+        foreach(string node in problemFrom.nodes){
+            if(!solutionList.Contains(node)){
+                mappedSolutionList.Add(node);
+            }
+        }
+        string problemToSolution = "";
+        foreach(string node in mappedSolutionList){
+            problemToSolution += node + ',';
+        }
+        return '{' + problemToSolution.TrimEnd(',') + '}';
+
     }
 }
 // // return an instance of what you are reducing to
