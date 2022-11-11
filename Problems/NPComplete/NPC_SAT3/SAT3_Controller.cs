@@ -79,6 +79,17 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
+    [HttpGet("mapSolution")]
+    public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 sat3 = new SAT3(problemFrom);
+        SipserClique clique = new SipserClique(problemTo);
+        SipserReduction reduction = new SipserReduction(sat3);
+        string mappedSolution = reduction.mapSolutions(sat3,clique,problemFromSolution);
+        string jsonString = JsonSerializer.Serialize(mappedSolution, options);
+        return jsonString;
+    }
+
 }
 
 [ApiController]
