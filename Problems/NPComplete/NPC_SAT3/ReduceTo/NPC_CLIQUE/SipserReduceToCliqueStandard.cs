@@ -303,5 +303,9 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
     }
 
+    public string mapSolutions(SAT3 problemFrom, SipserClique problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
+
 }
 // return an instance of what you are reducing to

@@ -130,5 +130,9 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
         reductionTo = reduced01INT;
         return reduced01INT;
     }
+
+    public string mapSolutions(SAT3 problemFrom, INTPROGRAMMING01 problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
 }
 // return an instance of what you are reducing to

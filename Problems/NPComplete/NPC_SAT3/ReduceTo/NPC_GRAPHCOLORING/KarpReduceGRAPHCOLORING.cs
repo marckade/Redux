@@ -330,21 +330,11 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
       
     }
 
+    public string mapSolutions(SAT3 problemFrom, GRAPHCOLORING problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
+
     #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

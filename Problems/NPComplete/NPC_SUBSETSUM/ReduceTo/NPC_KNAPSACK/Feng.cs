@@ -91,5 +91,9 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         reductionTo = reducedKNAPSACK;
         return reducedKNAPSACK;
     }
+
+    public string mapSolutions(SUBSETSUM problemFrom, KNAPSACK problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
 }
 // return an instance of what you are reducing to

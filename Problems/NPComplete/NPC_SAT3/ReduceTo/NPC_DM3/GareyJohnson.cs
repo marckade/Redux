@@ -173,4 +173,8 @@ class GareyJohnson : IReduction<SAT3, DM3> {
         //return new THREE_DM();
         return reduced3DM;
     }
+
+    public string mapSolutions(SAT3 problemFrom, DM3 problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
 }

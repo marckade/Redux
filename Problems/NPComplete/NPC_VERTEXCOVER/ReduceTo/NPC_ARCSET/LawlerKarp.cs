@@ -98,5 +98,9 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         
         return arcset;
     }
+
+    public string mapSolutions(VERTEXCOVER problemFrom, ARCSET problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
 }
 // return an instance of what you are reducing to

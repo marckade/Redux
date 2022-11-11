@@ -141,5 +141,9 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
         return reducedVERTEXCOVER;
 
     }
+
+    public string mapSolutions(CLIQUE problemFrom, VERTEXCOVER problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
 }
 // // return an instance of what you are reducing to

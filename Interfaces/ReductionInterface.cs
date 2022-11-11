@@ -8,4 +8,5 @@ interface IReduction<T,U> {
     T reductionFrom {get;}
     U reductionTo {get;}
     U reduce();
+    string mapSolutions(T problemFrom, U problemTo, string problemFromSolution);
 }
