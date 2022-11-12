@@ -8,9 +8,9 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
     // --- Fields ---
     private string _reductionDefinition = "Fengs reduction converts positive integers in SUBSETSUM to items in KNAPSACK";
     private string _source = "Feng, Thomas http://cgm.cs.mcgill.ca/~avis/courses/360/2003/assignments/sol4.pdf";
-    private string[] _contributers = {"Garret Stouffer"};
+    private string[] _contributers = {"Garret Stouffer, Daniel Igbokwe"};
   
-    private string _complexity ="______";
+    private string _complexity ="O(n)";
     private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SUBSETSUM _reductionFrom;
@@ -84,6 +84,7 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         for(int i=0; i < SUBSETSUMInstance.Integers.Count; i++) {
             KeyValuePair<string, string> item = new KeyValuePair<string, string>(integers[i], integers[i]);
             Items.Add(item);
+            _gadgetMap[integers[i]] = integers[i];
         }
 
         reducedKNAPSACK.items = Items;

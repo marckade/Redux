@@ -116,16 +116,16 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
 
             //foreach node create literals for each K - 1
             for (int i = 0; i < _reductionFrom.K - 1; i++) {
-                currentNode = $"{node}{i}";
-                clause += $"{currentNode}|";
+                currentNode = $"{node}_{i}";
+                clause += $"{node}{i}|";
                 gadgetNodes.Add(currentNode);
             }
 
 
             // last K literals  
-            currentNode = $"{node}{_reductionFrom.K - 1}";
+            currentNode = $"{node}_{_reductionFrom.K - 1}";
 
-            clause += $"{currentNode})";
+            clause += $"{node}{_reductionFrom.K - 1})";
             reducedNodeClauses.Add(clause.Trim());
             
             // add to gadget dictionary 

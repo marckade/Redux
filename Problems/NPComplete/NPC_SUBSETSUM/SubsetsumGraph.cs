@@ -6,23 +6,23 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
 
-namespace API.Problems.NPComplete.NPC_KNAPSACK;
+namespace API.Problems.NPComplete.NPC_SUBSETSUM;
 
-    class KnapsackGraph:DirectedGraph {
+ class SubsetsumGraph:DirectedGraph {
 
         
-    public KnapsackGraph(string arcInput) : base (arcInput){
+    public SubsetsumGraph(string arcInput) : base (arcInput){
         
     }
 
-    public KnapsackGraph(string arcInput, bool decoy) : base (arcInput, decoy){
+    public SubsetsumGraph(string arcInput, bool decoy) : base (arcInput, decoy){
         _edgeList.Sort();
     }
 
 
     public override String toDotJson(){
         string totalString = $"";
-        string preStr = @"digraph KNAPSACK{";
+        string preStr = @"digraph SUBSETSUM{";
         totalString = totalString + preStr;
 
         //string preStr2 = @"node[style = ""filled""]";

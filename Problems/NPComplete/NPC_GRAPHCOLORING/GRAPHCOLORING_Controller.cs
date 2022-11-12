@@ -43,7 +43,7 @@ public class IgbokweVerifierController : ControllerBase {
         IgbokweVerifier verifier = new IgbokweVerifier();
 
 
-        string jsonString  = JsonSerializer.Serialize(verifier, options);
+        string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString; 
     }
 
