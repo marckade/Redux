@@ -218,7 +218,7 @@ public DanielBrelazSolver() {
         Dictionary<string, Node> nodeMap = new Dictionary<string, Node>();
 
         foreach(string node in problem.nodes){
-            nodeMap.Add(node, new Node(node));
+            nodeMap[node] = new Node(node);
         }
         return nodeMap;
 

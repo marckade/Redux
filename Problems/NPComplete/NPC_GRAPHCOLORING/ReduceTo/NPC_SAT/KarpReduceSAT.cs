@@ -11,6 +11,7 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
     private string _reductionDefinition = "Karp's reduction converts each clause from a 3CNF into an OR gadgets to establish the truth assignments using labels.";
     private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private string[] _contributers = {"Daniel Igbokwe"};
+    Dictionary<Object,List<string>> _gadgetMap = new Dictionary<object, List<string>>();
     
     private GRAPHCOLORING _reductionFrom;
     private SAT _reductionTo;
@@ -51,6 +52,15 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
         {
             _complexity = value;
         }
+    }
+
+     public Dictionary<Object,List<string>> gadgetMap
+    {
+        get
+        {
+            return _gadgetMap;
+        }
+       
     }
 
     public GRAPHCOLORING reductionFrom
@@ -101,13 +111,26 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
         // convert nodes to clauses
         foreach (string node in _reductionFrom.nodes) {
             string clause = "(";
+            string currentNode = "";
+            List<string> gadgetNodes = new List<string>();
 
+            //foreach node create literals for each K - 1
             for (int i = 0; i < _reductionFrom.K - 1; i++) {
-                clause += $"{node}{i}|";
+                currentNode = $"{node}{i}";
+                clause += $"{currentNode}|";
+                gadgetNodes.Add(currentNode);
             }
 
-            clause += $"{node}{_reductionFrom.K - 1})";
+
+            // last K literals  
+            currentNode = $"{node}{_reductionFrom.K - 1}";
+
+            clause += $"{currentNode})";
             reducedNodeClauses.Add(clause.Trim());
+            
+            // add to gadget dictionary 
+            _gadgetMap[node] = gadgetNodes;
+            
 
             for (int i = 0; i < _reductionFrom.K; i++)
             {
@@ -124,6 +147,8 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
                     }
                 }
             }
+
+         
 
         }
 
@@ -179,7 +204,13 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
 
     }
 
+    public string mapSolutions(GRAPHCOLORING problemFrom, SAT problemTo, string problemFromSolution){
+        return "";
+     }
+}
+
+
     #endregion
 
-}
+
 
