@@ -11,8 +11,9 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
     private string _reductionDefinition = "Karp's reduction converts each clause from a 3CNF into an OR gadgets to establish the truth assignments using labels.";
     private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private string[] _contributers = {"Daniel Igbokwe"};
-    Dictionary<Object,List<string>> _gadgetMap = new Dictionary<object, List<string>>();
+    // Dictionary<Object,List<string>> _gadgetMap = new Dictionary<object, List<string>>();
     
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
     private GRAPHCOLORING _reductionFrom;
     private SAT _reductionTo;
     private string _complexity = "O(n^2)";
@@ -54,15 +55,14 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
         }
     }
 
-     public Dictionary<Object,List<string>> gadgetMap
-    {
-        get
-        {
+    public Dictionary<Object,Object> gadgetMap {
+        get{
             return _gadgetMap;
         }
-       
+        set{
+            _gadgetMap = value;
+        }
     }
-
     public GRAPHCOLORING reductionFrom
     {
         get
@@ -205,12 +205,14 @@ class KarpReduceSAT : IReduction<GRAPHCOLORING, SAT>
     }
 
     public string mapSolutions(GRAPHCOLORING problemFrom, SAT problemTo, string problemFromSolution){
-        return "";
-     }
+        return "No mapping currently implemented.";
+    }
+    #endregion
+
 }
 
 
-    #endregion
+   
 
 
 

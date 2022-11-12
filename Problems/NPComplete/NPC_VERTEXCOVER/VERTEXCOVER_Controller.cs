@@ -235,5 +235,16 @@ public class LawlerKarpController : ControllerBase {
 
     }
 
+    [HttpGet("mapSolution")]
+    public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER vertexCover = new VERTEXCOVER(problemFrom);
+        ARCSET arcset = new ARCSET(problemTo);
+        LawlerKarp reduction = new LawlerKarp();
+        string mappedSolution = reduction.mapSolutions(vertexCover,arcset,problemFromSolution);
+        string jsonString = JsonSerializer.Serialize(mappedSolution, options);
+        return jsonString;
+    }
+
 }
 

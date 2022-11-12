@@ -9,9 +9,9 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
     private string _reductionDefinition = "Fengs reduction converts positive integers in SUBSETSUM to items in KNAPSACK";
     private string _source = "Feng, Thomas http://cgm.cs.mcgill.ca/~avis/courses/360/2003/assignments/sol4.pdf";
     private string[] _contributers = {"Garret Stouffer"};
-    Dictionary<Object, Object> _gadgetMap = new Dictionary<object, Object>();
-
+  
     private string _complexity ="______";
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SUBSETSUM _reductionFrom;
     private KNAPSACK _reductionTo;
@@ -32,6 +32,14 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         get
         {
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public SUBSETSUM reductionFrom {
@@ -56,12 +64,6 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         }
     }
 
-    public Dictionary<Object,Object> gadgetMap{
-        get{
-            return _gadgetMap;
-        }
-       
-    }
 
     // --- Methods Including Constructors ---
     public FengReduction(SUBSETSUM from) {
@@ -91,9 +93,8 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         return reducedKNAPSACK;
     }
 
-
-       public string mapSolutions(SUBSETSUM problemFrom, KNAPSACK problemTo, string problemFromSolution){
-        return "";
-     }
+    public string mapSolutions(SUBSETSUM problemFrom, KNAPSACK problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
+    }
 }
 // return an instance of what you are reducing to

@@ -4,6 +4,7 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Interfaces.Graphs;
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 
@@ -22,9 +23,10 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
                                             Then add directed edges from every 0 node 'u' to 1 node 'u'. ie. creates edges from <A,0> to <A,1>, <B,0> to <B,1> … <Z,0> to <Z,1>
                                             Now the algorithm has created an ARCSET instance (in other words, a Digraph). ";
     private string _source = "http://cgi.di.uoa.gr/~sgk/teaching/grad/handouts/karp.pdf"; //Alex NOTE: Change later to real citation.
-    private string[] _contributers = { "Daniel Igbokwe"};
+    private string[] _contributers = { "Daniel Igbokwe","Caleb Eardley"};
     private VERTEXCOVER _reductionFrom;
     private ARCSET _reductionTo;
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
 
     // --- Properties ---
@@ -41,6 +43,14 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
      public string[] contributers{
         get{
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public VERTEXCOVER reductionFrom {
@@ -88,6 +98,31 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         ARCSET arcset = new ARCSET(dgString);
         
         return arcset;
+    }
+
+    public string mapSolutions(VERTEXCOVER problemFrom, ARCSET problemTo, string problemFromSolution){
+        //Check if the colution is correct
+        if(!problemFrom.defaultVerifier.Verify(problemFrom,problemFromSolution)){
+            return "Solution is inccorect";
+        }
+
+        //NOTE :: should we verify if the reduction is correct, if so we might as well just take the problemFrom and create the problemTo
+
+        //Parse problemFromSolution into a list of nodes
+        GraphParser gParser = new GraphParser();
+        List<string> solutionList = gParser.getNodesFromNodeListString(problemFromSolution);
+
+        //Map solution 
+        List<string> mappedSolutionList = new List<string>();
+        foreach(string node in solutionList){
+            mappedSolutionList.Add(string.Format("({0}0,{0}1)",node));
+        }
+        string problemToSolution = "";
+        foreach(string edge in mappedSolutionList){
+            problemToSolution += edge + ',';
+        }
+
+        return '{' + problemToSolution.TrimEnd(',') + '}';
     }
 }
 // return an instance of what you are reducing to

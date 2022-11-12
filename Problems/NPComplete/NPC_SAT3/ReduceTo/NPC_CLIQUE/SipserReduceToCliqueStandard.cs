@@ -10,7 +10,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     // --- Fields ---
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
-    private string[] _contributers = { "Kaden Marchetti", "Alex Diviney" };
+    private string[] _contributers = { "Kaden Marchetti", "Alex Diviney", "Caleb Eardley"};
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SAT3 _reductionFrom;
     private SipserClique _reductionTo;
@@ -36,6 +37,14 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         get
         {
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public SAT3 reductionFrom
@@ -104,7 +113,6 @@ class SipserReduction : IReduction<SAT3, SipserClique>
                 }
             }
         }
-        SAT3Instance.clauses = newClauses;
         SipserClique reducedCLIQUE = new SipserClique();
         // SAT3 literals become nodes.
         reducedCLIQUE.nodes = SAT3Instance.literals;
@@ -114,25 +122,25 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         // define what makes the edges. Not in same cluster & not inverse
 
         // I is the cluster
-        for (int i = 0; i < SAT3Instance.clauses.Count; i++)
+        for (int i = 0; i < newClauses.Count; i++)
         {
-            reducedCLIQUE.numberOfClusters = SAT3Instance.clauses.Count;
-            for (int j = 0; j < SAT3Instance.clauses[i].Count; j++)
+            reducedCLIQUE.numberOfClusters = newClauses.Count;
+            for (int j = 0; j < newClauses[i].Count; j++)
             {
-                string nodeFrom = SAT3Instance.clauses[i][j];
+                string nodeFrom = newClauses[i][j];
                 // nodeFrom = duplicateName(nodeFrom, usedNames, 1, nodeFrom);
 
                 SipserNode newNode = new SipserNode(nodeFrom, i.ToString());
                 reducedCLIQUE.clusterNodes.Add(newNode);
                 // usedNames.Add(nodeFrom);
                 //Four loops? Sounds efficent
-                for (int a = 0; a < SAT3Instance.clauses.Count; a++)
+                for (int a = 0; a < newClauses.Count; a++)
                 {
 
-                    for (int b = 0; b < SAT3Instance.clauses[a].Count; b++)
+                    for (int b = 0; b < newClauses[a].Count; b++)
                     {
                         
-                        string nodeTo = SAT3Instance.clauses[a][b];
+                        string nodeTo = newClauses[a][b];
                         bool inverse = false;
                         bool samecluser = false;
 
@@ -292,6 +300,51 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         }
         return searchList;
 
+    }
+
+    public string mapSolutions(SAT3 problemFrom, SipserClique problemTo, string problemFromSolution){
+        //Check if the colution is correct
+        if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
+            return "Solution is inccorect";
+        }
+
+        //Parse problemFromSolution into a list of nodes
+        List<string> solutionList = problemFromSolution.Replace("(","").Replace(")","").Split(",").ToList();
+        for(int i=0; i<solutionList.Count; i++){
+            string[] tempSplit = solutionList[i].Split(":");
+            if(tempSplit[1] == "False"){
+                solutionList[i] = "!"+tempSplit[0];
+            }
+            else if(tempSplit[1] == "True"){
+                solutionList[i] = tempSplit[0];
+            }
+            else{solutionList[i] = "";}
+            
+        }
+        solutionList.RemoveAll(x => string.IsNullOrEmpty(x));
+
+        //Map solution
+        List<string> tempMappedSolutionList = new List<string>();
+        List<string> mappedSolutionList = new List<string>();
+        foreach(string node in problemTo.nodes){
+            if(solutionList.Contains(node.Split("_")[0])){
+                tempMappedSolutionList.Add(node);
+            }
+        }
+        foreach(List<string> clause in problemFrom.clauses){
+            foreach(string node in tempMappedSolutionList){
+                string tempNode = node.Split("_")[0];
+                if (clause.Contains(tempNode) && !mappedSolutionList.Contains(node)){
+                    mappedSolutionList.Add(node);
+                    break;
+                }
+            }
+        }
+        string problemToSolution = "";
+        foreach(string node in mappedSolutionList){
+            problemToSolution += node + ',';
+        }
+        return '{' + problemToSolution.TrimEnd(',') + '}';
     }
 
 }
