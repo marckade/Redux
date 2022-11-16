@@ -111,7 +111,7 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     }
 
     public List<List<int>> getMatrixC(string G){
-        string strippedG = G.Replace("(","").Replace(")","");
+        string strippedG = G.Replace(" )","").Replace("( ","").Replace("(","").Replace(")","");
         string[] matrixString = strippedG.Split("<=")[0].Split(",");
         List<List<int>> C = new List<List<int>>();
         for(int i=0; i < matrixString.Length; i++){
@@ -128,7 +128,7 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     }
 
     public List<int> getVectorD(string G){
-        string strippedG = G.Replace("(","").Replace(")","");
+        string strippedG = G.Replace(" )","").Replace("( ","").Replace("(","").Replace(")","");
         string[] vectorStringArray = strippedG.Split("<=")[1].Split(" ");
         List<int> d = new List<int>();
         for(int i=0; i<vectorStringArray.Length; i++){

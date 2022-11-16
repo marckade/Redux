@@ -146,6 +146,17 @@ public class KarpIntProgStandardController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
+    [HttpGet("mapSolution")]
+    public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
+        Console.WriteLine(problemTo);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 sat3 = new SAT3(problemFrom);
+        INTPROGRAMMING01 intProg = new INTPROGRAMMING01(problemTo);
+        KarpIntProgStandard reduction = new KarpIntProgStandard(sat3);
+        string mappedSolution = reduction.mapSolutions(sat3,intProg,problemFromSolution);
+        string jsonString = JsonSerializer.Serialize(mappedSolution, options);
+        return jsonString;
+    }
 
 }
 

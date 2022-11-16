@@ -27,7 +27,7 @@ public class INTPROGRAMMING01GenericController : ControllerBase {
 }
 [ApiController]
 [Route("[controller]")]
-public class GenericVerifier0_1INTPController : ControllerBase {
+public class GenericVerifier01INTPController : ControllerBase {
 
     [HttpGet("info")]
     public String getGeneric() {
