@@ -1,6 +1,8 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
+
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 
@@ -81,6 +83,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     {
         SAT3 SAT3Instance = _reductionFrom;
 
+        _gadgetMap = new Dictionary<object, object>();
+
         //number literals of sat before reduction
         List<List<String>> newClauses = new List<List<string>>();
         foreach(var clause in SAT3Instance.clauses){
@@ -116,6 +120,10 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         SipserClique reducedCLIQUE = new SipserClique();
         // SAT3 literals become nodes.
         reducedCLIQUE.nodes = SAT3Instance.literals;
+
+      
+       
+
         List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
         List<string> usedNames = new List<string>(); // Used to track what names have been used for nodes
 
@@ -197,7 +205,25 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
         // Assign and return
         //Console.WriteLine(G);
-        reducedCLIQUE.cliqueAsGraph = new CliqueGraph(G); //ALEX NOTE: Since undirected graphs are backwards compatible, I am able to take in an old format string here. This is a bandaid solution
+
+        //Update gadget mapping to set literals as keys and nodes as values.
+        List<SAT3Gadget> satGadgetList = new List<SAT3Gadget>();
+        List<CLIQUEGadget> cliqueGadgetList = new List<CLIQUEGadget>();
+
+        foreach(string l in SAT3Instance.literals ){
+            SAT3Gadget sGadget = new SAT3Gadget("SipserReduceToCliqueStandard",l);
+            satGadgetList.Add(sGadget);
+        }
+         foreach(string l in usedNamesLiterals ){
+            CLIQUEGadget sGadget = new CLIQUEGadget("SipserReduceToCliqueStandard",l);
+            cliqueGadgetList.Add(sGadget);
+        }
+
+        for (int i = 0; i < satGadgetList.Count;i++){
+            _gadgetMap.Add(satGadgetList[i], cliqueGadgetList[i]);
+        }
+
+            reducedCLIQUE.cliqueAsGraph = new CliqueGraph(G); //ALEX NOTE: Since undirected graphs are backwards compatible, I am able to take in an old format string here. This is a bandaid solution
         reducedCLIQUE.instance = reducedCLIQUE.cliqueAsGraph.formalString(); //Outputs a standard graph notation instance.
         reductionTo = reducedCLIQUE;
         return reducedCLIQUE;

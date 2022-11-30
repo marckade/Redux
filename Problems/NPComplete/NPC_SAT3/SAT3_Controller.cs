@@ -90,6 +90,18 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
+    [HttpGet("dev")]
+    public String dev(){
+    
+    var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 sat3 = new SAT3();
+        SipserReduction reduction = new SipserReduction(sat3);
+        Dictionary<object,object> map = reduction.gadgetMap;
+        
+        string jsonString = JsonSerializer.Serialize(map.Values, options);
+        return jsonString;
+    }
+
 }
 
 [ApiController]
