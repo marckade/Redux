@@ -100,8 +100,8 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         SAT3 sat3 = new SAT3();
         SipserReduction reduction = new SipserReduction(sat3);
         Dictionary<object,object> map = reduction.gadgetMap;
-        
-        string jsonString = JsonSerializer.Serialize(map.Values, options);
+        SAT3Gadget s =(SAT3Gadget) map.First().Key;
+        string jsonString = JsonSerializer.Serialize(map, options);
         return jsonString;
     }
 
