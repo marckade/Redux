@@ -13,6 +13,7 @@ using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_DM3;
+using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
@@ -108,17 +109,22 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
-
-
-
-
-
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance){
          
         KarpReduction reduction = new KarpReduction(new SAT3(problemInstance));
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+    [HttpGet("mapSolution")]
+    public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 sat3 = new SAT3(problemFrom);
+        GRAPHCOLORING graphColoring = new GRAPHCOLORING(problemTo);
+        KarpReduction reduction = new KarpReduction(sat3);
+        string mappedSolution = reduction.mapSolutions(sat3,graphColoring,problemFromSolution);
+        string jsonString = JsonSerializer.Serialize(mappedSolution, options);
         return jsonString;
     }
 

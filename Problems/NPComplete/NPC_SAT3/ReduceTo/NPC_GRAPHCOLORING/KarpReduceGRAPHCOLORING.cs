@@ -331,11 +331,97 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     }
 
     public string mapSolutions(SAT3 problemFrom, GRAPHCOLORING problemTo, string problemFromSolution){
-        return "No mapping currently implemented.";
+        //Check if the colution is correct
+        if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
+            return "Solution is inccorect";
+        }
+
+        //Parse problemFromSolution into a list of nodes
+        List<string> solutionList = problemFromSolution.Replace(" ","").Replace("(","").Replace(")","").Split(",").ToList();
+        for(int i=0; i<solutionList.Count; i++){
+            string[] tempSplit = solutionList[i].Split(":");
+            if(tempSplit[1] == "False"){
+                solutionList[i] = "!"+tempSplit[0];
+            }
+            else if(tempSplit[1] == "True"){
+                solutionList[i] = tempSplit[0];
+            }
+            else{solutionList[i] = "";}
+            
+        }
+        solutionList.RemoveAll(x => string.IsNullOrEmpty(x));
+
+        //Map solution
+        List<string> mappedSolutionList = new List<string>();
+        List<string> variables = new List<string>();
+        foreach(string literal in problemFrom.literals){
+            if(!variables.Contains(literal.Replace("!",""))){
+                variables.Add(literal.Replace("!",""));
+            }
+        }
+        mappedSolutionList.Add("F:0");
+        mappedSolutionList.Add("T:1");
+        mappedSolutionList.Add("B:2");
+        foreach(string variable in variables){
+            if(solutionList.Contains(variable)){
+                mappedSolutionList.Add(string.Format("{0}:1",variable));
+                mappedSolutionList.Add(string.Format("!{0}:0",variable));
+            }
+            else{
+                mappedSolutionList.Add(string.Format("{0}:0",variable));
+                mappedSolutionList.Add(string.Format("!{0}:1",variable));
+            }
+        }
+        for(int i=0; i<problemFrom.clauses.Count; i++){
+            string l0,l1,l2;
+            l0 = problemFrom.clauses[i][0];
+            l1 = problemFrom.clauses[i][1];
+            l2 = problemFrom.clauses[i][2];
+            int N0, N1, N2, N3, N4, N5;
+
+            if(solutionList.Contains(l0) || solutionList.Contains(l1)){
+                if(solutionList.Contains(l0)){
+                    N0 = 0;
+                    N1 = 2;
+                }
+                else{
+                    N0 = 2;
+                    N1 = 0;
+                }
+                N2 = 1;
+                N3 = 0;
+                N4 = 2;
+            }else{
+                
+                N2 = 0;
+            }
+            N0=1;
+            N1=1;
+            N2=1;
+            N3=1;
+            N4=1;
+            N5=1;
+
+            mappedSolutionList.Add(string.Format("C{0}N0:{1}",i,N0));
+            mappedSolutionList.Add(string.Format("C{0}N1:{1}",i,N1));
+            mappedSolutionList.Add(string.Format("C{0}N2:{1}",i,N2));
+            mappedSolutionList.Add(string.Format("C{0}N3:{1}",i,N3));
+            mappedSolutionList.Add(string.Format("C{0}N4:{1}",i,N4));
+            mappedSolutionList.Add(string.Format("C{0}N5:{1}",i,N5));
+        }
+
+
+        string problemToSolution = "";
+        foreach(string node in mappedSolutionList){
+            problemToSolution += node + ',';
+        }
+        return "{(" + problemToSolution.TrimEnd(',') + "):3}";
     }
+}
 
     #endregion
 
-}
 
 
+
+// {(F:1,T:2,B:0,x1:1,!x2:2,x3:1,!x1:2,x2:1,!x3:2,C0N0:0,C0N1:1,C0N2:2,C0N3:1,C0N4:0,C0N5:2,C1N0:1,C1N1:0,C1N2:2,C1N3:1,C1N4:0,C1N5:2,C2N0:0,C2N1:1,C2N2:2,C2N3:1,C2N4:0,C2N5:2):3}

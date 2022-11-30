@@ -264,8 +264,8 @@ class IgbokweVerifier : IVerifier
                 string[] nodeColor = node.Split(':');
 
 
-                string key = nodeColor[0].ToLower().Trim();
-                string val = nodeColor[1].ToLower().Trim();
+                string key = nodeColor[0].Trim();
+                string val = nodeColor[1].Trim();
 
 
                 // check if dictionary contains key first
