@@ -335,7 +335,7 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         }
 
         //Parse problemFromSolution into a list of nodes
-        List<string> solutionList = problemFromSolution.Replace("(","").Replace(")","").Split(",").ToList();
+        List<string> solutionList = problemFromSolution.Replace(" ","").Replace("(","").Replace(")","").Split(",").ToList();
         for(int i=0; i<solutionList.Count; i++){
             string[] tempSplit = solutionList[i].Split(":");
             if(tempSplit[1] == "False"){

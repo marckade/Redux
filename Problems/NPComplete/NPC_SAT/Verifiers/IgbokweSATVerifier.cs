@@ -83,6 +83,9 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
 
         foreach (string assignment in assignments) {
             string[] assignmentParts = assignment.Split(':');
+            if (assignmentParts.Length <= 1){
+                assignmentParts = assignment.Split('=');
+            }
             string literalName = assignmentParts[0];
             string TF = assignmentParts[1];
 

@@ -122,7 +122,9 @@ class IgbokweVerifier : IVerifier
 
         // check if each dictionary node is a node in the problem.
 
-        problem.nodeColoring = _coloring;
+        if(checkNodes(problem, _coloring)){
+
+             problem.nodeColoring = _coloring;
 
         string node = problem.nodes[0];
         string color = problem.getNodeColor(node);
@@ -140,13 +142,27 @@ class IgbokweVerifier : IVerifier
 
         }
 
+        }
+
+       
+
         return verified;
     }
 
-    public Boolean verifyNodes(GRAPHCOLORING problem, Dictionary<string, string> nodeColoring)
+    public Boolean checkNodes(GRAPHCOLORING problem, Dictionary<string, string> nodeColoring)
     {
+       if(problem.nodes.Count == nodeColoring.Count){
+         foreach(var elem in nodeColoring){
+            if(!(problem.nodes.Contains(elem.Key))){
+                return false;
+            }
+          }
 
-        return true;
+
+          return true;
+        }
+
+        return false;
     }
 
 
@@ -201,15 +217,11 @@ class IgbokweVerifier : IVerifier
                     string newColor = problem.getNodeColor(node);
 
 
-                    if (!newColor.Equals(color) && problem.validColor(newColor))
-                    {
+                    if (!newColor.Equals(color) && problem.validColor(newColor)){
 
                         stack.Push(node);
-
                     }
-                    else
-                    {
-
+                    else {
                         return false;
                     }
 
@@ -252,8 +264,8 @@ class IgbokweVerifier : IVerifier
                 string[] nodeColor = node.Split(':');
 
 
-                string key = nodeColor[0].ToLower().Trim();
-                string val = nodeColor[1].ToLower().Trim();
+                string key = nodeColor[0].Trim();
+                string val = nodeColor[1].Trim();
 
 
                 // check if dictionary contains key first
