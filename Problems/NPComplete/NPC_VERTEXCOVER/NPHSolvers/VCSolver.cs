@@ -3,7 +3,7 @@ using API.Interfaces.Graphs.GraphParser;
 
 
 
-namespace API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
+namespace API.Problems.NPComplete.NPC_VERTEXCOVER.NPHSolvers;
 class VCSolverJanita : ISolver {
 
     // --- Fields ---
