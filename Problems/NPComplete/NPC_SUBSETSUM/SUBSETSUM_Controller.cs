@@ -28,24 +28,8 @@ public class SUBSETSUMGenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-
 public class FengController : ControllerBase {
-    [HttpGet]
-    public String getDefault() {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        SUBSETSUM defaultSUBSETSUM = new SUBSETSUM();
-        FengReduction reduction = new FengReduction(defaultSUBSETSUM);
-        string jsonString = JsonSerializer.Serialize(reduction.reductionTo, options);
-        return jsonString;
-    }
-
-    [HttpGet("{instance}")]
-    public String getInstance() {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new SUBSETSUM(), options);
-        return jsonString;
-    }
-
+  
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -62,7 +46,9 @@ public class FengController : ControllerBase {
         SUBSETSUM defaultSUBSETSUM = new SUBSETSUM(problemInstance);
         FengReduction reduction = new FengReduction(defaultSUBSETSUM);
         string jsonString = JsonSerializer.Serialize(reduction, options);
-        Console.WriteLine("reduced form is: "+ jsonString);
+       // Console.WriteLine("reduced form is: "+ jsonString);
         return jsonString;
     }
 }
+
+

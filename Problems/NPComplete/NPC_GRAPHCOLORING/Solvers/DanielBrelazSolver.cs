@@ -90,7 +90,7 @@ public DanielBrelazSolver() {
 
     // Solves graphcoloring 
 
-    public string  Solve(GRAPHCOLORING problem){
+    public string  solve(GRAPHCOLORING problem){
         _nodeList = initialize(problem);
         _uncoloredNodes = problem.nodes;
         initializeColors(problem.nodes.Count);
@@ -98,17 +98,17 @@ public DanielBrelazSolver() {
         Dsatur(problem);
         problem.K = getChromaticNumber(problem.nodeColoring);
 
-        string solution = "{ ( ";  
+        string solution = "{(";  
    
         for(int i =0; i< problem.nodeColoring.Count -1; i++ ){
 
             KeyValuePair < string, string > value = problem.nodeColoring.ElementAt(i);
-            solution +=  value.Key + " : " + value.Value + ", "; 
+            solution +=  value.Key + ":" + value.Value + ","; 
         }
       
         KeyValuePair < string, string > keyValue = problem.nodeColoring.ElementAt(problem.nodeColoring.Count -1);
     
-        solution += keyValue.Key+" : " + keyValue.Value + " ) :"+ problem.K+" }";
+        solution += keyValue.Key+":" + keyValue.Value + "):"+ problem.K+"}";
        
 
         return solution;
@@ -218,7 +218,7 @@ public DanielBrelazSolver() {
         Dictionary<string, Node> nodeMap = new Dictionary<string, Node>();
 
         foreach(string node in problem.nodes){
-            nodeMap.Add(node, new Node(node));
+            nodeMap[node] = new Node(node);
         }
         return nodeMap;
 

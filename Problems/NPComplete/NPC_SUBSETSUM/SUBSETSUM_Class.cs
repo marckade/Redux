@@ -13,6 +13,9 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string[] _contributers = { "Garret Stouffer"};
 
+    //{{10,20,30},{(10,60),(20,100),(30,120)},50}
+    //{{}, {}, 28}
+
     private string _defaultInstance = "{{1,7,12,15} : 28}";
     private string _SS = string.Empty;
     private List<string> _Integers = new List<string>();

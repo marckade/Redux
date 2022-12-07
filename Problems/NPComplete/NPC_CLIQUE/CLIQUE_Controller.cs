@@ -37,7 +37,7 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
-      [HttpGet("visualize")]
+    [HttpGet("visualize")]
     public String getVisualization([FromQuery] string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
@@ -48,14 +48,13 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
-     [HttpGet("solvedVisualization")]
-    public String getSolvedVisualization([FromQuery]string problemInstance) {
+    [HttpGet("solvedVisualization")]
+    public String getSolvedVisualization([FromQuery]string problemInstance,string solution) {
         //Console.WriteLine("solvedvisualization:" + problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
         //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
         CliqueBruteForce solver = new CliqueBruteForce();
-        string solution = solver.solve(clique);
         Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
 
         
@@ -149,6 +148,16 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(apiArr, options);
         return jsonString;
     }
+    [HttpGet("mapSolution")]
+    public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE clique = new CLIQUE(problemFrom);
+        VERTEXCOVER vertexCover = new VERTEXCOVER(problemTo);
+        sipserReduction reduction = new sipserReduction(clique);
+        string mappedSolution = reduction.mapSolutions(clique,vertexCover,problemFromSolution);
+        string jsonString = JsonSerializer.Serialize(mappedSolution, options);
+        return jsonString;
+    }
 }
 
 [ApiController]
@@ -228,27 +237,27 @@ public class CliqueBruteForceController : ControllerBase
 
 }
 
-    [ApiController]
-    [Route("[controller]")]
-    public class CliqueVerifierController : ControllerBase {
+[ApiController]
+[Route("[controller]")]
+public class CliqueVerifierController : ControllerBase {
 
-        [HttpGet("verify")]
-        public String verifyInstance([FromQuery]string problemInstance, string certificate){
-        string jsonString = String.Empty;
-        GraphParser gParser = new GraphParser();
-        bool isValidString = gParser.isValidUndirectedGraph(problemInstance);
-        
-        if (isValidString)
-        {
-            CLIQUE vClique = new CLIQUE(problemInstance);
-            CliqueVerifier verifier = vClique.defaultVerifier;
-            bool validClique = verifier.verify(vClique, certificate);
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            jsonString = JsonSerializer.Serialize(validClique, options);
-        }
-        else{
-            jsonString = "ERROR: PROBLEM ENTERED IS INVALID";
-        }
-        return jsonString;
-        }
+    [HttpGet("verify")]
+    public String verifyInstance([FromQuery]string problemInstance, string certificate){
+    string jsonString = String.Empty;
+    GraphParser gParser = new GraphParser();
+    bool isValidString = gParser.isValidUndirectedGraph(problemInstance);
+    
+    if (isValidString)
+    {
+        CLIQUE vClique = new CLIQUE(problemInstance);
+        CliqueVerifier verifier = vClique.defaultVerifier;
+        bool validClique = verifier.verify(vClique, certificate);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        jsonString = JsonSerializer.Serialize(validClique, options);
     }
+    else{
+        jsonString = "ERROR: PROBLEM ENTERED IS INVALID";
+    }
+    return jsonString;
+    }
+}

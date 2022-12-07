@@ -43,7 +43,7 @@ public class IgbokweVerifierController : ControllerBase {
         IgbokweVerifier verifier = new IgbokweVerifier();
 
 
-        string jsonString  = JsonSerializer.Serialize(verifier, options);
+        string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString; 
     }
 
@@ -90,7 +90,7 @@ public class DanielBrelazSolverController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         GRAPHCOLORING GRAPHCOLORINGProblem = new GRAPHCOLORING(problemInstance);
         DanielBrelazSolver solver = new DanielBrelazSolver();
-        string solvedInstance = solver.Solve(GRAPHCOLORINGProblem);
+        string solvedInstance = solver.solve(GRAPHCOLORINGProblem);
       
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);

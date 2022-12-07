@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;
 
-class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
+class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettVerifier>{
 
     // --- Fields ---
     private string _problemName = "KNAPSACK";
@@ -19,7 +19,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
     private string _instance = string.Empty;
 
 
-    private string _defaultInstance = " {{1,2,3,5,7,9},{(1,5),(2,7),(3,9),(1,7)},1}";
+    private string _defaultInstance = "{{10,20,30},{(10,60),(20,100),(30,120)},50}";
  
 
     private string _wikiName = "Knapsack";
@@ -34,7 +34,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
 
 
     private GarrettKnapsackSolver _defaultSolver = new GarrettKnapsackSolver();
-    private GarrettsSimple _defaultVerifier = new GarrettsSimple();
+    private GarrettVerifier _defaultVerifier = new GarrettVerifier();
 
     // --- Properties ---
     public string problemName {
@@ -117,7 +117,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
             return _defaultSolver;
         }
     }
-    public GarrettsSimple defaultVerifier {
+    public GarrettVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
@@ -131,14 +131,16 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettsSimple>{
         _instance  = _knapsackGraph.ToString();
         nodes = _knapsackGraph.nodesStringList;
         items  = _knapsackGraph.edgesKVP;
+        _W = _knapsackGraph.K;
    
      
     }
     public KNAPSACK(string HWVInput) {
-        _knapsackGraph = new KnapsackGraph(_instance, true);
+        _knapsackGraph = new KnapsackGraph(HWVInput, true);
         _instance  = _knapsackGraph.ToString();
         nodes = _knapsackGraph.nodesStringList;
         items  = _knapsackGraph.edgesKVP;
+        _W = _knapsackGraph.K;
        
     }
 

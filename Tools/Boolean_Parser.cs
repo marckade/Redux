@@ -27,17 +27,12 @@ public class Boolean_Parser{
             string[] literals = singleClause.Split("|");
             foreach(string currentLiteral in literals){
                 currentClause.Add(currentLiteral);
-                Console.Write("adding: "+ currentLiteral);
             }
             clauses.Add(currentClause);
         }
 
         int i = 0;
         foreach (List<string> curList in clauses){
-            Console.WriteLine("curList is: "+ i);
-            foreach(string curClause in curList){
-               Console.WriteLine(curClause);
-            }
             i++;
         }
         return clauses;

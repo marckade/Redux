@@ -9,6 +9,7 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
     private string _reductionDefinition = "Sipsers reduction converts clauses from 3SAT into clusters of nodes in a graph for which CLIQUES exist";
     private string _source = "Sipser, Michael. Introduction to the Theory of Computation.ACM Sigact News 27.1 (1996): 27-29.";
     private string[] _contributers = { "Author Unknown"};
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SAT3 _reductionFrom;
     private INTPROGRAMMING01 _reductionTo;
@@ -28,6 +29,14 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
     public string[] contributers{
         get{
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public SAT3 reductionFrom {
@@ -121,5 +130,52 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
         reductionTo = reduced01INT;
         return reduced01INT;
     }
+
+    public string mapSolutions(SAT3 problemFrom, INTPROGRAMMING01 problemTo, string problemFromSolution){
+        // Check if the colution is correct
+        if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
+            return "Solution is inccorect";
+        }
+
+        //Parse problemFromSolution into a list of nodes
+        List<string> solutionList = problemFromSolution.Replace(" ","").Replace("(","").Replace(")","").Split(",").ToList();
+        for(int i=0; i<solutionList.Count; i++){
+            string[] tempSplit = solutionList[i].Split(":");
+            if(tempSplit[1] == "False"){
+                solutionList[i] = "!"+tempSplit[0];
+            }
+            else if(tempSplit[1] == "True"){
+                solutionList[i] = tempSplit[0];
+            }
+            else{solutionList[i] = "";}
+            
+        }
+        solutionList.RemoveAll(x => string.IsNullOrEmpty(x));
+
+        //Map solution
+        List<string> mappedSolutionList = new List<string>();
+        List<string> variables = new List<string>();
+        foreach(string literal in problemFrom.literals){
+            if(!variables.Contains(literal.Replace("!",""))){
+                variables.Add(literal.Replace("!",""));
+            }
+        }
+        foreach(string variable in variables){
+            if(solutionList.Contains(variable)){
+                mappedSolutionList.Add("1");
+            }
+            else{
+                mappedSolutionList.Add("0");
+            }
+        }
+
+
+        string problemToSolution = "";
+        foreach(string num in mappedSolutionList){
+            problemToSolution += num + ' ';
+        }
+        return '(' + problemToSolution.TrimEnd(' ') + ')';
+    }
 }
+
 // return an instance of what you are reducing to

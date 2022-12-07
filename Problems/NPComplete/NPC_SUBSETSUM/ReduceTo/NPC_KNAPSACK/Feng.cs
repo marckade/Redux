@@ -8,9 +8,10 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
     // --- Fields ---
     private string _reductionDefinition = "Fengs reduction converts positive integers in SUBSETSUM to items in KNAPSACK";
     private string _source = "Feng, Thomas http://cgm.cs.mcgill.ca/~avis/courses/360/2003/assignments/sol4.pdf";
-    private string[] _contributers = {"Garret Stouffer"};
-
-    private string _complexity ="______";
+    private string[] _contributers = {"Garret Stouffer, Daniel Igbokwe"};
+  
+    private string _complexity ="O(n)";
+    private Dictionary<Object,Object> _gadgetMap = new Dictionary<Object,Object>();
 
     private SUBSETSUM _reductionFrom;
     private KNAPSACK _reductionTo;
@@ -31,6 +32,14 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         get
         {
             return _contributers;
+        }
+    }
+    public Dictionary<Object,Object> gadgetMap {
+        get{
+            return _gadgetMap;
+        }
+        set{
+            _gadgetMap = value;
         }
     }
     public SUBSETSUM reductionFrom {
@@ -55,6 +64,7 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         }
     }
 
+
     // --- Methods Including Constructors ---
     public FengReduction(SUBSETSUM from) {
         _reductionFrom = from;
@@ -74,6 +84,7 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         for(int i=0; i < SUBSETSUMInstance.Integers.Count; i++) {
             KeyValuePair<string, string> item = new KeyValuePair<string, string>(integers[i], integers[i]);
             Items.Add(item);
+            _gadgetMap[integers[i]] = integers[i];
         }
 
         reducedKNAPSACK.items = Items;
@@ -81,6 +92,10 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
 
         reductionTo = reducedKNAPSACK;
         return reducedKNAPSACK;
+    }
+
+    public string mapSolutions(SUBSETSUM problemFrom, KNAPSACK problemTo, string problemFromSolution){
+        return "No mapping currently implemented.";
     }
 }
 // return an instance of what you are reducing to

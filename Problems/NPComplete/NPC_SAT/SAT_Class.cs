@@ -6,7 +6,7 @@ using API.Problems.NPComplete.NPC_SAT.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SAT;
 
- class SAT : IProblem<GenericSolver, GenericVerifier> {
+ class SAT : IProblem<SATBruteForceSolver, IgbokweSATVerifier> {
 
 
     #region Fields
@@ -18,15 +18,15 @@ namespace API.Problems.NPComplete.NPC_SAT;
     private string _source = ".";
     private string[] _contributers = { "Daniel Igbokwe" };
 
-    private string _defaultInstance = "(x1 & !x2 & x3) | (!x1 & x3 & x1) | (x2 & !x3 & x1)";
+    private string _defaultInstance = "(x1 | !x2 | x3) & (!x1 | x3 | x1) & (x2 | !x3 | x1)";
     private string _instance = string.Empty;
 
     private string _wikiName = "";
     private List<List<string>> _clauses = new List<List<string>>();
     private List<string> _literals = new List<string>();
    
-    private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private SATBruteForceSolver _defaultSolver = new SATBruteForceSolver();
+    private IgbokweSATVerifier _defaultVerifier = new IgbokweSATVerifier();
 
     #endregion
 
@@ -104,13 +104,13 @@ namespace API.Problems.NPComplete.NPC_SAT;
         }
     }
 
-    public GenericVerifier defaultVerifier {
+    public IgbokweSATVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
     }
 
-      public GenericSolver defaultSolver {
+      public SATBruteForceSolver defaultSolver {
         get {
             return _defaultSolver;
         }
@@ -150,11 +150,11 @@ namespace API.Problems.NPComplete.NPC_SAT;
         string strippedInput = phiInput.Replace(" ", "").Replace("(", "").Replace(")","");
 
         // Parse on | to collect each clause
-        string[] rawClauses = strippedInput.Split('|');
+        string[] rawClauses = strippedInput.Split('&');
 
         foreach(string clause in rawClauses) {
             List<string> clauseToAdd = new List<string>();
-            string[] literals = clause.Split('&');
+            string[] literals = clause.Split('|');
 
             foreach(string literal in literals) {
                 clauseToAdd.Add(literal);
