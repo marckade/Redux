@@ -2,6 +2,7 @@ using API.Interfaces;
 using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
+using System.Text.Json;
 
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
@@ -205,20 +206,29 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
         // Assign and return
         //Console.WriteLine(G);
-
+        var options = new JsonSerializerOptions { WriteIndented = false };
         //Update gadget mapping to set literals as keys and nodes as values.
-        List<SAT3Gadget> satGadgetList = new List<SAT3Gadget>();
-        List<CLIQUEGadget> cliqueGadgetList = new List<CLIQUEGadget>();
-
+        // List<SAT3Gadget> satGadgetList = new List<SAT3Gadget>();
+        // List<CLIQUEGadget> cliqueGadgetList = new List<CLIQUEGadget>();
+        List<string> satGadgetList = new List<string>();
+        List<string> cliqueGadgetList = new List<string>();
+        int id = 0;
         foreach(string l in SAT3Instance.literals ){
-            SAT3Gadget sGadget = new SAT3Gadget("SipserReduceToCliqueStandard",l);
-            satGadgetList.Add(sGadget);
+            id++;
+            SAT3Gadget sGadget = new SAT3Gadget("SipserReduceToCliqueStandard",l,id);
+            // string[] sGadget = new string[] {l};
+            string serializedGadget = JsonSerializer.Serialize(sGadget, options);
+            satGadgetList.Add(serializedGadget);
         }
-         foreach(string l in usedNamesLiterals ){
-            CLIQUEGadget sGadget = new CLIQUEGadget("SipserReduceToCliqueStandard",l);
-            cliqueGadgetList.Add(sGadget);
+        id = 0;
+        foreach(string l in usedNamesLiterals ){
+            id++;
+            CLIQUEGadget cGadget = new CLIQUEGadget("SipserReduceToCliqueStandard",l,id);
+            // string[] cGadget = new string[] { l };
+            string serializedGadget = JsonSerializer.Serialize(cGadget, options);
+            cliqueGadgetList.Add(serializedGadget);
         }
-
+    
         for (int i = 0; i < satGadgetList.Count;i++){
             _gadgetMap.Add(satGadgetList[i], cliqueGadgetList[i]);
         }

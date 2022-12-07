@@ -10,12 +10,13 @@ public class CLIQUEGadget : IGadget
 
     private string _gadgetString;
 
+    private int _uniqueId; //NEEDED FOR SERIALIZATION!!!
 
-    public CLIQUEGadget(string reductionType, string gadgetString){
+    public CLIQUEGadget(string reductionType, string gadgetString,int id){
         _reductionType = reductionType;
         _gadgetString = gadgetString;
         _problemType = "CLIQUE";
-
+        _uniqueId = id;
     }
 
 
@@ -52,6 +53,15 @@ public class CLIQUEGadget : IGadget
         set
         {
             _gadgetString = value;
+        }
+    }
+
+        public int uniqueId{
+        get{
+            return _uniqueId;
+        }
+        set{
+            _uniqueId = value;
         }
     }
 

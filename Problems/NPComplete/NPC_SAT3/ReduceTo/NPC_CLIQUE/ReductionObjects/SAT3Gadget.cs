@@ -14,12 +14,14 @@ public class SAT3Gadget : IGadget
 
     private string _gadgetString;
 
+    private int _uniqueId; //NEEDED FOR SERIALIZATION!!!
 
 
-    public SAT3Gadget(string reductionType, string gadgetString){
+    public SAT3Gadget(string reductionType, string gadgetString,int id){
         _reductionType = reductionType;
         _gadgetString = gadgetString;
         _problemType = "SAT3";
+        _uniqueId = id;
 
     }
 
@@ -62,10 +64,20 @@ public class SAT3Gadget : IGadget
         }
     }
 
+    public int uniqueId{
+        get{
+            return _uniqueId;
+        }
+        set{
+            _uniqueId = value;
+        }
+    }
+
     override public string? ToString(){
 
         return _gadgetString;
     }
+
 
 
     
@@ -74,6 +86,7 @@ public class SAT3Gadget : IGadget
         
         return this._reductionType.GetHashCode() + this._problemType.GetHashCode() + this._gadgetString.GetHashCode();
     }
+    
 
     public override bool Equals(object? obj)
     {
