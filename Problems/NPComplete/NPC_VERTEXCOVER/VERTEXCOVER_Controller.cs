@@ -61,13 +61,12 @@ public class VERTEXCOVERGenericController : ControllerBase {
     }
 
     [HttpGet("solvedVisualization")]
-    public String solvedVisualization([FromQuery]string problemInstance){
+    public String solvedVisualization([FromQuery]string problemInstance, string solution){
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
         VertexCoverGraph vGraph = vCover.VCAsGraph;
-        List<string> solutionStr = vCover.defaultSolver.Solve(vCover);
-        Dictionary<string, bool> solutionDict = vCover.defaultSolver.getSolutionDict(problemInstance, solutionStr);
+        Dictionary<string, bool> solutionDict = vCover.defaultSolver.getSolutionDict(problemInstance, solution);
         
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(vGraph.getNodeList,vGraph.getEdgeList);
         for(int i=0;i<apiGraph.nodes.Count;i++){
@@ -129,12 +128,12 @@ public class testInstanceController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class VCSolverController : ControllerBase {
+public class VertexCoverBruteForceController : ControllerBase {
 
     [HttpGet("info")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        VCSolverJanita solver = new VCSolverJanita();
+        VertexCoverBruteForce solver = new VertexCoverBruteForce();
         ArrayList testDataArr = new ArrayList();
         testDataArr.Add("DATA ARRAYLIST");
         API_Solution api_instance = new API_Solution("HELLO WORLD", testDataArr);
@@ -148,35 +147,8 @@ public class VCSolverController : ControllerBase {
     public String solveInstance([FromQuery]string problemInstance){
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER problem = new VERTEXCOVER(problemInstance);
-        List<string> solvedInstance = problem.defaultSolver.Solve(problem);
-
-        string undirectedSetString = "{";
-        foreach(string nodeStr in solvedInstance){
-            undirectedSetString = undirectedSetString + nodeStr + ",";
-        }
-        undirectedSetString = undirectedSetString.TrimEnd(',');
-        undirectedSetString = undirectedSetString + "}";
-        // List<KeyValuePair<string, string>> solvedInstance = problem.defaultSolver.Solve(problem);
-        // string stringVC = "{";
-        // stringVC += Environment.NewLine;
-        // foreach (KeyValuePair<string, string> keyValue in solvedInstance)
-        // {
-        //     string key = keyValue.Key;
-        //     string value = keyValue.Value;    
-        //     stringVC += "{Key: ";
-        //     stringVC += key;
-        //     stringVC += ", Value: ";
-        //     stringVC += value;
-        //     stringVC += "}, "; 
-        //     stringVC += Environment.NewLine;
-        // } 
-        // stringVC += "}";
-
-        // Console.Write(stringVC);
-
-
-
-        string jsonString = JsonSerializer.Serialize(undirectedSetString, options);
+        string solution = problem.defaultSolver.Solve(problem);
+        string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
 

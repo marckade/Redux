@@ -3,6 +3,7 @@ using API.Interfaces.Graphs;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Verifiers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
+using API.Problems.NPComplete.NPC_VERTEXCOVER.NPHSolvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
 namespace redux_tests;
 
@@ -32,7 +33,7 @@ public class VERTEXCOVER_Tests
     {
         string fiveClique = "{{{a,b,c,d,e},{{a,b},{a,c},{a,d},{a,e},{b,c},{b,d},{b,e},{c,e},{c,d},{d,e}},5}}";
         VERTEXCOVER vCov = new VERTEXCOVER(fiveClique);
-        VCSolverJanita vcSolver = vCov.defaultSolver;
+        VCSolverJanita vcSolver = new VCSolverJanita();
         List<string> nodeOutput = vcSolver.Solve(vCov);
 
         //We know from manually computing this using pen and paper that the above graph will always return a set of four nodes as the solution.

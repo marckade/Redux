@@ -5,7 +5,7 @@ using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
-class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
+class VERTEXCOVER : IProblem<VertexCoverBruteForce,VCVerifierJanita>{
 
     // --- Fields ---
     private string _problemName = "VERTEXCOVER";
@@ -19,7 +19,7 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
     private int _K = 3;
     private string _wikiName = "";
-    private VCSolverJanita _defaultSolver = new VCSolverJanita();
+    private VertexCoverBruteForce _defaultSolver = new VertexCoverBruteForce();
     private VCVerifierJanita _defaultVerifier = new VCVerifierJanita();
 
     private VertexCoverGraph _VCAsGraph;
@@ -101,7 +101,7 @@ class VERTEXCOVER : IProblem<VCSolverJanita,VCVerifierJanita>{
         }
     }
 
-    public VCSolverJanita defaultSolver {
+    public VertexCoverBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }

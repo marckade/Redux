@@ -37,7 +37,7 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
-      [HttpGet("visualize")]
+    [HttpGet("visualize")]
     public String getVisualization([FromQuery] string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
@@ -48,14 +48,13 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
-     [HttpGet("solvedVisualization")]
-    public String getSolvedVisualization([FromQuery]string problemInstance) {
+    [HttpGet("solvedVisualization")]
+    public String getSolvedVisualization([FromQuery]string problemInstance,string solution) {
         //Console.WriteLine("solvedvisualization:" + problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
         //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
         CliqueBruteForce solver = new CliqueBruteForce();
-        string solution = solver.solve(clique);
         Dictionary<string,bool> solutionDict = solver.getSolutionDict(problemInstance, solution);
 
         

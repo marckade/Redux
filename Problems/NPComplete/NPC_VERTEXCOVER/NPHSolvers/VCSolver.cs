@@ -3,7 +3,7 @@ using API.Interfaces.Graphs.GraphParser;
 
 
 
-namespace API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
+namespace API.Problems.NPComplete.NPC_VERTEXCOVER.NPHSolvers;
 class VCSolverJanita : ISolver {
 
     // --- Fields ---
@@ -120,19 +120,19 @@ class VCSolverJanita : ISolver {
     /// <param name="problemInstance"></param>
     /// <param name="solutionString"></param>
     /// <returns></returns>
-    public Dictionary<string,bool> getSolutionDict(string problemInstance, List<string> solutionStringList){
+    public Dictionary<string,bool> getSolutionDict(string problemInstance, string solutionString){
         Dictionary<string, bool> solutionDict = new Dictionary<string, bool>();
         // GraphParser gParser = new GraphParser();
         VertexCoverGraph vGraph = new VertexCoverGraph(problemInstance, true);
         List<string> problemInstanceNodes = vGraph.nodesStringList;
         // List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
-        List<string> solvedNodes = solutionStringList;
+        List<string> solvedNodes = solutionString.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
 
         // Remove solvedNodes from instanceNodes
         foreach(string node in solvedNodes){
-        problemInstanceNodes.Remove(node);
+            problemInstanceNodes.Remove(node);
         //  Console.WriteLine("Solved nodes: "+node);
-        solutionDict.Add(node, true);
+            solutionDict.Add(node, true);
        }
         // Add solved nodes to dict as {name, true}
         // Add remaining instance nodes as {name, false}

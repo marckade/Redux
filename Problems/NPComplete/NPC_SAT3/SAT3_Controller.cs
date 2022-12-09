@@ -61,23 +61,21 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
     }
 
     [HttpGet("solvedVisualization")]
-    public String getSolvedVisualization([FromQuery]string problemInstance) {
-        //Console.WriteLine("solvedvisualization:" + problemInstance);
+    public String getSolvedVisualization([FromQuery]string problemInstance, string solution) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3(problemInstance);
-        //Console.WriteLine("problemInstance: "+defaultSAT3.instance);
         SkeletonSolver solver = defaultSAT3.defaultSolver;
-        Dictionary<string,bool> solutionDict = solver.solve(defaultSAT3);
-        // bool solBool;
-        // solutionDict.TryGetValue("x1", out solBool);
-        //Console.WriteLine(solBool);
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();
-        //string cliqueString = reducedClique.instance;
-        //Console.WriteLine(cliqueString);
+        //Turn string into solution dictionary
+        List<string> solutionList = solution.Replace("(","").Replace(")","").Replace(" ","").Split(",").ToList();
+        Dictionary<string,bool> solutionDict = new Dictionary<string,bool>();
+        foreach(var assignment in solutionList){
+            string[] assignmentSpit = assignment.Split(":");
+            bool value = bool.Parse(assignmentSpit[1]);
+            solutionDict.Add(assignmentSpit[0], value);
+        }
         SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionDict);
-                //Console.WriteLine(sClique.clusterNodes[0].ToString());
-
         string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         return jsonString;
     }
