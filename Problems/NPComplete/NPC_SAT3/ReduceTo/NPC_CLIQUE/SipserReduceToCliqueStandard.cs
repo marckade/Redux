@@ -347,5 +347,36 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         return '{' + problemToSolution.TrimEnd(',') + '}';
     }
 
+    public string reverseMapSolutions(SAT3 problemFrom, SipserClique problemTo, string problemToSolution){
+        if(!problemTo.defaultVerifier.verify(problemTo,problemToSolution)){
+            return "Solution is inccorect";
+        }
+
+        //Parse problemFromSolution into a list of nodes
+        List<string> solutionList = problemToSolution.Replace(" ","").Replace("{","").Replace("}","").Split(",").ToList();
+      
+
+        //Reverse Mapping
+        List<string> reverseMappedSolutionList = new List<string>();
+        foreach(string node in solutionList){
+            string temp = node;
+            if(temp.Contains("_")){temp = temp.Substring(0,temp.IndexOf("_"));}
+            if(temp.Contains("!")){
+                temp = temp.Replace("!","") + ":False";
+            }
+            else{
+                temp = temp + ":True";
+            }
+            if(!reverseMappedSolutionList.Contains(temp)){reverseMappedSolutionList.Add(temp);}
+
+        }
+        
+        string problemFromSolution = "";
+        foreach(string literal in reverseMappedSolutionList){
+            problemFromSolution += literal + ',';
+        }
+        return '(' + problemFromSolution.TrimEnd(',') + ')';
+    }
+
 }
 // return an instance of what you are reducing to
