@@ -18,7 +18,7 @@ public bool isValidUndirectedGraph(string undirectedGraphStr){
     pattern = @"{{((\w+)*(\w+,)*)+},{(({\w+,\w+})*({\w+,\w+},)*)*},\d+}"; //checks for undirected graph format
     Regex reg = new Regex(pattern);
     bool inputIsValid = reg.IsMatch(undirectedGraphStr);
-        Console.WriteLine(inputIsValid.ToString(), undirectedGraphStr);
+        // Console.WriteLine(inputIsValid.ToString(), undirectedGraphStr);
         return inputIsValid;
 }
 

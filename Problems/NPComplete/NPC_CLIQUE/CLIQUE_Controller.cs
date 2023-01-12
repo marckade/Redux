@@ -183,7 +183,7 @@ public class CLIQUEDevController : ControllerBase
 
         CLIQUE devClique = new CLIQUE(problemInstance);
         GraphParser gParser = new GraphParser();
-        Console.WriteLine(devClique.cliqueAsGraph.formalString());
+        // Console.WriteLine(devClique.cliqueAsGraph.formalString());
         List<string> nList = gParser.getNodeList(devClique.cliqueAsGraph.formalString());
         
 
