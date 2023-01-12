@@ -4,13 +4,13 @@ using API.Problems.NPComplete.NPC_SAT3;
 
 
 namespace API.Problems.NPComplete.NPC_SAT3.Solvers;
-class SkeletonSolver : ISolver {
+class Sat3BacktrackingSolver : ISolver {
 
     // --- Fields ---
     private string _solverName = "Generic Solver";
-    private string _solverDefinition = "This is a skeleton for the solver for SAT3";
-    private string _source = "Kaden";
-    private string[] _contributers = {"Kaden Marchetti"};
+    private string _solverDefinition = "This is a O(n!) solution algorithm for the 3SAT problem which implements a back tracking algorithm to find and exact assignment boolean assignment of variable to satisfy the broblem instance.";
+    private string _source = "David Lindeman";
+    private string[] _contributers = {"Kaden Marchetti, David Lindeman"};
 
 
     // --- Properties ---
@@ -36,7 +36,7 @@ class SkeletonSolver : ISolver {
         }
     }
     // --- Methods Including Constructors ---
-    public SkeletonSolver() {
+    public Sat3BacktrackingSolver() {
     }
 
 

@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
-class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
+class SAT3 : IProblem<Sat3BacktrackingSolver,KadensSimple>{
 
     // --- Fields ---
     private string _problemName = "3SAT";
@@ -14,7 +14,7 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
     
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "(x1 | !x2 | x3) & (!x1 | x3 | x1) & (x2 | !x3 | x1)";
-    private SkeletonSolver _defaultSolver = new SkeletonSolver();
+    private Sat3BacktrackingSolver _defaultSolver = new Sat3BacktrackingSolver();
     private KadensSimple _defaultVerifier = new KadensSimple();
     private string _instance = string.Empty;
 
@@ -60,7 +60,7 @@ class SAT3 : IProblem<SkeletonSolver,KadensSimple>{
             return _defaultInstance;
         }
     }
-    public SkeletonSolver defaultSolver {
+    public Sat3BacktrackingSolver defaultSolver {
         get {
             return _defaultSolver;
         }
