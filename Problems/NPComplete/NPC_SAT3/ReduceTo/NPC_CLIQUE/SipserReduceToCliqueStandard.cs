@@ -1,6 +1,9 @@
 using API.Interfaces;
 using API.Problems.NPComplete.NPC_CLIQUE;
+using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
+using System.Text.Json;
+
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 
@@ -81,6 +84,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     {
         SAT3 SAT3Instance = _reductionFrom;
 
+        _gadgetMap = new Dictionary<object, object>();
+
         //number literals of sat before reduction
         List<List<String>> newClauses = new List<List<string>>();
         foreach(var clause in SAT3Instance.clauses){
@@ -116,6 +121,10 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         SipserClique reducedCLIQUE = new SipserClique();
         // SAT3 literals become nodes.
         reducedCLIQUE.nodes = SAT3Instance.literals;
+
+      
+       
+
         List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
         List<string> usedNames = new List<string>(); // Used to track what names have been used for nodes
 
@@ -197,7 +206,34 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
         // Assign and return
         //Console.WriteLine(G);
-        reducedCLIQUE.cliqueAsGraph = new CliqueGraph(G); //ALEX NOTE: Since undirected graphs are backwards compatible, I am able to take in an old format string here. This is a bandaid solution
+        var options = new JsonSerializerOptions { WriteIndented = false };
+        //Update gadget mapping to set literals as keys and nodes as values.
+        // List<SAT3Gadget> satGadgetList = new List<SAT3Gadget>();
+        // List<CLIQUEGadget> cliqueGadgetList = new List<CLIQUEGadget>();
+        List<string> satGadgetList = new List<string>();
+        List<string> cliqueGadgetList = new List<string>();
+        int id = 0;
+        foreach(string l in SAT3Instance.literals ){
+            id++;
+            SAT3Gadget sGadget = new SAT3Gadget("SipserReduceToCliqueStandard",l,id);
+            // string[] sGadget = new string[] {l};
+            string serializedGadget = JsonSerializer.Serialize(sGadget, options);
+            satGadgetList.Add(serializedGadget);
+        }
+        id = 0;
+        foreach(string l in usedNamesLiterals ){
+            id++;
+            CLIQUEGadget cGadget = new CLIQUEGadget("SipserReduceToCliqueStandard",l,id);
+            // string[] cGadget = new string[] { l };
+            string serializedGadget = JsonSerializer.Serialize(cGadget, options);
+            cliqueGadgetList.Add(serializedGadget);
+        }
+    
+        for (int i = 0; i < satGadgetList.Count;i++){
+            _gadgetMap.Add(satGadgetList[i], cliqueGadgetList[i]);
+        }
+
+            reducedCLIQUE.cliqueAsGraph = new CliqueGraph(G); //ALEX NOTE: Since undirected graphs are backwards compatible, I am able to take in an old format string here. This is a bandaid solution
         reducedCLIQUE.instance = reducedCLIQUE.cliqueAsGraph.formalString(); //Outputs a standard graph notation instance.
         reductionTo = reducedCLIQUE;
         return reducedCLIQUE;
@@ -345,6 +381,37 @@ class SipserReduction : IReduction<SAT3, SipserClique>
             problemToSolution += node + ',';
         }
         return '{' + problemToSolution.TrimEnd(',') + '}';
+    }
+
+    public string reverseMapSolutions(SAT3 problemFrom, SipserClique problemTo, string problemToSolution){
+        if(!problemTo.defaultVerifier.verify(problemTo,problemToSolution)){
+            return "Solution is inccorect";
+        }
+
+        //Parse problemFromSolution into a list of nodes
+        List<string> solutionList = problemToSolution.Replace(" ","").Replace("{","").Replace("}","").Split(",").ToList();
+      
+
+        //Reverse Mapping
+        List<string> reverseMappedSolutionList = new List<string>();
+        foreach(string node in solutionList){
+            string temp = node;
+            if(temp.Contains("_")){temp = temp.Substring(0,temp.IndexOf("_"));}
+            if(temp.Contains("!")){
+                temp = temp.Replace("!","") + ":False";
+            }
+            else{
+                temp = temp + ":True";
+            }
+            if(!reverseMappedSolutionList.Contains(temp)){reverseMappedSolutionList.Add(temp);}
+
+        }
+        
+        string problemFromSolution = "";
+        foreach(string literal in reverseMappedSolutionList){
+            problemFromSolution += literal + ',';
+        }
+        return '(' + problemFromSolution.TrimEnd(',') + ')';
     }
 
 }

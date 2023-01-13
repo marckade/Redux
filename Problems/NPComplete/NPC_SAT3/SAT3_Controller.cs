@@ -64,7 +64,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
     public String getSolvedVisualization([FromQuery]string problemInstance, string solution) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT3 defaultSAT3 = new SAT3(problemInstance);
-        SkeletonSolver solver = defaultSAT3.defaultSolver;
+        Sat3BacktrackingSolver solver = defaultSAT3.defaultSolver;
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();
         //Turn string into solution dictionary
@@ -87,6 +87,17 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         SipserClique clique = new SipserClique(problemTo);
         SipserReduction reduction = new SipserReduction(sat3);
         string mappedSolution = reduction.mapSolutions(sat3,clique,problemFromSolution);
+        string jsonString = JsonSerializer.Serialize(mappedSolution, options);
+        return jsonString;
+    }
+
+    [HttpGet("reverseMappedSolution")]
+    public String reverseMappedSolution([FromQuery]string problemFrom, string problemTo, string problemToSolution){
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        SAT3 sat3 = new SAT3(problemFrom);
+        SipserClique clique = new SipserClique(problemTo);
+        SipserReduction reduction = new SipserReduction(sat3);
+        string mappedSolution = reduction.reverseMapSolutions(sat3,clique,problemToSolution);
         string jsonString = JsonSerializer.Serialize(mappedSolution, options);
         return jsonString;
     }
@@ -229,13 +240,13 @@ public class KadensSimpleVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class SkeletonSolverController : ControllerBase {
+public class Sat3BacktrackingSolverController : ControllerBase {
 
     // Return Generic Solver Class
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        SkeletonSolver solver = new SkeletonSolver();
+        Sat3BacktrackingSolver solver = new Sat3BacktrackingSolver();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);

@@ -134,7 +134,7 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
 
         string G = "{{" + nodesString + "},{" + edgesString + "}," + vertexKInt.ToString() + "}";
         //reducedVERTEXCOVER.instance = G; 
-         Console.Write(G);
+        //  Console.Write(G);
 
         reducedVERTEXCOVER = new VERTEXCOVER(G);
         //reducedVERTEXCOVER.K = (CLIQUEInstance.nodes.Count - CLIQUEInstance.K); 
