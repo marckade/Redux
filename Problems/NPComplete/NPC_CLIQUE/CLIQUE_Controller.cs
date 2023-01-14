@@ -241,6 +241,16 @@ public class CliqueBruteForceController : ControllerBase
 [Route("[controller]")]
 public class CliqueVerifierController : ControllerBase {
 
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CliqueVerifier verifier = new CliqueVerifier();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(verifier, options);
+        return jsonString;
+    }
+
     [HttpGet("verify")]
     public String verifyInstance([FromQuery]string problemInstance, string certificate){
     string jsonString = String.Empty;
