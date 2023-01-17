@@ -8,7 +8,7 @@ class TSP : IProblem<BranchAndBoundSolver, TSPVerifier>
 {
 
     // --- Fields ---
-    private string _problemName = "TSP";
+    private string _problemName = "Traveling Sales Person";
     private string _formalDefinition = "D = (d sub i sub j) | D is the matrix of intercity distances, d sub i sub j represents the distance from city i to city j";
     private string _problemDefinition = "The traveling salesperson problem finds an optimal tour (a path of minimum distance) given a matrix of cities and distances between them. The tour must start and end in the same city and each other city must be visited exactly once.";
     private string _source = "Dasgupta, Sanjoy, Christos H. Papadimitriou, and Umesh V. Vazirani. Algorithms. Boston: McGraw-Hill Higher Education, 2008.";

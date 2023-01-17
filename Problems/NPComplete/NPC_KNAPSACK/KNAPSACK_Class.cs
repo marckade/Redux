@@ -7,7 +7,7 @@ namespace API.Problems.NPComplete.NPC_KNAPSACK;
 class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettVerifier>{
 
     // --- Fields ---
-    private string _problemName = "KNAPSACK";
+    private string _problemName = "Knapsack (Binary)";
 
     private string _formalDefinition = "KNAPSACK = {<H, W> | H is a set of items (w,v) and there is a subset of items in H whose collective weight is less than or equal to W and whose collective value is optimized.}";
     private string _problemDefinition = "The 0-1 KNAPSACK problem is given a knapsack with a maximum capacity W and a set of n items x_1, x_2,... x_n with weights w_1,w_2,... w_n and values v_1,v_2,... v_n optimize the combination of singular items that provide the most value while staying under W. ";
