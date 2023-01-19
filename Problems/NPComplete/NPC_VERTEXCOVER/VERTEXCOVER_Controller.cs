@@ -134,10 +134,7 @@ public class VertexCoverBruteForceController : ControllerBase {
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VertexCoverBruteForce solver = new VertexCoverBruteForce();
-        ArrayList testDataArr = new ArrayList();
-        testDataArr.Add("DATA ARRAYLIST");
-        API_Solution api_instance = new API_Solution("HELLO WORLD", testDataArr);
-        string jsonString = JsonSerializer.Serialize(api_instance, options);
+        string jsonString = JsonSerializer.Serialize(solver, options);
 
      return jsonString;
 

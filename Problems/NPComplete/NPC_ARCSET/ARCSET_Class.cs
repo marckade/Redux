@@ -15,7 +15,7 @@ namespace API.Problems.NPComplete.NPC_ARCSET;
 class ARCSET : IProblem<ArcSetBruteForce,AlexArcsetVerifier>{
 
     // --- Fields ---
-    private string _problemName = "ARCSET";
+    private string _problemName = "Feedback Arc Set";
     private string _formalDefinition = "ARCSET = {<G,k> | G is a directed graph that can be rendered acyclic by removal of at most k edges}";
      private string _problemDefinition = "ARCSET, or the Feedback Arc Set satisfiability problem, is an NP-complete problem that can be described like the following. Given a directed graph, does removing a given set of edges render the graph acyclical? That is, does removing the edges break every cycle in the graph?";
 

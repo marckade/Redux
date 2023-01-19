@@ -8,7 +8,7 @@ namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 class VERTEXCOVER : IProblem<VertexCoverBruteForce,VCVerifierJanita>{
 
     // --- Fields ---
-    private string _problemName = "VERTEXCOVER";
+    private string _problemName = "Vertex Cover";
     private string _formalDefinition = "VERTEXCOVER = {<G, k> | G in an undirected graph that has a k-node vertex cover}";
     private string _problemDefinition = "A vertex cover is a subset of nodes S, such that every edge in the graph, G, touches a node in S.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";

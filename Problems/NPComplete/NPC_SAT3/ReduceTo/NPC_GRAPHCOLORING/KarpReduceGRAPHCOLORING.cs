@@ -9,6 +9,7 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
 
 
     #region Fields
+    private string _reductionName = "Karps's Graph Coloring Reduction";
     private string _reductionDefinition = "Karp's reduction converts each clause from a 3CNF into an OR gadgets to establish the truth assignments using labels.";
     private string _source = "http://cs.bme.hu/thalg/3sat-to-3col.pdf.";
     private string[] _contributers = { "Daniel Igbokwe"};
@@ -21,7 +22,13 @@ class KarpReduction : IReduction<SAT3, GRAPHCOLORING>
     #endregion
 
     #region Properties
-
+    public string reductionName
+    {
+        get
+        {
+            return _reductionName;
+        }
+    }
     public string reductionDefinition
     {
         get

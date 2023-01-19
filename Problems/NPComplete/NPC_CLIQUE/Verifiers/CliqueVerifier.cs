@@ -56,6 +56,10 @@ class CliqueVerifier : IVerifier {
     public bool verify(CLIQUE problem, string certificate){
         
         List<string> nodeList = parseCertificate(certificate);
+        //Check k value
+        if(nodeList.Count != problem.K){
+            return false;
+        }
         foreach(var i in nodeList){
             foreach(var j in nodeList){
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);

@@ -1,6 +1,7 @@
 namespace API.Interfaces;
 
 interface IReduction<T,U> {
+    string reductionName{get;}
     string reductionDefinition{get;}
     string source {get;}
     string[] contributers { get; }

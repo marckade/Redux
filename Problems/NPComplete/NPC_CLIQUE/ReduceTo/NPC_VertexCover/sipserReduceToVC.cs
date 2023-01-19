@@ -8,6 +8,7 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
 
 
     // --- Fields ---
+    private string _reductionName = "Sipser's Vertex Cover Reduction";
     private string _reductionDefinition = @"This Sipsers reduction converts the Clique problem into a Vertex Cover problem.
                                             This is done by first taking all possible edges in the original clique graph, and removing
                                             the edges that are actually in the clique graph from that set.";
@@ -22,6 +23,11 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
 
 
     // --- Properties ---
+    public string reductionName {
+        get {
+            return _reductionName;
+        }
+    }
     public string reductionDefinition {
         get {
             return _reductionDefinition;
