@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_SUBSETSUM.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SUBSETSUM;
 
-class SUBSETSUM : IProblem<GenericSolver,SubsetSumVerifier> {
+class SUBSETSUM : IProblem<SubsetSumBruteForce,SubsetSumVerifier> {
 
     // --- Fields ---
     private string _problemName = "Subset Sum";
@@ -22,7 +22,7 @@ class SUBSETSUM : IProblem<GenericSolver,SubsetSumVerifier> {
     private int _T;
 
     private string _wikiName = "";
-    private GenericSolver _defaultSolver = new GenericSolver();
+    private SubsetSumBruteForce _defaultSolver = new SubsetSumBruteForce();
     private SubsetSumVerifier _defaultVerifier = new SubsetSumVerifier();
 
     // --- Properties ---
@@ -89,7 +89,7 @@ class SUBSETSUM : IProblem<GenericSolver,SubsetSumVerifier> {
             _T = value;
         }
     }
-    public GenericSolver defaultSolver {
+    public SubsetSumBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }

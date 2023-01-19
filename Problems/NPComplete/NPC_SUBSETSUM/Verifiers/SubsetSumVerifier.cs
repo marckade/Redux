@@ -46,7 +46,7 @@ class SubsetSumVerifier : IVerifier {
     }
 
     public bool verify(SUBSETSUM subsetSum, string certificate){
-        List<string> c = certificate.Replace("{","").Replace("}","").Split(",").ToList();
+        List<string> c = certificate.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
         int sum = 0;
         foreach(string a in c){
             if(subsetSum.S.Contains(a)){    
