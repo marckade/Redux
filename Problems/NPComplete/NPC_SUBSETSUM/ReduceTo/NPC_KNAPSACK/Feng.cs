@@ -86,8 +86,8 @@ class FengReduction : IReduction<SUBSETSUM, KNAPSACK> {
         
         // We reduce the set of integers to a set of items by having each integer n equal (n,n) as an item. 
         List<KeyValuePair<string, string>> Items = new List<KeyValuePair<string, string>>();
-        List<string> integers = SUBSETSUMInstance.Integers;
-        for(int i=0; i < SUBSETSUMInstance.Integers.Count; i++) {
+        List<string> integers = SUBSETSUMInstance.S;
+        for(int i=0; i < SUBSETSUMInstance.S.Count; i++) {
             KeyValuePair<string, string> item = new KeyValuePair<string, string>(integers[i], integers[i]);
             Items.Add(item);
             _gadgetMap[integers[i]] = integers[i];
