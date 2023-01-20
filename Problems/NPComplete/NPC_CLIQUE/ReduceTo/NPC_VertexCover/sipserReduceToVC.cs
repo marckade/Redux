@@ -152,7 +152,7 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
     public string mapSolutions(CLIQUE problemFrom, VERTEXCOVER problemTo, string problemFromSolution){
         //Check if the colution is correct
         if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
-            return "Solution is inccorect";
+            return "Clique solution is incorect " + problemFromSolution;
         }
 
         //NOTE :: should we verify if the reduction is correct, if so we might as well just take the problemFrom and create the problemTo
