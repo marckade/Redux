@@ -4,9 +4,9 @@ namespace API.Problems.NPComplete.NPC_SUBSETSUM.Solvers;
 class SubsetSumBruteForce : ISolver {
 
     // --- Fields ---
-    private string _solverName = "Subset Sum Solver";
+    private string _solverName = "Subset Sum Brute Force Solver";
     private string _solverDefinition = "This is a generic solver for Subset Sum";
-    private string _source = "This person ____";
+    private string _source = "This person Caleb Eardley";
     private string[] _contributers = { "Caleb Eardley, Garret Stouffer"};
 
 

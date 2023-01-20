@@ -72,14 +72,10 @@ public class SubSetSumVerifierController : ControllerBase {
         SUBSETSUM subsetSum = new SUBSETSUM(problemInstance);
         SubsetSumVerifier verifier = new SubsetSumVerifier();
 
-        Boolean response = verifier.verify(subsetSum,certificate);
-        string responseString;
-        if(response){
-            responseString = "True";
-        }
-        else{responseString = "False";}
+        bool response = verifier.verify(subsetSum,certificate);
+
         // Send back to API user
-        string jsonString = JsonSerializer.Serialize(responseString, options);
+        string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
     }
 

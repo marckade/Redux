@@ -57,7 +57,6 @@ class SubsetSumVerifier : IVerifier {
             }
         }
         if(sum == subsetSum.T){
-            Console.WriteLine(sum);
             return true;
         }
 

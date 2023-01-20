@@ -4,7 +4,7 @@ using API.Problems.NPComplete.NPC_INTPROGRAMMING01.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
-class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
+class INTPROGRAMMING01 : IProblem<IntegerProgrammingBruteForce,GenericVerifier01INTP>{
 
     // --- Fields ---
     private string _problemName = "0-1 Integer Programming";
@@ -15,10 +15,10 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
     private List<List<int>> _C = new List<List<int>>();
     private List<int> _d = new List<int>();
     private string _wikiName  = "";
-    private GenericSolver _defaultSolver = new GenericSolver();
+    private IntegerProgrammingBruteForce _defaultSolver = new IntegerProgrammingBruteForce();
     private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
     private string _instance = string.Empty;
-    private string[] _contributers = { "Author Unknown"};
+    private string[] _contributers = { "Caleb Eardley"};
 
     // --- Properties ---
     public string problemName {
@@ -58,7 +58,7 @@ class INTPROGRAMMING01 : IProblem<GenericSolver,GenericVerifier01INTP>{
             return _defaultInstance;
         }
     }
-    public GenericSolver defaultSolver {
+    public IntegerProgrammingBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }
