@@ -254,20 +254,12 @@ public class CliqueVerifierController : ControllerBase {
     [HttpGet("verify")]
     public String verifyInstance([FromQuery]string problemInstance, string certificate){
     string jsonString = String.Empty;
-    GraphParser gParser = new GraphParser();
-    bool isValidString = gParser.isValidUndirectedGraph(problemInstance);
-    
-    if (isValidString)
-    {
-        CLIQUE vClique = new CLIQUE(problemInstance);
-        CliqueVerifier verifier = vClique.defaultVerifier;
-        bool validClique = verifier.verify(vClique, certificate);
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        jsonString = JsonSerializer.Serialize(validClique, options);
-    }
-    else{
-        jsonString = "ERROR: PROBLEM ENTERED IS INVALID";
-    }
+    CLIQUE vClique = new CLIQUE(problemInstance);
+    CliqueVerifier verifier = vClique.defaultVerifier;
+    bool validClique = verifier.verify(vClique, certificate);
+    var options = new JsonSerializerOptions { WriteIndented = true };
+    jsonString = JsonSerializer.Serialize(validClique, options);
+
     return jsonString;
     }
 }

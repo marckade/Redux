@@ -50,7 +50,7 @@ class CliqueVerifier : IVerifier {
     private List<string> parseCertificate(string certificate){
 
         GraphParser gParser = new GraphParser();
-        List<string> nodeList = gParser.getNodesFromNodeListString(certificate);
+        List<string> nodeList = certificate.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
         return nodeList;
     }
     public bool verify(CLIQUE problem, string certificate){
