@@ -11,6 +11,7 @@ namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 [Route("[controller]")]
 public class INTPROGRAMMING01GenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -18,6 +19,7 @@ public class INTPROGRAMMING01GenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -29,6 +31,7 @@ public class INTPROGRAMMING01GenericController : ControllerBase {
 [Route("[controller]")]
 public class GenericVerifier01INTPController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -38,6 +41,7 @@ public class GenericVerifier01INTPController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };

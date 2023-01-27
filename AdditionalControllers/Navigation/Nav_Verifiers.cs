@@ -8,6 +8,7 @@ using System.Collections;
 [Route("Navigation/[controller]")]
 public class All_VerifiersController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
 
@@ -38,6 +39,7 @@ public class All_VerifiersController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class Problem_VerifiersController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
 
@@ -68,6 +70,7 @@ public class Problem_VerifiersController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class Problem_VerifiersRefactorController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem,[FromQuery]string problemType) {
                 string NOT_FOUND_ERR_VERIFIER = "entered a verifier that does not exist";

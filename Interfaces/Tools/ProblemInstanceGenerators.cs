@@ -112,6 +112,7 @@ public static class ProblemInstanceGenerators{
 [Route("[controller]")]
 public class ProblemGeneratorController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("UndirectedGraph")]
     public String getUndirectedGraph([FromQuery] int n = 5, int density = 50 , int k = -1)
     {
@@ -123,6 +124,7 @@ public class ProblemGeneratorController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("DirectedGraph")]
     public String getDirectedGraph([FromQuery] int n = 5, int density = 50 , int k = -1)
     {
@@ -133,6 +135,7 @@ public class ProblemGeneratorController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(graphInstance, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("Sat3")]
     public String getSat3([FromQuery] int n = 3, int c = 3)
     {

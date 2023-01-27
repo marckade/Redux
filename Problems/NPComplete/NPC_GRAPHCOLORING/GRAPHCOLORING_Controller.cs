@@ -13,6 +13,7 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 [Route("[controller]")]
 public class GRAPHCOLORINGGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -20,6 +21,7 @@ public class GRAPHCOLORINGGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance([FromQuery] string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -37,6 +39,7 @@ public class IgbokweVerifierController : ControllerBase {
 
     //string testVerifyString = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},3}";
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
@@ -48,6 +51,7 @@ public class IgbokweVerifierController : ControllerBase {
     }
 
     //[HttpGet("{certificate}/{problemInstance}")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
 
@@ -74,6 +78,7 @@ public class IgbokweVerifierController : ControllerBase {
 [Route("[controller]")]
 public class DanielBrelazSolverController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
@@ -84,6 +89,7 @@ public class DanielBrelazSolverController : ControllerBase {
         return jsonString; 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String solvedInstance([FromQuery]string problemInstance) {
          
@@ -106,6 +112,7 @@ public class DanielBrelazSolverController : ControllerBase {
 
 public class KarpReduceSATController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo(){
 
@@ -120,6 +127,7 @@ public class KarpReduceSATController : ControllerBase {
 
 
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance){
          

@@ -11,6 +11,7 @@ namespace API.Problems.NPComplete.NPC_TSP;
 [Route("[controller]")]
 public class TSPGenericController : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault()
     {
@@ -19,6 +20,7 @@ public class TSPGenericController : ControllerBase
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance()
     {
@@ -32,6 +34,7 @@ public class TSPGenericController : ControllerBase
 [Route("[controller]")]
 public class TSPVerifierTestController : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getInstance()
     {
@@ -52,6 +55,7 @@ public class TSPVerifierTestController : ControllerBase
 [Route("[controller]")]
 public class TSPVerifierBranchTestController : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getInstance()
     {
@@ -72,6 +76,7 @@ public class TSPVerifierBranchTestController : ControllerBase
 [Route("[controller]")]
 public class TSPVerifierController : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getInstance([FromQuery] string certificate, [FromQuery] string problemInstance)
     {
@@ -90,6 +95,7 @@ public class TSPVerifierController : ControllerBase
 [Route("[controller]")]
 public class BranchAndBoundSolverController : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo()
     {
@@ -103,6 +109,7 @@ public class BranchAndBoundSolverController : ControllerBase
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String getInstance([FromQuery] string problemInstance)
     {
@@ -121,6 +128,7 @@ public class BranchAndBoundSolverController : ControllerBase
 [Route("[controller]")]
 public class GreedySolverController : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String getInstance([FromQuery] string problemInstance)
     {

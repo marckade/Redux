@@ -13,6 +13,7 @@ namespace API.Problems.NPComplete.NPC_3DM;
 [Route("[controller]")]
 public class DM3GenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -20,6 +21,7 @@ public class DM3GenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -31,6 +33,7 @@ public class DM3GenericController : ControllerBase {
 [ApiController]
 [Route("[controller]")]
 public class GenericVerifierDM3Controller : ControllerBase {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -41,6 +44,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -65,6 +69,7 @@ public class GenericVerifierDM3Controller : ControllerBase {
 public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
 
     // Return Generic Solver Class
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -76,6 +81,7 @@ public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
     }
 
     // Solve a instance given a certificate
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string problemInstance) {
         // Implement solver here

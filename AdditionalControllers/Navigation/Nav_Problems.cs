@@ -9,7 +9,8 @@ using System.Collections;
 [ApiController]
 [Route("Navigation/[controller]")]
 public class All_ProblemsController : ControllerBase {
-    
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
         string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems")
@@ -28,7 +29,9 @@ public class All_ProblemsController : ControllerBase {
 [ApiController]
 [Route("Navigation/[controller]")]
 public class NPC_ProblemsController : ControllerBase {
-    
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet]
+
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
         string?[] subdirs = Directory.GetDirectories(projectSourcePath+ @"Problems/NPComplete")
@@ -42,6 +45,7 @@ public class NPC_ProblemsController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("json")]
     public string getProblemsJson(){
         string projectSourcePath = ProjectSourcePath.Value;
@@ -67,6 +71,9 @@ public class NPC_ProblemsController : ControllerBase {
 [ApiController]
 [Route("Navigation/[controller]")]
 public class NPC_ProblemsRefactorController : ControllerBase {
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet]
+
     public String getDefault() {
         // File system patch that should work on both Window/Linux enviroments
         string projectSourcePath = ProjectSourcePath.Value;
@@ -93,6 +100,7 @@ public class NPC_ProblemsRefactorController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("json")]
     public string getProblemsJson(){
         string projectSourcePath = ProjectSourcePath.Value;
@@ -117,6 +125,7 @@ public class NPC_ProblemsRefactorController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class NPC_NavGraph : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public string getProblemGraph(){
         ProblemGraph nav_graph = new ProblemGraph();
@@ -127,6 +136,7 @@ public class NPC_NavGraph : ControllerBase {
 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("availableReductions")]
     public string getConnectedProblems([FromQuery]string chosenProblem){
         ProblemGraph nav_graph = new ProblemGraph();
@@ -136,6 +146,7 @@ public class NPC_NavGraph : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reductionPath")]
     public string getPaths([FromQuery]string reducingFrom, string reducingTo){
         ProblemGraph nav_graph = new ProblemGraph();

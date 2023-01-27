@@ -8,6 +8,7 @@ using System.Collections;
 [Route("Navigation/[controller]")]
 public class All_SolversController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -27,6 +28,7 @@ public class All_SolversController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class Problem_SolversController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
 
@@ -59,6 +61,7 @@ public class Problem_SolversController : ControllerBase {
 public class Problem_SolversRefactorController : ControllerBase {
             string NOT_FOUND_ERR_SOLVER = "entered a solver that does not exist";
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem, [FromQuery]string problemType) {
 

@@ -14,12 +14,18 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_DM3;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING;
+using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
 [ApiController]
 [Route("[controller]")]
+#pragma warning disable CS1591
 public class SAT3GenericController : ControllerBase {
+#pragma warning restore CS1591
+
+
+///<summary>Returns a default 3SAT json object</summary>
 
     [HttpGet()]
     public String getDefault() {
@@ -28,6 +34,11 @@ public class SAT3GenericController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a 3SAT json object created from a given instance </summary>
+///<param name="problemInstance" example="(x1|!x2|x3)&amp;(!x1|x3|x1)&amp;(x2|!x3|x1)">3SAT problem instance string.</param>
+///<response code="200">Returns 3SAT Problem Object</response>
+
+    [ProducesResponseType(typeof(SAT3), 200)]
     [HttpGet("instance")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -42,6 +53,10 @@ public class SAT3GenericController : ControllerBase {
 [Route("[controller]")]
 public class SipserReduceToCliqueStandardController : ControllerBase {
 
+///<summary>Returns a a reduction object with info for Sipser's 3SAT to Clique reduction </summary>
+///<response code="200">Returns Reduction Object</response>
+
+    [ProducesResponseType(typeof(SipserReduction), 200)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -51,6 +66,11 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a reduction from 3SAT to Clique based on the given 3SAT instance  </summary>
+///<param name="problemInstance" example="(x1|!x2|x3)&amp;(!x1|x3|x1)&amp;(x2|!x3|x1)">3SAT problem instance string.</param>
+///<response code="200">Returns string instance of a graph</response>
+
+    [ProducesResponseType(typeof(string), 200)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -60,6 +80,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solvedVisualization")]
     public String getSolvedVisualization([FromQuery]string problemInstance, string solution) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -80,6 +101,14 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a reduction from 3SAT to Clique based on the given 3SAT instance  </summary>
+///<param name="problemFrom" example="(x1|!x2|x3)&amp;(!x1|!x3|!x1)&amp;(x2|!x3|x1)">3SAT problem instance string.</param>
+///<param name="problemTo" example="{{x1,!x2,x3,!x1,!x3,!x1_1,x2,!x3_1,x1_1},{{x1,!x3},{x1,!x1_1},{x1,x2},{x1,!x3_1},{x1,x1_1},{!x2,!x1},{!x2,!x3},{!x2,!x1_1},{!x2,!x3_1},{!x2,x1_1},{x3,!x1},{x3,!x1_1},{x3,x2},{x3,!x3_1},{x3,x1_1},{!x1,!x2},{!x1,x3},{!x1,x2},{!x1,!x3_1},{!x1,x1_1},{!x3,x1},{!x3,!x2},{!x3,x2},{!x3,!x3_1},{!x3,x1_1},{!x1_1,x1},{!x1_1,!x2},{!x1_1,x3},{!x1_1,x2},{!x1_1,!x3_1},{x2,x1},{x2,x3},{x2,!x1},{x2,!x3},{x2,!x1_1},{!x3_1,x1},{!x3_1,!x2},{!x3_1,x3},{!x3_1,!x1},{!x3_1,!x3},{!x3_1,!x1_1},{x1_1,x1},{x1_1,!x2},{x1_1,x3},{x1_1,!x1},{x1_1,!x3}},3}">Clique problem instance string reduced from 3SAT instance.</param>
+///<param name="problemFromSolution" example="(x1:True,x3:False)">Solution to 3SAT problem.</param>
+///<response code="200">Returns solution to the reduced Clique instance</response>
+///<example>asd</example>
+    
+    [ProducesResponseType(typeof(string), 200)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -91,6 +120,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reverseMappedSolution")]
     public String reverseMappedSolution([FromQuery]string problemFrom, string problemTo, string problemToSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -109,6 +139,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
 
 public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo(){
 
@@ -118,6 +149,7 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance){
          
@@ -126,6 +158,7 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -144,6 +177,7 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 [Route("[controller]")]
 public class KarpIntProgStandardController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -153,6 +187,7 @@ public class KarpIntProgStandardController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -161,6 +196,7 @@ public class KarpIntProgStandardController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         Console.WriteLine(problemTo);
@@ -178,6 +214,7 @@ public class KarpIntProgStandardController : ControllerBase {
 [ApiController]
 [Route("[controller]")]
 public class GareyJohnsonController : ControllerBase {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -187,6 +224,7 @@ public class GareyJohnsonController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -196,6 +234,7 @@ public class GareyJohnsonController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -213,6 +252,7 @@ public class GareyJohnsonController : ControllerBase {
 public class KadensSimpleVerifierController : ControllerBase {
 
     // Return Generic Verifier Class
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -224,6 +264,7 @@ public class KadensSimpleVerifierController : ControllerBase {
     }
 
     // Verify a instance given a certificate
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -243,6 +284,7 @@ public class KadensSimpleVerifierController : ControllerBase {
 public class Sat3BacktrackingSolverController : ControllerBase {
 
     // Return Generic Solver Class
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -254,6 +296,7 @@ public class Sat3BacktrackingSolverController : ControllerBase {
     }
 
     // Solve a instance given a certificate
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string problemInstance) { //FromQuery]string certificate, 
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -276,8 +319,9 @@ public class Sat3BacktrackingSolverController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class testInstanceController : ControllerBase {
+public class testSART3InstanceController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getSingleInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };

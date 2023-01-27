@@ -9,6 +9,7 @@ namespace API.Problems.NPComplete.NPC_ExactCover;
 [Route("[controller]")]
 public class ExactCoverGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -16,6 +17,7 @@ public class ExactCoverGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };

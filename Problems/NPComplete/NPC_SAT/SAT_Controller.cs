@@ -11,6 +11,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
     [ApiController]
     [Route("[controller]")]
     public class SATGenericController : ControllerBase {
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
 
         public String getDefault() {
@@ -19,6 +20,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
             return jsonString;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("{instance}")]
         public String getInstance() {
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -32,6 +34,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
     [Route("[controller]")]
     public class IgbokweSATVerifierController : ControllerBase {
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("info")]
         public String getInfo(){
             var options = new JsonSerializerOptions {WriteIndented = true};
@@ -43,6 +46,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
         }
 
         //[HttpGet("{certificate}/{problemInstance}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("verify")]
         public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -63,6 +67,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
     [ApiController]
     [Route("[controller]")]
     public class SATBruteForceSolverController : ControllerBase {
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("info")]
         public String getInfo(){
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -73,6 +78,7 @@ namespace API.Problems.NPComplete.NPC_SAT;
             return jsonString;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("solve")]
         public String solveInstance([FromQuery]string problemInstance) {
             var options = new JsonSerializerOptions { WriteIndented = true };

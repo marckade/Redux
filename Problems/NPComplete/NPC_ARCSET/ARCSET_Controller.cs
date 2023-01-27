@@ -15,6 +15,7 @@ namespace API.Problems.NPComplete.NPC_ARCSET;
 [Route("[controller]")]
 public class ARCSETGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -22,6 +23,7 @@ public class ARCSETGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("instance")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -34,6 +36,7 @@ public class ARCSETGenericController : ControllerBase {
 [Route("[controller]")]
 public class AlexArcsetVerifierController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInstance(){
         var options = new JsonSerializerOptions{WriteIndented = true};
@@ -42,7 +45,8 @@ public class AlexArcsetVerifierController : ControllerBase {
         return jsonString;
     }    
 
-      [HttpGet("verify")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
@@ -98,6 +102,7 @@ public class AlexArcsetVerifierController : ControllerBase {
 [Route("[controller]")]
 public class ArcSetBruteForceController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     //without params, just returns the solver.
     public String getDefault(){
@@ -112,7 +117,8 @@ public class ArcSetBruteForceController : ControllerBase {
         return jsonString;
     }
 
-      [HttpGet("solve")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("solve")]
      //With query.
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -135,7 +141,8 @@ public class ArcSetBruteForceController : ControllerBase {
 [Route("[controller]")]
 public class ArcsetJsonPayloadController : ControllerBase {
 
-      [HttpGet]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet]
     public String getInstance([FromQuery]string listType) {
                // Console.WriteLine("RECEIVED REQUEST");
 
@@ -169,6 +176,7 @@ public class ArcsetJsonPayloadController : ControllerBase {
 [Route("[controller]")]
 public class ARCSETDevController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
 
@@ -187,6 +195,7 @@ public class ARCSETDevController : ControllerBase {
         return printString2;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("instance")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -203,6 +212,7 @@ public class ARCSETDevController : ControllerBase {
 [Route("[controller]")]
 public class ARCSETVisualizerController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         ARCSET arcProblem = new ARCSET();
@@ -214,6 +224,7 @@ public class ARCSETVisualizerController : ControllerBase {
 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getInstance([FromQuery]string problemInstance) {
         ARCSET arcProblem = new ARCSET(problemInstance);

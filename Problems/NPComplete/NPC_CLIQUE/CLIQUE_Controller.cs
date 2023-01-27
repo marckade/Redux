@@ -19,6 +19,7 @@ namespace API.Problems.NPComplete.NPC_CLIQUE;
 [Route("[controller]")]
 public class CLIQUEGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -26,6 +27,7 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("instance")]
     public String getDefault([FromQuery] string problemInstance)
     {
@@ -37,6 +39,7 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getVisualization([FromQuery] string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -48,6 +51,7 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solvedVisualization")]
     public String getSolvedVisualization([FromQuery]string problemInstance,string solution) {
         //Console.WriteLine("solvedvisualization:" + problemInstance);
@@ -106,6 +110,7 @@ public class CLIQUEGenericController : ControllerBase {
 public class sipserReduceToVCController : ControllerBase {
 
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
 
     public String getInfo() {
@@ -117,6 +122,7 @@ public class sipserReduceToVCController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -127,6 +133,7 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getVisualization([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -148,6 +155,7 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(apiArr, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -165,6 +173,7 @@ public class sipserReduceToVCController : ControllerBase {
 public class CLIQUEDevController : ControllerBase
 {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault()
     {
@@ -176,7 +185,8 @@ public class CLIQUEDevController : ControllerBase
         return jsonString;
     }
     
-        [HttpGet("instance")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("instance")]
     public String getDefault([FromQuery] string problemInstance)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -193,7 +203,8 @@ public class CLIQUEDevController : ControllerBase
     }
 
 
-     [HttpGet("visualize")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("visualize")]
     public String getVisualization([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
@@ -211,6 +222,7 @@ public class CliqueBruteForceController : ControllerBase
 {
 
     // Return Generic Solver Class
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric()
     {
@@ -223,6 +235,7 @@ public class CliqueBruteForceController : ControllerBase
     }
 
     // Solve a instance given a certificate
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery] string problemInstance)
     {
@@ -241,6 +254,7 @@ public class CliqueBruteForceController : ControllerBase
 [Route("[controller]")]
 public class CliqueVerifierController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -251,6 +265,7 @@ public class CliqueVerifierController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String verifyInstance([FromQuery]string problemInstance, string certificate){
     string jsonString = String.Empty;

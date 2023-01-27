@@ -9,6 +9,7 @@ using System.Collections;
 public class All_ReductionsController : ControllerBase {
 
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -28,6 +29,7 @@ public class All_ReductionsController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class NPC_ReductionsController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -48,6 +50,7 @@ public class Problem_ReductionsController : ControllerBase {
 
     public const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
         
@@ -93,6 +96,7 @@ public class Problem_ReductionsRefactorController : ControllerBase {
 
     public const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem ,[FromQuery] string problemType) {
         
@@ -146,6 +150,7 @@ public class Problem_ReductionsRefactorController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class PossibleReductionsController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string reducingFrom, [FromQuery]string reducingTo) {
 
@@ -176,6 +181,7 @@ public class PossibleReductionsController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class PossibleReductionsRefactorController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string reducingFrom, [FromQuery]string reducingTo,[FromQuery]string problemType) {
         string NOT_FOUND_ERR_REDUCTION = "entered a reduce from or to that does not exist";
@@ -227,6 +233,7 @@ public class PossibleReductionsRefactorController : ControllerBase {
 [Route("Navigation/[controller]")]
 public class Reverse_ReductionsController : ControllerBase {
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenReduction) {
         string projectSourcePath = ProjectSourcePath.Value;

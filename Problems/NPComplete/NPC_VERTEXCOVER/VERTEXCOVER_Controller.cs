@@ -14,11 +14,19 @@ using System.Collections;
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
+
 [ApiController]
 [Route("[controller]")]
+
+
 public class testController : ControllerBase {
-    
+
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet]
+
     public String test() {
+
+
         VERTEXCOVER testObj = new VERTEXCOVER();
 
         if (testObj.instance == null) {
@@ -30,10 +38,13 @@ public class testController : ControllerBase {
     }
 }
 
+
+///<tags>- Hello</tags>
 [ApiController]
 [Route("[controller]")]
 public class VERTEXCOVERGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -42,7 +53,11 @@ public class VERTEXCOVERGenericController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(new VERTEXCOVER(), options);
         return jsonString;
     }
+///<summary>
+/// Returns json instance of Vertex Cover Problem
+///</summary>
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -50,6 +65,7 @@ public class VERTEXCOVERGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getVisualization([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -60,6 +76,7 @@ public class VERTEXCOVERGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solvedVisualization")]
     public String solvedVisualization([FromQuery]string problemInstance, string solution){
 
@@ -88,6 +105,7 @@ public class VERTEXCOVERGenericController : ControllerBase {
 [Route("[controller]")]
 public class VCVerifierController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -98,6 +116,7 @@ public class VCVerifierController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String verifyInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -113,8 +132,9 @@ public class VCVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-public class testInstanceController : ControllerBase {
+public class testVCInstanceController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getSingleInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -130,6 +150,7 @@ public class testInstanceController : ControllerBase {
 [Route("[controller]")]
 public class VertexCoverBruteForceController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -140,6 +161,7 @@ public class VertexCoverBruteForceController : ControllerBase {
 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string problemInstance){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -149,6 +171,7 @@ public class VertexCoverBruteForceController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getVisualization([FromQuery]string problemInstance, [FromQuery]string solutionString) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -170,7 +193,8 @@ public class VertexCoverBruteForceController : ControllerBase {
 [Route("[controller]")]
 public class LawlerKarpController : ControllerBase {
 
-      [HttpGet("info")] // url parameter
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("info")] // url parameter
 
       public String getInfo(){
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -181,7 +205,8 @@ public class LawlerKarpController : ControllerBase {
       }
 
     
-      [HttpGet("reduce")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         Console.Write("VertexCover controller getReduce:");
         Console.Write(problemInstance);
@@ -204,6 +229,7 @@ public class LawlerKarpController : ControllerBase {
 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };

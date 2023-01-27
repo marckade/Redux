@@ -11,6 +11,7 @@ namespace API.Problems.NPComplete.NPC_KNAPSACK;
 [Route("[controller]")]
 public class KNAPSACKGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -18,6 +19,7 @@ public class KNAPSACKGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance([FromQuery] string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -32,13 +34,15 @@ public class KNAPSACKGenericController : ControllerBase {
 [ApiController]
 [Route("[controller]")]
 public class GarrettVerifierController : ControllerBase {
-        [HttpGet("info")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
         GarrettVerifier verifier = new GarrettVerifier();
         string jsonString  = JsonSerializer.Serialize(verifier, options);
         return jsonString; 
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery] string problemInstance){
         var options = new JsonSerializerOptions {WriteIndented = true};
@@ -57,6 +61,7 @@ public class GarrettVerifierController : ControllerBase {
 [Route("[controller]")]
 public class GarrettKnapsackSolverController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
@@ -65,6 +70,7 @@ public class GarrettKnapsackSolverController : ControllerBase {
         return jsonString; 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solve")]
     public String solvedInstance([FromQuery]string problemInstance) {
          

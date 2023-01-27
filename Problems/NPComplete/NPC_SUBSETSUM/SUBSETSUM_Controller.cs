@@ -10,6 +10,7 @@ namespace API.Problems.NPComplete.NPC_SUBSETSUM;
 [Route("[controller]")]
 public class SUBSETSUMGenericController : ControllerBase {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -17,6 +18,7 @@ public class SUBSETSUMGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("{instance}")]
     public String getInstance() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -30,6 +32,7 @@ public class SUBSETSUMGenericController : ControllerBase {
 [Route("[controller]")]
 public class FengController : ControllerBase {
   
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -40,6 +43,7 @@ public class FengController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
