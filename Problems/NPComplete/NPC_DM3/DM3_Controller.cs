@@ -11,9 +11,14 @@ namespace API.Problems.NPComplete.NPC_3DM;
 
 [ApiController]
 [Route("[controller]")]
+[Tags("3 Dimensional Matching")]
+#pragma warning disable CS1591
 public class DM3GenericController : ControllerBase {
+#pragma warning restore CS1591
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns a default 3 Dimensional Matching object</summary>
+
+    [ProducesResponseType(typeof(DM3), 200)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -21,7 +26,11 @@ public class DM3GenericController : ControllerBase {
         return jsonString;
     }
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns a 3 Dimensional Matching object created from a given instance </summary>
+///<param name="problemInstance" example="{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}">3 Dimensional Matching problem instance string.</param>
+///<response code="200">Returns DM3 problem object</response>
+
+    [ProducesResponseType(typeof(DM3), 200)]
     [HttpGet("{instance}")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -32,8 +41,15 @@ public class DM3GenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+[Tags("3 Dimensional Matching")]
+#pragma warning disable CS1591
 public class GenericVerifierDM3Controller : ControllerBase {
-    [ApiExplorerSettings(IgnoreApi = true)]
+#pragma warning restore CS1591
+
+///<summary>Returns a info about the 3 Dimensional Matching generic Verifier </summary>
+///<response code="200">Returns GenericVerifierDM3 Object</response>
+
+    [ProducesResponseType(typeof(GenericVerifierDM3), 200)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -44,7 +60,12 @@ public class GenericVerifierDM3Controller : ControllerBase {
         return jsonString;
     }
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Verifies if a given certificate is a solution to a given 3 Dimensional Matching problem</summary>
+///<param name="certificate" example="{{Paul,Austin,Jake},{Sally,Madison,Frank},{Dave,Bob,Chloe}}">certificate solution to 3 Dimensional Matching problem.</param>
+///<param name="problemInstance" example="{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}">3 Dimentional Matching problem instance string.</param>
+///<response code="200">Returns a boolean</response>
+    
+    [ProducesResponseType(typeof(Boolean), 200)]
     [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -66,10 +87,17 @@ public class GenericVerifierDM3Controller : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+[Tags("3 Dimensional Matching")]
+#pragma warning disable CS1591
 public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
+#pragma warning restore CS1591
+
 
     // Return Generic Solver Class
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns a info about the 3 Dimensional Matching brute force solver </summary>
+///<response code="200">Returns ThreeDimensionalMatchingBruteForce solver Object</response>
+
+    [ProducesResponseType(typeof(ThreeDimensionalMatchingBruteForce), 200)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -81,7 +109,11 @@ public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
     }
 
     // Solve a instance given a certificate
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns a solution to a given  3 Dimensional Matching problem instance </summary>
+///<param name="problemInstance" example="{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}"> 3 Dimensional Matching problem instance string.</param>
+///<response code="200">Returns solution string </response>
+    
+    [ProducesResponseType(typeof(string), 200)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string problemInstance) {
         // Implement solver here

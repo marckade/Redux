@@ -10,7 +10,7 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
     private string _solverName = "Dsatur Solver";
     private string _solverDefinition = "The Dsatur algorithm is a greedy that lables the vertices by choosing the uncolored vertex with the highest number of different adjacent colors, breaking ties using the highest degree induced by the number of uncolored vertices";
     private string _source = "https://dl.acm.org/doi/10.1145/359094.359101";
-    private Dictionary<string, Node> _nodeList = new Dictionary<string, Node>();
+    private Dictionary<string, GCNode> _nodeList = new Dictionary<string, GCNode>();
     private List<string> _uncoloredNodes = new List<string>();
     private SortedSet<int> _colors = new SortedSet<int>(){0};
 
@@ -51,7 +51,7 @@ namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
         }
     }
 
-    public Dictionary<string, Node> nodeList{
+    public Dictionary<string, GCNode> nodeList{
         get {
             return _nodeList;
         }
@@ -136,11 +136,11 @@ public DanielBrelazSolver() {
 
         foreach(string elem in nodes){
 
-            List<Node> adjNodes = getAdjNodes(problem, elem);
+            List<GCNode> adjNodes = getAdjNodes(problem, elem);
             SortedSet<int> adjColors = new SortedSet<int>();
             int uncoloredDegree = 0;
 
-            foreach(Node node in adjNodes){
+            foreach(GCNode node in adjNodes){
 
                 if(node.color > -1){
                     adjColors.Add(node.color);
@@ -152,7 +152,7 @@ public DanielBrelazSolver() {
             }
 
              // Read node value 
-             Node tempNode = _nodeList[elem];
+             GCNode tempNode = _nodeList[elem];
              
              // update node saturation and degree  
              tempNode.adjDegree = uncoloredDegree;
@@ -169,18 +169,18 @@ public DanielBrelazSolver() {
         while(_uncoloredNodes.Count > 0){
 
 
-            PriorityQueue<Node> pq = new PriorityQueue<Node>(
+            PriorityQueue<GCNode> pq = new PriorityQueue<GCNode>(
                 createUncoloredNodes(_uncoloredNodes));
 
             // remove node with the highest priority
 
-            Node currentNode = pq.Dequeue();
+            GCNode currentNode = pq.Dequeue();
 
             // get used colors from adjacent nodes 
-            List<Node> adjNodes =  getAdjNodes(problem, currentNode.name);
+            List<GCNode> adjNodes =  getAdjNodes(problem, currentNode.name);
             SortedSet<int> adjColors = new SortedSet<int>();
 
-            foreach(Node node in adjNodes){
+            foreach(GCNode node in adjNodes){
 
         
 
@@ -199,7 +199,7 @@ public DanielBrelazSolver() {
         
 
            int newColor = checkColors.ElementAt(0);
-            Node tempNode = _nodeList[currentNode.name];
+            GCNode tempNode = _nodeList[currentNode.name];
             tempNode.color = newColor;
 
             //update in dictionary 
@@ -213,19 +213,19 @@ public DanielBrelazSolver() {
         }
     }
 
-    private Dictionary<string, Node> initialize(GRAPHCOLORING problem){
+    private Dictionary<string, GCNode> initialize(GRAPHCOLORING problem){
 
-        Dictionary<string, Node> nodeMap = new Dictionary<string, Node>();
+        Dictionary<string, GCNode> nodeMap = new Dictionary<string, GCNode>();
 
         foreach(string node in problem.nodes){
-            nodeMap[node] = new Node(node);
+            nodeMap[node] = new GCNode(node);
         }
         return nodeMap;
 
     }
 
-    private List<Node> createUncoloredNodes(List<string> list){
-         List<Node> adjNodes = new List<Node>();
+    private List<GCNode> createUncoloredNodes(List<string> list){
+         List<GCNode> adjNodes = new List<GCNode>();
 
         foreach(string elem in list){
             adjNodes.Add(_nodeList[elem]);
@@ -235,9 +235,9 @@ public DanielBrelazSolver() {
 
     }
 
-    private List<Node> getAdjNodes(GRAPHCOLORING problem, string name){
+    private List<GCNode> getAdjNodes(GRAPHCOLORING problem, string name){
         List<string> tempList  =  problem.getAdjNodes(name);
-        List<Node> adjNodes = new List<Node>();
+        List<GCNode> adjNodes = new List<GCNode>();
 
         foreach(string elem in tempList){
             adjNodes.Add(_nodeList[elem]);
@@ -257,7 +257,7 @@ public DanielBrelazSolver() {
 
 }
 
-class Node : IComparable {
+class GCNode : IComparable {
 
 #region Fields 
 
@@ -326,7 +326,7 @@ class Node : IComparable {
 
 #region Constructor
 
-    public Node(string label)
+    public GCNode(string label)
     {
         _name = label;
         _adjDegree = 0;
@@ -350,7 +350,7 @@ class Node : IComparable {
         else
         {
 
-            Node node = (Node)obj;
+            GCNode node = (GCNode)obj;
 
             return this.name.Equals(node.name);
         }
@@ -369,7 +369,7 @@ class Node : IComparable {
             throw new NullReferenceException("This cannot be null");
         }
 
-        Node obj = (Node)elem;
+        GCNode obj = (GCNode)elem;
 
 
         if (this.satDegree == obj.satDegree) {
@@ -400,7 +400,7 @@ class Node : IComparable {
 
     }
     public override string ToString()  {
-        return "Node: {name: " + this.name + ", satDegree:" + 
+        return "GCNode: {name: " + this.name + ", satDegree:" + 
             this.satDegree + ", adjDegree: " + this.adjDegree + ",  color: "
               + this.color + "} ";
 

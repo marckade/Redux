@@ -9,29 +9,45 @@ namespace API.Problems.NPComplete.NPC_INTPROGRAMMING01;
 
 [ApiController]
 [Route("[controller]")]
+[Tags("0-1 Integer Programming")]
+#pragma warning disable CS1591
 public class INTPROGRAMMING01GenericController : ControllerBase {
+#pragma warning restore CS1591
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns a default 0-1 Integer Programming object</summary>
+
+    [ProducesResponseType(typeof(INTPROGRAMMING01), 200)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING01(), options);
         return jsonString;
     }
+///<summary>Returns a 0-1 Integer Programming object created from a given instance </summary>
+///<param name="problemInstance" example="(-1 1 -1),(0 0 -1),(-1 -1 1)&lt;=(0 0 0)">0-1 Integer Programming problem instance string.</param>
+///<response code="200">Returns INTPROGRAMMING01 problem object</response>
 
-    [ApiExplorerSettings(IgnoreApi = true)]
-    [HttpGet("{instance}")]
-    public String getInstance() {
+    [ProducesResponseType(typeof(INTPROGRAMMING01), 200)]
+    [HttpGet("instance")]
+    public String getInstance(string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING01(), options);
+        string jsonString = JsonSerializer.Serialize(new INTPROGRAMMING01(problemInstance), options);
         return jsonString;
     }
 }
+
 [ApiController]
 [Route("[controller]")]
-public class GenericVerifier01INTPController : ControllerBase {
+[Tags("0-1 Integer Programming")]
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+#pragma warning disable CS1591
+public class GenericVerifier01INTPController : ControllerBase {
+#pragma warning restore CS1591
+
+///<summary>Returns a info about the 0-1 Integer Programming generic verifier </summary>
+///<response code="200">Returns GenericVerifier01INTP object</response>
+
+    [ProducesResponseType(typeof(GenericVerifier01INTP), 200)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -41,7 +57,13 @@ public class GenericVerifier01INTPController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString;
     }
-    [ApiExplorerSettings(IgnoreApi = true)]
+
+///<summary>Verifies if a given certificate is a solution to a given Graph Coloring problem</summary>
+///<param name="certificate" example="(1 0 0)">certificate solution to 0-1 Integer Programming problem.</param>
+///<param name="problemInstance" example="(-1 1 -1),(0 0 -1),(-1 -1 1)&lt;(0 0 0)">0-1 Integer Programming problem instance string.</param>
+///<response code="200">Returns a boolean</response>
+    
+    [ProducesResponseType(typeof(Boolean), 200)]
     [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
