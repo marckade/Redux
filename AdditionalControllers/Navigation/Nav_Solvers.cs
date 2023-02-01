@@ -6,8 +6,12 @@ using System.Collections;
 // Get all Solvers regardless of complexity class
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Solvers)")]
+#pragma warning disable CS1591
+
 public class All_SolversController : ControllerBase {
-    
+//Note: CALEB - should probably be removed with api refactor
+
     [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
@@ -22,13 +26,25 @@ public class All_SolversController : ControllerBase {
         return jsonString;
     }
 }
+#pragma warning restore CS1591
+
 
 // Get all Solvers for a specific problem
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Solvers)")]
+//Note: CALEB - should probably be removed with api refactor
+
+#pragma warning disable CS1591
+
 public class Problem_SolversController : ControllerBase {
+#pragma warning restore CS1591
     
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns all solvers available for a given problem </summary>
+///<param name="chosenProblem" example="NPC_SAT3">Problem name</param>
+///<response code="200">Returns string array of solvers</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
 
@@ -58,10 +74,20 @@ public class Problem_SolversController : ControllerBase {
 // Get all Solvers for a specific problem (Refactored)
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Solvers)")]
+#pragma warning disable CS1591
+
 public class Problem_SolversRefactorController : ControllerBase {
+#pragma warning restore CS1591
+
             string NOT_FOUND_ERR_SOLVER = "entered a solver that does not exist";
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns all solvers available for a given problem </summary>
+///<param name="chosenProblem" example="SAT3">Problem name</param>
+///<param name="problemType" example="NPC">Problem type</param>
+///<response code="200">Returns string array of solvers</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem, [FromQuery]string problemType) {
 

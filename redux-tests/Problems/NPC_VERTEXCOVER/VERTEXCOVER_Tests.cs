@@ -6,6 +6,7 @@ using API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.NPHSolvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
 namespace redux_tests;
+#pragma warning disable CS1591
 
 public class VERTEXCOVER_Tests
 {
@@ -20,7 +21,6 @@ public class VERTEXCOVER_Tests
     }
 
 
-    [Fact]
 
     ///<summary>
     ///This test ensures that the vertexcover solver solves an input instance.
@@ -28,6 +28,8 @@ public class VERTEXCOVER_Tests
     ///ie. every node is connected to every other node. This ensures that when we run this approximation algorithm we only 
     ///get four nodes in the vertexcover output. Essentially, a property of the VC solver is that given a fully connected graph, it will output a 
     ///node list that is a proper subset of that graph (ie. a subset smaller than the full set). 
+    ///</summary>
+    [Fact]
 
     public void VCSolver_Test()
     {

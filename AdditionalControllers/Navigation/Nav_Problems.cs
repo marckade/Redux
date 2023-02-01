@@ -8,8 +8,17 @@ using System.Collections;
 // Get all problems regardless of complexity class
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Problems)")]
+#pragma warning disable CS1591
 public class All_ProblemsController : ControllerBase {
-    [ApiExplorerSettings(IgnoreApi = true)]
+#pragma warning restore CS1591
+//Note: CALEB - should probably be renamed with api refactor
+
+
+///<summary>Returns list of all available problem types </summary>
+///<response code="200">Returns string array of problem types</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -28,8 +37,17 @@ public class All_ProblemsController : ControllerBase {
 // Get only NP-Complete problems
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Problems)")]
+#pragma warning disable CS1591
+
 public class NPC_ProblemsController : ControllerBase {
-    [ApiExplorerSettings(IgnoreApi = true)]
+#pragma warning restore CS1591
+//Note: CALEB - should probably be removed with api refactor
+
+///<summary>Returns all NP-Complete problems </summary>
+///<response code="200">Returns string array of all NP-Complete problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
 
     public String getDefault() {
@@ -45,7 +63,10 @@ public class NPC_ProblemsController : ControllerBase {
         return jsonString;
     }
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns all NP-Complete problems </summary>
+///<response code="200">Returns json dictionary of all NP-Complete problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("json")]
     public string getProblemsJson(){
         string projectSourcePath = ProjectSourcePath.Value;
@@ -70,8 +91,16 @@ public class NPC_ProblemsController : ControllerBase {
 // Get only NP-Complete problems
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Problems)")]
+#pragma warning disable CS1591
+
 public class NPC_ProblemsRefactorController : ControllerBase {
-    [ApiExplorerSettings(IgnoreApi = true)]
+#pragma warning restore CS1591
+
+///<summary>Returns all NP-Complete problems </summary>
+///<response code="200">Returns string array of all NP-Complete problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
 
     public String getDefault() {
@@ -100,7 +129,11 @@ public class NPC_ProblemsRefactorController : ControllerBase {
         return jsonString;
     }
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+///<summary>Returns all NP-Complete problems </summary>
+///<response code="200">Returns json dictionary of all NP-Complete problems</response>
+//Note: CALEB - should probably be removed with api refactor
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("json")]
     public string getProblemsJson(){
         string projectSourcePath = ProjectSourcePath.Value;
@@ -123,9 +156,18 @@ public class NPC_ProblemsRefactorController : ControllerBase {
 
 [ApiController]
 [Route("Navigation/[controller]")]
-public class NPC_NavGraph : ControllerBase {
+[Tags("- Navigation (Problems)")]
+#pragma warning disable CS1591
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+public class NPC_NavGraph : ControllerBase {
+#pragma warning restore CS1591
+
+
+///<summary>Returns graph of all NP-Complete problems connected through reductions </summary>
+///<response code="200">Returns json graph of all NP-Complete problems connected through reductions</response>
+//Note: CALEB - should probably be renamed with api refactor
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("info")]
     public string getProblemGraph(){
         ProblemGraph nav_graph = new ProblemGraph();
@@ -136,7 +178,11 @@ public class NPC_NavGraph : ControllerBase {
 
     }
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+    ///<summary>Returns all problems reachable from given problem via reductions </summary>
+    ///<param name="chosenProblem" example="SAT3">NP-Complete problem name</param>
+    ///<response code="200">Returns string array of NP-Complete problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("availableReductions")]
     public string getConnectedProblems([FromQuery]string chosenProblem){
         ProblemGraph nav_graph = new ProblemGraph();
@@ -146,7 +192,12 @@ public class NPC_NavGraph : ControllerBase {
         return jsonString;
     }
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+    ///<summary>Returns reduction path from a given problem to another given problem </summary>
+    ///<param name="reducingFrom" example="SAT3">NP-Complete problem name</param>
+    ///<param name="reducingTo" example="ARCSET">NP-Complete problem name</param>
+    ///<response code="200">Returns string array of NP-Complete reductions</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("reductionPath")]
     public string getPaths([FromQuery]string reducingFrom, string reducingTo){
         ProblemGraph nav_graph = new ProblemGraph();

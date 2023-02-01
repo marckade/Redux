@@ -1,6 +1,8 @@
 using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE;
+#pragma warning disable CS1591
+
 public class CLIQUEGadget : IGadget
 {
 
