@@ -110,7 +110,7 @@ static class ProblemInstanceGenerators{
 
 [ApiController]
 [Route("[controller]")]
-[Tags("- Problem Generator")]
+[Tags("-Problem Generator")]
 #pragma warning disable CS1591
 public class ProblemGeneratorController : ControllerBase {
 #pragma warning restore CS1591
