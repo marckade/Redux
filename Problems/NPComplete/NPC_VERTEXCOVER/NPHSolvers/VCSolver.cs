@@ -126,7 +126,7 @@ class VCSolverJanita : ISolver {
         VertexCoverGraph vGraph = new VertexCoverGraph(problemInstance, true);
         List<string> problemInstanceNodes = vGraph.nodesStringList;
         // List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
-        List<string> solvedNodes = solutionString.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
+        List<string> solvedNodes = new GraphParser().parseNodeListWithStringFunctions(solutionString);
 
         // Remove solvedNodes from instanceNodes
         foreach(string node in solvedNodes){

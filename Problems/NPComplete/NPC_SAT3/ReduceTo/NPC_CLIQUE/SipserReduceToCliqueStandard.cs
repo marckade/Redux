@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 using System.Text.Json;
-
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 
@@ -386,7 +386,7 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         }
 
         //Parse problemFromSolution into a list of nodes
-        List<string> solutionList = problemToSolution.Replace(" ","").Replace("{","").Replace("}","").Split(",").ToList();
+        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(problemToSolution);
       
 
         //Reverse Mapping

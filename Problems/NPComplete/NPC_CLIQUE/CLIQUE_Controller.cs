@@ -51,7 +51,7 @@ public class CLIQUEGenericController : ControllerBase {
     public String getSolvedVisualization([FromQuery]string problemInstance,string solution) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SipserClique sClique = new SipserClique(problemInstance);
-        List<string> solutionList = solution.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
+        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(problemInstance);
 
         CliqueGraph cGraph = sClique.cliqueAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(cGraph.getNodeList,cGraph.getEdgeList);

@@ -145,5 +145,16 @@ public List<string> getNodesFromNodeListString(string input){
 
         return retList;
     }
+    public List<string> parseNodeListWithStringFunctions(string input){
+        List<string> retList = new List<string>();
+        try{
+            retList = input.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
+            return retList;
+        }
+        catch(Exception e){
+            Console.WriteLine("Invalid input GraphParser getNodesFromNodeListString");
+        }
+        return retList;
+}
 
 }
