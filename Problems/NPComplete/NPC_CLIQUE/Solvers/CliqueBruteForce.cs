@@ -96,7 +96,7 @@ class CliqueBruteForce : ISolver {
         CliqueGraph cGraph = new CliqueGraph(problemInstance, true);
         List<string> problemInstanceNodes = cGraph.nodesStringList;
         List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
-
+        
         // Remove solvedNodes from instanceNodes
         foreach(string node in solvedNodes){
         problemInstanceNodes.Remove(node);

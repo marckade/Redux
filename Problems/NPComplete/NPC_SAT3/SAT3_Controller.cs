@@ -14,6 +14,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_DM3;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING;
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
@@ -68,14 +69,8 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();
         //Turn string into solution dictionary
-        List<string> solutionList = solution.Replace("(","").Replace(")","").Replace(" ","").Split(",").ToList();
-        Dictionary<string,bool> solutionDict = new Dictionary<string,bool>();
-        foreach(var assignment in solutionList){
-            string[] assignmentSpit = assignment.Split(":");
-            bool value = bool.Parse(assignmentSpit[1]);
-            solutionDict.Add(assignmentSpit[0], value);
-        }
-        SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionDict);
+        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(solution);
+        SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionList);
         string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         return jsonString;
     }

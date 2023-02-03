@@ -2,10 +2,10 @@ using API.Interfaces;
 
 namespace API.Problems.NPComplete.NPC_SUBSETSUM.Verifiers;
 
-class GenericVerifier : IVerifier {
+class SubsetSumVerifier : IVerifier {
 
     // --- Fields ---
-    private string _verifierName = "Generic Verifier";
+    private string _verifierName = "Subset Sum Verifier";
     private string _verifierDefinition = "This is a verifier for Subset Summ";
     private string _source = " ";
     private string[] _contributers = { "Garret Stouffer"};
@@ -41,7 +41,26 @@ class GenericVerifier : IVerifier {
 
 
     // --- Methods Including Constructors ---
-    public GenericVerifier() {
+    public SubsetSumVerifier() {
         
+    }
+
+    public bool verify(SUBSETSUM subsetSum, string certificate){
+        List<string> c = certificate.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
+        int sum = 0;
+        foreach(string a in c){
+            if(subsetSum.S.Contains(a)){    
+                sum += int.Parse(a);
+            }
+            else{
+                return false;
+            }
+        }
+        if(sum == subsetSum.T){
+            return true;
+        }
+
+
+        return false;
     }
 }
