@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 // Somewhat of a security concern. But since we are not doing POSTS im not concerned about it
 app.Use((context, next) =>
     {
@@ -51,7 +54,10 @@ app.UseAuthorization();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+        c.InjectStylesheet("/assests/css/swagger.css")
+    );
 }
 
 app.MapControllers();
