@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
 using System.Text.Json;
-
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 
@@ -162,7 +162,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
                         bool samecluser = false;
 
                         // Check if nodes are inverse of one another
-                        if (nodeFrom != nodeTo && nodeFrom.Replace("!", "") == nodeTo.Replace("!", ""))
+
+                        if (removeIndex(nodeFrom) != removeIndex(nodeTo) && removeIndex(nodeFrom.Replace("!", "")) == removeIndex(nodeTo.Replace("!", "")))
                         {
                             inverse = true;
                         }
@@ -172,13 +173,12 @@ class SipserReduction : IReduction<SAT3, SipserClique>
                             samecluser = true;
                         }
 
+                        KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(nodeFrom, nodeTo);
+
                         if (!inverse && !samecluser && nodeFrom != nodeTo)
                         {
-                            KeyValuePair<string, string> fullEdge = new KeyValuePair<string, string>(nodeFrom, nodeTo);
-                            // Console.WriteLine("i:{0} a:{1} edge:{2}",i,a,fullEdge);
                             if(i == 0 && a ==1 && j == 0 && b == 1){
                                 foreach(var name in usedNames){
-                                    Console.WriteLine(name);
                                 }
                             }
                             edges.Add(fullEdge);
@@ -266,64 +266,16 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     /// <param name="sipserInput"></param>
     /// <param name="solutionDict"></param>
     /// <returns> A Sipser Clique with a cluster nodes attribute (list of SipserNodes) that has a solution state mapped to each node.</returns>
-    public SipserClique solutionMappedToClusterNodes(SipserClique sipserInput, Dictionary<string, bool> solutionDict)
+    public SipserClique solutionMappedToClusterNodes(SipserClique sipserInput, List<string> solution)
     {
 
-        SipserClique sipserClique = sipserInput;
-        //Console.WriteLine("TEST CLIQUE INTERNAL");
-        List<SipserNode> clusterNodes = sipserClique.clusterNodes;
-        int numberOfClusters = sipserClique.numberOfClusters; //Not guaranteed to not be null, this value is set by the reduction that should have happened to sipserInput previously.
-        foreach (SipserNode s in clusterNodes) 
-        //This loop will set all nodes matching the format true. This means that we can have multiple nodes in a single "clause" true, but we need to 
-        // instead arbitrarily pick one per clause (per cluster). A cleanup loop will follow and choose one candidate per cluster.
-        {
-            bool result = false;
-            if (solutionDict.ContainsKey(s.name))
-            { //if the name of the node is in the dictioary
-                if (solutionDict.TryGetValue(s.name, out result))
-                { //given key, get the value of the node kvp 
-                    s.solutionState = result.ToString(); //We know this is true.
-                    List<string> searchList = getclusterNodeSearchList(s.name, numberOfClusters); //Get the list of equivalent names to turn true;
-
-                    foreach (string equivalentNode in searchList)
-                    { //For each equivalent name (name that has the same start but has a _1, _2 etc suffix)
-                      //Console.Write(equivalentNode);
-                        foreach (SipserNode sInner in clusterNodes) //Look for any node in clusterNode that has shares the prefix.
-                        { 
-                            //Console.WriteLine(" S inner: " + sInner + " equivalentNode: " + equivalentNode);
-                            if (sInner.name.Equals(equivalentNode)) //if it has one of the prefix's
-                                sInner.solutionState = true.ToString(); //We already know its true. 
-                        }
-                    }
-                }
-            }
-
-        }
-
-        //Cleanup loops. First we sort the nodes into sublists by cluster. 
-        List<SipserNode>[] nodeListSortedByCluster = new List<SipserNode>[numberOfClusters];
-        for (int i = 0; i < numberOfClusters;i++){
-            nodeListSortedByCluster[i] = new List<SipserNode>();
-        }
-        foreach (SipserNode s in clusterNodes){
-            
-            int clusterNum = Int32.Parse(s.cluster); //gets the number
-            nodeListSortedByCluster[clusterNum].Add(s); //array position is mapped to cluster. Every node in this sublist has the same cluster.
-        }
-        //then we look through sublists and unset duplicates.
-        foreach(List<SipserNode> subList in nodeListSortedByCluster){
-            bool foundTrueFlag = false;
-            foreach(SipserNode cNode in subList){
-                if(cNode.solutionState.Equals("True") && !foundTrueFlag){
-                    foundTrueFlag = true; //This is the first true node found, dont edit it.
-                }
-                else if(cNode.solutionState.Equals("True") && foundTrueFlag){
-                    cNode.solutionState = ""; //This is another true node in a cluster so we will set it back to false. 
-                }
+        foreach (var s in sipserInput.clusterNodes){
+            if(solution.Contains(s.name)){
+                s.solutionState = true.ToString();
             }
         }
 
-        return sipserClique;
+        return sipserInput;
 
     }
 
@@ -345,12 +297,50 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         return searchList;
 
     }
+    private string removeIndex(string node){
+        if(node.Contains("_")){
+            return node.Split("_")[0];
+        }
+        return node;
+    }
 
     public string mapSolutions(SAT3 problemFrom, SipserClique problemTo, string problemFromSolution){
         //Check if the colution is correct
         if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
-            return "Solution is inccorect";
+            return "3SAT Solution is incorect";
         }
+        List<List<String>> newClauses = new List<List<string>>();
+        foreach(var clause in problemFrom.clauses){
+            List<String> temp = new List<String>();
+            foreach(var element in clause){
+                temp.Add(element);
+            }
+            newClauses.Add(temp);
+        }
+        for (int i = 0; i < problemFrom.clauses.Count; i++){
+            for (int j = 0; j < problemFrom.clauses[i].Count; j++){
+                int count = 0;
+                for( int k = 0; k<i; k++){
+                    foreach(var element in problemFrom.clauses[k]){
+                        if(element == problemFrom.clauses[i][j]){
+                            count ++;
+                        }
+                    }
+                }
+                for( int k = 0; k<j; k++){
+                    if(problemFrom.clauses[i][j] == problemFrom.clauses[i][k]){
+                        count ++;
+                    }
+                }
+                if(count >0){
+                    newClauses[i][j] = problemFrom.clauses[i][j] + "_" +count;
+                }
+                else{
+                    newClauses[i][j] = problemFrom.clauses[i][j];
+                }
+            }
+        }
+        problemFrom.clauses = newClauses;
 
         //Parse problemFromSolution into a list of nodes
         List<string> solutionList = problemFromSolution.Replace(" ","").Replace("(","").Replace(")","").Split(",").ToList();
@@ -377,8 +367,7 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         }
         foreach(List<string> clause in problemFrom.clauses){
             foreach(string node in tempMappedSolutionList){
-                string tempNode = node.Split("_")[0];
-                if (clause.Contains(tempNode) && !mappedSolutionList.Contains(node)){
+                if (clause.Contains(node) && !mappedSolutionList.Contains(node)){
                     mappedSolutionList.Add(node);
                     break;
                 }
@@ -393,11 +382,11 @@ class SipserReduction : IReduction<SAT3, SipserClique>
 
     public string reverseMapSolutions(SAT3 problemFrom, SipserClique problemTo, string problemToSolution){
         if(!problemTo.defaultVerifier.verify(problemTo,problemToSolution)){
-            return "Solution is inccorect";
+            return "Clique Solution is incorect";
         }
 
         //Parse problemFromSolution into a list of nodes
-        List<string> solutionList = problemToSolution.Replace(" ","").Replace("{","").Replace("}","").Split(",").ToList();
+        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(problemToSolution);
       
 
         //Reverse Mapping

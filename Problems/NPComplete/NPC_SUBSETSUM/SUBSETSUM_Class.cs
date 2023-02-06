@@ -4,26 +4,26 @@ using API.Problems.NPComplete.NPC_SUBSETSUM.Verifiers;
 
 namespace API.Problems.NPComplete.NPC_SUBSETSUM;
 
-class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
+class SUBSETSUM : IProblem<SubsetSumBruteForce,SubsetSumVerifier> {
 
     // --- Fields ---
     private string _problemName = "Subset Sum";
-    private string _formalDefinition = "Subset Sum = <G, T> | G is a set of positive integers and there exists a subset of G, K where the sum of K's elements equals T";
+    private string _formalDefinition = "Subset Sum = <S, T> | S is a set of positive integers and there exists a subset of S, K where the sum of K's elements equals T";
     private string _problemDefinition = "The problem is to determine whether there exists a sum of elements that totals to the number T.";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string[] _contributers = { "Garret Stouffer"};
+    private string[] _contributers = { "Garret Stouffer, Caleb Eardley"};
 
     //{{10,20,30},{(10,60),(20,100),(30,120)},50}
     //{{}, {}, 28}
 
     private string _defaultInstance = "{{1,7,12,15} : 28}";
-    private string _SS = string.Empty;
-    private List<string> _Integers = new List<string>();
-    private int _T = 3;
+    private string _instance = string.Empty;
+    private List<string> _S = new List<string>();
+    private int _T;
 
     private string _wikiName = "";
-    private GenericSolver _defaultSolver = new GenericSolver();
-    private GenericVerifier _defaultVerifier = new GenericVerifier();
+    private SubsetSumBruteForce _defaultSolver = new SubsetSumBruteForce();
+    private SubsetSumVerifier _defaultVerifier = new SubsetSumVerifier();
 
     // --- Properties ---
     public string problemName {
@@ -65,20 +65,20 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
         }
     }
 
-    public string SS {
+    public string instance {
         get {
-            return _SS;
+            return _instance;
         }
         set {
-            _SS = value;
+            _instance = value;
         }
     }
-    public List<string> Integers {
+    public List<string> S {
         get {
-            return _Integers;
+            return _S;
         }
         set {
-            _Integers = value;
+            _S = value;
         }
     }
     public int T {
@@ -89,31 +89,31 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
             _T = value;
         }
     }
-    public GenericSolver defaultSolver {
+    public SubsetSumBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-    public GenericVerifier defaultVerifier {
+    public SubsetSumVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
     }
     // --- Methods Including Constructors ---
     public SUBSETSUM() {
-        _SS = defaultInstance;
-        Integers = getIntegers(_SS);
-        T = getT(_SS);
+        _instance = defaultInstance;
+        S = getIntegers(_instance);
+        T = getT(_instance);
     }
-    public SUBSETSUM(string SSInput) {
-        _SS = SSInput;
-        Integers = getIntegers(_SS);
-        T = getT(_SS);
+    public SUBSETSUM(string instance) {
+        _instance = instance;
+        S = getIntegers(_instance);
+        T = getT(_instance);
     }
-    public List<string> getIntegers(string SSInput) {
+    public List<string> getIntegers(string instance) {
 
         List<string> allIntegers = new List<string>();
-        string strippedInput = SSInput.Replace("{", "").Replace("}", "").Replace(" ", "");
+        string strippedInput = instance.Replace("{", "").Replace("}", "").Replace(" ", "");
         
         // [0] is integers,  [1] is T.
         string[] SSsections = strippedInput.Split(':');
@@ -127,8 +127,8 @@ class SUBSETSUM : IProblem<GenericSolver,GenericVerifier> {
     }
     
 
-    public int getT(string SSInput) {
-        string strippedInput = SSInput.Replace("{", "").Replace("}", "").Replace(" ", "");
+    public int getT(string instance) {
+        string strippedInput = instance.Replace("{", "").Replace("}", "").Replace(" ", "");
         
         // [0] is integers,  [1] is T.
         string[] SSsections = strippedInput.Split(':');

@@ -4,7 +4,7 @@ namespace API.Problems.NPComplete.NPC_DM3.Solvers;
 class ThreeDimensionalMatchingBruteForce : ISolver {
 
     // --- Fields ---
-    private string _solverName = "Hurkens Shriver";
+    private string _solverName = "3 Dimensional Matching Brute Force Solver";
     private string _solverDefinition = "This is a generic local search solver for 3-Dimensional Matching, which, while possible, removes one constraint from the current solution, and swaps in two more constraints.";
     private string _source = "This is a brute force solver which simply test all combinations of hyper edges.";
     private string[] _contributers = { "Caleb Eardley"};
