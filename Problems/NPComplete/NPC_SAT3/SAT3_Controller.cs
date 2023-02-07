@@ -6,7 +6,6 @@ using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_CLIQUE;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_GRAPHCOLORING;
 using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_DM3;
 using API.Problems.NPComplete.NPC_INTPROGRAMMING01;
-https://github.com/marckade/Redux/pull/77/conflict?name=Problems%252FNPComplete%252FNPC_SAT3%252FSAT3_Controller.cs&ancestor_oid=ab4ad019b69b2273c12de417b8776d401aabca22&base_oid=0efb16e255c772a6ee346cc67541376778eaadb8&head_oid=9fabde985e6a07927cab412178e45b0dd0232652using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING01;
 using API.Problems.NPComplete.NPC_SAT3.Verifiers;
 using API.Problems.NPComplete.NPC_SAT3.Solvers;
 using API.Problems.NPComplete.NPC_CLIQUE.Inherited;
@@ -16,6 +15,7 @@ using API.Problems.NPComplete.NPC_DM3;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING;
 using API.Interfaces;
 using API.Interfaces.Graphs.GraphParser;
+using API.Problems.NPComplete.NPC_SAT3.ReduceTo.NPC_INTPROGRAMMING01;
 
 namespace API.Problems.NPComplete.NPC_SAT3;
 
