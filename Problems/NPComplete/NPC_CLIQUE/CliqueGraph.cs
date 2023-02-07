@@ -12,9 +12,9 @@ class CliqueGraph : UndirectedGraph
 
    /// <summary>
  /// Takes a String and creates a VertexCoverGraph from it
- /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} & {b,c}} : 1}
+ /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} &amp; {b,c}} : 1}
  /// </summary>
- /// <param name="graphStr"> string input</param>
+ /// <param name="cliqueInput"> string input</param>
   public CliqueGraph(string cliqueInput) : base (cliqueInput){
         
     }
@@ -23,7 +23,7 @@ class CliqueGraph : UndirectedGraph
      /// <summary>
      /// 
      /// </summary>
-     /// <param name="graphStr"> Undirected Graph string input
+     /// <param name="cliqueInput"> Undirected Graph string input
      /// ex. {{1,2,3},{{1,2},{2,3}},0}
      /// </param>
      /// <param name="decoy"></param>
@@ -37,7 +37,7 @@ class CliqueGraph : UndirectedGraph
   /// amount of, and naming convention for, its nodes. 
   /// </summary>
   /// <param name="cliqueInput"></param>
-  /// <param name="cliqueNodes"></param>
+  /// <param name="usingCliqueNodes"></param>
   public CliqueGraph(string cliqueInput, string usingCliqueNodes){
         string pattern;
         pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},\d+}"; //checks for undirected graph format

@@ -121,6 +121,7 @@ private List<string> nodesGivenValidGraphAndPattern(string validGraphStr,string 
 /// <returns></returns>
 /// <remarks>
 /// only supports word characters  (multicharacter supported) currently, not special characters or ! symbols.
+/// </remarks>
 public List<string> getNodesFromNodeListString(string input){
         List<string> retList = new List<string>();
 

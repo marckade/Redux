@@ -11,7 +11,7 @@ class GraphColoringGraph : UndirectedGraph {
 
    /// <summary>
  /// Takes a String and creates a VertexCoverGraph from it
- /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} & {b,c}} : 1}
+ /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} &amp; {b,c}} : 1}
  /// </summary>
  /// <param name="stringInput"> string input</param>
   public GraphColoringGraph(string stringInput) {

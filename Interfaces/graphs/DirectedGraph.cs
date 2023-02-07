@@ -317,7 +317,7 @@ abstract class DirectedGraph:Graph{
     }
 
 
-    //<summary>
+    ///<summary>
     ///Returns an ArrayList of Strings that is essentially a dot representation of the graph.
     ///</summary>
     public ArrayList toDotArrayList(){

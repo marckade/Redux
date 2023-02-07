@@ -279,7 +279,7 @@ private void explore(Node currentNode,bool[] visited,int[] preVisitArr,int[] pos
 
 
 
-///<summary> Adds the passed in edge to the graph <summary>
+///<summary> Adds the passed in edge to the graph </summary>
 ///<param name = "edge"> Edge to add </param>
     public void addEdge(KeyValuePair<string,string> edge){
         Node newNode1 = new Node(edge.Key);

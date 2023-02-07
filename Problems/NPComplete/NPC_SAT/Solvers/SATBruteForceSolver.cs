@@ -4,6 +4,8 @@ using API.Problems.NPComplete.NPC_SAT;
 using API.Tools.Boolean_Parser; 
 
 namespace API.Problems.NPComplete.NPC_SAT.Solvers;
+#pragma warning disable CS1591
+
 
     public class SATBruteForceSolver : ISolver {
 

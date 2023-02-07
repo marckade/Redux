@@ -7,6 +7,7 @@ using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
 using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 
 namespace redux_tests;
+#pragma warning disable CS1591
 
 public class SAT3_Tests
 {

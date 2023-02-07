@@ -1,4 +1,4 @@
-///ArcsetTests.cs
+//ArcsetTests.cs
 using Xunit;
 using API.Problems.NPComplete.NPC_ARCSET;
 using API.Interfaces.Graphs;
@@ -8,6 +8,8 @@ using API.Problems.NPComplete.NPC_ARCSET.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER;
 namespace redux_tests;
 
+#pragma warning disable CS1591
+
 public class ARCSET_Tests
 {
     [Fact]
@@ -16,12 +18,11 @@ public class ARCSET_Tests
         Assert.Equal(2, (1 + 1));
     }
 
-    [Fact]
     /// <summary>
     /// Tests the default instance of an arcset graph
     /// 
     /// </summary>
-    /// <param name="graphStr"> string input</param>
+    [Fact]
     public void ARCSETGraph_Default_Instantiation_Test(){
 
         string testValue = "";

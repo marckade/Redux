@@ -6,8 +6,18 @@ using System.Collections;
 // Get all Verifiers regardless of complexity class
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Verifiers)")]
+#pragma warning disable CS1591
+//Note: CALEB - should probably be removed with api refactor
+
 public class All_VerifiersController : ControllerBase {
-    
+#pragma warning restore CS1591
+   
+///<summary>Returns all verifiers available for a given problem </summary>
+///<param name="chosenProblem" example="NPC_SAT3">Problem name</param>
+///<response code="200">Returns string array of verifiers</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
 
@@ -36,8 +46,18 @@ public class All_VerifiersController : ControllerBase {
 // Get all Verifiers for a specific problem\
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Verifiers)")]
+#pragma warning disable CS1591
+//Note: CALEB - should probably be removed with api refactor
+
 public class Problem_VerifiersController : ControllerBase {
+#pragma warning restore CS1591
     
+///<summary>Returns all verifiers available for a given problem </summary>
+///<param name="chosenProblem" example="NPC_SAT3">Problem name</param>
+///<response code="200">Returns string array of verifiers</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
 
@@ -66,8 +86,18 @@ public class Problem_VerifiersController : ControllerBase {
 // Get all Verifiers for a specific problem\
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Verifiers)")]
+#pragma warning disable CS1591
+
 public class Problem_VerifiersRefactorController : ControllerBase {
+#pragma warning restore CS1591
     
+///<summary>Returns all verifiers available for a given problem </summary>
+///<param name="chosenProblem" example="SAT3">Problem name</param>
+///<param name="problemType" example="NPC">Problem type</param>
+///<response code="200">Returns string array of verifiers</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem,[FromQuery]string problemType) {
                 string NOT_FOUND_ERR_VERIFIER = "entered a verifier that does not exist";

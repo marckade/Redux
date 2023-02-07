@@ -1,6 +1,7 @@
 using Xunit;
 
 namespace redux_tests;
+#pragma warning disable CS1591
 
 public class ExampleTest
 {

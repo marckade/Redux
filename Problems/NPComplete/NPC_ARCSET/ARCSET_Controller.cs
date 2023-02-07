@@ -13,8 +13,14 @@ namespace API.Problems.NPComplete.NPC_ARCSET;
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Feedback Arc Set")]
+#pragma warning disable CS1591
 public class ARCSETGenericController : ControllerBase {
+#pragma warning restore CS1591
 
+///<summary>Returns a default Feedback Arc Set problem object</summary>
+
+    [ProducesResponseType(typeof(ARCSET), 200)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -22,6 +28,11 @@ public class ARCSETGenericController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a Arc Set problem object created from a given instance </summary>
+///<param name="problemInstance" example="{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}">Feedback Arc Set problem instance string.</param>
+///<response code="200">Returns ARCSET problem Object</response>
+
+    [ProducesResponseType(typeof(ARCSET), 200)]
     [HttpGet("instance")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -32,8 +43,16 @@ public class ARCSETGenericController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Feedback Arc Set")]
+#pragma warning disable CS1591
 public class AlexArcsetVerifierController : ControllerBase {
+#pragma warning restore CS1591
 
+
+///<summary>Returns a info about Alex's Feedback Arc Set verifier </summary>
+///<response code="200">Returns Feedback Arc Set verifier object</response>
+
+    [ProducesResponseType(typeof(AlexArcsetVerifier), 200)]
     [HttpGet("info")]
     public String getInstance(){
         var options = new JsonSerializerOptions{WriteIndented = true};
@@ -42,7 +61,13 @@ public class AlexArcsetVerifierController : ControllerBase {
         return jsonString;
     }    
 
-      [HttpGet("verify")]
+///<summary>Verifies if a given certificate is a solution to a given Feedback Arc Set problem</summary>
+///<param name="certificate" example="{(2,4)}">certificate solution to Feedback Arc Set problem.</param>
+///<param name="problemInstance" example="{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}">Feedback Arc Set problem instance string.</param>
+///<response code="200">Returns a boolean</response>
+    
+    [ProducesResponseType(typeof(Boolean), 200)]
+    [HttpGet("verify")]
     public String getInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
@@ -96,8 +121,16 @@ public class AlexArcsetVerifierController : ControllerBase {
 
 [ApiController]                    
 [Route("[controller]")]
+[Tags("Feedback Arc Set")]
+#pragma warning disable CS1591
 public class ArcSetBruteForceController : ControllerBase {
+#pragma warning restore CS1591
 
+
+///<summary>Returns a info about the Feedback Arc Set brute force solver </summary>
+///<response code="200">Returns ArcSetBruteForce solver object</response>
+
+    [ProducesResponseType(typeof(ArcSetBruteForce), 200)]
     [HttpGet("info")]
     //without params, just returns the solver.
     public String getDefault(){
@@ -112,7 +145,12 @@ public class ArcSetBruteForceController : ControllerBase {
         return jsonString;
     }
 
-      [HttpGet("solve")]
+///<summary>Returns a solution to a given Feedback Arc Set problem instance </summary>
+///<param name="problemInstance" example="{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}">Feedback Arc Set problem instance string.</param>
+///<response code="200">Returns a string </response>
+    
+    [ProducesResponseType(typeof(string), 200)]
+    [HttpGet("solve")]
      //With query.
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -133,9 +171,14 @@ public class ArcSetBruteForceController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Feedback Arc Set")]
+#pragma warning disable CS1591
 public class ArcsetJsonPayloadController : ControllerBase {
 
-      [HttpGet]
+
+
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet]
     public String getInstance([FromQuery]string listType) {
                // Console.WriteLine("RECEIVED REQUEST");
 
@@ -164,11 +207,16 @@ public class ArcsetJsonPayloadController : ControllerBase {
     }
 
 }
+#pragma warning restore CS1591
     
 [ApiController]
 [Route("[controller]")]
+[Tags("Feedback Arc Set")]
+#pragma warning disable CS1591
 public class ARCSETDevController : ControllerBase {
 
+
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
 
@@ -187,6 +235,7 @@ public class ARCSETDevController : ControllerBase {
         return printString2;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("instance")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -198,11 +247,17 @@ public class ARCSETDevController : ControllerBase {
         return jsonString;
     }
 }
+#pragma warning restore CS1591
+
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Feedback Arc Set")]
+#pragma warning disable CS1591
 public class ARCSETVisualizerController : ControllerBase {
 
+
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
         ARCSET arcProblem = new ARCSET();
@@ -214,6 +269,7 @@ public class ARCSETVisualizerController : ControllerBase {
 
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getInstance([FromQuery]string problemInstance) {
         ARCSET arcProblem = new ARCSET(problemInstance);
@@ -224,6 +280,8 @@ public class ARCSETVisualizerController : ControllerBase {
         return jsonString;
     }
 }
+#pragma warning restore CS1591
+
 
 
     
