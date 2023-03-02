@@ -51,7 +51,6 @@ app.UseCors(x => x
     
 app.UseAuthorization();
 
-if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     // app.UseSwaggerUI();
