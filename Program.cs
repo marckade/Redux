@@ -51,13 +51,11 @@ app.UseCors(x => x
     
 app.UseAuthorization();
 
-{
-    app.UseSwagger();
-    // app.UseSwaggerUI();
-    app.UseSwaggerUI(c =>
-        c.InjectStylesheet("/assests/css/swagger.css")
-    );
-}
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+    c.InjectStylesheet("/assests/css/swagger.css")
+);
+
 
 app.MapControllers();
 
