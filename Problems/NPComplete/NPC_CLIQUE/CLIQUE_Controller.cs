@@ -16,8 +16,14 @@ namespace API.Problems.NPComplete.NPC_CLIQUE;
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Clique")]
+#pragma warning disable CS1591
 public class CLIQUEGenericController : ControllerBase {
+#pragma warning restore CS1591
 
+///<summary>Returns a default Clique problem object</summary>
+
+    [ProducesResponseType(typeof(CLIQUE), 200)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -25,6 +31,11 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a Clique problem object created from a given instance </summary>
+///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Clique problem instance string.</param>
+///<response code="200">Returns CLIQUE problem object</response>
+
+    [ProducesResponseType(typeof(CLIQUE), 200)]
     [HttpGet("instance")]
     public String getDefault([FromQuery] string problemInstance)
     {
@@ -36,6 +47,8 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+#pragma warning disable CS1591
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
     public String getVisualization([FromQuery] string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -47,6 +60,7 @@ public class CLIQUEGenericController : ControllerBase {
         return jsonString;
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("solvedVisualization")]
     public String getSolvedVisualization([FromQuery]string problemInstance,string solution) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -68,14 +82,21 @@ public class CLIQUEGenericController : ControllerBase {
         // Console.WriteLine(sClique.clusterNodes.Count.ToString());
         
     }
+#pragma warning restore CS1591
 
 }
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Clique")]
+#pragma warning disable CS1591
 public class sipserReduceToVCController : ControllerBase {
 
 
+///<summary>Returns a a reduction object with info for Sipser's Clique to Vertex Cover reduction </summary>
+///<response code="200">Returns sipserReduction Object</response>
+
+    [ProducesResponseType(typeof(sipserReduction), 200)]
     [HttpGet("info")]
 
     public String getInfo() {
@@ -87,6 +108,11 @@ public class sipserReduceToVCController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a reduction from Clique to Vertex Cover based on the given Clique instance  </summary>
+///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Clique problem instance string.</param>
+///<response code="200">Returns Sipser's Clique to Vertex Cover SipserReduction object</response>
+
+    [ProducesResponseType(typeof(SipserReduction), 200)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -97,7 +123,10 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet("visualize")]
+    #pragma warning disable CS1591
+
     public String getVisualization([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
@@ -118,6 +147,15 @@ public class sipserReduceToVCController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(apiArr, options);
         return jsonString;
     }
+    #pragma warning restore CS1591
+
+///<summary>Returns a solution to the a Vertex Cover problem, wich has been reduced from Clique using Sipser's reduction  </summary>
+///<param name="problemFrom" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Clique problem instance string.</param>
+///<param name="problemTo" example="{{1,2,3,4},{{1,3}},1}">Vertex Cover problem instance string reduced from Clique instance.</param>
+///<param name="problemFromSolution" example=" {1,2,4}">Solution to Clique problem.</param>
+///<response code="200">Returns solution to the reduced Vertex Cover instance</response>
+    
+    [ProducesResponseType(typeof(string), 200)]
     [HttpGet("mapSolution")]
     public String mapSolution([FromQuery]string problemFrom, string problemTo, string problemFromSolution){
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -132,9 +170,12 @@ public class sipserReduceToVCController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Clique")]
+#pragma warning disable CS1591
 public class CLIQUEDevController : ControllerBase
 {
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault()
     {
@@ -146,7 +187,8 @@ public class CLIQUEDevController : ControllerBase
         return jsonString;
     }
     
-        [HttpGet("instance")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("instance")]
     public String getDefault([FromQuery] string problemInstance)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -163,7 +205,8 @@ public class CLIQUEDevController : ControllerBase
     }
 
 
-     [HttpGet("visualize")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("visualize")]
     public String getVisualization([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE clique = new CLIQUE(problemInstance);
@@ -174,13 +217,23 @@ public class CLIQUEDevController : ControllerBase
     }
 
 }
+#pragma warning restore CS1591
+
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Clique")]
+#pragma warning disable CS1591
 public class CliqueBruteForceController : ControllerBase
+#pragma warning restore CS1591
+
 {
 
     // Return Generic Solver Class
+///<summary>Returns a info about the Clique brute force solver </summary>
+///<response code="200">Returns CliqueBruteForce solver object</response>
+
+    [ProducesResponseType(typeof(CliqueBruteForce), 200)]
     [HttpGet("info")]
     public String getGeneric()
     {
@@ -193,6 +246,11 @@ public class CliqueBruteForceController : ControllerBase
     }
 
     // Solve a instance given a certificate
+///<summary>Returns a solution to a given Clique problem instance </summary>
+///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Clique problem instance string.</param>
+///<response code="200">Returns a solution string </response>
+    
+    [ProducesResponseType(typeof(string), 200)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery] string problemInstance)
     {
@@ -209,8 +267,16 @@ public class CliqueBruteForceController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
+[Tags("Clique")]
+#pragma warning disable CS1591
 public class CliqueVerifierController : ControllerBase {
+    #pragma warning restore CS1591
 
+
+///<summary>Returns a info about the Clique generic Verifier </summary>
+///<response code="200">Returns CliqueVerifier Object</response>
+
+    [ProducesResponseType(typeof(CliqueVerifier), 200)]
     [HttpGet("info")]
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -221,6 +287,12 @@ public class CliqueVerifierController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Verifies if a given certificate is a solution to a given Clique problem</summary>
+///<param name="certificate" example="{1,2,4}">certificate solution to Clique problem.</param>
+///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Clique problem instance string.</param>
+///<response code="200">Returns a boolean</response>
+    
+    [ProducesResponseType(typeof(Boolean), 200)]
     [HttpGet("verify")]
     public String verifyInstance([FromQuery]string problemInstance, string certificate){
     string jsonString = String.Empty;

@@ -263,8 +263,8 @@ class SipserReduction : IReduction<SAT3, SipserClique>
     /// <summary>
     ///  Given a solution string and a reduced to problem instance, map the solution to the problem. 
     /// </summary>
-    /// <param name="problemInstance"></param>
-    /// <param name="sat3SolutionString"></param>
+    /// <param name="sipserInput"></param>
+    /// <param name="solutionDict"></param>
     /// <returns> A Sipser Clique with a cluster nodes attribute (list of SipserNodes) that has a solution state mapped to each node.</returns>
     public SipserClique solutionMappedToClusterNodes(SipserClique sipserInput, List<string> solution)
     {

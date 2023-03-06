@@ -1,7 +1,7 @@
-/**
+/*
 * Arcset_Class.cs
 * @author Alex Diviney
-**/
+*/
 
 
 

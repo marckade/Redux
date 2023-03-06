@@ -4,11 +4,21 @@ using System.Text.Json.Serialization;
 using System.Collections;
 
 // Get all problems regardless of complexity class
+
 [ApiController]
 [Route("Navigation/[controller]")]
-public class All_ReductionsController : ControllerBase {
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
 
-    
+public class All_ReductionsController : ControllerBase {
+#pragma warning restore CS1591
+
+//Note: CALEB - should probably be removed with api refactor
+
+///<summary>Returns list of all available problem types </summary>
+///<response code="200">Returns string array of problem types</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -26,8 +36,18 @@ public class All_ReductionsController : ControllerBase {
 // Get only NP-Complete problems
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
+
+//Note: CALEB - should probably be removed with api refactor
+
 public class NPC_ReductionsController : ControllerBase {
+#pragma warning restore CS1591
     
+///<summary>Returns all NP-Complete problems </summary>
+///<response code="200">Returns string array of all NP-Complete problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault() {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -44,10 +64,20 @@ public class NPC_ReductionsController : ControllerBase {
 // Get all problems we can reduce to for a specific problem
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
+//Note: CALEB - should probably be removed with api refactor
+
 public class Problem_ReductionsController : ControllerBase {
+#pragma warning restore CS1591
 
-    public const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
+    const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
 
+///<summary>Returns all problems which a given problem directly reduces to </summary>
+///<param name="chosenProblem" example="NPC_SAT3">Problem name</param>
+///<response code="200">Returns string array of problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem) {
         
@@ -89,10 +119,20 @@ public class Problem_ReductionsController : ControllerBase {
 // Get all problems we can reduce to for a specific problem
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
+
 public class Problem_ReductionsRefactorController : ControllerBase {
+#pragma warning restore CS1591
 
-    public const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
+    const string NO_REDUCTIONS_ERROR = "{\"ERROR\": \"No Reductions Available\"}"; //API Response. 
 
+///<summary>Returns all problems which a given  problem directly reduces to </summary>
+///<param name="chosenProblem" example="SAT3">Problem name</param>
+///<param name="problemType" example="NPC">Problem type</param>
+///<response code="200">Returns string array of problems</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenProblem ,[FromQuery] string problemType) {
         
@@ -144,8 +184,19 @@ public class Problem_ReductionsRefactorController : ControllerBase {
 // Get all reductions implemented for a specific problem
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
+//Note: CALEB - should probably be removed with api refactor
+
 public class PossibleReductionsController : ControllerBase {
-    
+#pragma warning restore CS1591
+
+///<summary>Returns al list of reductions from a given problem to another given problem </summary>
+///<param name="reducingFrom" example="NPC_SAT3">Problem name</param>
+///<param name="reducingTo" example="NPC_CLIQUE">Problem name</param>
+///<response code="200">Returns string array of reductions</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string reducingFrom, [FromQuery]string reducingTo) {
 
@@ -174,8 +225,19 @@ public class PossibleReductionsController : ControllerBase {
 // Get all reductions implemented for a specific problem
 [ApiController]
 [Route("Navigation/[controller]")]
-public class PossibleReductionsRefactorController : ControllerBase {
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
 
+public class PossibleReductionsRefactorController : ControllerBase {
+#pragma warning restore CS1591
+
+///<summary>Returns al list of reductions from a given problem to another given problem </summary>
+///<param name="reducingFrom" example="SAT3">Problem name</param>
+///<param name="reducingTo" example="CLIQUE">Problem name</param>
+///<param name="problemType" example="NPC">Problem type</param>
+///<response code="200">Returns string array of reductions</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet]
     public String getDefault([FromQuery]string reducingFrom, [FromQuery]string reducingTo,[FromQuery]string problemType) {
         string NOT_FOUND_ERR_REDUCTION = "entered a reduce from or to that does not exist";
@@ -225,8 +287,13 @@ public class PossibleReductionsRefactorController : ControllerBase {
 // Get all problems from a chosen reduction
 [ApiController]
 [Route("Navigation/[controller]")]
+[Tags("- Navigation (Reductions)")]
+#pragma warning disable CS1591
+
 public class Reverse_ReductionsController : ControllerBase {
-    
+
+//Note: CALEB - should probably be removed with api refactor
+    // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault([FromQuery]string chosenReduction) {
         string projectSourcePath = ProjectSourcePath.Value;
@@ -239,3 +306,4 @@ public class Reverse_ReductionsController : ControllerBase {
         return jsonString;
     }
 }
+ #pragma warning restore CS1591

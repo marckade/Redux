@@ -42,13 +42,7 @@ class VertexCoverBruteForce : ISolver {
     }
 
 
-/// <summary>
-/// Solves a VERTEXCOVER instance input.
-/// </summary>
-/// <param name="G"> G is an undirected graph instance string</param>
-/// <returns>
-///  Subset of nodes that cover whole graph. 
-/// </returns>
+
     private long factorial(long x){
         long y = 1;
         for(long i=1; i<=x; i++){
@@ -75,6 +69,13 @@ class VertexCoverBruteForce : ISolver {
         }
         return combination;
     }
+/// <summary>
+/// Solves a VERTEXCOVER instance input.
+/// </summary>
+/// <param name="G"> G is an undirected graph instance string</param>
+/// <returns>
+///  Subset of nodes that cover whole graph. 
+/// </returns>
     public string Solve(VERTEXCOVER G){
         List<int> combination = new List<int>();
         for(int i=0; i<G.K; i++){

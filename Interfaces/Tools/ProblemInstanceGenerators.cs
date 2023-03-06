@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace API.Interfaces.Tools;
 
-public static class ProblemInstanceGenerators{
+static class ProblemInstanceGenerators{
     public static string UndirectedGraphInstance(int n = 5, int k =- 1, int density = 50){
         Random random = new Random();
         List<int> nodes = new List<int>();
@@ -110,8 +110,18 @@ public static class ProblemInstanceGenerators{
 
 [ApiController]
 [Route("[controller]")]
+[Tags("-Problem Generator")]
+#pragma warning disable CS1591
 public class ProblemGeneratorController : ControllerBase {
+#pragma warning restore CS1591
 
+///<summary>Returns a random undirected graph with a k value, for NP-Complete problems with undirected graph input </summary>
+///<param name="n" example="5">Nodes in graph</param>
+///<param name="density" example="50">Density of edges</param>
+///<param name="k" example="3">k value for NP-Complete problem, -1 if no k value wanted</param>
+///<response code="200">Returns string graph NP Complete problem instance, &lt;G,k&gt;</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("UndirectedGraph")]
     public String getUndirectedGraph([FromQuery] int n = 5, int density = 50 , int k = -1)
     {
@@ -123,6 +133,13 @@ public class ProblemGeneratorController : ControllerBase {
         return jsonString;
     }
 
+///<summary>Returns a random graph with a k value, for NP-Complete problems with graph input </summary>
+///<param name="n" example="5">Nodes in graph</param>
+///<param name="density" example="50">Density of edges</param>
+///<param name="k" example="3">k value for NP-Complete problem, -1 if no k value wanted</param>
+///<response code="200">Returns string graph NP Complete problem instance, &lt;G,k&gt;</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("DirectedGraph")]
     public String getDirectedGraph([FromQuery] int n = 5, int density = 50 , int k = -1)
     {
@@ -133,6 +150,13 @@ public class ProblemGeneratorController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(graphInstance, options);
         return jsonString;
     }
+
+///<summary>Returns a random problem input for 3SAT</summary>
+///<param name="n" example="3">Variables in problem</param>
+///<param name="c" example="3">Number of clauses</param>
+///<response code="200">Returns string instance of a 3SAT problem;</response>
+
+    [ProducesResponseType(typeof(string[]), 200)]
     [HttpGet("Sat3")]
     public String getSat3([FromQuery] int n = 3, int c = 3)
     {

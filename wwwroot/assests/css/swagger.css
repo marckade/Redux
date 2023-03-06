@@ -1,0 +1,24 @@
+body{
+  background-color: #ffffff !important;
+}
+
+.topbar{
+  background-color: #424242 !important;
+}
+
+.opblock-summary-get > button > span.opblock-summary-method {
+  background: #424242 !important;
+}
+
+.link{
+  visibility: hidden !important;
+}
+  
+.opblock-summary{
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.opblock.opblock-get{
+  background-color: #e7e7e7 !important;
+  border-color: #b3b3b3 !important;
+}

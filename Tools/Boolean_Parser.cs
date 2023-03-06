@@ -4,6 +4,8 @@ namespace API.Tools.Boolean_Parser;
 
 //Simple class to parse a Boolean string. 
 //Use is to create an Boolean_Parser with you Boolean string and call the functions on it.
+#pragma warning disable CS1591
+
 public class Boolean_Parser{
 
     //Constructor
