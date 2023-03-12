@@ -146,6 +146,13 @@ public List<string> getNodesFromNodeListString(string input){
 
         return retList;
     }
+    
+    /// <summary>
+    /// Despite the complex name, all this does is take a string input in list format eg. "{a,b,c}" and turns it into a list of strings. 
+    /// Be careful using this because it will also turn a graph string {{a,b,c},{(a,b},{b,c},0} into a list [a,b,c,a,b,b,c,0]
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns> A list of strings</returns>
     public List<string> parseNodeListWithStringFunctions(string input){
         List<string> retList = new List<string>();
         try{
