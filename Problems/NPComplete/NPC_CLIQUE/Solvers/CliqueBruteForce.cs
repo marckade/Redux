@@ -45,11 +45,14 @@ class CliqueBruteForce : ISolver {
         return y;
     }
     private string indexListToCertificate(List<int> indecies, List<string> nodes){
+        // Console.WriteLine("indecies: ", indecies.ToString());
         string certificate = "";
         foreach(int i in indecies){
-            certificate += ","+nodes[i];
+            certificate += nodes[i]+",";
         }
-        return "{" + certificate.Substring(1) + "}";
+        certificate = certificate.TrimEnd(',');
+        // Console.WriteLine("returned statement: {"+certificate+"}");
+        return "{" + certificate + "}"; 
     }
     private List<int> nextComb(List<int> combination, int size){
         for(int i=combination.Count-1; i>=0; i--){

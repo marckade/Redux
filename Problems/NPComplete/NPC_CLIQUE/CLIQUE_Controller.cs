@@ -65,14 +65,13 @@ public class CLIQUEGenericController : ControllerBase {
     public String getSolvedVisualization([FromQuery]string problemInstance,string solution) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SipserClique sClique = new SipserClique(problemInstance);
-        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(problemInstance);
-
+        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(solution); //Note, this is just a convenience string to list function.
         CliqueGraph cGraph = sClique.cliqueAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(cGraph.getNodeList,cGraph.getEdgeList);
         for(int i=0;i<apiGraph.nodes.Count;i++){
             apiGraph.nodes[i].attribute1 = i.ToString();
-            if(solutionList.Contains(apiGraph.nodes[i].name)){
-                apiGraph.nodes[i].attribute2 = true.ToString();
+            if(solutionList.Contains(apiGraph.nodes[i].name)){ //we set the nodes as either having a true or false flag which will indicate to the frontend whether to highlight.
+                apiGraph.nodes[i].attribute2 = true.ToString(); 
             }
             else{apiGraph.nodes[i].attribute2 = false.ToString();}
         }
