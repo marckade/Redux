@@ -106,7 +106,7 @@ class VertexCoverBruteForce : ISolver {
         VertexCoverGraph vGraph = new VertexCoverGraph(problemInstance, true);
         List<string> problemInstanceNodes = vGraph.nodesStringList;
         // List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
-        List<string> solvedNodes = new GraphParser().parseNodeListWithStringFunctions(solutionString);
+        List<string> solvedNodes = GraphParser.parseNodeListWithStringFunctions(solutionString);
 
         // Remove solvedNodes from instanceNodes
         foreach(string node in solvedNodes){

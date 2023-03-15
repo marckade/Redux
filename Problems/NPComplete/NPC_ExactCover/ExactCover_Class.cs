@@ -102,7 +102,7 @@ class ExactCover : IProblem<ExactCoverBruteForce,ExactCoverVerifier> {
         List<List<string>> S = new List<List<string>>();
         List<string> S_stringList = instance.Replace(" ","").Split(":")[0].Split("},{").ToList();
         foreach(string stringSet in S_stringList){
-            List<string> subset = new GraphParser().parseNodeListWithStringFunctions(stringSet);
+            List<string> subset = GraphParser.parseNodeListWithStringFunctions(stringSet);
             S.Add(subset);
         }
         return S;

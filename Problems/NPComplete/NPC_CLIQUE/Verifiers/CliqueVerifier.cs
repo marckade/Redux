@@ -49,7 +49,7 @@ class CliqueVerifier : IVerifier {
     }
     private List<string> parseCertificate(string certificate){
 
-        List<string> nodeList = new GraphParser().parseNodeListWithStringFunctions(certificate);
+        List<string> nodeList = GraphParser.parseNodeListWithStringFunctions(certificate);
         return nodeList;
     }
     public bool verify(CLIQUE problem, string certificate){

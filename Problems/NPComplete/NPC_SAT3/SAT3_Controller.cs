@@ -95,7 +95,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();
         //Turn string into solution dictionary
-        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(solution);
+        List<string> solutionList = GraphParser.parseNodeListWithStringFunctions(solution);
         SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionList);
         string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         return jsonString;
