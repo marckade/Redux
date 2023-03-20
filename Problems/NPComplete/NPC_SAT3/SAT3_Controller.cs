@@ -95,7 +95,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
         SipserReduction reduction = new SipserReduction(defaultSAT3);
         SipserClique reducedClique = reduction.reduce();
         //Turn string into solution dictionary
-        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(solution);
+        List<string> solutionList = GraphParser.parseNodeListWithStringFunctions(solution);
         SipserClique sClique = reduction.solutionMappedToClusterNodes(reducedClique,solutionList);
         string jsonString = JsonSerializer.Serialize(sClique.clusterNodes, options);
         return jsonString;
@@ -379,15 +379,26 @@ public class Sat3BacktrackingSolverController : ControllerBase {
         SAT3 SAT3_PROBLEM = new SAT3(problemInstance);
         Dictionary<string, bool> solution = SAT3_PROBLEM.defaultSolver.solve(SAT3_PROBLEM);
 
-        //ALEX NOTE: This is a temporary fix. This logic should be moved to the SAT3 solver class soon. 
-        string solutionString = "(";
-        foreach(KeyValuePair<string,bool> kvp in solution){
-            solutionString = solutionString + kvp.Key + ":" + kvp.Value.ToString() + ",";
+        string solutionString;
+        string jsonString;
+        if(solution == null){
+            solutionString = "No Solution";
+            jsonString = JsonSerializer.Serialize(solutionString, options);
+            return jsonString;
         }
-        solutionString = solutionString.TrimEnd(',');
-        solutionString = solutionString + ")"; 
-        string jsonString = JsonSerializer.Serialize(solutionString, options);
-        return jsonString;
+
+        else{
+            //ALEX NOTE: This is a temporary fix. This logic should be moved to the SAT3 solver class soon. 
+            solutionString = "(";
+            foreach(KeyValuePair<string,bool> kvp in solution){
+                solutionString = solutionString + kvp.Key + ":" + kvp.Value.ToString() + ",";
+            }
+            solutionString = solutionString.TrimEnd(',');
+            solutionString = solutionString + ")"; 
+            
+            jsonString = JsonSerializer.Serialize(solutionString, options);
+            return jsonString;
+        }
 
     }
 

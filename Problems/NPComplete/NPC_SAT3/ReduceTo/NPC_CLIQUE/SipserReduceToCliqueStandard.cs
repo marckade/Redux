@@ -386,7 +386,7 @@ class SipserReduction : IReduction<SAT3, SipserClique>
         }
 
         //Parse problemFromSolution into a list of nodes
-        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(problemToSolution);
+        List<string> solutionList = GraphParser.parseNodeListWithStringFunctions(problemToSolution);
       
 
         //Reverse Mapping

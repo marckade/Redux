@@ -158,7 +158,7 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
         //NOTE :: should we verify if the reduction is correct, if so we might as well just take the problemFrom and create the problemTo
 
         //Parse problemFromSolution into a list of nodes
-        List<string> solutionList = new GraphParser().parseNodeListWithStringFunctions(problemFromSolution);
+        List<string> solutionList = GraphParser.parseNodeListWithStringFunctions(problemFromSolution);
 
         //Map solution
         List<string> mappedSolutionList = new List<string>();

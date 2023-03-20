@@ -153,7 +153,7 @@ public List<string> getNodesFromNodeListString(string input){
     /// </summary>
     /// <param name="input"></param>
     /// <returns> A list of strings</returns>
-    public List<string> parseNodeListWithStringFunctions(string input){
+    public static List<string> parseNodeListWithStringFunctions(string input){
         List<string> retList = new List<string>();
         try{
             retList = input.Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
