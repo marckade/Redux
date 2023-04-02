@@ -8,6 +8,7 @@ using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 using API.Interfaces.Graphs;
+using API.Interfaces.JSON_Objects.Graphs;
 
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
@@ -37,6 +38,21 @@ public class ARCSETGenericController : ControllerBase {
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new ARCSET(problemInstance), options);
+        return jsonString;
+    }
+
+///<summary>Returns a graph object used for dynamic visualization </summary>
+///<param name="problemInstance" example="{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}">Feedback Arc Set problem instance string.</param>
+///<response code="200">Returns graph object</response>
+
+    // [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("visualize")]
+    public String getVisualization([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ARCSET aSet = new ARCSET(problemInstance);
+        ArcsetGraph aGraph = aSet.directedGraph;
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList, aGraph.getEdgeList);
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
     }
 }
