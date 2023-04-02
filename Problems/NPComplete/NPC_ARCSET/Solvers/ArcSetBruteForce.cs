@@ -1,5 +1,6 @@
 using API.Interfaces;
 using API.Interfaces.Graphs;
+using API.Interfaces.Graphs.GraphParser;
 
 namespace API.Problems.NPComplete.NPC_ARCSET.Solvers;
 class ArcSetBruteForce : ISolver {
@@ -96,9 +97,25 @@ class ArcSetBruteForce : ISolver {
         return "{}";
     }
 
+    public Dictionary<KeyValuePair<string,string>, bool> getSolutionDict(string problemInstance, string solutionString){
+        Dictionary<KeyValuePair<string,string>, bool> solutionDict = new Dictionary<KeyValuePair<string,string>, bool>();
+        ArcsetGraph aGraph = new ArcsetGraph(problemInstance, true);
+        List<KeyValuePair<string, string>> problemInstanceEdges = aGraph.edgesKVP;
+        List<KeyValuePair<string, string>> solvedNodes = GraphParser.parseDirectedEdgeListWithStringFunctions(solutionString);
+
+        foreach(var edge in solvedNodes){
+            problemInstanceEdges.Remove(edge);
+            solutionDict.Add(edge, true);
+       }
+        foreach(var edge in problemInstanceEdges){
+          
+                solutionDict.Add(edge, false);
+        }
+
+        return solutionDict;
+    }
+
 }
-
-
 // public string solve(CLIQUE clique){
 //         List<int> combination = new List<int>();
 //         for(int i=0; i<clique.K; i++){
