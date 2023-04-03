@@ -88,7 +88,6 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         _reductionTo = reduce();
         var options = new JsonSerializerOptions { WriteIndented = true };
         String jsonString = JsonSerializer.Serialize(reduce(),options);
-        Console.Write(jsonString);
         
     }
     /// <summary>
@@ -115,8 +114,7 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         //NOTE :: should we verify if the reduction is correct, if so we might as well just take the problemFrom and create the problemTo
 
         //Parse problemFromSolution into a list of nodes
-        GraphParser gParser = new GraphParser();
-        List<string> solutionList = gParser.getNodesFromNodeListString(problemFromSolution);
+        List<string> solutionList = GraphParser.parseNodeListWithStringFunctions(problemFromSolution);
 
         //Map solution 
         List<string> mappedSolutionList = new List<string>();
@@ -127,7 +125,6 @@ class LawlerKarp : IReduction<VERTEXCOVER, ARCSET> {
         foreach(string edge in mappedSolutionList){
             problemToSolution += edge + ',';
         }
-
         return '{' + problemToSolution.TrimEnd(',') + '}';
     }
 }
