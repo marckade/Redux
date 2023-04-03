@@ -260,17 +260,13 @@ public class LawlerKarpController : ControllerBase {
     [ProducesResponseType(typeof(LawlerKarp), 200)]
     [HttpGet("reduce")]
     public String getReduce([FromQuery]string problemInstance) {
-        Console.Write("VertexCover controller getReduce:");
-        Console.Write(problemInstance);
         //from query is a query parameter
 
-        Console.WriteLine(problemInstance);
         var options = new JsonSerializerOptions { WriteIndented = true };
         //UndirectedGraph UG = new UndirectedGraph(problemInstance);
         //string reduction = UG.reduction();
         //Boolean response = verifier.verify(ARCSETProblem,certificate);
         // Send back to API user
-        Console.Write(problemInstance);
         VERTEXCOVER vCover = new VERTEXCOVER(problemInstance);
         LawlerKarp reduction = new LawlerKarp(vCover);
        // ARCSET reducedArcset = reduction.reduce();
