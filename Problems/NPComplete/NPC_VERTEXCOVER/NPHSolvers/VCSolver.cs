@@ -99,7 +99,6 @@ class VCSolverJanita : ISolver {
 
         List<string> leftoverNodes = new List<string>();
             foreach(KeyValuePair<string,string> cEdge in C){
-            Console.WriteLine(cEdge.Key + " " + cEdge.Value);
             if(!leftoverNodes.Contains(cEdge.Key)){
                 leftoverNodes.Add(cEdge.Key);
                 }

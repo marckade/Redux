@@ -150,9 +150,9 @@ class SAT3PQObject{
                 newSATObj.varStates.Add(this.nextVar, boolValue);
             }
             else{
-                Console.WriteLine("The variable : " + this.nextVar + " already exists in seen variables");
-                Console.WriteLine("the variable is set to : " + this.varStates.GetValueOrDefault(this.nextVar).ToString());
-                Console.WriteLine("The system is currently evaulating it at : " + boolValue.ToString());
+                // Console.WriteLine("The variable : " + this.nextVar + " already exists in seen variables");
+                // Console.WriteLine("the variable is set to : " + this.varStates.GetValueOrDefault(this.nextVar).ToString());
+                // Console.WriteLine("The system is currently evaulating it at : " + boolValue.ToString());
             }
             return newSATObj;
         }
