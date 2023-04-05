@@ -61,7 +61,7 @@ class Sat3BacktrackingSolver : ISolver {
         //CATCHES INVALID INPUTS
         // Console.WriteLine(sat3.literals.Count);
         if(sat3.literals.Count < 2){
-            Console.WriteLine("No literals provided");
+            // Console.WriteLine("No literals provided");
             return null;
         }
         

@@ -94,12 +94,10 @@ class ProblemGraph {
                 visited.Add(currentNode);
             }
             foreach(KeyValuePair<string, List<string>> elem in nodes){
-                Console.WriteLine(elem.Key);
                 // for(int i=0; i<elem.Value.Count; i++){
                 //     Console.WriteLine("     "+elem.Value[i]);
                 // }
                 if(edges.ContainsKey(elem.Key)){
-                    Console.WriteLine("1");
                     foreach(string method in elem.Value){
                         if(!currentNode.Equals(problemName)){
                             edges[elem.Key].Add("*"+method); 
@@ -109,7 +107,6 @@ class ProblemGraph {
                         }
                     }
                 } else {
-                    Console.WriteLine("2");
                     if(currentNode.Equals(problemName.ToLower())){
                         edges.Add(elem.Key, elem.Value);
                               

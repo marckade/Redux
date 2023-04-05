@@ -165,4 +165,21 @@ public List<string> getNodesFromNodeListString(string input){
         return retList;
 }
 
+    public static List<KeyValuePair<string, string>> parseDirectedEdgeListWithStringFunctions(string input){
+            List<KeyValuePair<string, string>> retList = new List<KeyValuePair<string, string>>();
+            try{
+                List<string> sList = input.Replace("{","").Replace("}","").Replace(" ","").Replace("),(","|").Split("|").ToList();
+                foreach(string s in sList){
+                    string k = s.Split(",")[0].Replace("(","").Replace(")","");
+                    string v = s.Split(",")[1].Replace("(","").Replace(")","");
+                    retList.Add( new KeyValuePair<string, string>(k,v));
+                }
+                return retList;
+            }
+            catch(Exception e){
+                Console.WriteLine("Invalid input GraphParser getNodesFromNodeListString");
+            }
+            return retList;
+    }
+
 }

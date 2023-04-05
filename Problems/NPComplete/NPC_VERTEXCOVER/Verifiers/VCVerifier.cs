@@ -109,8 +109,7 @@ class VCVerifierJanita : IVerifier {
     }
 
     public List<string> getNodes(string nodesInput) {
-        GraphParser gParser = new GraphParser();
-       return gParser.getNodesFromNodeListString(nodesInput);
+       return GraphParser.parseNodeListWithStringFunctions(nodesInput);
 
     }
 

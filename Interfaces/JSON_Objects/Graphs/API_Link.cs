@@ -7,14 +7,17 @@ namespace API.Interfaces.JSON_Objects.Graphs;
 class API_Link{
     private string _source;
     private string _target;
+    private string _attribute1;
     public API_Link(){
         this._source = "DEFAULTSOURCE";
         this._target = "DEFAULTTARGET";
+        this._attribute1 = "DEFAULT";
     }
 
-    public API_Link(string s, string t){
+    public API_Link(string s, string t, string a1=""){
         _source = s;
         _target = t;
+        _attribute1 = a1;
     }
     
     public string source{
@@ -25,6 +28,14 @@ class API_Link{
     public string target{
         get{
             return _target;
+        }
+    }
+    public string attribute1{
+        get{
+            return _attribute1;
+        }
+        set{
+            _attribute1 = value;
         }
     }
     

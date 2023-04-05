@@ -231,12 +231,14 @@ abstract class UndirectedGraph:Graph{
         string[] Gedges = Gsections[1].Split('&');
         
         foreach (string edge in Gedges) {
-            string[] fromTo = edge.Split(',');
-            string nodeFrom = fromTo[0];
-            string nodeTo = fromTo[1];
+            if(edge.Replace(" ","") != ""){ // Checks that edge isn't empty string, which can happens if there are no edges to begin with
+                string[] fromTo = edge.Split(',');
+                string nodeFrom = fromTo[0];
+                string nodeTo = fromTo[1];
             
-            KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
-            allGEdges.Add(fullEdge);
+                KeyValuePair<string,string> fullEdge = new KeyValuePair<string,string>(nodeFrom, nodeTo);
+                allGEdges.Add(fullEdge);
+            }
         }
 
         return allGEdges;

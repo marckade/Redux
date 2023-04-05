@@ -125,7 +125,6 @@ class GarrettVerifier : IVerifier
     private bool containsValue(List<KeyValuePair<string, string>> listOfItems, KeyValuePair<string, string> item ){
 
         foreach (var elem in listOfItems ){
-            Console.WriteLine(elem.ToString());
             if (elem.Key.ToLower().Equals(item.Key.ToLower())  && elem.Value.ToLower().Equals(item.Value.ToLower()) ){
                 return true;
             }
