@@ -87,12 +87,10 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
         CLIQUE CLIQUEInstance = _reductionFrom;
         VERTEXCOVER reducedVERTEXCOVER = new VERTEXCOVER();
 
-
         // Assign clique nodes to vertexcover nodes.
         reducedVERTEXCOVER.nodes = CLIQUEInstance.nodes;
 
         List<KeyValuePair<string, string>> edges = new List<KeyValuePair<string, string>>();
-
 
         //this nested loop creates every possible combination of edges that aren't self edges between the nodes in the set and adds them to a list. 
         // ie. nodes 1,2,3 become edges {1,2},{2,1},{1,3},{3,1},{2,3},{3,2}
@@ -120,30 +118,21 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
             }
         }
 
-        //reducedVERTEXCOVER.edges = edges;
-
         // --- Generate G string for new CLIQUE ---
         string nodesString = "";
         foreach (string nodes in CLIQUEInstance.nodes) {
             nodesString += nodes + ",";
         }
         nodesString = nodesString.Trim(',');
-
         string edgesString = "";
         foreach (KeyValuePair<string,string> edge in edges) {
             edgesString += "{" + edge.Key + "," + edge.Value + "}" + ",";
         }
         edgesString = edgesString.Trim(',');
-
-        //int kint = reducedVERTEXCOVER.K; //DEPRECATED BY ALEX
         int vertexKInt = (CLIQUEInstance.nodes.Count - CLIQUEInstance.K); //N - K where N is number of nodes of k-clique and K is the k of k-clique
-
         string G = "{{" + nodesString + "},{" + edgesString + "}," + vertexKInt.ToString() + "}";
-        //reducedVERTEXCOVER.instance = G; 
-        //  Console.Write(G);
 
         reducedVERTEXCOVER = new VERTEXCOVER(G);
-        //reducedVERTEXCOVER.K = (CLIQUEInstance.nodes.Count - CLIQUEInstance.K); 
         reductionTo = reducedVERTEXCOVER;
         return reducedVERTEXCOVER;
 
@@ -154,8 +143,6 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
         if(!problemFrom.defaultVerifier.verify(problemFrom,problemFromSolution)){
             return "Clique solution is incorect " + problemFromSolution;
         }
-
-        //NOTE :: should we verify if the reduction is correct, if so we might as well just take the problemFrom and create the problemTo
 
         //Parse problemFromSolution into a list of nodes
         List<string> solutionList = GraphParser.parseNodeListWithStringFunctions(problemFromSolution);
@@ -175,4 +162,3 @@ class sipserReduction : IReduction<CLIQUE, VERTEXCOVER> {
 
     }
 }
-// // return an instance of what you are reducing to

@@ -17,7 +17,7 @@ abstract class DirectedGraph:Graph{
     // --- Fields ---
 
     //private list nodeList // Node obj
-   // protected List<Node> _nodeList;
+    //protected List<Node> _nodeList;
     //private list edge list // edge obj
     //protected List<Edge> _edgeList;
 
@@ -35,7 +35,7 @@ abstract class DirectedGraph:Graph{
     public DirectedGraph(){
 
         _nodeList = new List<Node>();
-         _edgeList = new List<Edge>();
+        _edgeList = new List<Edge>();
         _nodeDict = new Dictionary<string, Node>();
       
        
@@ -57,8 +57,8 @@ abstract class DirectedGraph:Graph{
         List<string> nl = getNodes(graphStr);
         List<KeyValuePair<string,string>> el = getEdges(graphStr);
         
-         //The following generates the dictionaries for our Nodes and Edges
-         _nodeDict = new Dictionary<string,Node>();
+        //The following generates the dictionaries for our Nodes and Edges
+        _nodeDict = new Dictionary<string,Node>();
         int k = getK(graphStr);
 
          _nodeList = new List<Node>();
@@ -236,12 +236,12 @@ abstract class DirectedGraph:Graph{
 ///NOTE: DEPRECATED
 ///</summary>
     protected override int getK(string Ginput) {
-            string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
-            
-            // [0] is nodes,  [1] is edges,  [2] is k.
-            string[] Gsections = strippedInput.Split(':');
-            return Int32.Parse(Gsections[2]);
-        }
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
+        
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        return Int32.Parse(Gsections[2]);
+    }
 
 
 
@@ -249,41 +249,37 @@ abstract class DirectedGraph:Graph{
 ///<summary>
 /// This method generates a Dictionary of key value pairs to represent the graph
 ///</summary>
-  protected void generateAdjacencyMatrix(){
-
-
-             _adjacencyMatrix =  new Dictionary<string,List<KeyValuePair<string,Node>>>();
-            foreach(Node n in _nodeList){ //creates the x row
-                _adjacencyMatrix.Add(n.name,new List<KeyValuePair<string,Node>>()); //initializes a list of KVP's per node. 
-                    //Console.Write(n.name);    
-            }
-            List<KeyValuePair<string,Node>> posList;
-            KeyValuePair<string,Node>kvp;
-            foreach(Edge e in _edgeList){ //creates the y columns. 
-                
-                bool hasKey =_adjacencyMatrix.ContainsKey(e.source.name);
-                if (!hasKey){
+    protected void generateAdjacencyMatrix(){
+        _adjacencyMatrix =  new Dictionary<string,List<KeyValuePair<string,Node>>>();
+        foreach(Node n in _nodeList){ //creates the x row
+            _adjacencyMatrix.Add(n.name,new List<KeyValuePair<string,Node>>()); //initializes a list of KVP's per node. 
+                //Console.Write(n.name);    
+        }
+        List<KeyValuePair<string,Node>> posList;
+        KeyValuePair<string,Node>kvp;
+        foreach(Edge e in _edgeList){ //creates the y columns. 
+            
+            bool hasKey =_adjacencyMatrix.ContainsKey(e.source.name);
+            if (!hasKey){
                 posList = new List<KeyValuePair<string, Node>>();
                 kvp = new KeyValuePair<string, Node>(e.target.name,e.target);
-
-                }
-                else{
-                    try{
-                   posList = _adjacencyMatrix[e.source.name];
+            }
+            else{
+                try{
+                    posList = _adjacencyMatrix[e.source.name];
                     kvp = new KeyValuePair<string, Node>(e.target.name,e.target);
                     posList.Add(kvp); //adds the node kvp to the list of kvps associated with "e1" (current node).
-
-                    }
-                    catch(KeyNotFoundException k){
-                        Console.WriteLine("Key not found");
-                        Console.WriteLine(k.StackTrace);
-                    }
-                 //_adjacencyMatrix.TryGetValue(e.source.name,out posList); //given name of node 1 in edge, add the KVP (target.name, target) to list. 
-
                 }
-                  
+                catch(KeyNotFoundException k){
+                    Console.WriteLine("Key not found");
+                    Console.WriteLine(k.StackTrace);
+                }
+                //_adjacencyMatrix.TryGetValue(e.source.name,out posList); //given name of node 1 in edge, add the KVP (target.name, target) to list. 
 
             }
+                
+
+        }
 
     }
     
@@ -297,16 +293,11 @@ abstract class DirectedGraph:Graph{
             List<KeyValuePair<string,Node>> adjList = new List<KeyValuePair<string, Node>>();
             try{
                 adjList =_adjacencyMatrix[n.name];
-                      
-            
-             //bool testCreation = _adjacencyMatrix.TryGetValue(n.name,out adjList);
-              //Console.Write(testStackCreation);
-              toString = toString +"Edges: (";
-              foreach(KeyValuePair<string,Node> kvp in adjList){
-                
-                  toString= toString+ "["+ n.name + ","+kvp.Value.name +"]";
-              }
-              toString= toString+")";
+                toString = toString +"Edges: (";
+                foreach(KeyValuePair<string,Node> kvp in adjList){
+                    toString= toString+ "["+ n.name + ","+kvp.Value.name +"]";
+                }
+                toString= toString+")";
             }
             catch(KeyNotFoundException k){
                 Console.WriteLine("KEY NOT FOUND");
@@ -337,16 +328,12 @@ abstract class DirectedGraph:Graph{
         //dotNode=$"{n.name} [{colorRed}]";
         dotList.Add(dotNode);
         }
-
-        foreach(Edge e in _edgeList){
-            
+        foreach(Edge e in _edgeList){ 
             KeyValuePair<string,string> eKVP = e.toKVP();
             string edgeStr = $"{eKVP.Key} -> {eKVP.Value}";
             dotList.Add(edgeStr);
         }
-
         dotList.Add("}");
-        
         return dotList;
        
     }

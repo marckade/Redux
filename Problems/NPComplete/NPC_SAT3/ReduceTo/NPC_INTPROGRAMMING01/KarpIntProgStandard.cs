@@ -154,7 +154,6 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
                 solutionList[i] = tempSplit[0];
             }
             else{solutionList[i] = "";}
-            
         }
         solutionList.RemoveAll(x => string.IsNullOrEmpty(x));
 
@@ -174,8 +173,6 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
                 mappedSolutionList.Add("0");
             }
         }
-
-
         string problemToSolution = "";
         foreach(string num in mappedSolutionList){
             problemToSolution += num + ' ';
@@ -183,5 +180,3 @@ class KarpIntProgStandard : IReduction<SAT3, INTPROGRAMMING01> {
         return '(' + problemToSolution.TrimEnd(' ') + ')';
     }
 }
-
-// return an instance of what you are reducing to

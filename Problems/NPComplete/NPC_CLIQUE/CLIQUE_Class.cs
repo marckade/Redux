@@ -11,15 +11,12 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
     private string _formalDefinition = "Clique = {<G, k> | G is an graph that has a set of k mutually adjacent nodes}";
     private string _problemDefinition = "A clique is the problem of uncovering a subset of vertices in an undirected graph G = (V, E) such that every two distinct vertices are adjacent";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    //{{a,b,c,d,e,f} : {(a,b) & (a,f) & (a,e) & (b,c) & (b,e) & (b,d) & (d,c) & (d,e) & (c,f) & (c,e)} : 4}
-    // private string _defaultInstance = "{{1,2,3,4} : {{4,1} & {1,2} & {4,3} & {3,2} & {2,4}} : 1}";
     private string _defaultInstance = "{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}";
     private string _instance = string.Empty;
-
     private string _wikiName = "";
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
-    private int _K = 3;
+    private int _K ;
     private CliqueBruteForce _defaultSolver = new CliqueBruteForce();
     private CliqueVerifier _defaultVerifier = new CliqueVerifier();
     private CliqueGraph _cliqueAsGraph;
@@ -120,28 +117,17 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
     public CLIQUE() {
         _instance = defaultInstance;
         _cliqueAsGraph = new CliqueGraph(_instance,true);
-        //nodes = getNodes(_instance);
-        //edges = getEdges(_instance);
-        //K = getK(_instance);
         nodes = _cliqueAsGraph.nodesStringList;
         edges = _cliqueAsGraph.edgesKVP;
          _K = _cliqueAsGraph.K;
-
-
     }
     public CLIQUE(string GInput) {
-        //nodes = getNodes(_instance);
-        //edges = getEdges(_instance);
-        //K = getK(_instance);
         _cliqueAsGraph = new CliqueGraph(GInput, true);
         nodes = _cliqueAsGraph.nodesStringList;
         edges = _cliqueAsGraph.edgesKVP;
         _K = _cliqueAsGraph.K;
         _instance = _cliqueAsGraph.ToString();
-
-
     }
-
 
     public List<string> getNodes(string Ginput) {
 
@@ -155,13 +141,12 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
         foreach(string node in Gnodes) {
             allGNodes.Add(node);
         }
-
         return allGNodes;
     }
+
     public List<KeyValuePair<string, string>> getEdges(string Ginput) {
 
         List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
-
         string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
         
         // [0] is nodes,  [1] is edges,  [2] is k.
@@ -181,6 +166,7 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
     }
 
     public int getK(string Ginput) {
+
         string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
         
         // [0] is nodes,  [1] is edges,  [2] is k.

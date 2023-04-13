@@ -117,9 +117,4 @@ namespace API.Problems.NPComplete.NPC_SAT.Verifiers;
     }
 
     #endregion
-
-    #region Methods
-
-    #endregion
-        
     }

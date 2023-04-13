@@ -106,13 +106,11 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
                 }
             }
             if(!inM){
-                // Console.WriteLine("The certificate is not a subset");
                 return false;
             }
         }
 
         if(certificate.Count != Problem.X.Count){   //Checks is c is the size of X, if not it cannot conatin each element.
-            // Console.WriteLine("c is not the right size");
             return false;   
         }
         foreach(var set in Problem.problem[0]){   //Checks that each element of X Y and Z are in a set of c
@@ -124,7 +122,6 @@ ParseCertificate(string certificate) takes the string representation of the 3-Di
                     }
                 }
                 if(match == false){
-                    // Console.WriteLine(item + " is not in the certificate");
                     return false;
                 }
             }

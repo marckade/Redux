@@ -395,7 +395,6 @@ public class Sat3BacktrackingSolverController : ControllerBase {
             }
             solutionString = solutionString.TrimEnd(',');
             solutionString = solutionString + ")"; 
-            
             jsonString = JsonSerializer.Serialize(solutionString, options);
             return jsonString;
         }

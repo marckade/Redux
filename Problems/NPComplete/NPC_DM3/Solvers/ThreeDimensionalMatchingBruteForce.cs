@@ -54,7 +54,6 @@ class ThreeDimensionalMatchingBruteForce : ISolver {
             set = "{"+set.Substring(1)+"}";
             certificate += "," + set;
         }
-        // Console.WriteLine(certificate);
         return "{" + certificate.Substring(1) + "}";
     }
     private List<int> nextComb(List<int> combination, int size){

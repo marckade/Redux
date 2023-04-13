@@ -120,15 +120,7 @@ class Sat3BacktrackingSolver : ISolver {
         if(boolExp.Count == 1 && string.IsNullOrEmpty(boolExp[0][0])){
             retVal = 1;
         }
-        //THERE IS AN ISSUE WITH THE EVALUATION
-        // Console.WriteLine(boolExp.ToString());
-        // Console.WriteLine("evaluating");
-        // Console.WriteLine(boolExp.Count);
-        // foreach(List<string> sL in boolExp){
-        //     Console.Write(sL[0]);
-        // }
-
-
+        
         //variables for looping through boolExp
         int index = 0;
         string exp;
