@@ -7,7 +7,7 @@ class CutBruteForce : ISolver {
 
     // --- Fields ---
     private string _solverName = "Cut Brute Force";
-    private string _solverDefinition = "This is a brute force solver for the NP-Complete Cut problem";
+    private string _solverDefinition = "This is a brute force solver for the Cut problem";
     private string _source = "Andrija Sevaljevic";
     private string[] _contributers = {"Andrija Sevaljevic"};
 
@@ -55,18 +55,33 @@ public CutBruteForce() {
         return "{" + certificate + "}"; 
     }
 
-    private string indexListToSecondSet(List<int> indecies, List<string> nodes){
-        // Console.WriteLine("indecies: ", indecies.ToString());
-        string certificate = "";
-        for (int i = 0; i < nodes.Count; i++) {
-            if (!indecies.Contains(i)) {
-                certificate += nodes[i]+",";
+    private List<string> parseCertificate(string certificate){
+
+        List<string> nodeList = GraphParser.parseNodeListWithStringFunctions(certificate);
+        return nodeList;
+    }
+
+// Function below turns certificate into list of edges
+  /*  private string certificateToEdges(CUT cut, string certificate) {
+        List<string> nodeList = parseCertificate(certificate);
+        certificate = "{";
+        foreach(var i in nodeList){
+             foreach(var j in cut.nodes){
+                    
+                    KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
+                    KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
+                        if (cut.edges.Contains(pairCheck1) || cut.edges.Contains(pairCheck2)) { // checks if is being cut
+                        certificate += "(" + i + "," + j +"),"; // adds edge
+                    }
+                
             }
         }
         certificate = certificate.TrimEnd(',');
-        // Console.WriteLine("returned statement: {"+certificate+"}");
-        return "{" + certificate + "}"; 
-    }
+        certificate += "}";
+        return certificate;
+
+    }*/
+
 
     private List<int> nextComb(List<int> combination, int size){
         for(int i=combination.Count-1; i>=0; i--){
@@ -89,8 +104,8 @@ public CutBruteForce() {
         long reps = factorial(cut.nodes.Count) / (factorial(i + 1) * factorial(cut.nodes.Count - i - 1));
         for(int k=0; k<reps; k++){
             string certificate = indexListToCertificate(combination, cut.nodes);
-            string secondSet = indexListToSecondSet(combination, cut.nodes);
-            if(cut.defaultVerifier.verify(cut, certificate, secondSet)){
+            if(cut.defaultVerifier.verify(cut, certificate)) {
+               // certificate = certificateToEdges(cut, certificate);
                 return certificate;
             }
             combination = nextComb(combination, cut.nodes.Count);

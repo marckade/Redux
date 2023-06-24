@@ -6,10 +6,10 @@ namespace API.Problems.NPComplete.NPC_CUT.Verifiers;
 class CutVerifier : IVerifier {
 
     // --- Fields ---
-    private string _verifierName = "Generic Verifier";
+    private string _verifierName = "Cut Verifier";
     private string _verifierDefinition = "This is a verifier for the Cut problem";
-    private string _source = " ";
-    private string[] _contributers = {"Caleb Eardley", "Kaden Marchetti, Andrija Sevaljevic"};
+    private string _source = "Andrija Sevaljevic";
+    private string[] _contributers = {"Andrija Sevaljevic"};
 
 
     private string _certificate =  "";
@@ -52,25 +52,17 @@ class CutVerifier : IVerifier {
         List<string> nodeList = GraphParser.parseNodeListWithStringFunctions(certificate);
         return nodeList;
     }
-    public bool verify(CUT problem, string certificate, string secondSet){
+    public bool verify(CUT problem, string certificate){
         
         List<string> nodeList = parseCertificate(certificate);
-        List<string> nodeList2 = parseCertificate(secondSet);
         int counter = 0;
-        //Check k value
-        //if(nodeList.Count != problem.K){
-        //    return false;
-        //}
         foreach(var i in nodeList){
-            foreach(var j in nodeList2){
+            foreach(var j in problem.nodes){
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
                 KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
-                if ((problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2)) && !i.Equals(j)) {
-                    counter++;
-                }
-                //if(!(problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) || i.Equals(j))){
-                //    return false;
-                //}
+                    if (problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) && !i.Equals(j)) { //Checks if edge exists, then adds to cut
+                      counter++;
+                    }
             }
         }
         if (counter != problem.K) {

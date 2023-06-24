@@ -69,12 +69,12 @@ public class CutVerifierController : ControllerBase {
     
     [ProducesResponseType(typeof(Boolean), 200)]
     [HttpGet("verify")]
-    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance, [FromQuery]string secondSet) {
+    public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CUT CUT_PROBLEM = new CUT(problemInstance);
         CutVerifier verifier = new CutVerifier();
 
-        Boolean response = verifier.verify(CUT_PROBLEM,certificate, secondSet);
+        Boolean response = verifier.verify(CUT_PROBLEM, certificate);
         string responseString;
         if(response){
             responseString = "True";
