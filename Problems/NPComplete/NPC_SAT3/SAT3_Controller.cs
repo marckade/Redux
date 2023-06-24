@@ -58,7 +58,7 @@ public class SAT3GenericController : ControllerBase {
 public class SipserReduceToCliqueStandardController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a a reduction object with info for Sipser's 3SAT to Clique reduction </summary>
+///<summary>Returns a reduction object with info for Sipser's 3SAT to Clique reduction </summary>
 ///<response code="200">Returns SipserReduction object</response>
 
     [ProducesResponseType(typeof(SipserReduction), 200)]
@@ -149,7 +149,7 @@ public class SipserReduceToCliqueStandardController : ControllerBase {
 public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a a reduction object with info for Karps's 3SAT to Graph Coloring reduction </summary>
+///<summary>Returns a reduction object with info for Karps's 3SAT to Graph Coloring reduction </summary>
 ///<response code="200">Returns KarpReduction object</response>
 
     [ProducesResponseType(typeof(KarpReduction), 200)]
@@ -200,7 +200,7 @@ public class KarpReduceGRAPHCOLORINGController : ControllerBase {
 public class KarpIntProgStandardController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a a reduction object with info for Karps's 3SAT to 0-1 Integer Programming reduction </summary>
+///<summary>Returns a reduction object with info for Karps's 3SAT to 0-1 Integer Programming reduction </summary>
 ///<response code="200">Returns KarpIntProgStandard object</response>
 
     [ProducesResponseType(typeof(KarpIntProgStandard), 200)]
@@ -308,7 +308,7 @@ public class GareyJohnsonController : ControllerBase {
 public class KadensSimpleVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about Kadens Simple Verifier </summary>
+///<summary>Returns information about Kadens Simple Verifier </summary>
 ///<response code="200">Returns KadensSimple verifier Object</response>
 
     [ProducesResponseType(typeof(KadensSimple), 200)]
@@ -353,7 +353,7 @@ public class Sat3BacktrackingSolverController : ControllerBase {
 
 
     // Return Generic Solver Class
-///<summary>Returns a info about the 3SAT Backtracking Solver </summary>
+///<summary>Returns information about the 3SAT Backtracking Solver </summary>
 ///<response code="200">Returns Sat3BacktrackingSolver solver Object</response>
 
     [ProducesResponseType(typeof(Sat3BacktrackingSolver), 200)]

@@ -92,7 +92,7 @@ public class CLIQUEGenericController : ControllerBase {
 public class sipserReduceToVCController : ControllerBase {
 
 
-///<summary>Returns a a reduction object with info for Sipser's Clique to Vertex Cover reduction </summary>
+///<summary>Returns a reduction object with info for Sipser's Clique to Vertex Cover reduction </summary>
 ///<response code="200">Returns sipserReduction Object</response>
 
     [ProducesResponseType(typeof(sipserReduction), 200)]
@@ -229,7 +229,7 @@ public class CliqueBruteForceController : ControllerBase
 {
 
     // Return Generic Solver Class
-///<summary>Returns a info about the Clique brute force solver </summary>
+///<summary>Returns information about the Clique brute force solver </summary>
 ///<response code="200">Returns CliqueBruteForce solver object</response>
 
     [ProducesResponseType(typeof(CliqueBruteForce), 200)]
@@ -272,7 +272,7 @@ public class CliqueVerifierController : ControllerBase {
     #pragma warning restore CS1591
 
 
-///<summary>Returns a info about the Clique generic Verifier </summary>
+///<summary>Returns information about the Clique generic Verifier </summary>
 ///<response code="200">Returns CliqueVerifier Object</response>
 
     [ProducesResponseType(typeof(CliqueVerifier), 200)]

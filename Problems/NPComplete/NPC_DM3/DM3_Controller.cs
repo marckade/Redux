@@ -46,7 +46,7 @@ public class DM3GenericController : ControllerBase {
 public class GenericVerifierDM3Controller : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the 3 Dimensional Matching generic Verifier </summary>
+///<summary>Returns information about the 3 Dimensional Matching generic Verifier </summary>
 ///<response code="200">Returns GenericVerifierDM3 Object</response>
 
     [ProducesResponseType(typeof(GenericVerifierDM3), 200)]
@@ -94,7 +94,7 @@ public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
 
 
     // Return Generic Solver Class
-///<summary>Returns a info about the 3 Dimensional Matching brute force solver </summary>
+///<summary>Returns information about the 3 Dimensional Matching brute force solver </summary>
 ///<response code="200">Returns ThreeDimensionalMatchingBruteForce solver Object</response>
 
     [ProducesResponseType(typeof(ThreeDimensionalMatchingBruteForce), 200)]

@@ -29,7 +29,7 @@ public class ARCSETGenericController : ControllerBase {
         return jsonString;
     }
 
-///<summary>Returns a Arc Set problem object created from a given instance </summary>
+///<summary>Returns an Arc Set problem object created from a given instance </summary>
 ///<param name="problemInstance" example="{{1,2,3,4},{(4,1),(1,2),(4,3),(3,2),(2,4)},1}">Feedback Arc Set problem instance string.</param>
 ///<response code="200">Returns ARCSET problem Object</response>
 
@@ -94,7 +94,7 @@ public class AlexArcsetVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
 
-///<summary>Returns a info about Alex's Feedback Arc Set verifier </summary>
+///<summary>Returns information about Alex's Feedback Arc Set verifier </summary>
 ///<response code="200">Returns Feedback Arc Set verifier object</response>
 
     [ProducesResponseType(typeof(AlexArcsetVerifier), 200)]
@@ -172,7 +172,7 @@ public class ArcSetBruteForceController : ControllerBase {
 #pragma warning restore CS1591
 
 
-///<summary>Returns a info about the Feedback Arc Set brute force solver </summary>
+///<summary>Returns information about the Feedback Arc Set brute force solver </summary>
 ///<response code="200">Returns ArcSetBruteForce solver object</response>
 
     [ProducesResponseType(typeof(ArcSetBruteForce), 200)]

@@ -48,7 +48,7 @@ public class CUTGenericController : ControllerBase {
 public class CutVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the Cut Verifier </summary>
+///<summary>Returns information about the Cut Verifier </summary>
 ///<response code="200">Returns CutVerifier</response>
 
     [ProducesResponseType(typeof(CutVerifier), 200)]
@@ -96,7 +96,7 @@ public class CutBruteForceController : ControllerBase {
 
 
     // Return Generic Solver Class
-///<summary>Returns a info about the Cut brute force solver </summary>
+///<summary>Returns information about the Cut brute force solver </summary>
 ///<response code="200">Returns CutBruteSolver solver Object</response>
 
     [ProducesResponseType(typeof(CutBruteForce), 200)]

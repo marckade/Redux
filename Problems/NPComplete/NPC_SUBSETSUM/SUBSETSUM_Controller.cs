@@ -54,7 +54,7 @@ public class FengController : ControllerBase {
 #pragma warning restore CS1591
 
   
-///<summary>Returns a a reduction object with info for Feng's Subset Sum to Knapsack reduction </summary>
+///<summary>Returns a reduction object with info for Feng's Subset Sum to Knapsack reduction </summary>
 ///<response code="200">Returns FengReduction bbject</response>
 
     [ProducesResponseType(typeof(FengReduction), 200)]
@@ -127,7 +127,7 @@ public class SubsetSumBruteForceController : ControllerBase {
         return jsonString;
     }
 
-    // Solve a instance given a certificate
+    // Solve an instance given a certificate
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string problemInstance) {
         // Implement solver here
