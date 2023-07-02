@@ -29,8 +29,8 @@ public class CUTGenericController : ControllerBase {
     }
 
 ///<summary>Returns a Cut object created from a given instance </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Cut problem instance string.</param>
-///<response code="200">Returns Cut problem object</response>
+///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Cut problem instance string.</param>
+///<response code="200">Returns CUT problem object</response>
 
     [ProducesResponseType(typeof(CUT), 200)]
     [HttpGet("{instance}")]
@@ -63,8 +63,8 @@ public class CutVerifierController : ControllerBase {
     }
 
 ///<summary>Verifies if a given certificate is a solution to a given Cut problem</summary>
-///<param name="certificate" example="{1,2,4}">certificate solution to Cut problem.</param>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Cut problem instance string.</param>
+///<param name="certificate" example="{{2,1},{2,3},{2,4},{5,3},{5,4}}">certificate solution to Cut problem.</param>
+///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Cut problem instance string.</param>
 ///<response code="200">Returns a boolean</response>
     
     [ProducesResponseType(typeof(Boolean), 200)]
@@ -112,7 +112,7 @@ public class CutBruteForceController : ControllerBase {
 
     // Solve a instance given a certificate
 ///<summary>Returns a solution to a given  Cut problem instance </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}"> Cut problem instance string.</param>
+///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}"> Cut problem instance string.</param>
 ///<response code="200">Returns solution string </response>
     
     [ProducesResponseType(typeof(string), 200)]

@@ -62,25 +62,25 @@ public CutBruteForce() {
     }
 
 // Function below turns certificate into list of edges
-  /*  private string certificateToEdges(CUT cut, string certificate) {
+    private string certificateToEdges(CUT cut, string certificate) {
         List<string> nodeList = parseCertificate(certificate);
         certificate = "{";
         foreach(var i in nodeList){
              foreach(var j in cut.nodes){
-                    
+                if (!nodeList.Contains(j)) {
                     KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
                     KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
-                        if (cut.edges.Contains(pairCheck1) || cut.edges.Contains(pairCheck2)) { // checks if is being cut
-                        certificate += "(" + i + "," + j +"),"; // adds edge
+                        if ((cut.edges.Contains(pairCheck1) || cut.edges.Contains(pairCheck2)) && !i.Equals(j)) { // checks if is being cut
+                        certificate += "{" + i + "," + j +"},"; // adds edge
                     }
-                
+                }
             }
         }
         certificate = certificate.TrimEnd(',');
         certificate += "}";
         return certificate;
 
-    }*/
+    }
 
 
     private List<int> nextComb(List<int> combination, int size){
@@ -96,6 +96,9 @@ public CutBruteForce() {
         return combination;
     }
     public string solve(CUT cut){
+        if(cut.K > cut.nodes.Count) {
+            return "{}";
+        }
         for(int i=0; i<cut.K; i++) {
         List<int> combination = new List<int>();
         for(int j=0; j<=i; j++){
@@ -104,8 +107,8 @@ public CutBruteForce() {
         long reps = factorial(cut.nodes.Count) / (factorial(i + 1) * factorial(cut.nodes.Count - i - 1));
         for(int k=0; k<reps; k++){
             string certificate = indexListToCertificate(combination, cut.nodes);
+            certificate = certificateToEdges(cut, certificate);
             if(cut.defaultVerifier.verify(cut, certificate)) {
-               // certificate = certificateToEdges(cut, certificate);
                 return certificate;
             }
             combination = nextComb(combination, cut.nodes.Count);

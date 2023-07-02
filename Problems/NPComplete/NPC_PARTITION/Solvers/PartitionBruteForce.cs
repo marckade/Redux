@@ -44,7 +44,8 @@ class PartitionBruteForce : ISolver {
                 certificate += S[i]+",";
             }
         }
-        certificate += "), ";
+        certificate = certificate.TrimEnd(',');
+        certificate += "),(";
         for(int i = 0; i< binary.Count; i++){
             if(binary[i] == 0){
                 certificate += S[i]+",";
@@ -67,16 +68,18 @@ class PartitionBruteForce : ISolver {
        
     public string solve(PARTITION partition){
         List<int> binary = new List<int>(){1};
+        int counter = 0;
         for(int i = 0; i < partition.S.Count-1; i++){
             binary.Add(0);
         }
         string certificate = BinaryToCertificate(binary, partition.S);
-        while(certificate != "{}"){
+        while(counter <= Math.Pow(2,partition.S.Count)){
             nextBinary(binary);
             certificate = BinaryToCertificate(binary, partition.S);
             if(partition.defaultVerifier.verify(partition, certificate)){
                 return certificate;
             }
+            counter++;
         }
         return "{}";
     }

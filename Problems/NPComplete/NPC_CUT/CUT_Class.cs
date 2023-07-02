@@ -13,7 +13,7 @@ class CUT : IProblem<CutBruteForce, CutVerifier>{
     private string[] _contributers = {"Andrija Sevaljevic"};
     
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}";
+    private string _defaultInstance = "{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}";
     private string _instance = string.Empty;
     
     private List<string> _nodes = new List<string>();

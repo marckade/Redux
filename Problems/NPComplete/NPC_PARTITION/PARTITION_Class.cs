@@ -8,8 +8,8 @@ class PARTITION : IProblem<PartitionBruteForce,PartitionVerifier> {
 
     // --- Fields ---
     private string _problemName = "Partition";
-    private string _formalDefinition = "";
-    private string _problemDefinition = "";
+    private string _formalDefinition = "Partition = <S, I> | S is a set of positive integers and there exists a subset of S, I where the sum of I's elements equals the sum of elements not in set I";
+    private string _problemDefinition = "The partition problem is the task of deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2 such that the sum of the numbers in S1 equals the sum of the numbers in S2";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string[] _contributers = {"Andrija Sevaljevic"};
 

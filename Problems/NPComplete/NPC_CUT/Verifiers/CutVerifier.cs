@@ -49,21 +49,21 @@ class CutVerifier : IVerifier {
     }
     private List<string> parseCertificate(string certificate){
 
-        List<string> nodeList = GraphParser.parseNodeListWithStringFunctions(certificate);
-        return nodeList;
+        List<string> edgeList = certificate.Replace("{{", "").Replace("}}","").Replace(" ","").Split("},{").ToList();
+        return edgeList;
     }
     public bool verify(CUT problem, string certificate){
         
-        List<string> nodeList = parseCertificate(certificate);
+        List<string> edgeList = parseCertificate(certificate);
         int counter = 0;
-        foreach(var i in nodeList){
-            foreach(var j in problem.nodes){
-                KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(i,j);
-                KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(j,i);
-                    if (problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2) && !i.Equals(j)) { //Checks if edge exists, then adds to cut
-                      counter++;
-                    }
+        foreach(var i in edgeList){
+            List<string> currentEdge = i.Split(",").ToList();
+            KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(currentEdge[0],currentEdge[1]);
+            KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(currentEdge[1],currentEdge[0]);
+            if ((problem.edges.Contains(pairCheck1) || problem.edges.Contains(pairCheck2)) && !currentEdge[1].Equals(currentEdge[0])) { //Checks if edge exists, then adds to cut
+                counter++;
             }
+            
         }
         if (counter != problem.K) {
             return false;

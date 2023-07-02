@@ -63,7 +63,7 @@ public class PartitionVerifierController : ControllerBase {
     }
 
 ///<summary>Verifies if a given certificate is a solution to a given Partition problem</summary>
-///<param name="certificate" example="{1,2,4}">certificate solution to Partition problem.</param>
+///<param name="certificate" example="{(7,12,33,12,11),(1,15,5,6,9,21,18)}">certificate solution to Partition problem.</param>
 ///<param name="problemInstance" example="{1,7,12,15,33,12,11,5,6,9,21,18}">Partition problem instance string.</param>
 ///<response code="200">Returns a boolean</response>
     

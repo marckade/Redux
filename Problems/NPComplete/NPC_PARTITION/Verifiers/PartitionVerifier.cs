@@ -6,10 +6,10 @@ namespace API.Problems.NPComplete.NPC_PARTITION.Verifiers;
 class PartitionVerifier : IVerifier {
 
     // --- Fields ---
-    private string _verifierName = "Subset Sum Verifier";
-    private string _verifierDefinition = "This is a verifier for Subset Summ";
-    private string _source = " ";
-    private string[] _contributers = { "Garret Stouffer"};
+    private string _verifierName = "Partition Verifier";
+    private string _verifierDefinition = "This is a verifier for Partition";
+    private string _source = "Andrija Sevaljevic";
+    private string[] _contributers = { "Andrija Sevaljevic"};
 
     private string _certificate = "";
 
@@ -47,29 +47,43 @@ class PartitionVerifier : IVerifier {
     }
 
     public bool verify(PARTITION partition, string certificate){
-        string cleanedInput = certificate.Trim('{', '}');
-        string[] tupleStrings = cleanedInput.Split("),(");
-        List<string> c = tupleStrings[0].Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
-        List<string> c2 = tupleStrings[1].Replace("{","").Replace("}","").Replace(" ","").Split(",").ToList();
+        
+        certificate = certificate.Replace("{","").Replace("}","").Replace(" ","");
+
+        string[] pairs = certificate.Split("),(");
+        string firstPair = pairs[0];
+        string secondPair = pairs[1];
+
+        List<string> c = firstPair.Replace("(","").Replace(")","").Replace(" ","").Split(",").ToList();
+        List<string> c2 = secondPair.Replace("(","").Replace(")","").Replace(" ","").Split(",").ToList();
+
+        foreach(var a in partition.S) {
+            if(partition.S.Count(n => n == a) != (c.Count(n => n == a) + c2.Count(n => n == a))) {
+                return false;
+            }
+        }
 
         int sum = 0;
-        int secondSum = 0;
+        int sum2 = 0;
 
         foreach(string a in c){
             if(partition.S.Contains(a)){    
                 sum += int.Parse(a);
+            } else {
+                return false;
             }
-            else{
+        }
+        foreach(string a in c2){
+            if(partition.S.Contains(a)){    
+                sum2 += int.Parse(a);
+            } else {
                 return false;
             }
         }
         
-
-        
-        if(sum == secondSum){
+        if(sum == sum2 && (c.Count() + c2.Count()) == partition.S.Count()) {
             return true;
         }
-
 
         return false;
     }
