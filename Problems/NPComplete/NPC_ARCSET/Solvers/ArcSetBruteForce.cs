@@ -92,9 +92,9 @@ class ArcSetBruteForce : ISolver {
         Dictionary<KeyValuePair<string,string>, bool> solutionDict = new Dictionary<KeyValuePair<string,string>, bool>();
         ArcsetGraph aGraph = new ArcsetGraph(problemInstance, true);
         List<KeyValuePair<string, string>> problemInstanceEdges = aGraph.edgesKVP;
-        List<KeyValuePair<string, string>> solvedNodes = GraphParser.parseDirectedEdgeListWithStringFunctions(solutionString);
+        List<KeyValuePair<string, string>> solvedEdges = GraphParser.parseDirectedEdgeListWithStringFunctions(solutionString);
 
-        foreach(var edge in solvedNodes){
+        foreach(var edge in solvedEdges){
             problemInstanceEdges.Remove(edge);
             solutionDict.Add(edge, true);
         }
