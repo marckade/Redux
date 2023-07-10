@@ -115,9 +115,6 @@ class CUT : IProblem<CutBruteForce, CutVerifier>{
         get{
             return _cutAsGraph;
         }
-        set{
-            _cutAsGraph = value;
-        }
     }
 
     // --- Methods Including Constructors ---

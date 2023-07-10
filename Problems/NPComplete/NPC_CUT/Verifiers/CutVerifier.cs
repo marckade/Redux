@@ -54,9 +54,13 @@ class CutVerifier : IVerifier {
     }
     public bool verify(CUT problem, string certificate){
         
-        List<string> edgeList = parseCertificate(certificate);
+        List<string> edgeList = parseCertificate(certificate); 
         int counter = 0;
         foreach(var i in edgeList){
+            string invertedString = new string(i.ToCharArray().Reverse().ToArray());
+            if ((edgeList.Count(x => x == i)) > 1 || edgeList.Contains(invertedString)) {
+                return false;
+            }
             List<string> currentEdge = i.Split(",").ToList();
             KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(currentEdge[0],currentEdge[1]);
             KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(currentEdge[1],currentEdge[0]);

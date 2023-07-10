@@ -39,7 +39,52 @@ public class CUTGenericController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(new CUT(problemInstance), options);
         return jsonString;
     }
+
+///<summary>Returns a graph object used for dynamic visualization </summary>
+///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Cut problem instance string.</param>
+///<response code="200">Returns graph object</response>
+
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("visualize")]
+    public String getVisualization([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CUT aSet = new CUT(problemInstance);
+        CutGraph aGraph = aSet.cutAsGraph;
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList, aGraph.getEdgeList);
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
+        return jsonString;
+    }
+
+///<summary>Returns a graph object used for dynamic solved visualization </summary>
+///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Cut problem instance string.</param>
+///<param name="solution" example="{{2,1},{2,3},{2,4},{5,3},{5,4}}">Cut instance string.</param>
+
+///<response code="200">Returns graph object</response>
+
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("solvedVisualization")]
+    #pragma warning disable CS1591
+    public String solvedVisualization([FromQuery]string problemInstance, string solution){
+    #pragma warning restore CS1591
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CUT aSet = new CUT(problemInstance);
+        CutGraph aGraph = aSet.cutAsGraph;
+        Dictionary<KeyValuePair<string,string>, bool> solutionDict = aSet.defaultSolver.getSolutionDict(problemInstance, solution);
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList,aGraph.getEdgeList);
+
+        for(int i=0;i<apiGraph.links.Count;i++){
+            bool edgeVal = false;
+            KeyValuePair<string, string> edge = new KeyValuePair<string, string>(apiGraph.links[i].source, apiGraph.links[i].target);
+            solutionDict.TryGetValue(edge, out edgeVal);
+            apiGraph.links[i].attribute1 = edgeVal.ToString();
+        }
+
+        string jsonString = JsonSerializer.Serialize(apiGraph, options);
+        return jsonString;
+
+    }
 }
+
 
 [ApiController]
 [Route("[controller]")]

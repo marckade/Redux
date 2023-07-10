@@ -127,28 +127,21 @@ public CutBruteForce() {
     /// <param name="problemInstance"></param>
     /// <param name="solutionString"></param>
     /// <returns></returns>
-    public Dictionary<string,bool> getSolutionDict(string problemInstance, string solutionString){
+   public Dictionary<KeyValuePair<string,string>, bool> getSolutionDict(string problemInstance, string solutionString){
 
-        Dictionary<string, bool> solutionDict = new Dictionary<string, bool>();
-        GraphParser gParser = new GraphParser();
+        Dictionary<KeyValuePair<string,string>, bool> solutionDict = new Dictionary<KeyValuePair<string,string>, bool>();
         CutGraph cGraph = new CutGraph(problemInstance, true);
-        List<string> problemInstanceNodes = cGraph.nodesStringList;
-        List<string> solvedNodes = gParser.getNodesFromNodeListString(solutionString);
-        
-        // Remove solvedNodes from instanceNodes
-        foreach(string node in solvedNodes){
-        problemInstanceNodes.Remove(node);
-        // Console.WriteLine("Solved nodes: "+node);
-        solutionDict.Add(node, true);
+        List<KeyValuePair<string, string>> problemInstanceEdges = cGraph.edgesKVP;
+        List<KeyValuePair<string, string>> solvedEdges = GraphParser.parseUndirectedEdgeListWithStringFunctions(solutionString);
+
+        foreach(var edge in solvedEdges){
+            problemInstanceEdges.Remove(edge);
+            solutionDict.Add(edge, true);
        }
-        // Add solved nodes to dict as {name, true}
-        // Add remaining instance nodes as {name, false}
-
-        foreach(string node in problemInstanceNodes){
+        foreach(var edge in problemInstanceEdges){
           
-                solutionDict.Add(node, false);
+                solutionDict.Add(edge, false);
         }
-
 
         return solutionDict;
     }
