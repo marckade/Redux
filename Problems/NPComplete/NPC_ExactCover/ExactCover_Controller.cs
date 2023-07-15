@@ -27,8 +27,8 @@ public class ExactCoverGenericController : ControllerBase
         return jsonString;
     }
 
-    ///<summary>Returns a Exact Cover object created from a given instance </summary>{
-    ///<param name="problemInstance" example="{{1,2,3},{2,3},{4,1} : {1,2,3,4}}">Exact Cover problem instance string.</param>
+    ///<summary>Returns an Exact Cover object created from a given instance </summary>{
+    ///<param name="problemInstance" example="{{ (), (1 &amp; 3), (2 &amp; 3), (2 &amp; 4)} : {1,2,3,4} : {(1 &amp; 3), (2 &amp; 4)}}">Exact Cover problem instance string.</param>
     ///<response code="200">Returns ExactCover problem object</response>
 
     [ProducesResponseType(typeof(ExactCover), 200)]

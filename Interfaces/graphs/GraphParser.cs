@@ -68,7 +68,7 @@ public List<string> getNodeList(string graphString){
 /**
 * Helper parser method for getGraphEdgeList();
 **/
-private List<Edge> edgesGivenValidGraphAndPattern(string validGraphStr,string edgePattern){
+public List<Edge> edgesGivenValidGraphAndPattern(string validGraphStr,string edgePattern){
     List<Edge> edgeList = new List<Edge>();
     MatchCollection eMatches = Regex.Matches(validGraphStr,edgePattern);
     string edgeStr = eMatches[0].ToString();
@@ -173,6 +173,26 @@ public List<string> getNodesFromNodeListString(string input){
                     string k = s.Split(",")[0].Replace("(","").Replace(")","");
                     string v = s.Split(",")[1].Replace("(","").Replace(")","");
                     retList.Add( new KeyValuePair<string, string>(k,v));
+                }
+                return retList;
+            }
+            catch(Exception e){
+                Console.WriteLine("Invalid input GraphParser getNodesFromNodeListString");
+            }
+            return retList;
+    }
+
+    
+    public static List<KeyValuePair<string, string>> parseUndirectedEdgeListWithStringFunctions(string input){
+            List<KeyValuePair<string, string>> retList = new List<KeyValuePair<string, string>>();
+            try{
+                List<string> sList = input.Replace("{{", "").Replace("}}","").Replace(" ","").Split("},{").ToList();
+                foreach(string s in sList){
+                    List<string> currentEdge = s.Split(",").ToList();
+                    string k = currentEdge[0];
+                    string v = currentEdge[1];
+                    retList.Add( new KeyValuePair<string, string>(k,v));
+                    retList.Add( new KeyValuePair<string, string>(v,k));
                 }
                 return retList;
             }

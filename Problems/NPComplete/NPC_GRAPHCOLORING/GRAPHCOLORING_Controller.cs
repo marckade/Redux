@@ -50,7 +50,10 @@ public class GRAPHCOLORINGGenericController : ControllerBase {
 public class IgbokweVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the Graph Coloring Igbokwe Verifier </summary>
+
+    //string testVerifyString = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},3}";
+
+///<summary>Returns information about the Graph Coloring Igbokwe Verifier </summary>
 ///<response code="200">Returns IgbokweVerifier Object</response>
 
     [ProducesResponseType(typeof(IgbokweVerifier), 200)]
@@ -88,7 +91,8 @@ public class IgbokweVerifierController : ControllerBase {
 public class DanielBrelazSolverController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the Graph Coloring Daniel Brelaz solver </summary>
+
+///<summary>Returns information about the Graph Coloring Daniel Brelaz solver </summary>
 ///<response code="200">Returns DanielBrelazSolver solver Object</response>
 
     [ProducesResponseType(typeof(DanielBrelazSolver), 200)]
@@ -127,7 +131,7 @@ public class DanielBrelazSolverController : ControllerBase {
 public class KarpReduceSATController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a a reduction object with info for Karps's Graph Coloring to SAT reduction </summary>
+///<summary>Returns a reduction object with info for Karps's Graph Coloring to SAT reduction </summary>
 ///<response code="200">Returns KarpReduceSAT reduction object</response>
 
     [ProducesResponseType(typeof(KarpReduceSAT), 200)]

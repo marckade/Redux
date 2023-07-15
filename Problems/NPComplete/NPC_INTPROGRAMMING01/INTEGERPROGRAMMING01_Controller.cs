@@ -44,7 +44,7 @@ public class INTPROGRAMMING01GenericController : ControllerBase {
 public class GenericVerifier01INTPController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the 0-1 Integer Programming generic verifier </summary>
+///<summary>Returns information about the 0-1 Integer Programming generic verifier </summary>
 ///<response code="200">Returns GenericVerifier01INTP object</response>
 
     [ProducesResponseType(typeof(GenericVerifier01INTP), 200)]

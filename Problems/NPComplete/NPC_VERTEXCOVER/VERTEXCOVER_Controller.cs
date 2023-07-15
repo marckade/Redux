@@ -120,7 +120,7 @@ public class VERTEXCOVERGenericController : ControllerBase {
 public class VCVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the Vertex Cover generic verifier </summary>
+///<summary>Returns information about the Vertex Cover generic verifier </summary>
 ///<response code="200">Returns VCVerifierJanita verifier object</response>
 
     [ProducesResponseType(typeof(VCVerifierJanita), 200)]
@@ -181,7 +181,7 @@ public class VertexCoverBruteForceController : ControllerBase {
 #pragma warning restore CS1591
 
 
-///<summary>Returns a info about the Vertex Cover brute force solver </summary>
+///<summary>Returns information about the Vertex Cover brute force solver </summary>
 ///<response code="200">Returns VertexCoverBruteForce solver object</response>
 
     [ProducesResponseType(typeof(VertexCoverBruteForce), 200)]
@@ -238,7 +238,7 @@ public class LawlerKarpController : ControllerBase {
 #pragma warning restore CS1591
 
 
-///<summary>Returns a a reduction object with info for Lawler and Karp's Vertex Cover to Feedback Arc Set reduction </summary>
+///<summary>Returns a reduction object with info for Lawler and Karp's Vertex Cover to Feedback Arc Set reduction </summary>
 ///<response code="200">Returns LawlerKarp reduction object</response>
 
     [ProducesResponseType(typeof(LawlerKarp), 200)]
