@@ -6,10 +6,8 @@
 
 
 using API.Interfaces;
-using API.Interfaces.Graphs;
 using API.Problems.NPComplete.NPC_ARCSET.Solvers;
 using API.Problems.NPComplete.NPC_ARCSET.Verifiers;
-using System;
 namespace API.Problems.NPComplete.NPC_ARCSET;
 
 class ARCSET : IProblem<ArcSetBruteForce,AlexArcsetVerifier>{
@@ -17,7 +15,7 @@ class ARCSET : IProblem<ArcSetBruteForce,AlexArcsetVerifier>{
     // --- Fields ---
     private string _problemName = "Feedback Arc Set";
     private string _formalDefinition = "ARCSET = {<G,k> | G is a directed graph that can be rendered acyclic by removal of at most k edges}";
-     private string _problemDefinition = "ARCSET, or the Feedback Arc Set satisfiability problem, is an NP-complete problem that can be described like the following. Given a directed graph, does removing a given set of edges render the graph acyclical? That is, does removing the edges break every cycle in the graph?";
+    private string _problemDefinition = "ARCSET, or the Feedback Arc Set satisfiability problem, is an NP-complete problem that can be described like the following. Given a directed graph, does removing a given set of edges render the graph acyclical? That is, does removing the edges break every cycle in the graph?";
 
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
 
@@ -100,35 +98,18 @@ class ARCSET : IProblem<ArcSetBruteForce,AlexArcsetVerifier>{
         }
     }
 
-
     // --- Methods Including Constructors ---
     public ARCSET() {
-       // _arcset = defaultInstance;
         //Should be a graph object.
-
-       string arcDefaultString = _defaultInstance;
-
+        string arcDefaultString = _defaultInstance;
         _arcsetAsGraph = new ArcsetGraph(_defaultInstance,true); //first value is the string input, second is a dummy boolean to utilize overloading.
         _instance = _arcsetAsGraph.ToString(); 
         _defaultVerifier = new AlexArcsetVerifier();
         
     }
     public ARCSET(string arcInput) {
-    
         _arcsetAsGraph = new ArcsetGraph(arcInput,true); //first value is the string input, second is a dummy boolean to utilize overloading.
-
-        //_nCoverAsGraph = new UndirectedGraph(arcInput)
-        // _nCoverAsGraph.toString()
         _instance = _arcsetAsGraph.ToString();
         _defaultVerifier = new AlexArcsetVerifier(); 
-
-
     }
-
-      
-    public void ParseProblem(string arcInput) {
-
-    }
-
-
 }

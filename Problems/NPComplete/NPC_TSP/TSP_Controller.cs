@@ -101,7 +101,7 @@ public class TSPVerifierBranchTestController : ControllerBase
 public class TSPVerifierController : ControllerBase
 #pragma warning restore CS1591
 {
-///<summary>Returns a info about the Travelling Sales Person generic Verifier </summary>
+///<summary>Returns information about the Travelling Sales Person generic Verifier </summary>
 ///<response code="200">Returns TSPVerifier object</response>
 
     [ProducesResponseType(typeof(TSPVerifier), 200)]
@@ -143,7 +143,7 @@ public class BranchAndBoundSolverController : ControllerBase
 #pragma warning restore CS1591
 
 {
-///<summary>Returns a info about the Traveling Sales Person branch and bound solver </summary>
+///<summary>Returns information about the Traveling Sales Person branch and bound solver </summary>
 ///<response code="200">Returns BranchAndBoundSolver solver object</response>
 
     [ProducesResponseType(typeof(BranchAndBoundSolver), 200)]
@@ -185,7 +185,7 @@ public class BranchAndBoundSolverController : ControllerBase
 public class GreedySolverController : ControllerBase
 #pragma warning restore CS1591
 {
-///<summary>Returns a info about the Traveling Sales Person branch and bound solver </summary>
+///<summary>Returns information about the Traveling Sales Person branch and bound solver </summary>
 ///<response code="200">Returns BranchAndBoundSolver solver object</response>
 
     [ProducesResponseType(typeof(GreedySolver), 200)]

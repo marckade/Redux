@@ -40,9 +40,7 @@ public class CLIQUEGenericController : ControllerBase {
     public String getDefault([FromQuery] string problemInstance)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
-
         CLIQUE devClique = new CLIQUE(problemInstance);
-        
         string jsonString = JsonSerializer.Serialize(devClique, options);
         return jsonString;
     }
@@ -75,11 +73,8 @@ public class CLIQUEGenericController : ControllerBase {
             }
             else{apiGraph.nodes[i].attribute2 = false.ToString();}
         }
-    
         string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
-        // Console.WriteLine(sClique.clusterNodes.Count.ToString());
-        
     }
 #pragma warning restore CS1591
 
@@ -92,7 +87,7 @@ public class CLIQUEGenericController : ControllerBase {
 public class sipserReduceToVCController : ControllerBase {
 
 
-///<summary>Returns a a reduction object with info for Sipser's Clique to Vertex Cover reduction </summary>
+///<summary>Returns a reduction object with info for Sipser's Clique to Vertex Cover reduction </summary>
 ///<response code="200">Returns sipserReduction Object</response>
 
     [ProducesResponseType(typeof(sipserReduction), 200)]
@@ -116,8 +111,6 @@ public class sipserReduceToVCController : ControllerBase {
     public String getReduce([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE defaultCLIQUE = new CLIQUE(problemInstance);
-        //SAT3 defaultSAT3 = new SAT3(problemInstance);
-        //SipserReduction reduction = new SipserReduction(defaultSAT3);
         sipserReduction reduction = new sipserReduction(defaultCLIQUE);
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
@@ -134,8 +127,6 @@ public class sipserReduceToVCController : ControllerBase {
         for(int i=0;i<apiGraphFrom.nodes.Count;i++){
             apiGraphFrom.nodes[i].attribute1 = i.ToString();
         }
-        //SAT3 defaultSAT3 = new SAT3(problemInstance);
-        //SipserReduction reduction = new SipserReduction(defaultSAT3);
         sipserReduction reduction = new sipserReduction(clique);
         VERTEXCOVER reducedVcov = reduction.reductionTo;
         VertexCoverGraph vGraph = reducedVcov.VCAsGraph;
@@ -179,9 +170,7 @@ public class CLIQUEDevController : ControllerBase
     public String getDefault()
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
-
         CLIQUE devClique = new CLIQUE();
-        
         string jsonString = JsonSerializer.Serialize(devClique, options);
         return jsonString;
     }
@@ -191,14 +180,9 @@ public class CLIQUEDevController : ControllerBase
     public String getDefault([FromQuery] string problemInstance)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
-
         CLIQUE devClique = new CLIQUE(problemInstance);
         GraphParser gParser = new GraphParser();
-        // Console.WriteLine(devClique.cliqueAsGraph.formalString());
         List<string> nList = gParser.getNodeList(devClique.cliqueAsGraph.formalString());
-        
-
-
         string jsonString = JsonSerializer.Serialize(nList, options);
         return jsonString;
     }
@@ -229,7 +213,7 @@ public class CliqueBruteForceController : ControllerBase
 {
 
     // Return Generic Solver Class
-///<summary>Returns a info about the Clique brute force solver </summary>
+///<summary>Returns information about the Clique brute force solver </summary>
 ///<response code="200">Returns CliqueBruteForce solver object</response>
 
     [ProducesResponseType(typeof(CliqueBruteForce), 200)]
@@ -238,8 +222,6 @@ public class CliqueBruteForceController : ControllerBase
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CliqueBruteForce solver = new CliqueBruteForce();
-
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
         return jsonString;
     }
@@ -253,11 +235,9 @@ public class CliqueBruteForceController : ControllerBase
     [HttpGet("solve")]
     public String solveInstance([FromQuery] string problemInstance)
     {
-        // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
         CLIQUE problem = new CLIQUE(problemInstance);
         string solution = problem.defaultSolver.solve(problem);
-
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
@@ -272,7 +252,7 @@ public class CliqueVerifierController : ControllerBase {
     #pragma warning restore CS1591
 
 
-///<summary>Returns a info about the Clique generic Verifier </summary>
+///<summary>Returns information about the Clique generic Verifier </summary>
 ///<response code="200">Returns CliqueVerifier Object</response>
 
     [ProducesResponseType(typeof(CliqueVerifier), 200)]
@@ -280,8 +260,6 @@ public class CliqueVerifierController : ControllerBase {
     public String getInfo() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         CliqueVerifier verifier = new CliqueVerifier();
-
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString;
     }
@@ -293,14 +271,13 @@ public class CliqueVerifierController : ControllerBase {
     
     [ProducesResponseType(typeof(Boolean), 200)]
     [HttpGet("verify")]
-    public String verifyInstance([FromQuery]string problemInstance, string certificate){
-    string jsonString = String.Empty;
-    CLIQUE vClique = new CLIQUE(problemInstance);
-    CliqueVerifier verifier = vClique.defaultVerifier;
-    bool validClique = verifier.verify(vClique, certificate);
-    var options = new JsonSerializerOptions { WriteIndented = true };
-    jsonString = JsonSerializer.Serialize(validClique, options);
-
-    return jsonString;
+        public String verifyInstance([FromQuery]string problemInstance, string certificate){
+        string jsonString = String.Empty;
+        CLIQUE vClique = new CLIQUE(problemInstance);
+        CliqueVerifier verifier = vClique.defaultVerifier;
+        bool validClique = verifier.verify(vClique, certificate);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        jsonString = JsonSerializer.Serialize(validClique, options);
+        return jsonString;
     }
 }

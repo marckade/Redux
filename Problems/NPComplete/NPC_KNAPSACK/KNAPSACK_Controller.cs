@@ -49,7 +49,7 @@ public class KNAPSACKGenericController : ControllerBase {
 public class GarrettVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about the Knapsack generic Verifier </summary>
+///<summary>Returns information about the Knapsack generic Verifier </summary>
 ///<response code="200">Returns GarrettVerifier object</response>
 
     [ProducesResponseType(typeof(GarrettVerifier), 200)]
@@ -72,9 +72,7 @@ public class GarrettVerifierController : ControllerBase {
         var options = new JsonSerializerOptions {WriteIndented = true};
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
         GarrettVerifier verifier = new GarrettVerifier();
-
         Boolean response = verifier.verify(KNAPSACKProblem, certificate);
-        //send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
     }
@@ -89,7 +87,7 @@ public class GarrettVerifierController : ControllerBase {
 public class GarrettKnapsackSolverController : ControllerBase {
 #pragma warning restore CS1591
 
-///<summary>Returns a info about Garrett's Knapsack solver </summary>
+///<summary>Returns information about Garrett's Knapsack solver </summary>
 ///<response code="200">Returns GarrettKnapsackSolver solver bject</response>
 
     [ProducesResponseType(typeof(GarrettKnapsackSolver), 200)]
@@ -113,8 +111,6 @@ public class GarrettKnapsackSolverController : ControllerBase {
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
         GarrettKnapsackSolver solver = new GarrettKnapsackSolver();
         string solvedInstance = solver.solve(KNAPSACKProblem);
-      
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }

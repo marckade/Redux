@@ -282,12 +282,6 @@ class IgbokweVerifier : IVerifier
         _coloring = nodeColoring;
         _k = k;
     }
-
-
-
-
-
     #endregion
-    // --- Methods Including Constructors ---
 
 }

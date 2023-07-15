@@ -106,8 +106,6 @@ class INTPROGRAMMING01 : IProblem<IntegerProgrammingBruteForce,GenericVerifier01
         _instance = instanceInput;
         C = getMatrixC(_instance);
         d = getVectorD(_instance);
-
-        
     }
 
     public List<List<int>> getMatrixC(string G){

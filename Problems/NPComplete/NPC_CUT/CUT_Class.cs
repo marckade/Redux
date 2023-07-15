@@ -1,26 +1,33 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_CLIQUE.Solvers;
-using API.Problems.NPComplete.NPC_CLIQUE.Verifiers;
+using API.Problems.NPComplete.NPC_CUT.Solvers;
+using API.Problems.NPComplete.NPC_CUT.Verifiers;
 
-namespace API.Problems.NPComplete.NPC_CLIQUE;
+namespace API.Problems.NPComplete.NPC_CUT;
 
-class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
+class CUT : IProblem<CutBruteForce, CutVerifier>{
 
     // --- Fields ---
-    private string _problemName = "Clique";
-    private string _formalDefinition = "Clique = {<G, k> | G is an graph that has a set of k mutually adjacent nodes}";
-    private string _problemDefinition = "A clique is the problem of uncovering a subset of vertices in an undirected graph G = (V, E) such that every two distinct vertices are adjacent";
+    private string _problemName = "Cut";
+    private string _formalDefinition = "Cut = {<G, k> | G is a graph with cut of size k}";
+    private string _problemDefinition = "A cut in an undirected graph is a partition of the graph's vertices into two complementary sets S and T, and the size of the cut is the number of edges between S and T.";
+    private string[] _contributers = {"Andrija Sevaljevic"};
+    
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}";
+    private string _defaultInstance = "{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}";
     private string _instance = string.Empty;
-    private string _wikiName = "";
+    
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
-    private int _K ;
-    private CliqueBruteForce _defaultSolver = new CliqueBruteForce();
-    private CliqueVerifier _defaultVerifier = new CliqueVerifier();
-    private CliqueGraph _cliqueAsGraph;
-    private string[] _contributers = { "Kaden Marchetti", "Alex Diviney" };
+    private int _K;
+    private CutBruteForce _defaultSolver = new CutBruteForce();
+    private CutVerifier _defaultVerifier = new CutVerifier();
+    private CutGraph _cutAsGraph;
+    
+
+
+    private string _wikiName = "";
+    //private List<List<string>> _clauses = new List<List<string>>();
+    //private List<string> _literals = new List<string>();
 
     // --- Properties ---
     public string problemName {
@@ -93,41 +100,43 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
             _K = value;
         }
     }
-    public CliqueBruteForce defaultSolver {
+    public CutBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-    public CliqueVerifier defaultVerifier {
+    public CutVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
     }
 
-    public CliqueGraph cliqueAsGraph {
+    public CutGraph cutAsGraph {
         get{
-            return _cliqueAsGraph;
-        }
-        set{
-            _cliqueAsGraph = value;
+            return _cutAsGraph;
         }
     }
 
     // --- Methods Including Constructors ---
-    public CLIQUE() {
+    public CUT() {
         _instance = defaultInstance;
-        _cliqueAsGraph = new CliqueGraph(_instance,true);
-        nodes = _cliqueAsGraph.nodesStringList;
-        edges = _cliqueAsGraph.edgesKVP;
-         _K = _cliqueAsGraph.K;
+        _cutAsGraph = new CutGraph(_instance,true);
+        nodes = _cutAsGraph.nodesStringList;
+        edges = _cutAsGraph.edgesKVP;
+         _K = _cutAsGraph.K;
+
+
     }
-    public CLIQUE(string GInput) {
-        _cliqueAsGraph = new CliqueGraph(GInput, true);
-        nodes = _cliqueAsGraph.nodesStringList;
-        edges = _cliqueAsGraph.edgesKVP;
-        _K = _cliqueAsGraph.K;
-        _instance = _cliqueAsGraph.ToString();
+    public CUT(string GInput) {
+        _cutAsGraph = new CutGraph(GInput, true);
+        nodes = _cutAsGraph.nodesStringList;
+        edges = _cutAsGraph.edgesKVP;
+        _K = _cutAsGraph.K;
+        _instance = _cutAsGraph.ToString();
+
+
     }
+
 
     public List<string> getNodes(string Ginput) {
 
@@ -141,12 +150,13 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
         foreach(string node in Gnodes) {
             allGNodes.Add(node);
         }
+
         return allGNodes;
     }
-
     public List<KeyValuePair<string, string>> getEdges(string Ginput) {
 
         List<KeyValuePair<string, string>> allGEdges = new List<KeyValuePair<string, string>>();
+
         string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
         
         // [0] is nodes,  [1] is edges,  [2] is k.
@@ -166,7 +176,6 @@ class CLIQUE : IProblem<CliqueBruteForce,CliqueVerifier> {
     }
 
     public int getK(string Ginput) {
-
         string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
         
         // [0] is nodes,  [1] is edges,  [2] is k.

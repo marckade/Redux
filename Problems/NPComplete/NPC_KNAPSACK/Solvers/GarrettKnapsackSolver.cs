@@ -42,13 +42,8 @@ class GarrettKnapsackSolver : ISolver {
     //solver for 0-1 knapsack problem
     public string solve(KNAPSACK knapsack) {
         // returns the maximum value achievable given the the weight constraints on the given knapsack.
-        
         List<KeyValuePair<String, String>> allitems = knapsack.items; 
         int Capacity = knapsack.W;
-
-     // {{10,20,30},{(10,60),(20,100),(30,120)},50}
-     // {{1,2,3,5,7,9},{(1,5),(2,7),(3,9),(1,7)},5}
-
         int[,] matrix = new int[allitems.Count +1 , Capacity + 1];
         //iterate through each item
         for (int i=0; i < allitems.Count + 1; i++){
@@ -67,7 +62,6 @@ class GarrettKnapsackSolver : ISolver {
                 }
                 else {
                     matrix[i,j] = Math.Max(Int32.Parse(currentItem.Value) + matrix[i-1, j- Int32.Parse(currentItem.Key)], matrix[i-1,j]);
-
                 }
             }
         }
@@ -76,25 +70,16 @@ class GarrettKnapsackSolver : ISolver {
         int tempCap = Capacity;
         string solution = "{(";
    
-
         while(count != 0){
-
             if(matrix[count , tempCap] != matrix[count -1, tempCap]){
-                
                 var current = allitems[count-1];
                 tempCap = tempCap - Int32.Parse(current.Key);
-              //  Console.WriteLine("Package " + count.ToString() + "with W = " + Int32.Parse(current.Key).ToString() + " and Value = "+Int32.Parse(current.Value).ToString());
-            // solution +=  current.Key + " : " + current.Value + ", ";
                 solution +=  current.Key + ":" + current.Value + ",";
             }
-
             count--;
-
         }
         solution = solution.Trim(',');
-
         solution += "):"+ matrix[allitems.Count, Capacity].ToString()+"}";
-        
         return solution;
     }
 
