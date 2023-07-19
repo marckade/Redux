@@ -127,7 +127,14 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
         }
     }
 
-   
+   public GraphColoringGraph graphColoringAsGraph {
+    get {
+        return _graphColoringAsGraph;
+    }
+    set {
+        _graphColoringAsGraph = value;
+    }
+   }
 
     
     public SortedSet<string> colors {
