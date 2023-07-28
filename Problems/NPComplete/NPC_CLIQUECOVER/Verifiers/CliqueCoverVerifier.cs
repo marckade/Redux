@@ -10,7 +10,7 @@ class CliqueCoverVerifier : IVerifier
     private string _verifierName = "Generic Verifier";
     private string _verifierDefinition = "This is a verifier for Clique";
     private string _source = " ";
-    private string[] _contributers = { "Caleb Eardley", "Kaden Marchetti" };
+    private string[] _contributers = { "Andrija Sevaljevic" };
 
 
     private string _certificate = "";

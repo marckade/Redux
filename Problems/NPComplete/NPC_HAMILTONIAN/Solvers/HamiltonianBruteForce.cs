@@ -2,13 +2,13 @@ using API.Interfaces;
 using API.Interfaces.Graphs.GraphParser;
 using API.Interfaces.Graphs;
 
-namespace API.Problems.NPComplete.NPC_CLIQUECOVER.Solvers;
-class CliqueCoverBruteForce : ISolver
+namespace API.Problems.NPComplete.NPC_HAMILTONIAN.Solvers;
+class HamiltonianBruteForce : ISolver
 {
 
     // --- Fields ---
-    private string _solverName = "Clique Cover Brute Force";
-    private string _solverDefinition = "This is a brute force solver for the NP-Complete Clique Cover problem";
+    private string _solverName = "Hamiltonian Brute Force";
+    private string _solverDefinition = "This is a brute force solver for the NP-Complete Hamiltonian problem";
     private string _source = "This solver was contributed by Andrija Sevaljevic";
     private string[] _contributers = { "Andrija Sevaljevic" };
 
@@ -43,76 +43,88 @@ class CliqueCoverBruteForce : ISolver
         }
     }
     // --- Methods Including Constructors ---
-    public CliqueCoverBruteForce()
+    public HamiltonianBruteForce()
     {
 
     }
 
-
-    private string BinaryToCertificate(List<int> binary, List<string> S, int K)
+    private string combinationToCertificate(List<int> combination, List<string> nodes) {
+        string certificate = "";
+        foreach(int i in combination) {
+            certificate += nodes[i - 1] + ',';
+        }
+        return "{" + certificate + certificate.Split(',')[0] + "}";
+    }
+    
+    public static List<List<int>> GenerateCombinations(int x)
     {
-        string certificate = "{";
-
-        for (int j = 0; j < K; j++)
+        List<int> currentCombination = new List<int>();
+        for (int i = 1; i <= x; i++)
         {
-            for (int i = 0; i < binary.Count; i++)
-            {
-                if (binary[i] == j)
-                {
-                    certificate += S[i] + ",";
-                }
-            }
-            certificate = certificate.TrimEnd(',');
-            certificate += "},{";
+            currentCombination.Add(i);
         }
 
-        certificate = certificate.TrimEnd('{');
+        List<List<int>> combinations = new List<List<int>>();
+        combinations.Add(new List<int>(currentCombination));
 
-        return "{" + certificate.TrimEnd(',') + "}";
+        while (true)
+        {
+            if (GetNextCombination(currentCombination))
+            {
+                combinations.Add(new List<int>(currentCombination));
+            }
+            else
+            {
+                break; // All combinations have been generated
+            }
+        }
 
+        return combinations;
+    }
+
+    private static bool GetNextCombination(List<int> combination)
+    {
+        int x = combination.Count;
+        int i = x - 2;
+        while (i >= 0 && combination[i] >= combination[i + 1])
+        {
+            i--;
+        }
+
+        if (i < 0)
+        {
+            return false; // No more combinations
+        }
+
+        int j = x - 1;
+        while (combination[j] <= combination[i])
+        {
+            j--;
+        }
+
+        // Swap elements at indices i and j
+        int temp = combination[i];
+        combination[i] = combination[j];
+        combination[j] = temp;
+
+        // Reverse the sequence from i+1 to the end
+        combination.Reverse(i + 1, x - i - 1);
+
+        return true;
     }
 
 
-    private void nextBinary(List<int> binary, int K)
+    public string solve(HAMILTONIAN hamiltonian)
     {
-        for (int i = 0; i < binary.Count; i++)
+        List<List<int>> combinations = GenerateCombinations(hamiltonian.nodes.Count);
+
+        foreach (List<int> combination in combinations)
         {
-            if (binary[i] != K)
-            {
-                binary[i] += 1;
-                return;
-            }
-            else if (binary[i] == K)
-            {
-                binary[i] = 0;
-            }
-        }
-    }
-
-
-    public string solve(CLIQUECOVER clique)
-    {
-
-        if (clique.K > clique.nodes.Count)
-        {
-            return "{}";
-        }
-
-        List<int> binary = new List<int>();
-        foreach (var i in clique.nodes)
-        {
-            binary.Add(0);
-        }
-
-        while (binary.Count(n => n == (clique.K - 1)) < clique.nodes.Count)
-        {
-            string certificate = BinaryToCertificate(binary, clique.nodes, clique.K);
-            if (clique.defaultVerifier.verify(clique, certificate))
+            string certificate = combinationToCertificate(combination, hamiltonian.nodes);
+            if (hamiltonian.defaultVerifier.verify(hamiltonian, certificate))
             {
                 return certificate;
             }
-            nextBinary(binary,clique.K);
-
         }
 
         return "{}";
