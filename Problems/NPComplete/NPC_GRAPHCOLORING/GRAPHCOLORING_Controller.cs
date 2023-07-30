@@ -83,14 +83,13 @@ public class GRAPHCOLORINGGenericController : ControllerBase
             foreach (var j in nodeColoring)
             {
 
-                if (j.Split(':').Contains(apiGraph.nodes[i].name))
+                if (j.Split(':')[0].Contains(apiGraph.nodes[i].name))
                 {
                     apiGraph.nodes[i].attribute2 = j.Split(':')[1].ToString();
+                   
                 }
-
-
-
             }
+            
         }
 
         string jsonString = JsonSerializer.Serialize(apiGraph, options);

@@ -8,8 +8,8 @@ class CLIQUECOVER : IProblem<CliqueCoverBruteForce,CliqueCoverVerifier> {
 
     // --- Fields ---
     private string _problemName = "Clique Cover";
-    private string _formalDefinition = "Clique Cover = ";
-    private string _problemDefinition = "A clique cover is the problem";
+    private string _formalDefinition = "Clique Cover = {<G, k> | G is a graph represnted by k or fewer cliques}";
+    private string _problemDefinition = "A clique cover is a partition of the vertices into cliques, subsets of vertices within which every two vertices are adjacent";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{{1,2,3,4,5,6,7,8},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5},{6,7},{7,8},{6,8}},3}";
     private string _instance = string.Empty;

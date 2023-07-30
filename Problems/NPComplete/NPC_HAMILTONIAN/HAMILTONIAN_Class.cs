@@ -8,8 +8,8 @@ class HAMILTONIAN : IProblem<HamiltonianBruteForce,HamiltonianVerifier> {
 
     // --- Fields ---
     private string _problemName = "Hamiltonian";
-    private string _formalDefinition = "Hamiltonian = ";
-    private string _problemDefinition = "Hamiltonian is the problem";
+    private string _formalDefinition = "Hamiltonian = {<G> | G has a cycle which covers every node exactly once}";
+    private string _problemDefinition = "Hamiltonian is the problem of determining whether a Hamiltonian cycle (a path in an undirected or directed graph that visits each vertex exactly once).";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string _defaultInstance = "{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},1}";
     private string _instance = string.Empty;
