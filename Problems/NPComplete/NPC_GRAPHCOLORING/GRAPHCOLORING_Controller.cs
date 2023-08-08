@@ -6,6 +6,8 @@ using API.Interfaces.JSON_Objects.Graphs;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING.Verifiers;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING.Solvers;
 using API.Problems.NPComplete.NPC_GRAPHCOLORING.ReduceTo.NPC_SAT;
+using API.Problems.NPComplete.NPC_GRAPHCOLORING.ReduceTo.NPC_CLIQUECOVER;
+
 
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
@@ -99,6 +101,47 @@ public class GRAPHCOLORINGGenericController : ControllerBase
 
 }
 
+
+[ApiController]
+[Route("[controller]")]
+[Tags("Graph Coloring")]
+
+
+#pragma warning disable CS1591
+
+public class GraphColoringToCliqueCoverController : ControllerBase {
+#pragma warning restore CS1591
+
+  
+///<summary>Returns a reduction object with info for Graph Coloring to CliqueCover Reduction </summary>
+///<response code="200">Returns CliqueCoverReduction object</response>
+
+    [ProducesResponseType(typeof(CliqueCoverReduction), 200)]
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GRAPHCOLORING defaultGRAPHCOLORING = new GRAPHCOLORING();
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+        CliqueCoverReduction reduction = new CliqueCoverReduction(defaultGRAPHCOLORING);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+///<summary>Returns a reduction from Graph Coloring to CliqueCover based on the given Graph Coloring instance  </summary>
+///<param name="problemInstance" example="{{1,7,12,15} : 28}">Graph Coloring problem instance string.</param>
+///<response code="200">Returns Fengs's Graph Coloring to CliqueCover object</response>
+
+    [ProducesResponseType(typeof(CliqueCoverReduction), 200)]
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        GRAPHCOLORING defaultGRAPHCOLORING = new GRAPHCOLORING(problemInstance);
+        CliqueCoverReduction reduction = new CliqueCoverReduction(defaultGRAPHCOLORING);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+}
 
 
 [ApiController]
