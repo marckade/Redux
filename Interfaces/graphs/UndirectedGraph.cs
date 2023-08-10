@@ -104,10 +104,14 @@ abstract class UndirectedGraph:Graph{
      /// <param name="decoy"></param>
     public UndirectedGraph(String graphStr,bool decoy){
         string pattern;
+        string patternWithTerminals;
         pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},\d+}"; //checks for undirected graph format
+        patternWithTerminals = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},{(([\w!]+)(,([\w!]+))*)+},\d+}"; //checks for undirected graph format with terminals
         Regex reg = new Regex(pattern);
+        Regex regTerminal = new Regex(patternWithTerminals);
         bool inputIsValid = reg.IsMatch(graphStr);
-        if(inputIsValid){
+        bool terminalInputIsValid = regTerminal.IsMatch(graphStr);
+        if(inputIsValid || terminalInputIsValid){
             
             //nodes
             string nodePattern = @"{((([\w!]+))*(([\w!]+),)*)+}";
