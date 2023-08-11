@@ -7,7 +7,7 @@ class SteinerTreeBruteForce : ISolver
 {
 
     // --- Fields ---
-    private string _solverName = "SteinerTree Brute Force";
+    private string _solverName = "Steiner Tree Brute Force";
     private string _solverDefinition = "This is a brute force solver for the NP-Complete SteinerTree problem";
     private string _source = "This solver was contributed by Andrija Sevaljevic";
     private string[] _contributers = { "Andrija Sevaljevic" };
@@ -87,15 +87,11 @@ class SteinerTreeBruteForce : ISolver
 
     public string solve(STEINERTREE steiner)
     {
-        if (steiner.K < steiner.terminals.Count - 1)
-        {
-            return "{}";
-        }
 
-        for (int i = steiner.terminals.Count - 1; i < steiner.K; i++)
+        for (int i = steiner.terminals.Count - 1; i <= steiner.K; i++)
         {
             List<int> combination = new List<int>();
-            for (int j = 0; j <= i; j++)
+            for (int j = 0; j < i; j++)
             {
                 combination.Add(j);
             }

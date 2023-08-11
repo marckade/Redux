@@ -124,24 +124,26 @@ class SteinerTreeVerifier : IVerifier
             string edgeValues = order[i];
             string t = edgeValues.Split(',').ToList()[1];
             string s = edgeValues.Split(',').ToList()[0];
-            Console.WriteLine(s + "---" + t);
+          
             KeyValuePair<string, string> edgePair = new KeyValuePair<string, string>(s, t);
-            if (check.Contains(s))
-            {
-                check.Remove(s);
-            }
-            else if (check.Contains(t))
-            {
-                check.Remove(t);
-            }
+            
             edges.Add(edgePair);
         }
 
-        if (!check.Any() && IsConnected(edges))
+        order = certificate.Replace("{","").Replace("}","").Split(',').ToList();
+
+        foreach(var i in order) {
+            if(check.Contains(i)) {
+                check.Remove(i);
+            }
+        }
+
+
+        if (IsConnected(edges) && !check.Any())
         {
             return true;
         }
-        Console.WriteLine("---");
+        
         return false;
     }
 

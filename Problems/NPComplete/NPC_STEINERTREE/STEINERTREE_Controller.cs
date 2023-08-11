@@ -71,15 +71,16 @@ public class STEINERTREEGenericController : ControllerBase
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
         STEINERTREE steiner = new STEINERTREE(problemInstance);
-        List<string> solutionList = solution.Replace("{", "").Replace("}", "").Split(",").ToList();
+        List<string> solutionListNodes = solution.Replace("{", "").Replace("}", "").Split(",").ToList();
+        List<string> solutionListEdges = solution.Replace("{{", "").Replace("}}", "").Split("},{").ToList();
         SteinerGraph hGraph = steiner.steinerAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(hGraph.getNodeList, hGraph.getEdgeList);
-        
-        for(int j = 0; j < solutionList.Count - 1; j++)
+        if(solution != "{}") {
+        for(int j = 0; j < solutionListNodes.Count; j++)
         {
             for (int i = 0; i < apiGraph.nodes.Count; i++)
             {
-                if (solutionList.Contains(apiGraph.nodes[i].name))
+                if (solutionListNodes.Contains(apiGraph.nodes[i].name))
                 {
                     apiGraph.nodes[i].attribute1 = i.ToString();
                     apiGraph.nodes[i].attribute2 = true.ToString();
@@ -88,16 +89,21 @@ public class STEINERTREEGenericController : ControllerBase
                     }
                 }
             }
- 
+        }
 
+        for(int j = 0; j < solutionListEdges.Count; j++) {
+            List<string> edgeValues = solutionListEdges[j].Split(',').ToList();
+            string target = edgeValues[1];
+            string source = edgeValues[0];
             for (int i = 0; i < apiGraph.links.Count; i++)
             {
-                if ((apiGraph.links[i].target == solutionList[j] && apiGraph.links[i].source == solutionList[j+1]) ||
-                (apiGraph.links[i].source == solutionList[j] && apiGraph.links[i].target == solutionList[j+1]) )
+                if ((apiGraph.links[i].target == target && apiGraph.links[i].source == source) ||
+                (apiGraph.links[i].source == target && apiGraph.links[i].target == source) )
                 {
                     apiGraph.links[i].attribute1 = true.ToString();
                 }
             }
+        }
         }
         string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
