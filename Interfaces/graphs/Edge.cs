@@ -10,6 +10,7 @@ class Edge : IComparable<Edge>{
 //Fields
 private Node _source;
 private Node _target;
+private int _weight;
 
 public Edge(){
 _source = new Node();
@@ -18,6 +19,12 @@ _target = new Node();
 public Edge(Node n1,Node n2){
     _source = n1;
     _target = n2;
+}
+
+public Edge(Node n1, Node n2, int weight) {
+    _source = n1;
+    _target = n2;
+    _weight = weight;
 }
 
 public Node source{
@@ -35,6 +42,15 @@ public Node target{
     }
     set{
         _target = value;
+    }
+}
+
+public int weight {
+    get {
+        return _weight;
+    } 
+    set {
+        _weight = value;
     }
 }
 

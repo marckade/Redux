@@ -19,11 +19,8 @@ public Graph(){
 }
 protected abstract List<string> getNodes(string gInput);
 protected abstract List<KeyValuePair<string,string>> getEdges(string gInput);
+protected abstract List<(string,string,int)> getWeightedEdges(string gInput);
 
 protected abstract int getK(string gInput);
-
-//  public object Clone(){
-//         return this.MemberwiseClone();
-//     }
 
 }
