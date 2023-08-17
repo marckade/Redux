@@ -7,9 +7,9 @@ class INDEPENDENTSET : IProblem<IndependentSetBruteForce,IndependentSetVerifier>
 
     // --- Fields ---
     private string _problemName = "Independent Set";
-    private string _formalDefinition = "Independent set = {<G, k> | G is an graph that has a set of k nodes of which no two are adjacent}";
+    private string _formalDefinition = "In a graph G = (V, E), an independent set is a subset X of vertices no two of which are adjacent";
     private string _problemDefinition = "An Independent Set is a set of nodes in a graph G, where no node is connected to another node in the set";
-    private string _source = "";
+    private string _source = "Golumbic, M. C. (2004). Algorithmic graph theory and perfect graphs. Elsevier.";
     private string _defaultInstance = "{{a,b,c,d,e,f,g,h,i},{{a,b},{b,a},{b,c},{c,a},{a,c},{c,b},{a,d},{d,a},{d,e},{e,a},{a,e},{e,d},{a,f},{f,a},{f,g},{g,a},{a,g},{g,f},{a,h},{h,a},{h,i},{i,a},{a,i},{i,h}},4}";
     private string _instance = string.Empty;
     private string _wikiName = "";
