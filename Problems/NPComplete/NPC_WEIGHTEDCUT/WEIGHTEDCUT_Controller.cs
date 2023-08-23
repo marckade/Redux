@@ -3,28 +3,28 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Interfaces.JSON_Objects.Graphs;
 using API.Interfaces.Graphs.GraphParser;
-using API.Problems.NPComplete.NPC_CUT;
-using API.Problems.NPComplete.NPC_CUT.Solvers;
-using API.Problems.NPComplete.NPC_CUT.Verifiers;
+using API.Problems.NPComplete.NPC_WEIGHTEDCUT;
+using API.Problems.NPComplete.NPC_WEIGHTEDCUT.Solvers;
+using API.Problems.NPComplete.NPC_WEIGHTEDCUT.Verifiers;
 
 
-namespace API.Problems.NPComplete.NPC_CUT;
+namespace API.Problems.NPComplete.NPC_WEIGHTEDCUT;
 
 [ApiController]
 [Route("[controller]")]
-[Tags("Cut")]
+[Tags("Weighted Cut")]
 
 #pragma warning disable CS1591
-public class CUTGenericController : ControllerBase {
+public class WEIGHTEDCUTGenericController : ControllerBase {
 #pragma warning restore CS1591
 
 ///<summary>Returns a default Cut object</summary>
 
-    [ProducesResponseType(typeof(CUT), 200)]
+    [ProducesResponseType(typeof(WEIGHTEDCUT), 200)]
     [HttpGet]
     public String getDefault() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CUT(), options);
+        string jsonString = JsonSerializer.Serialize(new WEIGHTEDCUT(), options);
         return jsonString;
     }
 
@@ -32,15 +32,15 @@ public class CUTGenericController : ControllerBase {
 ///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Cut problem instance string.</param>
 ///<response code="200">Returns CUT problem object</response>
 
-    [ProducesResponseType(typeof(CUT), 200)]
+    [ProducesResponseType(typeof(WEIGHTEDCUT), 200)]
     [HttpGet("{instance}")]
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(new CUT(problemInstance), options);
+        string jsonString = JsonSerializer.Serialize(new WEIGHTEDCUT(problemInstance), options);
         return jsonString;
     }
 
-///<summary>Returns a graph object used for dynamic visualization </summary>
+    ///<summary>Returns a graph object used for dynamic visualization </summary>
 ///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Cut problem instance string.</param>
 ///<response code="200">Returns graph object</response>
 
@@ -48,8 +48,8 @@ public class CUTGenericController : ControllerBase {
     [HttpGet("visualize")]
     public String getVisualization([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CUT aSet = new CUT(problemInstance);
-        CutGraph aGraph = aSet.cutAsGraph;
+        WEIGHTEDCUT aSet = new WEIGHTEDCUT(problemInstance);
+        WeightedCutGraph aGraph = aSet.weightedCutAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList, aGraph.getEdgeList);
         string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
@@ -67,49 +67,58 @@ public class CUTGenericController : ControllerBase {
     public String solvedVisualization([FromQuery]string problemInstance, string solution){
     #pragma warning restore CS1591
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CUT aSet = new CUT(problemInstance);
-        CutGraph aGraph = aSet.cutAsGraph;
-        Dictionary<KeyValuePair<string,string>, bool> solutionDict = aSet.defaultSolver.getSolutionDict(problemInstance, solution);
+        WEIGHTEDCUT aSet = new WEIGHTEDCUT(problemInstance);
+        WeightedCutGraph aGraph = aSet.weightedCutAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList,aGraph.getEdgeList);
 
-        for(int i=0;i<apiGraph.links.Count;i++){
-            bool edgeVal = false;
-            KeyValuePair<string, string> edge = new KeyValuePair<string, string>(apiGraph.links[i].source, apiGraph.links[i].target);
-            solutionDict.TryGetValue(edge, out edgeVal);
-            apiGraph.links[i].attribute1 = edgeVal.ToString();
-        }
-
-        List<string> parsedS = solution.TrimEnd().TrimStart().Replace("{","").Replace("}","").Split(',').ToList();
+        List<string> parsedS = solution.Replace("{","").Replace("}","").Split(',').ToList();
+        Console.WriteLine(solution.Replace("{","").Replace("}",""));
+        List<string> setS = new List<string>();
 
         for (int i = 0; i < apiGraph.nodes.Count; i++) {
             apiGraph.nodes[i].attribute1 = i.ToString();
-            if(parsedS.IndexOf(apiGraph.nodes[i].name) % 2 == 0) {
+            bool found = parsedS.Where((value, index) => index % 3 == 0 && value == apiGraph.nodes[i].name).Any();
+            if(found) {
                 apiGraph.nodes[i].attribute2 = true.ToString();
+                setS.Add(apiGraph.nodes[i].name);
             }
         }
+
+        for(int i=0;i<apiGraph.links.Count;i++){
+            if(setS.Contains(apiGraph.links[i].source) && setS.Contains(apiGraph.links[i].target)) {
+                apiGraph.links[i].attribute1 = true.ToString();
+            }
+            else if(setS.Contains(apiGraph.links[i].source) || setS.Contains(apiGraph.links[i].target)) {
+                apiGraph.links[i].attribute1 = "Cut";
+            }
+            else {
+                apiGraph.links[i].attribute1 = false.ToString();
+            }
+        }        
 
         string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
 
     }
+
 }
 
 
 [ApiController]
 [Route("[controller]")]
-[Tags("Cut")]
+[Tags("Weighted Cut")]
 #pragma warning disable CS1591
-public class CutVerifierController : ControllerBase {
+public class WeightedCutVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
 ///<summary>Returns information about the Cut Verifier </summary>
 ///<response code="200">Returns CutVerifier</response>
 
-    [ProducesResponseType(typeof(CutVerifier), 200)]
+    [ProducesResponseType(typeof(WeightedCutVerifier), 200)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CutVerifier verifier = new CutVerifier();
+        WeightedCutVerifier verifier = new WeightedCutVerifier();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
@@ -125,8 +134,8 @@ public class CutVerifierController : ControllerBase {
     [HttpGet("verify")]
     public String solveInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CUT CUT_PROBLEM = new CUT(problemInstance);
-        CutVerifier verifier = new CutVerifier();
+        WEIGHTEDCUT CUT_PROBLEM = new WEIGHTEDCUT(problemInstance);
+        WeightedCutVerifier verifier = new WeightedCutVerifier();
 
         Boolean response = verifier.verify(CUT_PROBLEM, certificate);
         string responseString;
@@ -143,9 +152,9 @@ public class CutVerifierController : ControllerBase {
 
 [ApiController]
 [Route("[controller]")]
-[Tags("Cut")]
+[Tags("Weighted Cut")]
 #pragma warning disable CS1591
-public class CutBruteForceController : ControllerBase {
+public class WeightedCutBruteForceController : ControllerBase {
 #pragma warning restore CS1591
 
 
@@ -153,11 +162,11 @@ public class CutBruteForceController : ControllerBase {
 ///<summary>Returns information about the Cut brute force solver </summary>
 ///<response code="200">Returns CutBruteSolver solver Object</response>
 
-    [ProducesResponseType(typeof(CutBruteForce), 200)]
+    [ProducesResponseType(typeof(WeightedCutBruteForce), 200)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CutBruteForce solver = new CutBruteForce();
+        WeightedCutBruteForce solver = new WeightedCutBruteForce();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
@@ -174,7 +183,7 @@ public class CutBruteForceController : ControllerBase {
     public String solveInstance([FromQuery]string problemInstance) {
         // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
-        CUT problem = new CUT(problemInstance);
+        WEIGHTEDCUT problem = new WEIGHTEDCUT(problemInstance);
         string solution = problem.defaultSolver.solve(problem);
         
         string jsonString = JsonSerializer.Serialize(solution, options);

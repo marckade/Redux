@@ -338,6 +338,33 @@ abstract class DirectedGraph:Graph{
        
     }
 
+    protected override List<(string, string, int)> getWeightedEdges(string Ginput)
+    {
+
+        List<(string, string, int)> allGEdges = new List<(string, string, int)>();
+
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")", "");
+
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        string[] Gedges = Gsections[1].Split('&');
+
+        foreach (string edge in Gedges)
+        {
+            if (edge.Replace(" ", "") != "")
+            { // Checks that edge isn't empty string, which can happens if there are no edges to begin with
+                string[] fromTo = edge.Split(',');
+                string nodeFrom = fromTo[0];
+                string nodeTo = fromTo[1];
+                int weight = Int32.Parse(fromTo[2]);
+
+                allGEdges.Add((nodeFrom, nodeTo, weight));
+            }
+        }
+
+        return allGEdges;
+    }
+
     /// <summary>
     /// Returns a Jsoned Dot representation (jsoned list of strings) that is compliant with the graphvis DOT format. 
     /// </summary>

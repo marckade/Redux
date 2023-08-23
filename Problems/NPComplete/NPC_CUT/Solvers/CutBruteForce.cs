@@ -115,8 +115,6 @@ public CutBruteForce() {
 
         }
         }
-        // Console.WriteLine(combination.ToString());
-        // Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
         return "{}";
     }
 

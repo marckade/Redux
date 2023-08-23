@@ -67,7 +67,7 @@ public class VERTEXCOVERGenericController : ControllerBase {
 
     [ProducesResponseType(typeof(VERTEXCOVER), 200)]
     [HttpGet("{instance}")]
-    public String getInstance([FromQuery]string problemInstance) {
+    public String getInstance([FromQuery]string problemInstance,string kArgument="") {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(new VERTEXCOVER(problemInstance), options);
         return jsonString;

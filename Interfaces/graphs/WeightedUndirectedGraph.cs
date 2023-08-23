@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace API.Interfaces.Graphs;
 
-abstract class UndirectedGraph : Graph
+abstract class WeightedUndirectedGraph : Graph
 {
 
 
@@ -18,11 +18,11 @@ abstract class UndirectedGraph : Graph
 
     protected int _K;
     protected List<string> _nodeStringList = new List<string>();
-    protected List<KeyValuePair<string, string>> _edgesKVP = new List<KeyValuePair<string, string>>();
+    protected List<(string source, string destination, int weight)> _edgesTuple = new List<(string, string, int)>(); // first two value is the edges, outer int is their weight
 
 
     //Constructor
-    public UndirectedGraph()
+    public WeightedUndirectedGraph()
     {
 
         _nodeList = new List<Node>();
@@ -32,7 +32,7 @@ abstract class UndirectedGraph : Graph
     }
 
 
-    public UndirectedGraph(List<Node> nl, List<Edge> el, int kVal)
+    public WeightedUndirectedGraph(List<Node> nl, List<Edge> el, int kVal)
     {
 
         this._nodeList = nl;
@@ -41,7 +41,7 @@ abstract class UndirectedGraph : Graph
     }
 
     //This constructors takes in a list of nodes (in string format) and a list of edges (in string format) and creates a graph
-    public UndirectedGraph(List<String> nl, List<KeyValuePair<string, string>> el, int kVal)
+    public WeightedUndirectedGraph(List<String> nl, List<KeyValuePair<string, string>> el, int kVal)
     {
 
         this._nodeList = new List<Node>();
@@ -69,12 +69,12 @@ abstract class UndirectedGraph : Graph
     /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} &amp; {b,c}} : 1}
     /// </summary>
     /// <param name="graphStr"> string input</param>
-    public UndirectedGraph(String graphStr)
+    public WeightedUndirectedGraph(String graphStr)
     {
 
 
         List<string> nl = getNodes(graphStr);
-        List<KeyValuePair<string, string>> el = getEdges(graphStr);
+        List<(string source, string destination, int weight)> el = getWeightedEdges(graphStr);
         int k = getK(graphStr);
 
         this._nodeList = new List<Node>();
@@ -85,10 +85,10 @@ abstract class UndirectedGraph : Graph
         }
         //Note that this is initializing unique node instances. May want to compose edges of already existing nodes instead. 
         this._edgeList = new List<Edge>();
-        foreach (KeyValuePair<string, string> edgeKV in el)
+        foreach(var edgeKV in el)
         {
-            string eStr1 = edgeKV.Key;
-            string eStr2 = edgeKV.Value;
+            string eStr1 = edgeKV.source;
+            string eStr2 = edgeKV.destination;
             Node n1 = new Node(eStr1);
             Node n2 = new Node(eStr2);
             Edge edge = new Edge(n1, n2);
@@ -104,19 +104,12 @@ abstract class UndirectedGraph : Graph
 
 
 
-    //Constructor for standard graph formatted string input.
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="graphStr"> Undirected Graph string input
-    /// ex. {{1,2,3},{{1,2},{2,3}},0}
-    /// </param>
-    /// <param name="decoy"></param>
-    public UndirectedGraph(String graphStr, bool decoy)
+
+    public WeightedUndirectedGraph(String graphStr, bool decoy)
     {
         string pattern;
         string patternWithTerminals;
-        pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},\d+}"; //checks for undirected graph format
+        pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+),([\d]+)\}(,\{([\w!]+),([\w!]+),([\d]+)\})*)*},\d+}"; //checks for undirected graph format with weights
         patternWithTerminals = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},{(([\w!]+)(,([\w!]+))*)+},\d+}"; //checks for undirected graph format with terminals
         Regex reg = new Regex(pattern);
         Regex regTerminal = new Regex(patternWithTerminals);
@@ -139,18 +132,19 @@ abstract class UndirectedGraph : Graph
             //Console.WriteLine(nMatches[0]);
 
             //edges
-            string edgePattern = @"{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*}";
+            string edgePattern = @"{(\{([\w!]+),([\w!]+),([\d]+)\}(,\{([\w!]+),([\w!]+),([\d]+)\})*)*}";
             MatchCollection eMatches = Regex.Matches(graphStr, edgePattern);
             string edgeStr = eMatches[0].ToString();
-            //Console.WriteLine(edgeStr);
-            string edgePatternInner = @"([\w!]+),([\w!]+)";
+            string edgePatternInner = @"([\w!]+),([\w!]+),([\d]+)";
             MatchCollection eMatches2 = Regex.Matches(edgeStr, edgePatternInner);
             foreach (Match medge in eMatches2)
             {
                 string[] edgeSplit = medge.ToString().Split(',');
                 Node n1 = new Node(edgeSplit[0]);
                 Node n2 = new Node(edgeSplit[1]);
-                _edgeList.Add(new Edge(n1, n2));
+                int weight = Int32.Parse(edgeSplit[2]);
+                
+                _edgeList.Add(new Edge(n1, n2, weight));
             }
 
             //end num
@@ -172,8 +166,7 @@ abstract class UndirectedGraph : Graph
             }
             foreach (Edge e in _edgeList)
             {
-                KeyValuePair<string, string> tempKVP = new KeyValuePair<string, string>(e.source.name, e.target.name);
-                _edgesKVP.Add(tempKVP);
+                _edgesTuple.Add((e.source.name, e.target.name, e.weight)); //
             }
 
         }
@@ -183,7 +176,6 @@ abstract class UndirectedGraph : Graph
         }
 
     }
-
 
     /// <summary>
     /// The toString method used to use an old graph format, now it an alias for
@@ -208,9 +200,9 @@ abstract class UndirectedGraph : Graph
         nodeListStr = nodeListStr.TrimEnd(',');
 
         string edgeListStr = "";
-        foreach (Edge edge in _edgeList)
+        foreach (var edge in _edgesTuple)
         {
-            string edgeStr = edge.undirectedString() + ","; //This line makes this distinct from DirectedGraph
+            string edgeStr = "{" + edge.source + "," + edge.destination + "," + edge.weight + "}"; //This line makes this distinct from DirectedGraph
             edgeListStr = edgeListStr + edgeStr + "";
         }
         edgeListStr = edgeListStr.TrimEnd(',', ' ');
@@ -242,10 +234,33 @@ abstract class UndirectedGraph : Graph
         return allGNodes;
     }
 
-    //ALEX NOTE: Taken from Kaden's Clique class
-    /**
-    * Takes a string representation of a directed graph and returns its edges as a list of strings.
-    **/
+
+    protected override List<(string, string, int)> getWeightedEdges(string Ginput)
+    {
+
+        List<(string, string, int)> allGEdges = new List<(string, string, int)>();
+
+        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")", "");
+
+        // [0] is nodes,  [1] is edges,  [2] is k.
+        string[] Gsections = strippedInput.Split(':');
+        string[] Gedges = Gsections[1].Split('&');
+
+        foreach (string edge in Gedges)
+        {
+            if (edge.Replace(" ", "") != "")
+            { // Checks that edge isn't empty string, which can happens if there are no edges to begin with
+                string[] fromTo = edge.Split(',');
+                string nodeFrom = fromTo[0];
+                string nodeTo = fromTo[1];
+                int weight = Int32.Parse(fromTo[2]);
+
+                allGEdges.Add((nodeFrom, nodeTo, weight));
+            }
+        }
+
+        return allGEdges;
+    }
 
     protected override List<KeyValuePair<string, string>> getEdges(string Ginput)
     {
@@ -290,32 +305,6 @@ abstract class UndirectedGraph : Graph
         return Int32.Parse(Gsections[2]);
     }
 
-    protected override List<(string, string, int)> getWeightedEdges(string Ginput)
-    {
-
-        List<(string, string, int)> allGEdges = new List<(string, string, int)>();
-
-        string strippedInput = Ginput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")", "");
-
-        // [0] is nodes,  [1] is edges,  [2] is k.
-        string[] Gsections = strippedInput.Split(':');
-        string[] Gedges = Gsections[1].Split('&');
-
-        foreach (string edge in Gedges)
-        {
-            if (edge.Replace(" ", "") != "")
-            { // Checks that edge isn't empty string, which can happens if there are no edges to begin with
-                string[] fromTo = edge.Split(',');
-                string nodeFrom = fromTo[0];
-                string nodeTo = fromTo[1];
-                int weight = Int32.Parse(fromTo[2]);
-
-                allGEdges.Add((nodeFrom, nodeTo, weight));
-            }
-        }
-
-        return allGEdges;
-    }
 
 
 
@@ -342,11 +331,11 @@ abstract class UndirectedGraph : Graph
             return _nodeStringList;
         }
     }
-    public List<KeyValuePair<string, string>> edgesKVP
+    public List<(string, string, int)> edgesTuple
     {
         get
         {
-            return _edgesKVP;
+            return _edgesTuple;
         }
     }
 
