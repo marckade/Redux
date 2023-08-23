@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace API.Interfaces.Graphs;
 
-abstract class UndirectedGraph : Graph
+abstract class UnweightedUndirectedGraph : Graph
 {
 
 
@@ -22,7 +22,7 @@ abstract class UndirectedGraph : Graph
 
 
     //Constructor
-    public UndirectedGraph()
+    public UnweightedUndirectedGraph()
     {
 
         _nodeList = new List<Node>();
@@ -32,7 +32,7 @@ abstract class UndirectedGraph : Graph
     }
 
 
-    public UndirectedGraph(List<Node> nl, List<Edge> el, int kVal)
+    public UnweightedUndirectedGraph(List<Node> nl, List<Edge> el, int kVal)
     {
 
         this._nodeList = nl;
@@ -41,7 +41,7 @@ abstract class UndirectedGraph : Graph
     }
 
     //This constructors takes in a list of nodes (in string format) and a list of edges (in string format) and creates a graph
-    public UndirectedGraph(List<String> nl, List<KeyValuePair<string, string>> el, int kVal)
+    public UnweightedUndirectedGraph(List<String> nl, List<KeyValuePair<string, string>> el, int kVal)
     {
 
         this._nodeList = new List<Node>();
@@ -69,7 +69,7 @@ abstract class UndirectedGraph : Graph
     /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} &amp; {b,c}} : 1}
     /// </summary>
     /// <param name="graphStr"> string input</param>
-    public UndirectedGraph(String graphStr)
+    public UnweightedUndirectedGraph(String graphStr)
     {
 
 
@@ -112,11 +112,11 @@ abstract class UndirectedGraph : Graph
     /// ex. {{1,2,3},{{1,2},{2,3}},0}
     /// </param>
     /// <param name="decoy"></param>
-    public UndirectedGraph(String graphStr, bool decoy)
+    public UnweightedUndirectedGraph(String graphStr, bool decoy)
     {
         string pattern;
         string patternWithTerminals;
-        pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},\d+}"; //checks for undirected graph format
+        pattern = @"\(\({([\w!]+)(,([\w!]+))*},{\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*}\),\d+\)"; //checks for undirected graph format
         patternWithTerminals = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},{(([\w!]+)(,([\w!]+))*)+},\d+}"; //checks for undirected graph format with terminals
         Regex reg = new Regex(pattern);
         Regex regTerminal = new Regex(patternWithTerminals);
@@ -126,7 +126,7 @@ abstract class UndirectedGraph : Graph
         {
 
             //nodes
-            string nodePattern = @"{((([\w!]+))*(([\w!]+),)*)+}";
+            string nodePattern = @"{[\w!]+(,[\w!])*}";
             MatchCollection nMatches = Regex.Matches(graphStr, nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');
@@ -154,7 +154,7 @@ abstract class UndirectedGraph : Graph
             }
 
             //end num
-            string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
+            string endNumPatternOuter = @"\),\d+\)"; //gets the end section of the graph string
             MatchCollection numMatches = Regex.Matches(graphStr, endNumPatternOuter);
             string outerString = numMatches[0].ToString();
             string endNumPatternInner = @"\d+"; //parses out number from end section.

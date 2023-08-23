@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
 namespace API.Problems.NPComplete.NPC_CLIQUE;
 
-class CliqueGraph : UndirectedGraph
+class CliqueGraph : UnweightedUndirectedGraph
 {
 
    /// <summary>

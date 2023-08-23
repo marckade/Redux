@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
 namespace API.Problems.NPComplete.NPC_HAMILTONIAN;
 
-class HamiltonianGraph : UndirectedGraph
+class HamiltonianGraph : UnweightedUndirectedGraph
 {
 
    /// <summary>
