@@ -246,7 +246,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
 /// </remarks>
     public void parseProblem() {
 
-        string problem = "{{";
+        string problem = "(({";
 
         // Parse nodes
         for(int i = 0; i < nodes.Count - 1; i++){
@@ -262,7 +262,7 @@ class GRAPHCOLORING : IProblem<DanielBrelazSolver, IgbokweVerifier>{
         }
         problem = problem.TrimEnd(',');
         // Parse k
-        problem +="}," +this._K + "}";
+        problem +="})," +this._K + ")";
         //this._defaultInstance = problem; //ALEX NOTE: We shouldn't ever update the defaultIntance. DEPRECATING
         this._instance  = problem;
 
