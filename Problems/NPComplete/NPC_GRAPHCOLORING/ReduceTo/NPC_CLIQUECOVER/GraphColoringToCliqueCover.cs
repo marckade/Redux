@@ -96,7 +96,7 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
         GRAPHCOLORING GRAPHCOLORINGInstance = _reductionFrom;
         CLIQUECOVER reducedCLIQUECOVER = new CLIQUECOVER();
 
-        string instance = "{{";
+        string instance = "(({";
         foreach (var node in reductionFrom.nodes)
         {
             instance += node + ',';
@@ -116,7 +116,7 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
             }
         }
 
-        instance = instance.TrimEnd('{').TrimEnd(',') +"}," + reductionFrom.K.ToString() + '}';
+        instance = instance.TrimEnd('{').TrimEnd(',') +"})," + reductionFrom.K.ToString() + ')';
 
         reducedCLIQUECOVER.K = reductionFrom.K;
         reducedCLIQUECOVER.nodes = reductionFrom.nodes;
