@@ -127,7 +127,7 @@ public class AlexArcsetVerifierController : ControllerBase {
 
 // Comented out as we're transitioning to desision problem solvers
 // The algorithm for this is in NPC_ARCSET/ NPHSolver,and can be reused when we 
-//begin implementing NPHard problems
+// begin implementing NPHard problems
 
 // [ApiController]                    
 // [Route("[controller]")]
@@ -177,15 +177,10 @@ public class ArcSetBruteForceController : ControllerBase {
 
     [ProducesResponseType(typeof(ArcSetBruteForce), 200)]
     [HttpGet("info")]
-    //without params, just returns the solver.
     public String getDefault(){
-        
         var options = new JsonSerializerOptions { WriteIndented = true };
-
         ARCSET ARCSETProblem = new ARCSET();
         ArcSetBruteForce solver = new ArcSetBruteForce();
-        
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
         return jsonString;
     }
@@ -196,16 +191,11 @@ public class ArcSetBruteForceController : ControllerBase {
     
     [ProducesResponseType(typeof(string), 200)]
     [HttpGet("solve")]
-     //With query.
     public String getInstance([FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET ARCSETProblem = new ARCSET(problemInstance);
         ArcSetBruteForce solver = new ArcSetBruteForce();
-
-
         string solvedInstance = solver.solve(ARCSETProblem);
-        //Boolean response = verifier.verify(ARCSETProblem,certificate);
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }
@@ -220,34 +210,26 @@ public class ArcSetBruteForceController : ControllerBase {
 #pragma warning disable CS1591
 public class ArcsetJsonPayloadController : ControllerBase {
 
-
-
     [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getInstance([FromQuery]string listType) {
-               // Console.WriteLine("RECEIVED REQUEST");
-
         var options = new JsonSerializerOptions { WriteIndented = true };
         ARCSET defaultArcset = new ARCSET();
         ArcsetGraph defaultGraph = defaultArcset.directedGraph;
         string jsonString = "";
         List<Edge> edgeList = defaultGraph.getEdgeList;
         List<Node> nodeList = defaultGraph.getNodeList;
+        if(listType.Equals("nodes")){
 
+            jsonString = JsonSerializer.Serialize(nodeList,options);
+        }
+        else if(listType.Equals("edges")){
+            jsonString = JsonSerializer.Serialize(edgeList,options);
+        }
+        else{
+            jsonString = JsonSerializer.Serialize("BAD INPUT, choose edges or nodes for listType. You chose: "+listType,options);
 
-                if(listType.Equals("nodes")){
-
-                    jsonString = JsonSerializer.Serialize(nodeList,options);
-                }
-                else if(listType.Equals("edges")){
-                    jsonString = JsonSerializer.Serialize(edgeList,options);
-                }
-                else{
-                    jsonString = JsonSerializer.Serialize("BAD INPUT, choose edges or nodes for listType. You chose: "+listType,options);
-
-                }
-
-        //string jsonString = JsonSerializer.Serialize(totalString, options);
+        }
         return jsonString;
     }
 
@@ -260,23 +242,14 @@ public class ArcsetJsonPayloadController : ControllerBase {
 #pragma warning disable CS1591
 public class ARCSETDevController : ControllerBase {
 
-
     [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
-
         ARCSET arcTest = new ARCSET();
-
         AlexArcsetVerifier verifier = new AlexArcsetVerifier();
-       bool vOut = verifier.verify(arcTest, "(3,2),(4,1)");
-        // string printString = JsonSerializer.Serialize(arcTest, options);
+        bool vOut = verifier.verify(arcTest, "(3,2),(4,1)");
         var options = new JsonSerializerOptions { WriteIndented = true };
         string printString2 = JsonSerializer.Serialize(vOut, options);
-        //string printString3 = JsonSerializer.Serialize(uTest2);
-
-        //Console.WriteLine(printString);
-       // Console.WriteLine(printString2);
-
         return printString2;
     }
 
@@ -301,7 +274,6 @@ public class ARCSETDevController : ControllerBase {
 #pragma warning disable CS1591
 public class ARCSETVisualizerController : ControllerBase {
 
-
     [ApiExplorerSettings(IgnoreApi = true)]
     [HttpGet]
     public String getDefault() {
@@ -311,7 +283,6 @@ public class ARCSETVisualizerController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(dotStr, options);
         return jsonString;
-
     }
 
     [ApiExplorerSettings(IgnoreApi = true)]

@@ -54,8 +54,6 @@ public class GenericVerifierDM3Controller : ControllerBase {
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         GenericVerifierDM3 verifier = new GenericVerifierDM3();
-
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString;
     }
@@ -71,14 +69,12 @@ public class GenericVerifierDM3Controller : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         DM3 DM3_PROBLEM = new DM3(problemInstance);
         GenericVerifierDM3 verifier = new GenericVerifierDM3();
-
         Boolean response = verifier.verify(DM3_PROBLEM,certificate);
         string responseString;
         if(response){
             responseString = "True";
         }
         else{responseString = "False";}
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(responseString, options);
         return jsonString;
     }
@@ -102,13 +98,10 @@ public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
         ThreeDimensionalMatchingBruteForce solver = new ThreeDimensionalMatchingBruteForce();
-
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solver, options);
         return jsonString;
     }
 
-    // Solve a instance given a certificate
 ///<summary>Returns a solution to a given  3 Dimensional Matching problem instance </summary>
 ///<param name="problemInstance" example="{Paul,Sally,Dave}{Madison,Austin,Bob}{Chloe,Frank,Jake}{Paul,Madison,Chloe}{Paul,Austin,Jake}{Sally,Bob,Chloe}{Sally,Madison,Frank}{Dave,Austin,Chloe}{Dave,Bob,Chloe}"> 3 Dimensional Matching problem instance string.</param>
 ///<response code="200">Returns solution string </response>
@@ -116,11 +109,9 @@ public class ThreeDimensionalMatchingBruteForceController : ControllerBase {
     [ProducesResponseType(typeof(string), 200)]
     [HttpGet("solve")]
     public String solveInstance([FromQuery]string problemInstance) {
-        // Implement solver here
         var options = new JsonSerializerOptions { WriteIndented = true };
         DM3 problem = new DM3(problemInstance);
         string solution = problem.defaultSolver.solve(problem);
-        
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }

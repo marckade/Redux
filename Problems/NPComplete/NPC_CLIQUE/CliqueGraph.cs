@@ -21,7 +21,6 @@ class CliqueGraph : UndirectedGraph
 
     //Constructor for standard graph formatted string input.
      /// <summary>
-     /// 
      /// </summary>
      /// <param name="cliqueInput"> Undirected Graph string input
      /// ex. {{1,2,3},{{1,2},{2,3}},0}
@@ -54,7 +53,7 @@ class CliqueGraph : UndirectedGraph
             string[] nodeStringList = nodeStr.Split(',');
             foreach(string nodeName in nodeStringList){
                _nodeList.Add(new CliqueNode(nodeName,String.Empty));
-           }
+            }
            //Console.WriteLine(nMatches[0]);
             
             //edges
@@ -84,10 +83,10 @@ class CliqueGraph : UndirectedGraph
             _K = convNum;
           
 
-          foreach(Node n in _nodeList){
-            _nodeStringList.Add(n.name);
-        }
-        foreach(Edge e in _edgeList){
+            foreach(Node n in _nodeList){
+                _nodeStringList.Add(n.name);
+            }
+            foreach(Edge e in _edgeList){
                 KeyValuePair<string, string> tempKVP = new KeyValuePair<string, string>(e.source.name, e.target.name);
                 _edgesKVP.Add(tempKVP);
             }
@@ -97,8 +96,5 @@ class CliqueGraph : UndirectedGraph
         {
             Console.WriteLine("NOT VALID INPUT for Regex evaluation! INITIALIZATION FAILED");         
         }
-
     }
-
-
 }

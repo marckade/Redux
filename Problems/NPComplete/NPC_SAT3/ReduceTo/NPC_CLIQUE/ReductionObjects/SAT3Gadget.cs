@@ -25,10 +25,6 @@ public class SAT3Gadget : IGadget
         _uniqueId = id;
 
     }
-
-
-
-
     public string reductionType
     {
         get
@@ -114,11 +110,10 @@ public class SAT3Gadget : IGadget
 
             if(reductionTypeSame==true && problemTypeSame==true && gadgetStringSame==true){
                     return true;
-                }
-                
+            } 
             else{
                     return false;
-                }
+            }
         }
     }
 }

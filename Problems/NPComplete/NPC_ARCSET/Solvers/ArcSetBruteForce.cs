@@ -10,7 +10,7 @@ class ArcSetBruteForce : ISolver {
     private string _solverDefinition = @" This Solver is a bruteForce solver, which checks all combinations of k edges until a solution is found or its determined there is no solution";
     private string _source = "wikipedia: https://en.wikipedia.org/wiki/Feedback_arc_set";
 
-    private string[] _contributers = { "Alex Diviney"};
+    private string[] _contributers = { "Alex Diviney","Caleb Eardley"};
 
 
     // --- Properties ---
@@ -69,16 +69,7 @@ class ArcSetBruteForce : ISolver {
     /**
     * Returns the set of edges that if removed from arcset would turn it acyclic
     */
-    // public string solve(ARCSET arc){
-    //     string retStr = "";
-    //     List<Edge> backEdges = arc.directedGraph.DFS();
-    //     foreach(Edge be in backEdges){
-    //         retStr =retStr + be.directedString()+",";
-    //     }
-    //     retStr = retStr.TrimEnd(',');
-    //     return retStr;        
 
-    // }
     public string solve(ARCSET arc){
         ArcsetGraph graph = arc.directedGraph;
         List<int> combination = new List<int>();
@@ -101,36 +92,16 @@ class ArcSetBruteForce : ISolver {
         Dictionary<KeyValuePair<string,string>, bool> solutionDict = new Dictionary<KeyValuePair<string,string>, bool>();
         ArcsetGraph aGraph = new ArcsetGraph(problemInstance, true);
         List<KeyValuePair<string, string>> problemInstanceEdges = aGraph.edgesKVP;
-        List<KeyValuePair<string, string>> solvedNodes = GraphParser.parseDirectedEdgeListWithStringFunctions(solutionString);
+        List<KeyValuePair<string, string>> solvedEdges = GraphParser.parseDirectedEdgeListWithStringFunctions(solutionString);
 
-        foreach(var edge in solvedNodes){
+        foreach(var edge in solvedEdges){
             problemInstanceEdges.Remove(edge);
             solutionDict.Add(edge, true);
-       }
-        foreach(var edge in problemInstanceEdges){
-          
-                solutionDict.Add(edge, false);
         }
-
+        foreach(var edge in problemInstanceEdges){
+            solutionDict.Add(edge, false);
+        }
         return solutionDict;
     }
 
 }
-// public string solve(CLIQUE clique){
-//         List<int> combination = new List<int>();
-//         for(int i=0; i<clique.K; i++){
-//             combination.Add(i);
-//         }
-//         long reps = factorial(clique.nodes.Count) / (factorial(clique.K) * factorial(clique.nodes.Count - clique.K));
-//         for(int i=0; i<reps; i++){
-//             string certificate = indexListToCertificate(combination,clique.nodes);
-//             if(clique.defaultVerifier.verify(clique, certificate)){
-//                 return certificate;
-//             }
-//             combination = nextComb(combination, clique.nodes.Count);
-
-//         }
-//         // Console.WriteLine(combination.ToString());
-//         // Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
-//         return "{}";
-//     }

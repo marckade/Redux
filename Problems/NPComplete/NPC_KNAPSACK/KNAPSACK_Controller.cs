@@ -114,9 +114,7 @@ public class GarrettVerifierController : ControllerBase {
         var options = new JsonSerializerOptions {WriteIndented = true};
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
         GarrettVerifier verifier = new GarrettVerifier();
-
         Boolean response = verifier.verify(KNAPSACKProblem, certificate);
-        //send back to API user
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
     }
@@ -155,8 +153,6 @@ public class GarrettKnapsackSolverController : ControllerBase {
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
         GarrettKnapsackSolver solver = new GarrettKnapsackSolver();
         string solvedInstance = solver.solve(KNAPSACKProblem);
-      
-        // Send back to API user
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
     }

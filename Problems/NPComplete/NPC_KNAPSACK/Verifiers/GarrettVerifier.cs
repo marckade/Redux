@@ -111,13 +111,9 @@ class GarrettVerifier : IVerifier
         Console.WriteLine("Combined Weight: "+ combinedWeight + " Capacity: "+ problem.W );
 
         //If the weight is over the Costraint, it is not a solution
-        if (combinedWeight <= Convert.ToDouble(problem.W) && inputItems.Count > 0)
-        {
+        if (combinedWeight <= Convert.ToDouble(problem.W) && inputItems.Count > 0){
             return true;
         }
-
-
-
         return false;
     }
 
@@ -129,12 +125,8 @@ class GarrettVerifier : IVerifier
                 return true;
             }
         }
-
-
         return false;
     }
-
-
     private Dictionary<string, string> parseCertificate(string certificate)
     {
 
@@ -155,29 +147,18 @@ class GarrettVerifier : IVerifier
             foreach (string node in nodes)
             {
                 string[] nodeColor = node.Split(':');
-
-
                 string key = nodeColor[0].Trim();
                 string val = nodeColor[1].Trim();
 
-
                 // check if dictionary contains key first
-
                 if(!weightValues.ContainsKey(key)){
                     weightValues.Add(key, val);
                 }else{
                     weightValues =  new Dictionary<string, string>();
                     break;
                 }
-
-                
-
             }
-
         }
-
-        // _coloring =  nodeColoring;
-        // _k =  k;
         return weightValues;
     }
 

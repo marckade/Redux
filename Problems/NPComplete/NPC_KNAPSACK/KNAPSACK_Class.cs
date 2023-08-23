@@ -143,37 +143,4 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettVerifier>{
         _W = _knapsackGraph.K;
        
     }
-
-    // public List<KeyValuePair<string, string>> getItems(string HWVInput){
-       
-    //    List<KeyValuePair<string,string>> allItems = new List<KeyValuePair<string, string>>(); 
-
-    //    string strippedInput = HWVInput.Replace("{", "").Replace("{","").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
-
-    //     //HWVsections[0] is the items and HWVsections[1] is W 
-    //    string[] HWVsections = strippedInput.Split(":");
-    //    string[] HWVitems = HWVsections[0].Split("&");
-
-    //     foreach(string item in HWVitems) {
-    //         string[] fromTo = item.Split(",");
-    //         string nodeFrom = fromTo[0];
-    //         string nodeTo = fromTo[1];
-
-    //         KeyValuePair<string, string> fullItem = new KeyValuePair<string, string>(nodeFrom, nodeTo);
-    //         allItems.Add(fullItem);
-    //     }
-    //     return allItems;
-    // }
-
-    // public int getW(string HWVInput){
-        
-    //     string strippedInput = HWVInput.Replace("{", "").Replace("}", "").Replace(" ", "").Replace("(", "").Replace(")","");
-
-    //     //HWVsections[0] is the items [1] is W and [2] is V.
-    //    string[] HWVsections = strippedInput.Split(":");
-    //    return Int32.Parse(HWVsections[1]);
-    // }
-
-
-
 }

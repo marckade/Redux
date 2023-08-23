@@ -45,13 +45,11 @@ class CliqueBruteForce : ISolver {
         return y;
     }
     private string indexListToCertificate(List<int> indecies, List<string> nodes){
-        // Console.WriteLine("indecies: ", indecies.ToString());
         string certificate = "";
         foreach(int i in indecies){
             certificate += nodes[i]+",";
         }
         certificate = certificate.TrimEnd(',');
-        // Console.WriteLine("returned statement: {"+certificate+"}");
         return "{" + certificate + "}"; 
     }
     private List<int> nextComb(List<int> combination, int size){
@@ -80,8 +78,6 @@ class CliqueBruteForce : ISolver {
             combination = nextComb(combination, clique.nodes.Count);
 
         }
-        // Console.WriteLine(combination.ToString());
-        // Console.WriteLine("n={0} k={1} reps={2}, 5! = {3}",clique.nodes.Count,clique.K,reps,factorial(5));
         return "{}";
     }
 
@@ -102,19 +98,12 @@ class CliqueBruteForce : ISolver {
         
         // Remove solvedNodes from instanceNodes
         foreach(string node in solvedNodes){
-        problemInstanceNodes.Remove(node);
-        // Console.WriteLine("Solved nodes: "+node);
-        solutionDict.Add(node, true);
-       }
-        // Add solved nodes to dict as {name, true}
-        // Add remaining instance nodes as {name, false}
-
-        foreach(string node in problemInstanceNodes){
-          
-                solutionDict.Add(node, false);
+            problemInstanceNodes.Remove(node);
+            solutionDict.Add(node, true);
         }
-
-
+        foreach(string node in problemInstanceNodes){
+            solutionDict.Add(node, false);
+        }
         return solutionDict;
     }
 }
