@@ -5,20 +5,22 @@
 using System;
 using System.Collections.Generic;
 namespace API.Interfaces.Graphs;
-class Edge : IComparable<Edge>{
+class WeightedEdge : IComparable<WeightedEdge>{
 
 //Fields
 private Node _source;
 private Node _target;
 private int _weight;
 
-public Edge(){
+public WeightedEdge(){
 _source = new Node();
 _target = new Node();
 }
-public Edge(Node n1,Node n2){
+
+public WeightedEdge(Node n1, Node n2, int weight) {
     _source = n1;
     _target = n2;
+    _weight = weight;
 }
 
 public Node source{
@@ -58,7 +60,7 @@ public string undirectedString(){
 public string directedString(){
     return "("+source.name+","+_target.name+")";
 }
-public int CompareTo(Edge other)
+public int CompareTo(WeightedEdge other)
     {
         int compare =  this.toKVP().Key.CompareTo(other.toKVP().Key);
         if(compare == 0){

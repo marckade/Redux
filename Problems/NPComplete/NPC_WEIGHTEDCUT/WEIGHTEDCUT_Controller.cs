@@ -6,7 +6,7 @@ using API.Interfaces.Graphs.GraphParser;
 using API.Problems.NPComplete.NPC_WEIGHTEDCUT;
 using API.Problems.NPComplete.NPC_WEIGHTEDCUT.Solvers;
 using API.Problems.NPComplete.NPC_WEIGHTEDCUT.Verifiers;
-
+using API.Interfaces.Graphs;
 
 namespace API.Problems.NPComplete.NPC_WEIGHTEDCUT;
 
@@ -50,7 +50,13 @@ public class WEIGHTEDCUTGenericController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         WEIGHTEDCUT aSet = new WEIGHTEDCUT(problemInstance);
         WeightedCutGraph aGraph = aSet.weightedCutAsGraph;
-        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList, aGraph.getEdgeList);
+        List<Edge> edgesWithoutWeight = new List<Edge>();
+        foreach(var edgeTuple in aGraph.getEdgeList) {
+            Node n1 = edgeTuple.source;
+            Node n2 = edgeTuple.target;
+            edgesWithoutWeight.Add(new Edge(n1,n2));
+        }
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList,edgesWithoutWeight);
         string jsonString = JsonSerializer.Serialize(apiGraph, options);
         return jsonString;
     }
@@ -69,7 +75,13 @@ public class WEIGHTEDCUTGenericController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         WEIGHTEDCUT aSet = new WEIGHTEDCUT(problemInstance);
         WeightedCutGraph aGraph = aSet.weightedCutAsGraph;
-        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList,aGraph.getEdgeList);
+        List<Edge> edgesWithoutWeight = new List<Edge>();
+        foreach(var edgeTuple in aGraph.getEdgeList) {
+            Node n1 = edgeTuple.source;
+            Node n2 = edgeTuple.target;
+            edgesWithoutWeight.Add(new Edge(n1,n2));
+        }
+        API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList,edgesWithoutWeight);
 
         List<string> parsedS = solution.Replace("{","").Replace("}","").Split(',').ToList();
         Console.WriteLine(solution.Replace("{","").Replace("}",""));
