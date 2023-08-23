@@ -19,18 +19,6 @@ class HamiltonianGraph : UndirectedGraph
         
     }
 
-    //Constructor for standard graph formatted string input.
-     /// <summary>
-     /// 
-     /// </summary>
-     /// <param name="hamiltonianInput"> Undirected Graph string input
-     /// ex. {{1,2,3},{{1,2},{2,3}},0}
-     /// </param>
-     /// <param name="decoy"></param>
-    public HamiltonianGraph(string hamiltonianInput, bool decoy) : base (hamiltonianInput, decoy){
-    
-
-    }
 
   /// <summary>
   /// This is an alternative constructor that would add native custom node support. This would mean that a hamiltoniangraph could have an arbitrary 
@@ -38,7 +26,7 @@ class HamiltonianGraph : UndirectedGraph
   /// </summary>
   /// <param name="hamiltonianInput"></param>
   /// <param name="usingCliqueNodes"></param>
-  public HamiltonianGraph(string hamiltonianInput, string usingCliqueNodes){
+  public HamiltonianGraph(string hamiltonianInput, bool usingCliqueNodes){
         string pattern;
         pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},\d+}"; //checks for undirected graph format
         Regex reg = new Regex(pattern);

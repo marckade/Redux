@@ -153,7 +153,6 @@ class WeightedCutBruteForce : ISolver
                     return certificate;
                 }
                 combination = nextComb(combination, cut.nodes.Count);
-
             }
         }
         return "{}";

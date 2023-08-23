@@ -71,29 +71,14 @@ public class WEIGHTEDCUTGenericController : ControllerBase {
         WeightedCutGraph aGraph = aSet.weightedCutAsGraph;
         API_UndirectedGraphJSON apiGraph = new API_UndirectedGraphJSON(aGraph.getNodeList,aGraph.getEdgeList);
 
-        List<string> edges = solution.Replace("{{","").Replace("}}","").Split("},{").ToList();
-        List<(string source, string destination, int weight)> edgesTuple= new List<(string source, string destination, int weight)>();
-
-        foreach(var edge in edges) {
-            edgesTuple.Add((edge.Split(',')[0],edge.Split(',')[1],Int32.Parse(edge.Split(',')[2])));
-        }
-
-        for(int i=0;i<apiGraph.links.Count;i++){
-            bool edgeFound1 = edgesTuple.Any(edge => edge.source == apiGraph.links[i].source && edge.destination == apiGraph.links[i].target);
-            bool edgeFound2 = edgesTuple.Any(edge => edge.destination == apiGraph.links[i].source && edge.source == apiGraph.links[i].target);
-            if(edgeFound1 || edgeFound2) {
-                apiGraph.links[i].attribute1 = true.ToString();
-            } else {
-                apiGraph.links[i].attribute1 = false.ToString();
-            }
-        }
-
-        List<string> parsedS = solution.TrimEnd().TrimStart().Replace("{","").Replace("}","").Split(',').ToList();
+        List<string> parsedS = solution.Replace("{","").Replace("}","").Split(',').ToList();
+        Console.WriteLine(solution.Replace("{","").Replace("}",""));
         List<string> setS = new List<string>();
 
         for (int i = 0; i < apiGraph.nodes.Count; i++) {
             apiGraph.nodes[i].attribute1 = i.ToString();
-            if(parsedS.IndexOf(apiGraph.nodes[i].name) % 3 == 0) {
+            bool found = parsedS.Where((value, index) => index % 3 == 0 && value == apiGraph.nodes[i].name).Any();
+            if(found) {
                 apiGraph.nodes[i].attribute2 = true.ToString();
                 setS.Add(apiGraph.nodes[i].name);
             }

@@ -1,25 +1,25 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_HAMILTONIAN.Solvers;
-using API.Problems.NPComplete.NPC_HAMILTONIAN.Verifiers;
+using API.Problems.NPComplete.NPC_DIRHAMILTONIAN.Solvers;
+using API.Problems.NPComplete.NPC_DIRHAMILTONIAN.Verifiers;
 
-namespace API.Problems.NPComplete.NPC_HAMILTONIAN;
+namespace API.Problems.NPComplete.NPC_DIRHAMILTONIAN;
 
-class HAMILTONIAN : IProblem<HamiltonianBruteForce,HamiltonianVerifier> {
+class DIRHAMILTONIAN : IProblem<DirectedHamiltonianBruteForce,DirectedHamiltonianVerifier> {
 
     // --- Fields ---
-    private string _problemName = "Hamiltonian";
-    private string _formalDefinition = "Hamiltonian = {<G> | G has a cycle which covers every node exactly once}";
-    private string _problemDefinition = "Hamiltonian is the problem of determining whether a Hamiltonian cycle (a path in an undirected or directed graph that visits each vertex exactly once).";
+    private string _problemName = "Directed Hamiltonian";
+    private string _formalDefinition = "Directed Hamiltonian = {<G> | G has a cycle which covers every node exactly once}";
+    private string _problemDefinition = "Directed Hamiltonian is the problem of determining whether a Hamiltonian cycle (a path in an undirected or directed graph that visits each vertex exactly once).";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}}}";
+    private string _defaultInstance = "{{1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)}}";
     private string _instance = string.Empty;
 
     private string _wikiName = "";
     private List<string> _nodes = new List<string>();
     private List<KeyValuePair<string, string>> _edges = new List<KeyValuePair<string, string>>();
-    private HamiltonianBruteForce _defaultSolver = new HamiltonianBruteForce();
-    private HamiltonianVerifier _defaultVerifier = new HamiltonianVerifier();
-    private HamiltonianGraph _hamiltonianAsGraph;
+    private DirectedHamiltonianBruteForce _defaultSolver = new DirectedHamiltonianBruteForce();
+    private DirectedHamiltonianVerifier _defaultVerifier = new DirectedHamiltonianVerifier();
+    private DirectedHamiltonianGraph _directedHamiltonianAsGraph;
     private string[] _contributers = { "Andrija Sevaljevic" };
 
     // --- Properties ---
@@ -84,39 +84,39 @@ class HAMILTONIAN : IProblem<HamiltonianBruteForce,HamiltonianVerifier> {
             _edges = value;
         }
     }
-    public HamiltonianBruteForce defaultSolver {
+    public DirectedHamiltonianBruteForce defaultSolver {
         get {
             return _defaultSolver;
         }
     }
-    public HamiltonianVerifier defaultVerifier {
+    public DirectedHamiltonianVerifier defaultVerifier {
         get {
             return _defaultVerifier;
         }
     }
 
-    public HamiltonianGraph hamiltonianAsGraph {
+    public DirectedHamiltonianGraph directedHamiltonianAsGraph {
         get{
-            return _hamiltonianAsGraph;
+            return _directedHamiltonianAsGraph;
         }
         set{
-            _hamiltonianAsGraph = value;
+            _directedHamiltonianAsGraph = value;
         }
     }
 
     // --- Methods Including Constructors ---
-    public HAMILTONIAN() {
+    public DIRHAMILTONIAN() {
         _instance = defaultInstance;
-        _hamiltonianAsGraph = new HamiltonianGraph(_instance,true);
-        nodes = _hamiltonianAsGraph.nodesStringList;
-        edges = _hamiltonianAsGraph.edgesKVP;
+        _directedHamiltonianAsGraph = new DirectedHamiltonianGraph(_instance,true);
+        nodes = _directedHamiltonianAsGraph.nodesStringList;
+        edges = _directedHamiltonianAsGraph.edgesKVP;
 
     }
-    public HAMILTONIAN(string GInput) {
-        _hamiltonianAsGraph = new HamiltonianGraph(GInput, true);
-        nodes = _hamiltonianAsGraph.nodesStringList;
-        edges = _hamiltonianAsGraph.edgesKVP;
-        _instance = _hamiltonianAsGraph.ToString();
+    public DIRHAMILTONIAN(string GInput) {
+        _directedHamiltonianAsGraph = new DirectedHamiltonianGraph(GInput, true);
+        nodes = _directedHamiltonianAsGraph.nodesStringList;
+        edges = _directedHamiltonianAsGraph.edgesKVP;
+        _instance = _directedHamiltonianAsGraph.ToString();
 
     }
 

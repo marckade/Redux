@@ -2,13 +2,13 @@ using API.Interfaces;
 using API.Interfaces.Graphs.GraphParser;
 using API.Interfaces.Graphs;
 
-namespace API.Problems.NPComplete.NPC_HAMILTONIAN.Solvers;
-class HamiltonianBruteForce : ISolver
+namespace API.Problems.NPComplete.NPC_DIRHAMILTONIAN.Solvers;
+class DirectedHamiltonianBruteForce : ISolver
 {
 
     // --- Fields ---
-    private string _solverName = "Hamiltonian Brute Force";
-    private string _solverDefinition = "This is a brute force solver for the NP-Complete Hamiltonian problem";
+    private string _solverName = "Directed Hamiltonian Brute Force";
+    private string _solverDefinition = "This is a brute force solver for the NP-Complete Directed Hamiltonian problem";
     private string _source = "This solver was contributed by Andrija Sevaljevic";
     private string[] _contributers = { "Andrija Sevaljevic" };
 
@@ -43,7 +43,7 @@ class HamiltonianBruteForce : ISolver
         }
     }
     // --- Methods Including Constructors ---
-    public HamiltonianBruteForce()
+    public DirectedHamiltonianBruteForce()
     {
 
     }
@@ -114,7 +114,7 @@ class HamiltonianBruteForce : ISolver
     }
 
 
-    public string solve(HAMILTONIAN hamiltonian)
+    public string solve(DIRHAMILTONIAN hamiltonian)
     {
         List<List<int>> combinations = GenerateCombinations(hamiltonian.nodes.Count);
 

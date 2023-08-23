@@ -130,7 +130,7 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
     {
         if (!problemFrom.defaultVerifier.verify(problemFrom, problemFromSolution))
         {
-            return "Subset Sum Solution is incorect";
+            return "Solution is incorect";
         }
 
         return false.ToString();

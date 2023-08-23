@@ -53,6 +53,10 @@ class WeightedCutVerifier : IVerifier {
         return edgeList;
     }
     public bool verify(WEIGHTEDCUT problem, string certificate){
+
+        if(certificate == "{}") {
+            return false;
+        }
         
         List<string> edgeList = parseCertificate(certificate); 
         int counter = 0;
