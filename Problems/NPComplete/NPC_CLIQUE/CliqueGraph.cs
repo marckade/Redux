@@ -23,7 +23,7 @@ class CliqueGraph : UnweightedUndirectedGraph
      /// <summary>
      /// </summary>
      /// <param name="cliqueInput"> Undirected Graph string input
-     /// ex. {{1,2,3},{{1,2},{2,3}},0}
+     /// ex. (({1,2,3},{{1,2},{2,3}}),0)
      /// </param>
      /// <param name="decoy"></param>
     public CliqueGraph(string cliqueInput, bool decoy) : base (cliqueInput, decoy){
