@@ -31,7 +31,7 @@ public class DIRHAMILTONIANGenericController : ControllerBase
     }
 
     ///<summary>Returns a Hamiltonian object created from a given instance </summary>
-    ///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}}">Hamiltonian problem instance string.</param>
+    ///<param name="problemInstance" example="({1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)})">Hamiltonian problem instance string.</param>
     ///<response code="200">Returns Hamiltonian problem object</response>
 
     [ProducesResponseType(typeof(DIRHAMILTONIAN), 200)]
@@ -43,7 +43,7 @@ public class DIRHAMILTONIANGenericController : ControllerBase
         return jsonString;
     }
     ///<summary>Returns a graph object used for dynamic visualization </summary>
-    ///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">Hamiltonian problem instance string.</param>
+    ///<param name="problemInstance" example="({1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)})">Hamiltonian problem instance string.</param>
     ///<response code="200">Returns graph object</response>
 
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -58,8 +58,8 @@ public class DIRHAMILTONIANGenericController : ControllerBase
     }
 
 ///<summary>Returns a graph object used for dynamic solved visualization </summary>
-///<param name="problemInstance" example="{{a0,a1,b0,b1,c0,c1,d0,d1,e0,e1},{(a0,a1),(a1,b0),(a1,c0),(a1,e0),(b0,b1),(b1,a0),(b1,e0),(c0,c1),(c1,a0),(c1,d0),(d0,d1),(d1,c0),(e0,e1),(e1,a0),(e1,b0)},3}">Feedback Arc Set problem instance string.</param>
-///<param name="solution" example="{(a0,a1),(b0,b1),(c0,c1)}">Feedback Arc Set solution instance string.</param>
+///<param name="problemInstance" example="({1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)})">Directed Hamiltonian problem instance string.</param>
+///<param name="solution" example="{1,3,5,4,2,1}">Directed Hamiltonian solution instance string.</param>
 
 ///<response code="200">Returns graph object</response>
 
@@ -129,8 +129,8 @@ public class HamiltonianVerifierController : ControllerBase
     }
 
     ///<summary>Verifies if a given certificate is a solution to a given Hamiltonian problem</summary>
-    ///<param name="certificate" example="{1,2,4,5,3,1}">certificate solution to Hamiltonian problem.</param>
-    ///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}}}">Hamiltonian problem instance string.</param>
+    ///<param name="certificate" example="{1,3,5,4,2,1}">certificate solution to Hamiltonian problem.</param>
+    ///<param name="problemInstance" example="({1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)})">Hamiltonian problem instance string.</param>
     ///<response code="200">Returns a boolean</response>
 
     [ProducesResponseType(typeof(Boolean), 200)]
@@ -182,7 +182,7 @@ public class DirectedHamiltonianBruteForceController : ControllerBase
 
     // Solve a instance given a certificate
     ///<summary>Returns a solution to a given  Hamiltonian problem instance </summary>
-    ///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}}"> Hamiltonian problem instance string.</param>
+    ///<param name="problemInstance" example="({1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)})"> Hamiltonian problem instance string.</param>
     ///<response code="200">Returns solution string </response>
 
     [ProducesResponseType(typeof(string), 200)]

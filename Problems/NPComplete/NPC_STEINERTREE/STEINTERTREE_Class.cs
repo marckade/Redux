@@ -12,7 +12,7 @@ class STEINERTREE : IProblem<SteinerTreeBruteForce, SteinerTreeVerifier>
     private string _formalDefinition = "Steiner = {<G,R,k> | G has a subtree of weight <= k containing the set of nodes in R}";
     private string _problemDefinition = "Steiner tree problem in graphs requires a tree of minimum weight that contains all terminals";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{1,2,3,4,5,6,7,8},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5},{6,7},{7,8},{6,8},{6,1}},{5,2,8},6}";
+    private string _defaultInstance = "(({1,2,3,4,5,6,7,8},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5},{6,7},{7,8},{6,8},{6,1}}),{5,2,8},6)";
     private string _instance = string.Empty;
 
     private string _wikiName = "";
@@ -163,7 +163,7 @@ class STEINERTREE : IProblem<SteinerTreeBruteForce, SteinerTreeVerifier>
     public STEINERTREE()
     {
         _instance = defaultInstance;
-        _steinerAsGraph = new SteinerGraph(_instance, true);
+        _steinerAsGraph = new SteinerGraph(_instance,true);
         nodes = _steinerAsGraph.nodesStringList;
         terminals = getTerminals(_instance);
         edges = _steinerAsGraph.edgesKVP;
@@ -183,7 +183,7 @@ class STEINERTREE : IProblem<SteinerTreeBruteForce, SteinerTreeVerifier>
     public List<string> getTerminals(string Ginput)
     {
 
-        List<string> seperate = Ginput.Split("}},{").ToList();
+        List<string> seperate = Ginput.Split("}}),{").ToList();
         List<string> allGNodes = seperate[1].Split("},").ToList();
         allGNodes = allGNodes[0].Split(",").ToList();
 

@@ -11,7 +11,7 @@ class DIRHAMILTONIAN : IProblem<DirectedHamiltonianBruteForce,DirectedHamiltonia
     private string _formalDefinition = "Directed Hamiltonian = {<G> | G has a cycle which covers every node exactly once}";
     private string _problemDefinition = "Directed Hamiltonian is the problem of determining whether a Hamiltonian cycle (a path in an undirected or directed graph that visits each vertex exactly once).";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)}}";
+    private string _defaultInstance = "({1,2,3,4,5},{(2,1),(1,3),(2,3),(3,5),(4,2),(5,4)})";
     private string _instance = string.Empty;
 
     private string _wikiName = "";

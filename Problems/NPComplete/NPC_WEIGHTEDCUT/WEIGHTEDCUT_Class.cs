@@ -13,7 +13,7 @@ class WEIGHTEDCUT : IProblem<WeightedCutBruteForce, WeightedCutVerifier>{
     private string[] _contributers = {"Andrija Sevaljevic"};
     
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string _defaultInstance = "{{1,2,3,4,5},{{2,1,5},{1,3,4},{2,3,2},{3,5,1},{2,4,4},{4,5,2}},5}";
+    private string _defaultInstance = "(({1,2,3,4,5},{{2,1,5},{1,3,4},{2,3,2},{3,5,1},{2,4,4},{4,5,2}}),5)";
     private string _instance = string.Empty;
     
     private List<string> _nodes = new List<string>();

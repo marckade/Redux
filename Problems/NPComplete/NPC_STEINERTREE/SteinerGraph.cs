@@ -14,40 +14,28 @@ class SteinerGraph : UnweightedUndirectedGraph
  /// Takes a String and creates a VertexCoverGraph from it
  /// NOTE: DEPRECATED format, ex: {{a,b,c} : {{a,b} &amp; {b,c}} : 1}
  /// </summary>
- /// <param name="hamiltonianInput"> string input</param>
-  public SteinerGraph(string hamiltonianInput) : base (hamiltonianInput){
+ /// <param name="steiner"> string input</param>
+  public SteinerGraph(string steiner) : base (steiner){
         
     }
-
-    //Constructor for standard graph formatted string input.
-     /// <summary>
-     /// 
-     /// </summary>
-     /// <param name="hamiltonianInput"> Undirected Graph string input
-     /// ex. {{1,2,3},{{1,2},{2,3}},0}
-     /// </param>
-     /// <param name="decoy"></param>
-    public SteinerGraph(string hamiltonianInput, bool decoy) : base (hamiltonianInput, decoy){
     
-
-    }
 
   /// <summary>
   /// This is an alternative constructor that would add native custom node support. This would mean that a hamiltoniangraph could have an arbitrary 
   /// amount of, and naming convention for, its nodes. 
   /// </summary>
-  /// <param name="hamiltonianInput"></param>
+  /// <param name="steiner"></param>
   /// <param name="usingCliqueNodes"></param>
-  public SteinerGraph(string hamiltonianInput, string usingCliqueNodes){
+  public SteinerGraph(string steiner, bool usingCliqueNodes){
         string pattern;
-        pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},{(([\w!]+)(,([\w!]+))*)+},\d+}"; //checks for undirected graph format
+        pattern = @"\(\({([\w!]+)(,([\w!]+))*},{\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*}\),{([\w!]+)(,([\w!]+))*},\d+\)"; //checks for undirected graph format
         Regex reg = new Regex(pattern);
-        bool inputIsValid = reg.IsMatch(hamiltonianInput);
+        bool inputIsValid = reg.IsMatch(steiner);
         if(inputIsValid){
             
             //nodes
             string nodePattern = @"{((([\w!]+))*(([\w!]+),)*)+}";
-            MatchCollection nMatches =  Regex.Matches(hamiltonianInput,nodePattern);
+            MatchCollection nMatches =  Regex.Matches(steiner,nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');
             nodeStr = nodeStr.TrimEnd('}');
@@ -59,7 +47,7 @@ class SteinerGraph : UnweightedUndirectedGraph
             
             //edges
             string edgePattern = @"{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*}";
-            MatchCollection eMatches = Regex.Matches(hamiltonianInput,edgePattern);
+            MatchCollection eMatches = Regex.Matches(steiner,edgePattern);
             string edgeStr = eMatches[0].ToString();
             //Console.WriteLine(edgeStr);
             string edgePatternInner = @"([\w!]+),([\w!]+)";
@@ -72,8 +60,8 @@ class SteinerGraph : UnweightedUndirectedGraph
             }
             
             //end num
-            string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
-            MatchCollection numMatches = Regex.Matches(hamiltonianInput,endNumPatternOuter);
+            string endNumPatternOuter = @"},\d+\)"; //gets the end section of the graph string
+            MatchCollection numMatches = Regex.Matches(steiner,endNumPatternOuter);
             string outerString = numMatches[0].ToString();
             string endNumPatternInner = @"\d+"; //parses out number from end section.
             MatchCollection numMatches2 = Regex.Matches(outerString,endNumPatternInner);

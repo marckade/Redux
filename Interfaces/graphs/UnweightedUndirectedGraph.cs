@@ -126,7 +126,7 @@ abstract class UnweightedUndirectedGraph : Graph
         {
 
             //nodes
-            string nodePattern = @"{[\w!]+(,[\w!])*}";
+            string nodePattern = @"{[\w!]+(,[\w!]+)*}";
             MatchCollection nMatches = Regex.Matches(graphStr, nodePattern);
             string nodeStr = nMatches[0].ToString();
             nodeStr = nodeStr.TrimStart('{');

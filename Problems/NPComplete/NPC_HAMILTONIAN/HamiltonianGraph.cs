@@ -28,7 +28,7 @@ class HamiltonianGraph : UnweightedUndirectedGraph
   /// <param name="usingCliqueNodes"></param>
   public HamiltonianGraph(string hamiltonianInput, bool usingCliqueNodes){
         string pattern;
-        pattern = @"{{(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*},\d+}"; //checks for undirected graph format
+        pattern = @"\({(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+)\}(,\{([\w!]+),([\w!]+)\})*)*}\)"; //checks for undirected graph format
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(hamiltonianInput);
         if(inputIsValid){
@@ -59,20 +59,7 @@ class HamiltonianGraph : UnweightedUndirectedGraph
                 _edgeList.Add(new Edge(n1,n2));
             }
             
-            //end num
-            string endNumPatternOuter = @"},\d+}"; //gets the end section of the graph string
-            MatchCollection numMatches = Regex.Matches(hamiltonianInput,endNumPatternOuter);
-            string outerString = numMatches[0].ToString();
-            string endNumPatternInner = @"\d+"; //parses out number from end section.
-            MatchCollection numMatches2 = Regex.Matches(outerString,endNumPatternInner);
-            string innerString = numMatches2[0].ToString();
-
-            int convNum = Int32.Parse(innerString);
-
-            _K = convNum;
-          
-
-          foreach(Node n in _nodeList){
+            foreach(Node n in _nodeList){
             _nodeStringList.Add(n.name);
         }
         foreach(Edge e in _edgeList){

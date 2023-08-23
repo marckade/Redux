@@ -105,7 +105,6 @@ abstract class WeightedUndirectedGraph : WeightedGraph
     public WeightedUndirectedGraph(String graphStr, bool decoy)
     {
         string pattern;
-        string patternWithTerminals;
         pattern = @"\(\({(([\w!]+)(,([\w!]+))*)+},{(\{([\w!]+),([\w!]+),([\d]+)\}(,\{([\w!]+),([\w!]+),([\d]+)\})*)*}\),\d+\)"; //checks for undirected graph format with weights
         Regex reg = new Regex(pattern);
         bool inputIsValid = reg.IsMatch(graphStr);

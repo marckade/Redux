@@ -99,7 +99,7 @@ class WEIGHTEDCUTReduction : IReduction<PARTITION, WEIGHTEDCUT>
         List<string> nodes = new List<string>();
         List<(string source, string destination, int weight)> edges = new List<(string source, string destination, int weight)>();
 
-        string instance = "{{";
+        string instance = "(({";
         for(int i = 1; i <= reductionFrom.S.Count; i++)
         {
             instance += i.ToString() + ',';
@@ -127,7 +127,7 @@ class WEIGHTEDCUTReduction : IReduction<PARTITION, WEIGHTEDCUT>
         }
         sum = (sum * sum) / 4;
 
-        instance = instance.TrimEnd('{').TrimEnd(',') +"}," + sum.ToString() + '}';
+        instance = instance.TrimEnd('{').TrimEnd(',') +"})," + sum.ToString() + ')';
 
         reducedWEIGHTEDCUT.K = sum;
         reducedWEIGHTEDCUT.nodes = nodes;
