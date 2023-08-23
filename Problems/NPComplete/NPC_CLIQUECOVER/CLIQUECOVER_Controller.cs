@@ -29,7 +29,7 @@ public class CLIQUECOVERGenericController : ControllerBase {
     }
 
 ///<summary>Returns a CliqueCover object created from a given instance </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},2}">CliqueCover problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),2)">CliqueCover problem instance string.</param>
 ///<response code="200">Returns CliqueCover problem object</response>
 
     [ProducesResponseType(typeof(CLIQUECOVER), 200)]
@@ -41,7 +41,7 @@ public class CLIQUECOVERGenericController : ControllerBase {
     }
 
 ///<summary>Returns a graph object used for dynamic visualization </summary>
-///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">CliqueCover problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}}),5)">CliqueCover problem instance string.</param>
 ///<response code="200">Returns graph object</response>
 
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -56,8 +56,8 @@ public class CLIQUECOVERGenericController : ControllerBase {
     }
 
 ///<summary>Returns a graph object used for dynamic solved visualization </summary>
-///<param name="problemInstance" example="{{1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}},5}">CliqueCover problem instance string.</param>
-///<param name="solution" example="{{2,1},{2,3},{2,4},{5,3},{5,4}}">CliqueCover instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4,5},{{2,1},{1,3},{2,3},{3,5},{2,4},{4,5}}),5)">CliqueCover problem instance string.</param>
+///<param name="solution" example="{{4,5},{1,2,3}}">CliqueCover instance string.</param>
 
 ///<response code="200">Returns graph object</response>
 
@@ -137,8 +137,8 @@ public class CliqueCoverVerifierController : ControllerBase {
     }
 
 ///<summary>Verifies if a given certificate is a solution to a given CliqueCover problem</summary>
-///<param name="certificate" example="{{1,2,4},{3}}">certificate solution to CliqueCover problem.</param>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},2}">CliqueCover problem instance string.</param>
+///<param name="certificate" example="{{2,3,4},{1}}">certificate solution to CliqueCover problem.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),2)">CliqueCover problem instance string.</param>
 ///<response code="200">Returns a boolean</response>
     
     [ProducesResponseType(typeof(Boolean), 200)]
@@ -186,7 +186,7 @@ public class CliqueCoverBruteForceController : ControllerBase {
 
     // Solve a instance given a certificate
 ///<summary>Returns a solution to a given  CliqueCover problem instance </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},2}"> CliqueCover problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),2)"> CliqueCover problem instance string.</param>
 ///<response code="200">Returns solution string </response>
     
     [ProducesResponseType(typeof(string), 200)]
