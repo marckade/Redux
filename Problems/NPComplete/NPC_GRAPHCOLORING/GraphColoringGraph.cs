@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using API.Interfaces.Graphs;
 namespace API.Problems.NPComplete.NPC_GRAPHCOLORING;
 
-class GraphColoringGraph : UndirectedGraph {
+class GraphColoringGraph : UnweightedUndirectedGraph {
 
    /// <summary>
  /// Takes a String and creates a VertexCoverGraph from it

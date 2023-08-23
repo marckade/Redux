@@ -9,7 +9,7 @@ using API.Interfaces.JSON_Objects.Graphs;
 using API.Interfaces.Graphs.GraphParser;
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER;
 
-class VertexCoverGraph:UndirectedGraph{
+class VertexCoverGraph:UnweightedUndirectedGraph{
 
 
     public VertexCoverGraph() : base(){
