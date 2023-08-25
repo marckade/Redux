@@ -215,7 +215,7 @@ abstract class UnweightedUndirectedGraph : Graph
         }
         edgeListStr = edgeListStr.TrimEnd(',', ' ');
         //edgeListStr = edgeListStr.TrimEnd(' ');
-        string toStr = "{{" + nodeListStr + "}" + ",{" + edgeListStr + "}" + "," + _K + "}";
+        string toStr = "(({" + nodeListStr + "}" + ",{" + edgeListStr + "})" + "," + _K + ")";
         return toStr;
 
     }
