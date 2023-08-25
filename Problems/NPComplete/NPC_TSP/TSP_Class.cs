@@ -8,7 +8,7 @@ class TSP : IProblem<TSPBruteForce, TSPVerifier>{
 
     // --- Fields ---
     private string _problemName = "Traveling Sales Person";
-    private string _formalDefinition = "";
+    private string _formalDefinition = "TSP = {<G,k> | G is a weighted graph where there is a path through every vertex whose weights add up to less than k}";
     private string _problemDefinition = "";
     private string[] _contributers = {"Andrija Sevaljevic"};
     

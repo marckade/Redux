@@ -83,7 +83,7 @@ public class DIRHAMILTONIANGenericController : ControllerBase
                 {
                     apiGraph.nodes[i].attribute1 = i.ToString();
                     apiGraph.nodes[i].attribute2 = true.ToString();
-                    apiGraph.nodes[i].attribute3 = (counter * 1000).ToString();
+                    apiGraph.nodes[i].attribute3 = (counter * 5000 / apiGraph.nodes.Count).ToString();
                 }
             }
  
