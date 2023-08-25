@@ -28,7 +28,7 @@ public class INDEPENDENTSETGenericController : ControllerBase {
     }
 
 ///<summary>Returns a Independent Set problem object created from a given instance </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},3}">Clique problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),3)">Clique problem instance string.</param>
 ///<response code="200">Returns CLIQUE problem object</response>
 
     [ProducesResponseType(typeof(INDEPENDENTSET), 200)]
@@ -100,7 +100,7 @@ public class reduceToCLIQUEController : ControllerBase {
     }
 
 ///<summary>Returns a reduction from Independent Set to Clique based on the given Independent Set instance  </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},2}">Independent Set problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),2)">Independent Set problem instance string.</param>
 ///<response code="200">Returns Independent Set to CliqueReduction object</response>
 
     [ProducesResponseType(typeof(CliqueReduction), 200)]
@@ -140,7 +140,7 @@ public class IndependentSetBruteForceController : ControllerBase
 
     // Solve a instance given a certificate
 ///<summary>Returns a solution to a given Independent Set problem instance </summary>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},2}">Independent set problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),2)">Independent set problem instance string.</param>
 ///<response code="200">Returns a solution string </response>
     
     [ProducesResponseType(typeof(string), 200)]
@@ -180,7 +180,7 @@ public class IndependentSetVerifierController : ControllerBase {
 
 ///<summary>Verifies if a given certificate is a solution to a given Independent Set problem</summary>
 ///<param name="certificate" example="{1,3}">certificate solution to Independent Set problem.</param>
-///<param name="problemInstance" example="{{1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}},2}">Independent problem instance string.</param>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),2)">Independent problem instance string.</param>
 ///<response code="200">Returns a boolean</response>
     
     [ProducesResponseType(typeof(Boolean), 200)]

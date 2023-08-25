@@ -113,7 +113,7 @@ class CliqueReduction : IReduction<INDEPENDENTSET, CLIQUE> {
         }
         edgesString = edgesString.Trim(',');
 
-        string G = "{{" + nodesString + "},{" + edgesString + "}," + INDPENDENTSETInstance.K.ToString() + "}";
+        string G = "(({" + nodesString + "},{" + edgesString + "})," + INDPENDENTSETInstance.K.ToString() + ")";
 
         reducedCLIQUE = new CLIQUE(G);
         reductionTo = reducedCLIQUE;
