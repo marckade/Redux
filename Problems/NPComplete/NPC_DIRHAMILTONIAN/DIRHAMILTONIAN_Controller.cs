@@ -91,7 +91,7 @@ public class DIRHAMILTONIANGenericController : ControllerBase
 
             for (int i = 0; i < apiGraph.links.Count; i++)
             {
-                if (apiGraph.links[i].target == solutionList[j] && apiGraph.links[i].source == solutionList[j+1])
+                if (apiGraph.links[i].source == solutionList[j] && apiGraph.links[i].target == solutionList[j+1] )
                 {
                     apiGraph.links[i].attribute1 = true.ToString();
                     apiGraph.links[i].attribute2 = (counter * 1000).ToString();
@@ -109,7 +109,7 @@ public class DIRHAMILTONIANGenericController : ControllerBase
 [Route("[controller]")]
 [Tags("Hamiltonian")]
 #pragma warning disable CS1591
-public class HamiltonianVerifierController : ControllerBase
+public class DirectedHamiltonianVerifierController : ControllerBase
 {
 #pragma warning restore CS1591
 
