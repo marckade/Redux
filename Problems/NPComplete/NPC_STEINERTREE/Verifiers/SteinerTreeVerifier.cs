@@ -8,7 +8,7 @@ class SteinerTreeVerifier : IVerifier
 {
 
     // --- Fields ---
-    private string _verifierName = "SteinerTree Verifier";
+    private string _verifierName = "Steiner Tree Verifier";
     private string _verifierDefinition = "This is a verifier for Undirected SteinerTree Circut";
     private string _source = "Andrija Sevaljevic";
     private string[] _contributers = { "Andrija Sevaljevic" };
