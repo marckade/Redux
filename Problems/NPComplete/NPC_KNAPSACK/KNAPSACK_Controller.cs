@@ -4,6 +4,7 @@ using System.Text.Json;
 using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 using API.Problems.NPComplete.NPC_KNAPSACK.Solvers;
 using System.Text.Json.Serialization;
+using API.Problems.NPComplete.NPC_KNAPSACK.ReduceTo.NPC_PARTITION;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;
 
@@ -38,6 +39,47 @@ public class KNAPSACKGenericController : ControllerBase {
     }
 
 
+
+}
+
+[ApiController]
+[Route("[controller]")]
+[Tags("Knapsack")]
+
+
+#pragma warning disable CS1591
+
+public class KarpKnapsackToPartitionController : ControllerBase {
+#pragma warning restore CS1591
+
+  
+///<summary>Returns a reduction object with info for Graph Coloring to CliqueCover Reduction </summary>
+///<response code="200">Returns CliqueCoverReduction object</response>
+
+    [ProducesResponseType(typeof(PARTITIONReduction), 200)]
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        KNAPSACK defaultGRAPHCOLORING = new KNAPSACK();
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+        PARTITIONReduction reduction = new PARTITIONReduction(defaultGRAPHCOLORING);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+///<summary>Returns a reduction from Graph Coloring to CliqueCover based on the given Graph Coloring instance  </summary>
+///<param name="problemInstance" example="{{1,7,12,15} : 28}">Graph Coloring problem instance string.</param>
+///<response code="200">Returns Fengs's Graph Coloring to CliqueCover object</response>
+
+    [ProducesResponseType(typeof(PARTITIONReduction), 200)]
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        KNAPSACK defaultGRAPHCOLORING = new KNAPSACK(problemInstance);
+        PARTITIONReduction reduction = new PARTITIONReduction(defaultGRAPHCOLORING);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
 
 }
 
