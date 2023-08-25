@@ -13,7 +13,7 @@ class TSP : IProblem<TSPBruteForce, TSPVerifier>{
     private string[] _contributers = {"Andrija Sevaljevic"};
     
     private string _source = "";
-    private string _defaultInstance = "(({Narnia,Atlantis,Wakanda,Pocatello,Neverland},{{Narnia,Atlantis,30},{Narnia,Wakanda,55},{Narnia,Pocatello,80},{Narnia,Neverland,45},{Atlantis,Wakanda,65},{Atlantis,Pocatello,15},{Atlantis,Neverland,30},{Wakanda,Pocatello,40},{Wakanda,Neverland,90},{Pocatello,Neverland,25}}),150)";
+    private string _defaultInstance = "(({Narnia,Atlantis,Wakanda,Pocatello,Neverland},{{Narnia,Atlantis,30},{Narnia,Wakanda,55},{Narnia,Pocatello,80},{Narnia,Neverland,45},{Atlantis,Wakanda,65},{Atlantis,Pocatello,15},{Atlantis,Neverland,30},{Wakanda,Pocatello,40},{Wakanda,Neverland,90},{Pocatello,Neverland,25}}),200)";
                                       
     private string _instance = string.Empty;
     

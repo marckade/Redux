@@ -95,17 +95,22 @@ public class TSPGenericController : ControllerBase
         for (int i = 0; i < apiGraph.nodes.Count; i++)
         {
             apiGraph.nodes[i].attribute1 = i.ToString();
-            apiGraph.nodes[i].attribute2 = true.ToString();
+            if(parsedS.Contains(apiGraph.nodes[i].name))
+                apiGraph.nodes[i].attribute2 = true.ToString();
+            else 
+                apiGraph.nodes[i].attribute2 = false.ToString();
         }
 
         for (int j = 0; j < apiGraph.links.Count; j++)
         {
-            for (int i = 0; i < parsedS.Count; i++)
+            for (int i = 0; i < parsedS.Count - 1; i++)
             {
-                if (parsedS[i] == apiGraph.links[i].source && parsedS[i+1] == apiGraph.links[i].target)
-                    apiGraph.links[i].attribute1 = true.ToString();
+                if ((parsedS[i] == apiGraph.links[j].source && parsedS[i+1] == apiGraph.links[j].target) || (parsedS[i] == apiGraph.links[j].target && parsedS[i+1] == apiGraph.links[j].source)) {
+                    apiGraph.links[j].attribute1 = true.ToString();
+                    break;
+                }
                 else
-                    apiGraph.links[i].attribute1 = false.ToString();
+                    apiGraph.links[j].attribute1 = false.ToString();
             }
         }
 
