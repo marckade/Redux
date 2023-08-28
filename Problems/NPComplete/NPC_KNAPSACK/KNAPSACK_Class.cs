@@ -19,7 +19,7 @@ class KNAPSACK : IProblem<GarrettKnapsackSolver, GarrettVerifier>{
     private string _instance = string.Empty;
 
 
-    private string _defaultInstance = "{{10,20,30},{(10,60),(20,100),(30,120)},50}";
+    private string _defaultInstance = "(({10,20,30},{(10,60),(20,100),(30,120)}),50)";
  
 
     private string _wikiName = "Knapsack";
