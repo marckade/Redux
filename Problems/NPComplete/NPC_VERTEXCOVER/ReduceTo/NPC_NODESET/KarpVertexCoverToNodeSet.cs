@@ -1,22 +1,23 @@
 using API.Interfaces;
-using API.Problems.NPComplete.NPC_CLIQUECOVER;
+using API.Problems.NPComplete.NPC_NODESET;
+using API.Problems.NPComplete.NPC_VERTEXCOVER;
 
-namespace API.Problems.NPComplete.NPC_GRAPHCOLORING.ReduceTo.NPC_CLIQUECOVER;
+namespace API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_NODESET;
 
-class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
+class VertexCoverReduction : IReduction<VERTEXCOVER, NODESET>
 {
 
     // --- Fields ---
-    private string _reductionName = "Clique Cover Reduction";
-    private string _reductionDefinition = "Karp's Reduction from Graph Coloring to Clique Cover";
-    private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
+    private string _reductionName = "Karp Vertex Cover to Node Set Reduction";
+    private string _reductionDefinition = "Karp's Reduction from Vertex Cover to Feedback Node Set";
+    private string _source = "This reduction was found by the Algorithms Seminar at the Cornell University Computer Science Department. Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string[] _contributers = { "Andrija Sevaljevic" };
 
     private string _complexity = "";
     private Dictionary<Object, Object> _gadgetMap = new Dictionary<Object, Object>();
 
-    private GRAPHCOLORING _reductionFrom;
-    private CLIQUECOVER _reductionTo;
+    private VERTEXCOVER _reductionFrom;
+    private NODESET _reductionTo;
 
 
     // --- Properties ---
@@ -59,7 +60,7 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
             _gadgetMap = value;
         }
     }
-    public GRAPHCOLORING reductionFrom
+    public VERTEXCOVER reductionFrom
     {
         get
         {
@@ -70,7 +71,7 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
             _reductionFrom = value;
         }
     }
-    public CLIQUECOVER reductionTo
+    public NODESET reductionTo
     {
         get
         {
@@ -85,16 +86,16 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
 
 
     // --- Methods Including Constructors ---
-    public CliqueCoverReduction(GRAPHCOLORING from)
+    public VertexCoverReduction(VERTEXCOVER from)
     {
         _reductionFrom = from;
         _reductionTo = reduce();
 
     }
-    public CLIQUECOVER reduce()
+    public NODESET reduce()
     {
-        GRAPHCOLORING GRAPHCOLORINGInstance = _reductionFrom;
-        CLIQUECOVER reducedCLIQUECOVER = new CLIQUECOVER();
+        VERTEXCOVER VERTEXCOVERInstance = _reductionFrom;
+        NODESET reducedNODESET = new NODESET();
 
         string instance = "(({";
         foreach (var node in reductionFrom.nodes)
@@ -102,33 +103,34 @@ class CliqueCoverReduction : IReduction<GRAPHCOLORING, CLIQUECOVER>
             instance += node + ',';
         }
 
-        instance = instance.TrimEnd(',') + "},{{";
+        instance = instance.TrimEnd(',') + "},{(";
         foreach (var node in reductionFrom.nodes)
         {
             foreach (var node2 in reductionFrom.nodes)
             {
                 KeyValuePair<string, string> pairCheck1 = new KeyValuePair<string, string>(node, node2);
                 KeyValuePair<string, string> pairCheck2 = new KeyValuePair<string, string>(node2, node);
-                if (!(reductionFrom.edges.Contains(pairCheck1) || reductionFrom.edges.Contains(pairCheck1)) && node != node2)
+                if ((reductionFrom.edges.Contains(pairCheck1) || reductionFrom.edges.Contains(pairCheck1)) && node != node2)
                 {
-                    instance += node + ',' + node2 + "},{";
+                    instance += node + ',' + node2 + "),(";
+                    instance += node2 + ',' + node + "),(";
                 }
             }
         }
 
-        instance = instance.TrimEnd('{').TrimEnd(',') +"})," + reductionFrom.K.ToString() + ')';
+        instance = instance.TrimEnd('(').TrimEnd(',') +"})," + reductionFrom.K.ToString() + ')';
 
-        reducedCLIQUECOVER.K = reductionFrom.K;
-        reducedCLIQUECOVER.nodes = reductionFrom.nodes;
-        reducedCLIQUECOVER.instance = instance;
+        reducedNODESET.K = reductionFrom.K;
+        reducedNODESET.nodes = reductionFrom.nodes;
+        reducedNODESET.instance = instance;
 
-        reductionTo = reducedCLIQUECOVER;
-        return reducedCLIQUECOVER;
+        reductionTo = reducedNODESET;
+        return reducedNODESET;
     }
 
-    public string mapSolutions(GRAPHCOLORING problemFrom, CLIQUECOVER problemTo, string problemFromSolution)
+    public string mapSolutions(VERTEXCOVER problemFrom, NODESET problemTo, string problemFromSolution)
     {
-        if (!problemFrom.defaultVerifier.verify(problemFrom, problemFromSolution))
+        if (true)
         {
             return "Solution is incorect";
         }

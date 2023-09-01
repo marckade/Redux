@@ -3,7 +3,7 @@ using API.Problems.NPComplete.NPC_ExactCover.Verifiers;
 using API.Problems.NPComplete.NPC_ExactCover.Solvers;
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using API.Problems.NPComplete.NPC_ExactCover.ReduceTo.NPC_SUBSETSUM;
 
 namespace API.Problems.NPComplete.NPC_ExactCover;
 
@@ -42,6 +42,8 @@ public class ExactCoverGenericController : ControllerBase
     }
 
 }
+
+
 
 
 [ApiController]
@@ -121,5 +123,46 @@ public class ExactCoverBruteForceController : ControllerBase {
         string jsonString = JsonSerializer.Serialize(solution, options);
         return jsonString;
     }
+}
+
+
+[ApiController]
+[Route("[controller]")]
+[Tags("Exact Cover")]
+
+
+#pragma warning disable CS1591
+
+public class KarpExactCoverToSubsetSumController : ControllerBase {
+#pragma warning restore CS1591
+
+  
+///<summary>Returns a reduction object with info for Graph Coloring to CliqueCover Reduction </summary>
+///<response code="200">Returns CliqueCoverReduction object</response>
+
+    [ProducesResponseType(typeof(ExactCoverReduction), 200)]
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ExactCover defaultExactCover = new ExactCover();
+        ExactCoverReduction reduction = new ExactCoverReduction(defaultExactCover);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+///<summary>Returns a reduction from Graph Coloring to CliqueCover based on the given Graph Coloring instance  </summary>
+///<param name="problemInstance" example="{{1,7,12,15} : 28}">Graph Coloring problem instance string.</param>
+///<response code="200">Returns Fengs's Graph Coloring to CliqueCover object</response>
+
+    [ProducesResponseType(typeof(ExactCoverReduction), 200)]
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ExactCover defaultExactCover = new ExactCover(problemInstance);
+        ExactCoverReduction reduction = new ExactCoverReduction(defaultExactCover);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
 
 }
+
