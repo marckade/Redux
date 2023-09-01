@@ -100,22 +100,10 @@ class ExactCoverRecursive : ISolver {
         List<string> uSet = new List<string>(exactCover.X);
         List<List<string>> subsets = new List<List<string>>(exactCover.S);
         List<List<string>> choosenSubsets = new List<List<string>>();
-        return subsetsToCertificate(solve_r(exactCover, uSet, subsets, choosenSubsets, 0));
+        return subsetsToCertificate(solve_r(exactCover, uSet, subsets, choosenSubsets));
     }
 
-    public void printStuff(List<List<string>> subsetList, List<List<string>> choosenSubsets, List<List<string>> possibleSubsets, int depth){
-        Console.WriteLine(depth);
-        Console.WriteLine("subsetList");
-        Console.WriteLine(subsetsToCertificate(subsetList));
-        Console.WriteLine("choosenSubets");
-        Console.WriteLine(subsetsToCertificate(choosenSubsets));
-        Console.WriteLine("possibleSubsets");
-        Console.WriteLine(subsetsToCertificate(possibleSubsets));
-
-
-    }
-
-    public List<List<string>> solve_r(ExactCover exactCover, List<string> uSet, List<List<string>> subsetList, List<List<string>> choosenSubsets, int depth) 
+    public List<List<string>> solve_r(ExactCover exactCover, List<string> uSet, List<List<string>> subsetList, List<List<string>> choosenSubsets) 
     {
         //check if choosen subsets is a solution, if it is, return it
         if (exactCover.defaultVerifier.verify(exactCover, subsetsToCertificate(choosenSubsets)))
@@ -131,15 +119,13 @@ class ExactCoverRecursive : ISolver {
             }
         }
 
-        //printStuff(subsetList, choosenSubsets, possibleSubsets, depth);
-
         //foreach remaining good set in subsets, add it to choosen subsets and recurse.
         foreach (List<string> set in new List<List<string>>(possibleSubsets))
         {
             //if one returns a solution return it, otherwise return empty
             possibleSubsets.Remove(set);
             choosenSubsets.Add(set);
-            List<List<string>> result = solve_r(exactCover, uSet, possibleSubsets, choosenSubsets, depth+1);
+            List<List<string>> result = solve_r(exactCover, uSet, possibleSubsets, choosenSubsets);
             if (result.Count > 0)
                 return result;
             choosenSubsets.Remove(set);
