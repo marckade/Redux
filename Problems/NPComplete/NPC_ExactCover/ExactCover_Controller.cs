@@ -125,6 +125,43 @@ public class ExactCoverBruteForceController : ControllerBase {
     }
 }
 
+[ApiController]
+[Route("[controller]")]
+[Tags("Exact Cover")]
+#pragma warning disable CS1591
+public class ExactCoverRecursiveController : ControllerBase {
+#pragma warning restore CS1591
+
+    ///<summary>Returns a info about the Exact Cover brute force solver </summary>
+    ///<response code="200">Returns ExactCoverBruteForce solver Object</response>
+
+    [ProducesResponseType(typeof(ExactCoverRecursive), 200)]    
+    [HttpGet("info")]
+    public String getGeneric() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ExactCoverRecursive solver = new ExactCoverRecursive();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(solver, options);
+        return jsonString;
+    }
+
+    ///<summary>Returns a solution to a given  Exact Cover problem instance </summary>
+    ///<param name="problemInstance" example="{{1,2,3},{2,3},{4,1} : {1,2,3,4}}"s>Exact Cover problem instance string.</param>
+    ///<response code="200">Returns solution string </response>
+    
+    [ProducesResponseType(typeof(string), 200)]
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string problemInstance) {
+        // Implement solver here
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        ExactCover problem = new ExactCover(problemInstance);
+        string solution = new ExactCoverRecursive().solve(problem);
+        
+        string jsonString = JsonSerializer.Serialize(solution, options);
+        return jsonString;
+    }
+}
 
 [ApiController]
 [Route("[controller]")]
