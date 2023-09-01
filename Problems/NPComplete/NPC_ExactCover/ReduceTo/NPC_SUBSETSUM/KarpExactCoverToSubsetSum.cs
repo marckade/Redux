@@ -8,7 +8,7 @@ class ExactCoverReduction : IReduction<ExactCover, SUBSETSUM>
 {
 
     // --- Fields ---
-    private string _reductionName = "Exact Cover Reduction";
+    private string _reductionName = "Karp's Subset Sum Reduction";
     private string _reductionDefinition = "Karp's Reduction from Exact Cover to Subset Sum";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
     private string[] _contributers = { "Andrija Sevaljevic" };
@@ -97,7 +97,7 @@ class ExactCoverReduction : IReduction<ExactCover, SUBSETSUM>
         ExactCover ExactCoverInstance = _reductionFrom;
         SUBSETSUM reducedSUBSETSUM = new SUBSETSUM();
 
-         int r = reductionFrom.S.Count;
+        int r = reductionFrom.S.Count;
         int d = r + 1;
         int[,] e = new int[reductionFrom.S.Count,reductionFrom.X.Count];
 

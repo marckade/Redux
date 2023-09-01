@@ -157,8 +157,12 @@ class GraphColorToExactCoverReduction : IReduction<GRAPHCOLORING, ExactCover>
                     if (f1 != f2)
                     {
                         currentSubset.Add(e.Key + '_' + e.Value);
-                        currentSubset.Add(e.Key + '_' + e.Key + '_' + e.Value + '_' + f1.ToString());
-                        currentSubset.Add(e.Value + '_' + e.Key + '_' + e.Value + '_' + f2.ToString());
+                        for(int i = 1; i <= reductionFrom.K; i++)
+                            if(i != f1)
+                                currentSubset.Add(e.Key + '_' + e.Key + '_' + e.Value + '_' + i.ToString());
+                        for(int i = 1; i <= reductionFrom.K; i++)
+                            if(i != f2)
+                                currentSubset.Add(e.Value + '_' + e.Key + '_' + e.Value + '_' + i.ToString());
                         subsets.Add(new List<string>(currentSubset));
                         currentSubset.Clear();
                     }
