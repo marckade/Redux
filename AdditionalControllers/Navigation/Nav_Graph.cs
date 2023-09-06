@@ -181,7 +181,7 @@ class ProblemGraph {
             string u = Q.Dequeue();
             Dictionary<string, List<string>> adjacentNodes = this.graph[u];
             foreach(KeyValuePair<string, List<string>> node in adjacentNodes){
-                if(!links.ContainsKey(node.Key)){
+                if(!links.ContainsKey(node.Key) && startProblem != node.Key){
                     links.Add(node.Key,u);
                     Q.Enqueue(node.Key);
                 }
