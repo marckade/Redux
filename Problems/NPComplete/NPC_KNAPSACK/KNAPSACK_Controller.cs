@@ -4,7 +4,6 @@ using System.Text.Json;
 using API.Problems.NPComplete.NPC_KNAPSACK.Verifiers;
 using API.Problems.NPComplete.NPC_KNAPSACK.Solvers;
 using System.Text.Json.Serialization;
-using API.Problems.NPComplete.NPC_KNAPSACK.ReduceTo.NPC_PARTITION;
 
 namespace API.Problems.NPComplete.NPC_KNAPSACK;
 
@@ -42,46 +41,6 @@ public class KNAPSACKGenericController : ControllerBase {
 
 }
 
-[ApiController]
-[Route("[controller]")]
-[Tags("Knapsack")]
-
-
-#pragma warning disable CS1591
-
-public class KarpKnapsackToPartitionController : ControllerBase {
-#pragma warning restore CS1591
-
-  
-///<summary>Returns a reduction object with info for Graph Coloring to CliqueCover Reduction </summary>
-///<response code="200">Returns CliqueCoverReduction object</response>
-
-    [ProducesResponseType(typeof(PARTITIONReduction), 200)]
-    [HttpGet("info")]
-    public String getInfo() {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        KNAPSACK defaultGRAPHCOLORING = new KNAPSACK();
-        //SipserReduction reduction = new SipserReduction(defaultSAT3);
-        PARTITIONReduction reduction = new PARTITIONReduction(defaultGRAPHCOLORING);
-        string jsonString = JsonSerializer.Serialize(reduction, options);
-        return jsonString;
-    }
-
-///<summary>Returns a reduction from Graph Coloring to CliqueCover based on the given Graph Coloring instance  </summary>
-///<param name="problemInstance" example="{{1,7,12,15} : 28}">Graph Coloring problem instance string.</param>
-///<response code="200">Returns Fengs's Graph Coloring to CliqueCover object</response>
-
-    [ProducesResponseType(typeof(PARTITIONReduction), 200)]
-    [HttpGet("reduce")]
-    public String getReduce([FromQuery]string problemInstance) {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        KNAPSACK defaultGRAPHCOLORING = new KNAPSACK(problemInstance);
-        PARTITIONReduction reduction = new PARTITIONReduction(defaultGRAPHCOLORING);
-        string jsonString = JsonSerializer.Serialize(reduction, options);
-        return jsonString;
-    }
-
-}
 
 [ApiController]
 [Route("[controller]")]
@@ -94,11 +53,11 @@ public class GarrettVerifierController : ControllerBase {
 ///<summary>Returns information about the Knapsack generic Verifier </summary>
 ///<response code="200">Returns GarrettVerifier object</response>
 
-    [ProducesResponseType(typeof(GarrettVerifier), 200)]
+    [ProducesResponseType(typeof(KnapsackVerifier), 200)]
     [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
-        GarrettVerifier verifier = new GarrettVerifier();
+        KnapsackVerifier verifier = new KnapsackVerifier();
         string jsonString  = JsonSerializer.Serialize(verifier, options);
         return jsonString; 
     }
@@ -113,7 +72,7 @@ public class GarrettVerifierController : ControllerBase {
     public String getInstance([FromQuery]string certificate, [FromQuery] string problemInstance){
         var options = new JsonSerializerOptions {WriteIndented = true};
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
-        GarrettVerifier verifier = new GarrettVerifier();
+        KnapsackVerifier verifier = new KnapsackVerifier();
         Boolean response = verifier.verify(KNAPSACKProblem, certificate);
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;
@@ -126,17 +85,17 @@ public class GarrettVerifierController : ControllerBase {
 [Tags("Knapsack")]
 
 #pragma warning disable CS1591
-public class GarrettKnapsackSolverController : ControllerBase {
+public class KnapsackBruteForceController : ControllerBase {
 #pragma warning restore CS1591
 
 ///<summary>Returns information about Garrett's Knapsack solver </summary>
 ///<response code="200">Returns GarrettKnapsackSolver solver bject</response>
 
-    [ProducesResponseType(typeof(GarrettKnapsackSolver), 200)]
+    [ProducesResponseType(typeof(KnapsackBruteForce), 200)]
     [HttpGet("info")]
     public String getGeneric(){
         var options = new JsonSerializerOptions {WriteIndented = true};
-        GarrettKnapsackSolver solver = new GarrettKnapsackSolver();
+        KnapsackBruteForce solver = new KnapsackBruteForce();
         string jsonString  = JsonSerializer.Serialize(solver, options);
         return jsonString; 
     }
@@ -151,7 +110,7 @@ public class GarrettKnapsackSolverController : ControllerBase {
          
         var options = new JsonSerializerOptions { WriteIndented = true };
         KNAPSACK KNAPSACKProblem = new KNAPSACK(problemInstance);
-        GarrettKnapsackSolver solver = new GarrettKnapsackSolver();
+        KnapsackBruteForce solver = new KnapsackBruteForce();
         string solvedInstance = solver.solve(KNAPSACKProblem);
         string jsonString = JsonSerializer.Serialize(solvedInstance, options);
         return jsonString;
