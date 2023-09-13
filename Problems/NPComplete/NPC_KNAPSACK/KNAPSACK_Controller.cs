@@ -26,7 +26,7 @@ public class KNAPSACKGenericController : ControllerBase {
     }
 
 ///<summary>Returns a Knapsack problem object created from a given instance </summary>
-///<param name="problemInstance" example="{{10,20,30},{(10,60),(20,100),(30,120)},50}">Knapsack problem instance string.</param>
+///<param name="problemInstance" example="({(10,60),(20,100),(30,120)},50,220)">Knapsack problem instance string.</param>
 ///<response code="200">Returns Knapsack problem object</response>
 
     [ProducesResponseType(typeof(KNAPSACK), 200)]

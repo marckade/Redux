@@ -28,9 +28,7 @@ class KNAPSACK : IProblem<KnapsackBruteForce, KnapsackVerifier>{
 
     private string _wikiName = "Knapsack";
 
-    [JsonIgnore]
     public UtilCollection items { get; set; }
-
 
     private int _W = 0;
 

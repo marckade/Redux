@@ -1,13 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Collections;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace API.Tools.UtilCollection;
 
 
 #pragma warning disable CS1591
-public class UtilCollection : IEnumerable
+
+[JsonObject]
+public class UtilCollection
 {
     private HashSet<UtilCollection> set = new HashSet<UtilCollection>();
     private List<UtilCollection> list = new List<UtilCollection>();
