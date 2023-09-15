@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Runtime.Serialization;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -57,6 +58,18 @@ public class UtilCollection
             isValue = true;
             value = instance;
         }
+    }
+
+    public UtilCollection(List<UtilCollection> list__)
+    {
+        list = list__;
+        isOrdered = true;
+    }
+
+    public UtilCollection(HashSet<UtilCollection> set__)
+    {
+        set = set__;
+        isOrdered = false;
     }
 
     private string findMatchingBrace(string instance)
@@ -185,6 +198,32 @@ public class UtilCollection
     public int parseInt()
     {
         return int.Parse(ToString());
+    }
+
+    public UtilCollection Intersect(UtilCollection other)
+    {
+        if (isOrdered != other.isOrdered) throw new InvalidOperationException("Can't take the intersection of a set and a list");
+        if (!isOrdered)
+        {
+            return new UtilCollection(set.Intersect(other.set).ToHashSet());
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+    public UtilCollection Union(UtilCollection other)
+    {
+        if (isOrdered != other.isOrdered) throw new InvalidOperationException("Can't take the union of a set and a list");
+        if (!isOrdered)
+        {
+            return new UtilCollection(set.Union(other.set).ToHashSet());
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public override bool Equals(object? obj)
