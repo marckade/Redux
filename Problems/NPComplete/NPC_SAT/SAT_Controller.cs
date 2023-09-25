@@ -49,19 +49,19 @@ public class SATGenericController : ControllerBase
 [Tags("SAT")]
 
 #pragma warning disable CS1591
-public class IgbokweSATVerifierController : ControllerBase
+public class SATVerifierController : ControllerBase
 {
 #pragma warning restore CS1591
 
     ///<summary>Returns a info about the SAT generic Verifier </summary>
-    ///<response code="200">Returns IgbokweSATVerifier object</response>
+    ///<response code="200">Returns SATVerifier object</response>
 
-    [ProducesResponseType(typeof(IgbokweSATVerifier), 200)]
+    [ProducesResponseType(typeof(SATVerifier), 200)]
     [HttpGet("info")]
     public String getInfo()
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        IgbokweSATVerifier verifier = new IgbokweSATVerifier();
+        SATVerifier verifier = new SATVerifier();
         string jsonString = JsonSerializer.Serialize(verifier, options);
         return jsonString;
     }
@@ -78,7 +78,7 @@ public class IgbokweSATVerifierController : ControllerBase
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
         SAT SATProblem = new SAT(problemInstance);
-        IgbokweSATVerifier verifier = new IgbokweSATVerifier();
+        SATVerifier verifier = new SATVerifier();
         Boolean response = verifier.verify(SATProblem, certificate);
         string jsonString = JsonSerializer.Serialize(response.ToString(), options);
         return jsonString;

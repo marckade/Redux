@@ -8,8 +8,8 @@ class NodeSetVerifier : IVerifier {
     // --- Fields ---
     private string _verifierName = "Node Set Verifier";
     private string _verifierDefinition = "This is a verifier for the Node Set problem";
-    private string _source = "Andrija Sevaljevic";
-    private string[] _contributers = {"Andrija Sevaljevic"};
+    private string _source = "";
+    private string[] _contributors = {"Andrija Sevaljevic"};
 
 
     private string _certificate =  "";
@@ -30,9 +30,9 @@ class NodeSetVerifier : IVerifier {
             return _source;
         }
     }
-       public string[] contributers{
+       public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
 

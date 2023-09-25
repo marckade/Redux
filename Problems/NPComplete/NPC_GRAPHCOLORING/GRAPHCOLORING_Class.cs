@@ -13,7 +13,7 @@ class GRAPHCOLORING : IProblem<GraphColoringBruteForce, GraphColoringVerifier>{
     private readonly string _problemDefinition = "An assignment of labels (e.g., colors) to the vertices of a graph such that no two adjacent vertices are of the same label. This is called a vertex coloring.";
 
     private readonly string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string[] _contributers = { "Daniel Igbokwe", "Alex Diviney" };
+    private string[] _contributors = { "Daniel Igbokwe", "Alex Diviney" };
 
     private string _defaultInstance = "(({a,b,c,d,e,f,g,h,i},{{a,b},{b,c},{a,c},{d,a},{d,e},{a,e},{a,f},{f,g},{g,a},{a,h},{h,i},{i,a}}),3)";
 
@@ -62,9 +62,9 @@ class GRAPHCOLORING : IProblem<GraphColoringBruteForce, GraphColoringVerifier>{
             return _source;
         }
     }
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
     public string defaultInstance {

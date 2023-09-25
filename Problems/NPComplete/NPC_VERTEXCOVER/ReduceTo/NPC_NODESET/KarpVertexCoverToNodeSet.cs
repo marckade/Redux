@@ -11,7 +11,7 @@ class VertexCoverReduction : IReduction<VERTEXCOVER, NODESET>
     private string _reductionName = "Karp Vertex Cover to Node Set Reduction";
     private string _reductionDefinition = "Karp's Reduction from Vertex Cover to Feedback Node Set";
     private string _source = "This reduction was found by the Algorithms Seminar at the Cornell University Computer Science Department. Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string[] _contributers = { "Andrija Sevaljevic" };
+    private string[] _contributors = { "Andrija Sevaljevic" };
 
     private string _complexity = "";
     private Dictionary<Object, Object> _gadgetMap = new Dictionary<Object, Object>();
@@ -42,11 +42,11 @@ class VertexCoverReduction : IReduction<VERTEXCOVER, NODESET>
             return _source;
         }
     }
-    public string[] contributers
+    public string[] contributors
     {
         get
         {
-            return _contributers;
+            return _contributors;
         }
     }
     public Dictionary<Object, Object> gadgetMap

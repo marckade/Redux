@@ -24,7 +24,7 @@ class DM3 : IProblem<ThreeDimensionalMatchingBruteForce,GenericVerifierDM3> {
     private ThreeDimensionalMatchingBruteForce _defaultSolver = new ThreeDimensionalMatchingBruteForce();
     private GenericVerifierDM3 _defaultVerifier = new GenericVerifierDM3();
 
-    private string[] _contributers = { "Caleb Eardley" };
+    private string[] _contributors = { "Caleb Eardley" };
 
 
     // --- Properties ---
@@ -55,9 +55,9 @@ class DM3 : IProblem<ThreeDimensionalMatchingBruteForce,GenericVerifierDM3> {
             return _source;
         }
     }
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
     public string defaultInstance {

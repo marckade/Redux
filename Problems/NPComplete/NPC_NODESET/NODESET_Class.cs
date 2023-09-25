@@ -21,7 +21,7 @@ class NODESET : IProblem<NodeSetBruteForce,NodeSetVerifier> {
     private NodeSetBruteForce _defaultSolver = new NodeSetBruteForce();
     private NodeSetVerifier _defaultVerifier = new NodeSetVerifier();
     private NodeSetGraph _nodeSetAsGraph;
-    private string[] _contributers = { "Andrija Sevaljevic" };
+    private string[] _contributors = { "Andrija Sevaljevic" };
 
     // --- Properties ---
     public string problemName {
@@ -46,9 +46,9 @@ class NODESET : IProblem<NodeSetBruteForce,NodeSetVerifier> {
         }
     }
 
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
     public string defaultInstance {

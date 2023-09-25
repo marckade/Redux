@@ -122,13 +122,13 @@ public class VCVerifierController : ControllerBase {
 #pragma warning restore CS1591
 
 ///<summary>Returns information about the Vertex Cover generic verifier </summary>
-///<response code="200">Returns VCVerifierJanita verifier object</response>
+///<response code="200">Returns VCVerifier verifier object</response>
 
-    [ProducesResponseType(typeof(VCVerifierJanita), 200)]
+    [ProducesResponseType(typeof(VCVerifier), 200)]
     [HttpGet("info")]
     public String getGeneric() {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        VCVerifierJanita verifier = new VCVerifierJanita();
+        VCVerifier verifier = new VCVerifier();
 
         // Send back to API user
         string jsonString = JsonSerializer.Serialize(verifier, options);
@@ -145,7 +145,7 @@ public class VCVerifierController : ControllerBase {
     public String verifyInstance([FromQuery]string certificate, [FromQuery]string problemInstance) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER VCProblem = new VERTEXCOVER(problemInstance);
-        VCVerifierJanita verifier = new VCVerifierJanita();
+        VCVerifier verifier = new VCVerifier();
 
         Boolean response = verifier.Verify(VCProblem,certificate);
         // Send back to API user

@@ -6,10 +6,10 @@ namespace API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 class CliqueBruteForce : ISolver {
 
     // --- Fields ---
-    private string _solverName = "Clique Brute Force";
+    private string _solverName = "Clique Brute Force Solver";
     private string _solverDefinition = "This is a brute force solver for the NP-Complete Clique problem";
-    private string _source = "This person Caleb Eardley";
-    private string[] _contributers = {"Caleb Eardley", "Kaden Marchetti"};
+    private string _source = "";
+    private string[] _contributors = {"Caleb Eardley", "Kaden Marchetti"};
 
 
     // --- Properties ---
@@ -28,9 +28,9 @@ class CliqueBruteForce : ISolver {
             return _source;
         }
     }
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
     // --- Methods Including Constructors ---

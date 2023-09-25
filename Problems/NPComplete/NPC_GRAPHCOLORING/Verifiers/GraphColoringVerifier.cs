@@ -12,8 +12,8 @@ class GraphColoringVerifier : IVerifier
     #region Fields
     private string _verifierName = "Graph Coloring Verifier";
     private string _verifierDefinition = "This is a verifier for Graph Coloring.";
-    private string _source = "Andrija Sevaljevic";
-    private string[] _contributers = { "Andrija Sevaljevic" };
+    private string _source = "";
+    private string[] _contributors = { "Andrija Sevaljevic" };
 
     private string _complexity = "";
     private string _certificate = "";
@@ -45,11 +45,11 @@ class GraphColoringVerifier : IVerifier
             return _source;
         }
     }
-    public string[] contributers
+    public string[] contributors
     {
         get
         {
-            return _contributers;
+            return _contributors;
         }
     }
 

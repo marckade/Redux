@@ -18,7 +18,7 @@ class INTPROGRAMMING01 : IProblem<IntegerProgrammingBruteForce,GenericVerifier01
     private IntegerProgrammingBruteForce _defaultSolver = new IntegerProgrammingBruteForce();
     private GenericVerifier01INTP _defaultVerifier = new GenericVerifier01INTP();
     private string _instance = string.Empty;
-    private string[] _contributers = { "Caleb Eardley"};
+    private string[] _contributors = { "Caleb Eardley"};
 
     // --- Properties ---
     public string problemName {
@@ -41,9 +41,9 @@ class INTPROGRAMMING01 : IProblem<IntegerProgrammingBruteForce,GenericVerifier01
             return _source;
         }
     }
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
 

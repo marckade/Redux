@@ -9,8 +9,8 @@ class GraphColoringBruteForce : ISolver
     // --- Fields ---
     private string _solverName = "Graph Coloring Brute Force";
     private string _solverDefinition = "This is a brute force solver for the NP-Complete Graph Coloring problem";
-    private string _source = "This solver was contributed by Andrija Sevaljevic";
-    private string[] _contributers = { "Andrija Sevaljevic" };
+    private string _source = "";
+    private string[] _contributors = { "Andrija Sevaljevic" };
 
 
     // --- Properties ---
@@ -35,11 +35,11 @@ class GraphColoringBruteForce : ISolver
             return _source;
         }
     }
-    public string[] contributers
+    public string[] contributors
     {
         get
         {
-            return _contributers;
+            return _contributors;
         }
     }
     // --- Methods Including Constructors ---

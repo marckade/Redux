@@ -21,7 +21,7 @@ class SETCOVER : IProblem<SetCoverBruteForce,SetCoverVerifier> {
     private int _K = 3;
     private SetCoverBruteForce _defaultSolver = new SetCoverBruteForce();
     private SetCoverVerifier _defaultVerifier = new SetCoverVerifier();
-    private string[] _contributers = { "Andrija Sevaljevic" };
+    private string[] _contributors = { "Andrija Sevaljevic" };
 
     // --- Properties ---
     public string problemName {
@@ -46,9 +46,9 @@ class SETCOVER : IProblem<SetCoverBruteForce,SetCoverVerifier> {
         }
     }
 
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
     public string defaultInstance {

@@ -6,10 +6,10 @@ namespace API.Problems.NPComplete.NPC_NODESET.Solvers;
 class NodeSetBruteForce : ISolver {
 
     // --- Fields ---
-    private string _solverName = "Node Set Brute Force";
+    private string _solverName = "Node Set Brute Force Solver";
     private string _solverDefinition = "This is a brute force solver for the Node Set problem";
-    private string _source = "Andrija Sevaljevic";
-    private string[] _contributers = {"Andrija Sevaljevic"};
+    private string _source = "";
+    private string[] _contributors = {"Andrija Sevaljevic"};
 
     // --- Properties ---
 
@@ -28,9 +28,9 @@ class NodeSetBruteForce : ISolver {
             return _source;
         }
     }
-    public string[] contributers{
+    public string[] contributors{
         get{
-            return _contributers;
+            return _contributors;
         }
     }
 
