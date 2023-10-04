@@ -80,6 +80,7 @@ class GareyJohnson : IReduction<SAT3, DM3> {
         List<string> Y = new List<string>();
         List<string> Z = new List<string>();
         List<List<string>> M = new List<List<string>>();
+        string instance = "";
 
         List<string> variables = new List<string>();
 
@@ -90,86 +91,47 @@ class GareyJohnson : IReduction<SAT3, DM3> {
                 variables.Add(l.Replace("!", string.Empty));
             }
         }
-        int j;
-        //adds the variable gadget matchings
-        foreach(var literal in variables){
-            j = 1;
-            foreach(var clause in SAT3Instance.clauses){
-                string x1 = "a["+literal+"]["+j+"]";
-                string x2 = "a["+literal+"]["+(j+1)+"]";
-                string xLast = "a["+literal+"]["+(1)+"]";
-                string y = "b["+literal+"]["+j+"]";
-                string z1 = "[!"+literal+"]["+j+"]";
-                string z2 = "["+literal+"]["+j+"]";
-
-                X.Add(x1);
-                Y.Add(y);
-                Z.Add(z1);
-                Z.Add(z2);
-                
-                if(j == SAT3Instance.clauses.Count){
-                    M.Add(new List<string>(){x1,y,z1});
-                    M.Add(new List<string>(){xLast,y,z2});
-                }
-                else{
-                    M.Add(new List<string>(){x1,y,z1});
-                    M.Add(new List<string>(){x2,y,z2});
-                }
-                    //garbage collection for each literal
-                for(int k = 1; k<=(SAT3Instance.clauses.Count)*(variables.Count-1);k++){
-                    string xg = "g1["+k+"]";
-                    string yg = "g2["+k+"]";
-                    M.Add(new List<string>(){xg,yg,z2});
-                    M.Add(new List<string>(){xg,yg,z1});
-                }
-                j++;
-            }  
-        }
-        //creation of garbage gadgets for each variable in SAT3, not k = m*(n-1), where m is the number
-        //of clauses and n is the nuber of variables.
-        for(int k = 1; k<=(SAT3Instance.clauses.Count)*(variables.Count-1);k++){
-            X.Add( "g1["+k+"]");
-            Y.Add("g2["+k+"]");
-        }
-
-        //creates constraints of the clause gadgets
-        j = 1;
-        foreach(var clause in SAT3Instance.clauses){
-            string xc = "s1["+j+"]";
-            string yc = "s2["+j+"]";
-            X.Add(xc);
-            Y.Add(yc);
-            for(int i=0; i<3; i++){
-                string zc = "["+clause[i]+"]["+j+"]";
-                M.Add(new List<string>(){xc,yc,zc});
+        // variable gadget
+        foreach(var literal in variables) {
+            int count = SAT3Instance.literals.Count(x => x.Replace("!", string.Empty) == literal);
+            for(int i = 0; i < count; i++) {
+                X.Add("x_" + literal + "_" + i.ToString());
+                Y.Add("y_" + literal + "_" + i.ToString());
+                Z.Add("z_" + literal + "_" + i.ToString());
+                M.Add(new List<string>{X[X.Count - 1],Y[Y.Count - 1], Z[Z.Count - 1]});
+                Z.Add("z_" + "!" + literal + "_" + i.ToString());
+                M.Add(new List<string>{X[X.Count - 1],"y_" + literal + "_" + ((i + 2) % count).ToString(), Z[Z.Count - 1]});
             }
-            j ++;
         }
-        string Xstring = string.Empty;
-        string Ystring = string.Empty;
-        string Zstring = string.Empty;
-        string Mstring = string.Empty;
-
-
-        for (int i=0; i<X.Count-1; i++){
-            Xstring += ""+ X[i] + ",";
-            Ystring += ""+ Y[i] + ",";
-            Zstring += ""+ Z[i] + ",";
+        // clause gadget
+        List<string> unusedLiterals = new List<string>(Z);
+        for(int i = 0; i < SAT3Instance.clauses.Count; i++) {
+            foreach(var literal in SAT3Instance.clauses[i]) {
+                string found = unusedLiterals.Find(x => x.Contains("z_" + literal));
+                M.Add(new List<string>{"x_clause_" + i.ToString(), "y_clause" + i.ToString(), found});
+                unusedLiterals.Remove(found);
+            }
+            X.Add("x_clause_" + i.ToString());
+            Y.Add("y_clause" + i.ToString());
         }
-        Xstring += X[X.Count-1];
-        Ystring += Y[X.Count-1];
-        Zstring += Z[X.Count-1];
-
-        for (int i=0; i<M.Count; i++){
-            Mstring += "{";
-            Mstring += ""+M[i][0] + ",";
-            Mstring += ""+M[i][1] + ",";
-            Mstring += ""+M[i][2];
-            Mstring += "}";
+        // gaebage gadget
+        for(int i = 0; i < SAT3Instance.literals.Count() - SAT3Instance.clauses.Count(); i++) {
+            foreach(var j in Z) {
+                M.Add(new List<string>{"x_garb_" + i.ToString(),"y_garb_" + i.ToString(), j});
+            }
+            X.Add("x_garb_" + i.ToString());
+            Y.Add("y_garb_" + i.ToString());
         }
-            
-        string instance = "{" + Xstring + "}{" + Ystring + "}{" + Zstring + "}" +Mstring;
-        
+
+        foreach(var i in M) {
+            instance += "{";
+            foreach(var j in i) {
+                instance += j + ",";
+            }
+            instance = instance.TrimEnd(',') + "}";
+        }
+
+        Console.WriteLine(X.Count() + "----" + Y.Count() + "----" + Z.Count());
         reduced3DM.X = X;
         reduced3DM.Y = Y;
         reduced3DM.Z = Z;
