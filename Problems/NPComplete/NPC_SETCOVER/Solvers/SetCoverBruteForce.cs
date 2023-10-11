@@ -1,6 +1,7 @@
 using API.Interfaces;
 using API.Interfaces.Graphs.GraphParser;
 using API.Interfaces.Graphs;
+using System.Numerics;
 
 namespace API.Problems.NPComplete.NPC_SETCOVER.Solvers;
 class SetCoverBruteForce : ISolver
@@ -47,22 +48,25 @@ class SetCoverBruteForce : ISolver
     {
 
     }
-    private long factorial(long x)
+    private BigInteger factorial(BigInteger x)
     {
-        long y = 1;
-        for (long i = 1; i <= x; i++)
+        BigInteger y = 1;
+        for (BigInteger i = 1; i <= x; i++)
         {
             y *= i;
         }
         return y;
     }
-    private string indexListToCertificate(List<int> indecies, List<string> subsets)
+    private string indexListToCertificate(List<int> indecies, List<List<string>> subsets)
     {
 
         string certificate = "{";
         foreach (int i in indecies)
         {
-            certificate += subsets[i] + "},{";
+            foreach(var j in subsets[i]) {
+                certificate += j + ",";
+            }
+            certificate = certificate.TrimEnd(',') + "},{";
         }
         certificate = certificate.TrimEnd('{');
         certificate = certificate.TrimEnd(',');
@@ -94,7 +98,7 @@ class SetCoverBruteForce : ISolver
             {
                 combination.Add(i);
             }
-            long reps = factorial(setCover.subsets.Count) / (factorial(j) * factorial(setCover.subsets.Count - j));
+            BigInteger reps = factorial(setCover.subsets.Count) / (factorial(j) * factorial(setCover.subsets.Count - j));
             for (int i = 0; i < reps; i++)
             {
                 string certificate = indexListToCertificate(combination, setCover.subsets);

@@ -1,6 +1,6 @@
 using API.Interfaces;
 using API.Interfaces.Graphs.GraphParser;
-
+using System.Numerics;
 
 
 namespace API.Problems.NPComplete.NPC_VERTEXCOVER.Solvers;
@@ -43,9 +43,9 @@ class VertexCoverBruteForce : ISolver {
 
 
 
-    private long factorial(long x){
-        long y = 1;
-        for(long i=1; i<=x; i++){
+    private BigInteger factorial(BigInteger x){
+        BigInteger y = 1;
+        for(BigInteger i=1; i<=x; i++){
             y *= i;
         }
         return y;
@@ -81,7 +81,7 @@ class VertexCoverBruteForce : ISolver {
         for(int i=0; i<G.K; i++){
             combination.Add(i);
         }
-        long reps = factorial(G.nodes.Count) / (factorial(G.K) * factorial(G.nodes.Count - G.K));
+        BigInteger reps = factorial(G.nodes.Count) / (factorial(G.K) * factorial(G.nodes.Count - G.K));
         for(int i=0; i<reps; i++){
             string certificate = indexListToCertificate(combination,G.nodes);
             if(G.defaultVerifier.Verify(G, certificate)){

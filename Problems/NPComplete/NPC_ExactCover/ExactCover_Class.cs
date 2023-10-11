@@ -119,7 +119,7 @@ class ExactCover : IProblem<ExactCoverBruteForce,ExactCoverVerifier> {
         _X = GetX(_instance);
     }
     public ExactCover(string instance) {
-         _instance = instance;
+        _instance = instance;
         _S = GetS(_instance);
         _X = GetX(_instance);
     }

@@ -8,7 +8,7 @@ class CliqueCoverVerifier : IVerifier
 
     // --- Fields ---
     private string _verifierName = "Clique Cover Verifier";
-    private string _verifierDefinition = "This is a verifier for Clique Cover";
+    private string _verifierDefinition = "This is a verifier for the NP-Complete Clique Cover problem";
     private string _source = " ";
     private string[] _contributors = { "Andrija Sevaljevic" };
 

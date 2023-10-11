@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_ARCSET;
 using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_NODESET;
+using API.Problems.NPComplete.NPC_VERTEXCOVER.ReduceTo.NPC_SETCOVER;
 using API.Interfaces.JSON_Objects.Graphs;
 using API.Interfaces.JSON_Objects;
 
@@ -189,6 +190,47 @@ public class KarpVertexCoverToNodeSetController : ControllerBase {
         var options = new JsonSerializerOptions { WriteIndented = true };
         VERTEXCOVER defaultVERTEXCOVER = new VERTEXCOVER(problemInstance);
         VertexCoverReduction reduction = new VertexCoverReduction(defaultVERTEXCOVER);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+}
+
+[ApiController]
+[Route("[controller]")]
+[Tags("Vertex Cover")]
+
+
+#pragma warning disable CS1591
+
+public class KarpVertexCoverToSetCoverController : ControllerBase {
+#pragma warning restore CS1591
+
+  
+///<summary>Returns a reduction object with info for Graph Coloring to CliqueCover Reduction </summary>
+///<response code="200">Returns KarpVertexCoverToSetCover object</response>
+
+    [ProducesResponseType(typeof(KarpVertexCoverToSetCover), 200)]
+    [HttpGet("info")]
+    public String getInfo() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER defaultVERTEXCOVER = new VERTEXCOVER();
+        //SipserReduction reduction = new SipserReduction(defaultSAT3);
+        KarpVertexCoverToSetCover reduction = new KarpVertexCoverToSetCover(defaultVERTEXCOVER);
+        string jsonString = JsonSerializer.Serialize(reduction, options);
+        return jsonString;
+    }
+
+///<summary>Returns a reduction from Graph Coloring to CliqueCover based on the given Graph Coloring instance  </summary>
+///<param name="problemInstance" example="{{1,7,12,15} : 28}">Graph Coloring problem instance string.</param>
+///<response code="200">Returns Fengs's Graph Coloring to CliqueCover object</response>
+
+    [ProducesResponseType(typeof(KarpVertexCoverToSetCover), 200)]
+    [HttpGet("reduce")]
+    public String getReduce([FromQuery]string problemInstance) {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        VERTEXCOVER defaultVERTEXCOVER = new VERTEXCOVER(problemInstance);
+        KarpVertexCoverToSetCover reduction = new KarpVertexCoverToSetCover(defaultVERTEXCOVER);
         string jsonString = JsonSerializer.Serialize(reduction, options);
         return jsonString;
     }

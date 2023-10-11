@@ -1,6 +1,7 @@
 using API.Interfaces;
 using API.Interfaces.Graphs.GraphParser;
 using API.Interfaces.Graphs;
+using System.Numerics;
 
 namespace API.Problems.NPComplete.NPC_CLIQUE.Solvers;
 class CliqueBruteForce : ISolver {
@@ -37,9 +38,9 @@ class CliqueBruteForce : ISolver {
     public CliqueBruteForce() {
         
     }
-    private long factorial(long x){
-        long y = 1;
-        for(long i=1; i<=x; i++){
+    private BigInteger factorial(BigInteger x){
+        BigInteger y = 1;
+        for(BigInteger i=1; i<=x; i++){
             y *= i;
         }
         return y;
@@ -69,7 +70,7 @@ class CliqueBruteForce : ISolver {
         for(int i=0; i<clique.K; i++){
             combination.Add(i);
         }
-        long reps = factorial(clique.nodes.Count) / (factorial(clique.K) * factorial(clique.nodes.Count - clique.K));
+        BigInteger reps = factorial(clique.nodes.Count) / (factorial(clique.K) * factorial(clique.nodes.Count - clique.K));
         for(int i=0; i<reps; i++){
             string certificate = indexListToCertificate(combination,clique.nodes);
             if(clique.defaultVerifier.verify(clique, certificate)){

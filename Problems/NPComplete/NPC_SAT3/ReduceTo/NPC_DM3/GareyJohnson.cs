@@ -130,8 +130,7 @@ class GareyJohnson : IReduction<SAT3, DM3> {
             }
             instance = instance.TrimEnd(',') + "}";
         }
-
-        Console.WriteLine(X.Count() + "----" + Y.Count() + "----" + Z.Count());
+        
         reduced3DM.X = X;
         reduced3DM.Y = Y;
         reduced3DM.Z = Z;
