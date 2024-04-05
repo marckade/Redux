@@ -38,20 +38,20 @@ class PartitionBruteForce : ISolver {
         
     }
     private string BinaryToCertificate(List<int> binary, List<string> S ){
-        string certificate = "(";
+        string certificate = "{";
         for(int i = 0; i< binary.Count; i++){
             if(binary[i] == 1){
                 certificate += S[i]+",";
             }
         }
         certificate = certificate.TrimEnd(',');
-        certificate += "),(";
+        certificate += "},{";
         for(int i = 0; i< binary.Count; i++){
             if(binary[i] == 0){
                 certificate += S[i]+",";
             }
         }
-        return "{" + certificate.TrimEnd(',') + ")}";
+        return "{" + certificate.TrimEnd(',') + "}}";
 
     }
     private void nextBinary(List<int> binary){

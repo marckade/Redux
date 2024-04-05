@@ -281,3 +281,41 @@ public class CliqueVerifierController : ControllerBase {
         return jsonString;
     }
 }
+
+[ApiController]
+[Route("[controller]")]
+[Tags("Clique")]
+#pragma warning disable CS1591
+public class BronKerboschSolverController : ControllerBase {
+#pragma warning restore CS1591
+
+    ///<summary>Returns information about the BronKerbosch solver </summary>
+    ///<response code="200">Returns BronKerboschSolver Object</response>
+
+    [ProducesResponseType(typeof(BronKerboschSolver), 200)]    
+    [HttpGet("info")]
+    public String getGeneric() {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        BronKerboschSolver solver = new BronKerboschSolver();
+
+        // Send back to API user
+        string jsonString = JsonSerializer.Serialize(solver, options);
+        return jsonString;
+    }
+
+    ///<summary>Returns a solution to a given Clique problem instance </summary>
+///<param name="problemInstance" example="(({1,2,3,4},{{4,1},{1,2},{4,3},{3,2},{2,4}}),3)">Clique problem instance string.</param>
+///<response code="200">Returns a solution string </response>
+    
+    [ProducesResponseType(typeof(string), 200)]
+    [HttpGet("solve")]
+    public String solveInstance([FromQuery]string problemInstance) {
+        // Implement solver here
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        CLIQUE problem = new CLIQUE(problemInstance);
+        string solution = new BronKerboschSolver().solve(problem);
+        
+        string jsonString = JsonSerializer.Serialize(solution, options);
+        return jsonString;
+    }
+}

@@ -9,10 +9,10 @@ class ExactCover : IProblem<ExactCoverBruteForce,ExactCoverVerifier> {
 
     // --- Fields ---
     private string _problemName = "Exact Cover";
-    private string _formalDefinition = "Exact Cover = {<S, X> | S is a collection of subsets of a set X where S* exists such that S* is a subcollection of S and an exact cover, of S. This means that each element of X is in exactly one subset of S*.} ";
-    private string _problemDefinition = "The exact cover problem is a decision problem to determine if an exact cover exists for some <S, X>";
+    private string _formalDefinition = "Exact Cover = {<S, U> | Given a set of elements U and a family of subsets S of U, determine whether or not there exists a subfamily T of S such that all the subsets in T are disjoint and their union is equal to U.} ";
+    private string _problemDefinition = "";
     private string _source = "Karp, Richard M. Reducibility among combinatorial problems. Complexity of computer computations. Springer, Boston, MA, 1972. 85-103.";
-    private string[] _contributors = { "Caleb Eardley", "Alex Diviney" };
+    private string[] _contributors = { "Caleb Eardley", "Alex Diviney, Andrija Sevaljevic" };
 
     
     private string _defaultInstance = "{{1,2,3},{2,3},{4,1} : {1,2,3,4}}";
