@@ -147,7 +147,7 @@ public class ExactCoverRecursiveController : ControllerBase {
     }
 
     ///<summary>Returns a solution to a given  Exact Cover problem instance </summary>
-    ///<param name="problemInstance" example="{{1,2,3},{2,3},{4,1} : {1,2,3,4}}"s>Exact Cover problem instance string.</param>
+    ///<param name="problemInstance" example="{{1,2,3},{2,3},{4,1} : {1,2,3,4}}">Exact Cover problem instance string.</param>
     ///<response code="200">Returns solution string </response>
     
     [ProducesResponseType(typeof(string), 200)]
@@ -185,7 +185,7 @@ public class DancingLinksController : ControllerBase {
     }
 
     ///<summary>Returns a solution to a given  Exact Cover problem instance </summary>
-    ///<param name="problemInstance" example="{{1,2,3},{2,3},{4,1} : {1,2,3,4}}"s>Exact Cover problem instance string.</param>
+    ///<param name="problemInstance" example="{{1,2,3},{2,3},{4,1} : {1,2,3,4}}">Exact Cover problem instance string.</param>
     ///<response code="200">Returns solution string </response>
     
     [ProducesResponseType(typeof(string), 200)]
